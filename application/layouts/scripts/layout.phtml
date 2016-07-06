@@ -1,19 +1,5 @@
 <?php
 
-$uri = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
+echo $this->render('login.phtml');
 
-if ($uri == "/penca/public/?login") {
-  
-    echo $this->render('login.phtml');    
-
-    
-} else if ($uri == "/penca/public/?register") {    
-    
-    echo $this->render('register.phtml');
-
-    
-}
-
-
-     
-    
+echo $this->render('register.phtml');

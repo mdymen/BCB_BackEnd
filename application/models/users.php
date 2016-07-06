@@ -11,17 +11,20 @@
  *
  * @author Martin Dymenstein
  */
-class Application_Model_Usuarios extends Zend_Db_Table_Abstract
+class Application_Model_Users extends Zend_Db_Table_Abstract
 {
 
-    protected $_name = 'usuarios';
+    protected $_name = 'user';
     
     public function save($params) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
         $info = array(
-            'us_user'=>$params['username'],
+            'us_username'=>$params['username'],
             'us_password' => $params['password'],
-        );       
-        $this->insert($info);
+        );  
+        
+        $db->insert($this->_name, $info);
     }
         
     

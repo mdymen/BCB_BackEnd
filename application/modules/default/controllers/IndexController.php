@@ -1,6 +1,7 @@
 <?php
 
-class indexController extends Zend_Controller_Action
+include APPLICATION_PATH.'/models/users.php';
+class IndexController extends Zend_Controller_Action
 {
 
     public function init()
@@ -16,9 +17,10 @@ class indexController extends Zend_Controller_Action
     public function registerAction() {
        $params = $this->_request->getParams();
        
-       print_r($params);
-       die(".");
        
+//       print_r($params);
+//       die(".");
+//       
        $user = new Application_Model_Users();
        $user->save($params);
     }
