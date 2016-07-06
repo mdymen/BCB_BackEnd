@@ -18,7 +18,8 @@ class Application_Model_Usuarios extends Zend_Db_Table_Abstract
     
     public function save($params) {
         $info = array(
-            'us_user'=>$params['user'],
+            'us_user'=>$params['username'],
+            'us_password' => $params['password'],
         );       
         $this->insert($info);
     }

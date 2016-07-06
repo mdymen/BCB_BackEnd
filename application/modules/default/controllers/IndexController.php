@@ -13,8 +13,18 @@ class indexController extends Zend_Controller_Action
         // action body
     }
     
-    public function registerAction() {}
+    public function registerAction() {
+       $params = $this->_request->getParams();
+       
+       print_r($params);
+       die(".");
+       
+       $user = new Application_Model_Users();
+       $user->save($params);
+    }
     
-    public function loginAction() {}
+    public function loginAction() {
+       
+    }
 }
 
