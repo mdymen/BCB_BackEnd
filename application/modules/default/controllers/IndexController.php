@@ -15,5 +15,6 @@ class indexController extends Zend_Controller_Action
     
     public function registerAction() {}
     
+    public function loginAction() {}
 }
 
