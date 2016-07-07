@@ -51,24 +51,18 @@
 					<p>
 						<a class="btn btn-facebook"><span>Login via Facebook</span></a>
 					</p>
-					<p>	
-						<a class="btn btn-twitter"><span>Login via Twitter</span></a>
-					</p>
-					<p>	
-						<a class="btn btn-linkedin"><span>Login via LinkedIn</span></a>	
-					</p>
 					
 					<div class="text-with-hr">
 						<span>or use your username</span>
 					</div>
 					
-					<form class="form-horizontal login" action="index.html" method="post">
+					<form class="form-horizontal login" action="/penca/public/index/login" method="post">
 						
 						<fieldset class="col-sm-12">
 							<div class="form-group">
 							  	<div class="controls row">
 									<div class="input-group col-sm-12">	
-										<input type="text" class="form-control" id="username" placeholder="Username or E-mail">
+										<input type="text" class="form-control" name="username" placeholder="Username or E-mail">
 										<span class="input-group-addon"><i class="fa fa-user"></i></span>
 									</div>	
 							  	</div>
@@ -77,16 +71,11 @@
 							<div class="form-group">
 							  	<div class="controls row">
 									<div class="input-group col-sm-12">	
-										<input type="password" class="form-control" id="password" placeholder="Password">
+										<input type="password" class="form-control" name="password" placeholder="Password">
 										<span class="input-group-addon"><i class="fa fa-key"></i></span>
 									</div>	
 							  	</div>
 							</div>
-
-							<div class="confirm">
-								<div class="icheckbox_square-blue" style="position: relative;"><input type="checkbox" name="remember" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
-								<label for="remember">Remember me</label>
-							</div>	
 
 							<div class="row">
 							
@@ -99,7 +88,7 @@
 					</form>
 					
 					<a class="pull-left" href="page-login.html#">Forgot Password?</a>
-					<a class="pull-right" href="page-register.html">Sign Up!</a>
+					<a class="pull-right" href="<?php echo $this->baseUrl()."/?register"; ?>">Sign Up!</a>
 					
 					<div class="clearfix"></div>				
 						
