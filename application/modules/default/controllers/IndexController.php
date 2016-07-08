@@ -41,16 +41,9 @@ class IndexController extends Zend_Controller_Action
             $storage = new Zend_Auth_Storage_Session();
             $storage->write($authAdapter->getResultRowObject());
             
-            print_r($result);
-            
-         
         }
-
-        print_r($result);
         
-        die(".");
-        
-        return false;
+        $this->render("index");
     }
 }
 

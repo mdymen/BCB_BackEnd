@@ -13,10 +13,10 @@
 	<!-- end: Mobile Specific -->
 	
 	<!-- start: CSS -->
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-	<link href="assets/css/style.min.css" rel="stylesheet">
-	<link href="assets/css/retina.min.css" rel="stylesheet">
-	<link href="assets/css/print.css" rel="stylesheet" type="text/css" media="print">
+            <?php echo $this->headLink()->appendStylesheet($this->baseUrl('assets/css/bootstrap.min.css'))?>  
+            <?php echo $this->headLink()->appendStylesheet($this->baseUrl('assets/css/style.min.css'))?>  
+            <?php echo $this->headLink()->appendStylesheet($this->baseUrl('assets/css/retina.min.css'))?>  
+            <?php echo $this->headLink()->appendStylesheet($this->baseUrl('assets/css/print.css'))?>  
 	<!-- end: CSS -->
 	
 
@@ -457,7 +457,9 @@
 					<h4 class="modal-title">Modal title</h4>
 				</div>
 				<div class="modal-body">
-					dsgdd DFGDGD dfgd f g
+					
+                                        <?php echo $this->layout()->content; ?>
+                                    
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
