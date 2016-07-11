@@ -1,5 +1,8 @@
 <?php
 
+//    $storage = new Zend_Auth_Storage_Session();
+//        $storage->clear();
+
 $uri = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
 
 if ($uri == "/penca/public/?register") {
@@ -17,6 +20,8 @@ if ($uri == "/penca/public/?register") {
 
         if (!empty($data)) {
             echo $this->render('_head.php');      
+        } else {
+            echo $this->render('login.phtml');            
         }
-    
+            
 }

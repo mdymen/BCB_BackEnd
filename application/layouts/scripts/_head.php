@@ -1,4 +1,16 @@
-<html lang="en"><head>
+<?php
+
+        $storage = new Zend_Auth_Storage_Session();
+        $data = $storage->read();
+//        print_r($data->us_username);
+//        die(".");
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
 	
 	<!-- start: Meta -->
 	<meta charset="utf-8">
@@ -13,10 +25,10 @@
 	<!-- end: Mobile Specific -->
 	
 	<!-- start: CSS -->
-            <?php echo $this->headLink()->appendStylesheet($this->baseUrl('assets/css/bootstrap.min.css'))?>  
-            <?php echo $this->headLink()->appendStylesheet($this->baseUrl('assets/css/style.min.css'))?>  
-            <?php echo $this->headLink()->appendStylesheet($this->baseUrl('assets/css/retina.min.css'))?>  
-            <?php echo $this->headLink()->appendStylesheet($this->baseUrl('assets/css/print.css'))?>  
+        <link href="<?php echo $this->baseUrl("assets/css/bootstrap.min.css"); ?>" rel="stylesheet">
+	<link href="<?php echo $this->baseUrl("assets/css/style.min.css"); ?>"  rel="stylesheet">
+	<link href="<?php echo $this->baseUrl("assets/css/retina.min.css"); ?>" rel="stylesheet">
+	<link href="<?php echo $this->baseUrl("assets/css/print.css"); ?>" rel="stylesheet" type="text/css" media="print"/>
 	<!-- end: CSS -->
 	
 
@@ -49,16 +61,7 @@
 			</button>
 			<a id="main-menu-toggle" class="hidden-xs open"><i class="fa fa-bars"></i></a>		
 			<a class="navbar-brand col-md-2 col-sm-1 col-xs-2" href="index.html"><span>Genius</span></a>
-			<div id="search" class="col-sm-4 col-xs-8 col-lg-3">
-				<select>
-					<option>everything</option>
-					<option>messages</option>
-					<option>comments</option>
-					<option>users</option>
-			  	</select>
-				<input type="text" placeholder="search">
-				<i class="fa fa-search"></i>
-			</div>
+			
 			<!-- start: Header Menu -->
 			<div class="nav-no-collapse header-nav">
 				<ul class="nav navbar-nav pull-right">
@@ -160,45 +163,45 @@
                                 <a href="2nd-level.html#">
 									<span class="header">
 										<span class="title">iOS Development</span>
-										<span class="percent">80%</span>
+										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressBlue ui-progressbar ui-widget ui-widget-content ui-corner-all" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80">80<div class="ui-progressbar-value ui-widget-header ui-corner-left" style="width: 80%;"></div></div> 
+                                    <div class="taskProgress progressSlim progressBlue">80</div> 
                                 </a>
                             </li>
                             <li>
                                 <a href="2nd-level.html#">
 									<span class="header">
 										<span class="title">Android Development</span>
-										<span class="percent">47%</span>
+										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressYellow ui-progressbar ui-widget ui-widget-content ui-corner-all" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="47">47<div class="ui-progressbar-value ui-widget-header ui-corner-left" style="width: 47%;"></div></div> 
+                                    <div class="taskProgress progressSlim progressYellow">47</div> 
                                 </a>
                             </li>
                             <li>
                                 <a href="2nd-level.html#">
 									<span class="header">
 										<span class="title">Django Project For Google</span>
-										<span class="percent">32%</span>
+										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressRed ui-progressbar ui-widget ui-widget-content ui-corner-all" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="32">32<div class="ui-progressbar-value ui-widget-header ui-corner-left" style="width: 32%;"></div></div> 
+                                    <div class="taskProgress progressSlim progressRed">32</div> 
                                 </a>
                             </li>
 							<li>
                                 <a href="2nd-level.html#">
 									<span class="header">
 										<span class="title">SEO for new sites</span>
-										<span class="percent">63%</span>
+										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressGreen ui-progressbar ui-widget ui-widget-content ui-corner-all" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63">63<div class="ui-progressbar-value ui-widget-header ui-corner-left" style="width: 63%;"></div></div> 
+                                    <div class="taskProgress progressSlim progressGreen">63</div> 
                                 </a>
                             </li>
                             <li>
                                 <a href="2nd-level.html#">
 									<span class="header">
 										<span class="title">New blog posts</span>
-										<span class="percent">80%</span>
+										<span class="percent"></span>
 									</span>
-                                    <div class="taskProgress progressSlim progressPink ui-progressbar ui-widget ui-widget-content ui-corner-all" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80">80<div class="ui-progressbar-value ui-widget-header ui-corner-left" style="width: 80%;"></div></div> 
+                                    <div class="taskProgress progressSlim progressPink">80</div> 
                                 </a>
                             </li>
 							<li>
@@ -222,7 +225,7 @@
 									<span class="avatar"><img src="assets/img/avatar.jpg" alt="Avatar"></span>
 									<span class="header">
 										<span class="from">
-									    	Łukasz Holeczek
+									    	<?php echo $data->us_username; ?>
 									     </span>
 										<span class="time">
 									    	6 min
@@ -314,14 +317,14 @@
 							<div class="avatar"><img src="assets/img/avatar.jpg" alt="Avatar"></div>
 							<div class="user">
 								<span class="hello">Welcome!</span>
-								<span class="name">Łukasz Holeczek</span>
+								<span class="name"><?php echo $data->us_username; ?></span>
 							</div>
 						</a>
 						<ul class="dropdown-menu">
 							<li><a href="2nd-level.html#"><i class="fa fa-user"></i> Profile</a></li>
 							<li><a href="2nd-level.html#"><i class="fa fa-cog"></i> Settings</a></li>
 							<li><a href="2nd-level.html#"><i class="fa fa-envelope"></i> Messages</a></li>
-							<li><a href="page-login.html"><i class="fa fa-off"></i> Logout</a></li>
+							<li><a href="<?php echo $this->baseUrl("/index/logout") ?>"><i class="fa fa-off"></i> Logout</a></li>
 						</ul>
 					</li>
 					<!-- end: User Dropdown -->
@@ -345,7 +348,7 @@
 						<li>
 							<a class="dropmenu" href="2nd-level.html#"><i class="fa fa-eye"></i><span class="hidden-sm text"> UI Features</span> <span class="chevron closed"></span></a>
 							<ul>
-								<li><a class="submenu" href="ui-sliders-progress.html"><i class="fa fa-eye"></i><span class="hidden-sm text"> Sliders &amp; Progress</span></a></li>
+								<li><a class="submenu" href="ui-sliders-progress.html"><i class="fa fa-eye"></i><span class="hidden-sm text"> Sliders & Progress</span></a></li>
 								<li><a class="submenu" href="ui-nestable-list.html"><i class="fa fa-eye"></i><span class="hidden-sm text"> Nestable Lists</span></a></li>
 								<li><a class="submenu" href="ui-elements.html"><i class="fa fa-eye"></i><span class="hidden-sm text"> Elements</span></a></li>
 							</ul>
@@ -356,7 +359,7 @@
 							<ul>
 								<li><a class="submenu" href="page-inbox.html"><i class="fa fa-envelope-o"></i><span class="hidden-sm text"> Inbox</span></a></li>
 								<li><a class="submenu" href="page-invoice.html"><i class="fa fa-file-text"></i><span class="hidden-sm text"> Invoice</span></a></li>
-								<li><a class="submenu" href="page-todo.html"><i class="fa fa-tasks"></i><span class="hidden-sm text"> ToDo &amp; Timeline</span></a></li>
+								<li><a class="submenu" href="page-todo.html"><i class="fa fa-tasks"></i><span class="hidden-sm text"> ToDo & Timeline</span></a></li>
 								<li><a class="submenu" href="page-profile.html"><i class="fa fa-male"></i><span class="hidden-sm text"> Profile</span></a></li>
 								<li><a class="submenu" href="page-pricing-tables.html"><i class="fa fa-table"></i><span class="hidden-sm text"> Pricing Tables</span></a></li>
 								<li><a class="submenu" href="page-404.html"><i class="fa fa-unlink"></i><span class="hidden-sm text"> 404</span></a></li>
@@ -401,9 +404,9 @@
 							</ul>
 						</li>
 						<li>
-							<a class="dropmenu" href="2nd-level.html#"><i class="fa fa-folder-open"></i><span class="hidden-sm text"> 4 Level Menu</span> <span class="chevron opened"></span></a>
-							<ul style="display: block;">
-								<li class="active"><a href="2nd-level.html"><i class="fa fa-folder"></i><span class="hidden-sm text"> 2nd Level</span></a></li>
+							<a class="dropmenu" href="2nd-level.html#"><i class="fa fa-folder-open"></i><span class="hidden-sm text"> 4 Level Menu</span> <span class="chevron closed"></span></a>
+							<ul>
+								<li><a href="2nd-level.html"><i class="fa fa-folder"></i><span class="hidden-sm text"> 2nd Level</span></a></li>
 								<li>
 									<a class="dropmenu" href="2nd-level.html#"><i class="fa fa-folder-open"></i><span class="hidden-sm text"> 2nd Level</span> <span class="chevron closed"></span></a>
 									<ul>
@@ -435,7 +438,7 @@
 			<!-- end: Main Menu -->
 						
 			<!-- start: Content -->
-			<div id="content" class="col-lg-10 col-sm-11 " style="min-height: 587px;">
+			<div id="content" class="col-lg-10 col-sm-11 ">
 			
 			
 			  
@@ -453,13 +456,11 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4 class="modal-title">Modal title</h4>
 				</div>
 				<div class="modal-body">
-					
-                                        <?php echo $this->layout()->content; ?>
-                                    
+					<p>Here settings can be configured...</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -476,7 +477,7 @@
 		<div class="row">
 			
 			<div class="col-sm-5">
-				© 2014 creativeLabs. <a href="http://bootstrapmaster.com">Admin Templates</a> by BootstrapMaster
+				&copy; 2014 creativeLabs. <a href="http://bootstrapmaster.com">Admin Templates</a> by BootstrapMaster
 			</div><!--/.col-->
 			
 			<div class="col-sm-7 text-right">
@@ -532,5 +533,5 @@
 	
 	<!-- end: JavaScript-->
 	
-
-</body></html>
+</body>
+</html>

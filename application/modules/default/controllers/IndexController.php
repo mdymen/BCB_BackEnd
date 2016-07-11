@@ -21,6 +21,12 @@ class IndexController extends Zend_Controller_Action
        $user->save($params);
     }
     
+    function logoutAction() {
+        $storage = new Zend_Auth_Storage_Session();
+        $storage->clear();
+        $this->_redirect();
+    }           
+    
     public function loginAction() {
         $params = $this->_request->getParams();
         
