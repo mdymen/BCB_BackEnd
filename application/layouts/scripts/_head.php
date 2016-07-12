@@ -441,7 +441,7 @@
 			<div id="content" class="col-lg-10 col-sm-11 ">
 			
 			
-			  
+                            <?php echo $this->layout()->content; ?>
      
 					
 			</div>
@@ -490,9 +490,7 @@
 		
 	<!-- start: JavaScript-->
 	<!--[if !IE]>-->
-
-			<script src="assets/js/jquery-2.1.0.min.js"></script>
-
+             <?php echo $this->headScript()->appendFile($this->baseUrl('assets/js/jquery-2.1.0.min.js')) ?>
 	<!--<![endif]-->
 
 	<!--[if IE]>
@@ -516,18 +514,21 @@
 		</script>
 		
 	<![endif]-->
-	<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	
-		
-	
-	
+        <?php echo $this->headScript()->appendFile($this->baseUrl('assets/js/jquery-migrate-1.2.1.min.js')) ?>
+        <?php echo $this->headScript()->appendFile($this->baseUrl('assets/js/bootstrap.min.js')) ?>
+
+
+
+
+
+
+
 	<!-- page scripts -->
-	<script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+        <?php echo $this->headScript()->appendFile($this->baseUrl('assets/js/jquery-ui-1.10.3.custom.min.js')) ?>
 	
 	<!-- theme scripts -->
-	<script src="assets/js/custom.min.js"></script>
-	<script src="assets/js/core.min.js"></script>
+        <?php echo $this->headScript()->appendFile($this->baseUrl('assets/js/custom.min.js')) ?>
+        <?php echo $this->headScript()->appendFile($this->baseUrl('assets/js/core.min.js')) ?>
 	
 	<!-- inline scripts related to this page -->
 	

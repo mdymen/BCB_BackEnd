@@ -51,5 +51,16 @@ class IndexController extends Zend_Controller_Action
         
         $this->render("index");
     }
+    
+    public function registerteamsAction() {
+        
+    }   
+    
+    public function registerteamsformAction() {
+        $params = $this->_request->getParams();
+        
+        print_r($params);
+        die(".");
+    }
 }
 
