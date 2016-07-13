@@ -19,7 +19,7 @@ class RegisterController extends Zend_Controller_Action
 
     }
     
-    public function adchampionshipAction() {
+    public function addchampionshipAction() {
         $params = $this->_request->getParams();
         
         $championship = new Application_Model_Championships();
@@ -28,9 +28,18 @@ class RegisterController extends Zend_Controller_Action
         $this->redirect("/register/championship");
     }
     
-    function teamAction() {
-
-    }           
+    public function teamAction() {
+        
+    }
+    
+    public function addteamAction() {
+        $params = $this->_request->getParams();
+        
+        $championship = new Application_Model_Teams();
+        $championship->save($params);
+        
+        $this->redirect("/register/team");   
+    }          
   
 }
 

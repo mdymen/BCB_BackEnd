@@ -1,0 +1,19 @@
+<?php 
+
+include APPLICATION_PATH.'/forms/team.php';
+include APPLICATION_PATH.'/decorators/Form.php';
+
+
+?>
+
+    <div class="row">
+    
+<?php
+    
+
+
+$decform = new Decorators_Form();
+$form = new Form_Team(array('titulo' => 'Editar: '));
+//$form->populate($curso);
+$form->addDecorator($decform);
+echo $form;
