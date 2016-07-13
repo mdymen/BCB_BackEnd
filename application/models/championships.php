@@ -14,14 +14,16 @@
 class Application_Model_Championships extends Zend_Db_Table_Abstract
 {
 
-    protected $_name = 'champsionships';
+    protected $_name = 'champsionship';
     
     public function save($params) {
+        
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
         $info = array(
             'ch_nome'=>$params['nome'],
-            'ch_idfixture'=>$params['fixture'],
         );       
-        $this->insert($info);
+        $db->insert($this->_name,$info);
     }
         
     
