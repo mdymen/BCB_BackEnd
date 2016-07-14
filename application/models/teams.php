@@ -14,7 +14,7 @@
 class Application_Model_Teams extends Zend_Db_Table_Abstract
 {
 
-    protected $_name = 'teams';
+    protected $_name = 'team';
     
     public function save($params) {
         $info = array(

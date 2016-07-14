@@ -16,7 +16,7 @@ class Decorators_Combobox extends Zend_Form_Decorator_Abstract {
  //   protected $_format = '<input id="%s" name="%s"  class="form-control" placeholder="%s" type="%s" value="%s"/>';
     public function render($content)
     {
-        $_format = '<select name="ID_CURSO_CR" id="Curso">';
+        $_format = '<select name="tm_idchampionship" id="tm_idchampionship">';
 
         $value = ($this->getElement()->getValue());
 
@@ -26,10 +26,10 @@ class Decorators_Combobox extends Zend_Form_Decorator_Abstract {
         $i = 0;
         $select = '';
         foreach ($options as $e) {
-            if ($value == $e['ID_ID_CR']) {
+            if ($value == $e['ch_id']) {
                 $select = "selected";
             }
-            $_format .= '<option value="'.$e['ID_ID_CR'].'" '.$select.'>'.$e['ST_IDENT_CR'].'</option>';
+            $_format .= '<option value="'.$e['ch_id'].'" '.$select.'>'.$e['ch_nome'].'</option>';
             $select = '';
        }
             

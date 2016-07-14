@@ -1,6 +1,7 @@
 <?php
 include APPLICATION_PATH.'/decorators/decorator1.php';
 include APPLICATION_PATH.'/decorators/Combobox.php';
+//include APPLICATION_PATH.'/models/championships.php';
 class Form_Team extends Zend_Form {
         
     function init() {
@@ -16,7 +17,7 @@ class Form_Team extends Zend_Form {
         $decorator3 = new Decorators_Combobox(); 
         $champs = new Zend_Form_Element_Select('tm_idchampionship', array('col' => 'col-sm-3')); 
  
-        $champ = new Models_Championship();
+        $champ = new Application_Model_Championships();
         $champ = $champ->load();
         
         $champs->addMultiOptions($champ);
