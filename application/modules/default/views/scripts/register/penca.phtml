@@ -1,0 +1,19 @@
+<?php 
+
+include APPLICATION_PATH.'/forms/penca.php';
+include APPLICATION_PATH.'/decorators/Form.php';
+
+
+?>
+
+    <div class="row">
+    
+<?php
+    
+
+
+$decform = new Decorators_Form();
+$form = new Form_Penca(array('titulo' => 'Editar: '));
+
+$form->addDecorator($decform);
+echo $form;
