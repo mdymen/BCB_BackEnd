@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/register/team.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/configs/application.ini</file>
+            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/_head.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/register.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/ChampionshipController.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/FixtureController.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/models/teams.php</file>
+            <file>file:/C:/xampp/htdocs/penca/public/index.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/RegisterController.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/inseriremailface.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/forms/Penca.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/models/users.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/admin.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/decorators/Decorator1.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/index.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/Bootstrap.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/_footer.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/configs/scriptsql.sql</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/register/penca.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/registerteams.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/models/fixtures.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/models/matchs.php</file>
+            <file>file:/C:/xampp/htdocs/penca/public/web.config</file>
+            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/redirect.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/forms/curso/Editar.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/forms/Championship.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/_adminhead.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/models/pencas.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/models/result.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/admin/controllers/IndexController.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/forms/Fixture.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/register.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/decorators/Combobox.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/TeamController.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/register/championship.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/forms/Team.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/layout.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/admin/views/scripts/index/index.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/IndexController.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/PencaController.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/models/championships.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/login.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/login.phtml</file>
+        </group>
     </open-files>
 </project-private>
