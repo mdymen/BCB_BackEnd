@@ -65,7 +65,8 @@ class Decorators_Form extends Zend_Form_Decorator_Abstract {
         
         $icone_class = '';
         if ($icone != '') {
-            $icone_class = '<i class="'.$icone.'"></i>';
+            $icone_class = '<span class="input-group-addon">'
+                    . '<i class="'.$icone.'"></i></span>';
         }
         
         

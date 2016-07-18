@@ -64,6 +64,13 @@ class RegisterController extends Zend_Controller_Action
         
         $this->redirect("/register/penca");
     }
+    
+    public function matchAction() {}
+    
+    public function addmatchAction() {
+        
+    }
+    
   
 }
 

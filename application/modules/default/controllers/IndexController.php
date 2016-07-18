@@ -11,7 +11,16 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body
+        //Retorna las posiciones de todas las pencas 
+        //en la cual el usuario participa.
+        //en verde al ganador con el puntaje
+        //en amarillo los siguientes
+        // en rojo los que no ganan nada
+        
+        //listado de pencas aonde o usuario pode
+        //participar porque são livres
+       
+        //utimos resultados de alguna penca o de todas?
     }
     
     public function registerAction() {
@@ -66,5 +75,6 @@ class IndexController extends Zend_Controller_Action
         print_r($teams);
         die(".");
     }
+   
 }
 

@@ -348,6 +348,7 @@
                                                 <li><a href="index.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm text"> Caixa</span></a></li>	
 						<li><a href="index.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm text"> Baloes</span></a></li>	
                                                 <li><a href="index.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm text"> Meus Baloes </span></a></li>	
+                                                <li><a href="index.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm text"> Criar Balão </span></a></li>                                                
 					</ul>
 				</div>
 									<a href="2nd-level.html#" id="main-menu-min" class="full visible-md visible-lg"><i class="fa fa-angle-double-left"></i></a>
