@@ -33,14 +33,23 @@ class Decorators_Decorator1 extends Zend_Form_Decorator_Abstract {
         if ($disabled == 'disabled') { $disabled = 'disabled="disabled"';}
         $_format = '<label for="%s">%s</label><input id="%s" name="%s"  class="form-control" '.$disabled.' placeholder="%s" type="%s" value="%s"/>';
 
-        $placeholder = htmlentities($element->getAttrib("placeholder"));
-        $markup  = sprintf($_format,$name,$label,$id, $name, $placeholder, $type, $value);
+//    <div class="controls">
+//                        <div class="input-group col-sm-4">
+//                          <span class="input-group-addon"><i class="fa fa-male"></i></span>
+//                          <input type="text" id="ssn" class="form-control">
+//                        </div>
+//                        <span class="help-block col-sm-8">ex. 999-99-9999</span>
+//                  </div>
 
+        $placeholder = htmlentities($element->getAttrib("placeholder"));
+        $input  = sprintf($_format,$name,$label,$id, $name, $placeholder, $type, $value);
+        
+        $markup = '';
         if ($icono != '') {
-            $markup = '<span class="input-icon icon-right">'.$markup.'<i class="'.$icono.'"></i></span>';
+            $markup = '<span class="input-group-addon"><i class="'.$icono.'"></i></span>'.$markup;
         }
         
-        $markup = '<div class="form-group">'.$markup.'</div>';
+        $markup = '<div class="form-group"><div class="controls"><div class="input-group col-sm-4"> '.$markup.$input.'</div></div></div>';
         
         
         

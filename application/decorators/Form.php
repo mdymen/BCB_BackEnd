@@ -19,9 +19,6 @@ class Decorators_Form extends Zend_Form_Decorator_Abstract {
     {
         $titulo = htmlentities($this->getElement()->getAttrib("titulo"));
         $id = htmlentities($this->getElement()->getAttrib("id"));
-        
-        
-        
         $action = htmlentities($this->getElement()->getAttrib("action"));
         $method = htmlentities($this->getElement()->getAttrib("method"));
         $enctype = htmlentities($this->getElement()->getAttrib("enctype"));
@@ -63,6 +60,14 @@ class Decorators_Form extends Zend_Form_Decorator_Abstract {
             $classes = "col-lg-6 col-sm-6 col-xs-12"; 
         }
         
+//        <div class="controls">
+//            <div class="input-group col-sm-4">
+//              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+//              <input type="text" id="date" class="form-control">
+//            </div>
+//            <span class="help-block col-sm-8">ex. 99/99/9999</span>
+//      </div>
+        
         $icone_class = '';
         if ($icone != '') {
             $icone_class = '<span class="input-group-addon">'
@@ -88,13 +93,4 @@ class Decorators_Form extends Zend_Form_Decorator_Abstract {
         $form .= "</form></div></div></div></div>";
         return $form;
     }
-       /* $element = $this->getElement();
-        $name    = htmlentities($element->getFullyQualifiedName());
-        $label   = htmlentities($element->getLabel());
-        $id      = htmlentities($element->getId());
-        $placeholder = htmlentities($element->getAttrib("placeholder"));
- 
-        $markup  = sprintf($this->_format, $name, $label, $id, $name, $placeholder);
-        return $markup;*
-    }*/
 }

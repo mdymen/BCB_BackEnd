@@ -11,11 +11,11 @@ class Form_Penca extends Zend_Form {
         $this->setAction($root."/register/addpenca")->setMethod("post");
 
         $decorator = new Decorators_Decorator1();
-        $id = new Zend_Form_Element_Text('pn_name', array('placeholder' => 'Nome da penca', 'icono' => 'fa fa-key'/*, 'col' => 'col-sm-6'*/));
+        $id = new Zend_Form_Element_Text('pn_name', array('placeholder' => 'Nome da penca', 'icono' => 'fa fa-clock-o', 'type' => '', 'value' => ''));
         $id->addDecorator($decorator);
         
         $decorator1 = new Decorators_Decorator1();
-        $valor = new Zend_Form_Element_Text('pn_value', array('placeholder' => 'Valor', 'icono' => 'fa fa-key'/*, 'col' => 'col-sm-6'*/));
+        $valor = new Zend_Form_Element_Text('pn_value', array('placeholder' => 'Valor'));
         $valor->addDecorator($decorator1);
         
         $decorator3 = new Decorators_Combobox(); 
