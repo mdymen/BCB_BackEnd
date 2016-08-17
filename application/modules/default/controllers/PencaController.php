@@ -12,5 +12,12 @@
  * @author Martin Dymenstein
  */
 class PencaController extends Zend_Controller_Action {
-    //put your code here
+    
+    public function indexAction() {
+        
+    }
+    
+    public function listAction() {
+        
+    }
 }

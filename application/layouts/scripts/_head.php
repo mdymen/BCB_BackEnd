@@ -344,9 +344,9 @@
 								
 				<div class="sidebar-nav nav-collapse collapse navbar-collapse">
 					<ul class="nav main-menu">
-						<li><a href="index.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm text"> Home</span></a></li>
+                                            <li><a href=""><i class="fa fa-bar-chart-o"></i><span class="hidden-sm text"> Home</span></a></li>
                                                 <li><a href="index.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm text"> Caixa</span></a></li>	
-						<li><a href="index.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm text"> Baloes</span></a></li>	
+						<li><a href="<?php echo $this->baseUrl("/penca/index"); ?>"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm text"> Baloes</span></a></li>	
                                                 <li><a href="index.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm text"> Meus Baloes </span></a></li>	
                                                 <li><a href="index.html"><i class="fa fa-bar-chart-o"></i><span class="hidden-sm text"> Criar Balão </span></a></li>                                                
 					</ul>
