@@ -37,4 +37,24 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
         
         $db->insert("user_penca", $info);
     }
+    
+    public function load_penca__puntagem_usuario($id_user) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        return $db->select()->from("user_penca")
+                ->joinInner("penca", "user_penca.up_idpenca = penca.pn_id")
+                ->joinInner("championship", "penca.pn_idchampionship = championship.ch_id")
+                ->where("up_iduser = ?", $id_user)
+                 ->query()->fetchAll();
+    }
+    
+    public function load_penca_users($penca) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $db->select()->from("user_penca")
+                ->innerJoin("user","user_penca.up_iduser = user.us_id")
+                ->where("up_idpenca = ?", $penca)
+                ->order("up_puntagem desc")
+                ->query()->fetchAll();
+    }
 }

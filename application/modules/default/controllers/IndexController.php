@@ -1,6 +1,7 @@
 <?php
 
 include APPLICATION_PATH.'/models/users.php';
+include APPLICATION_PATH.'/models/pencas.php';
 class IndexController extends Zend_Controller_Action
 {
 
@@ -21,6 +22,19 @@ class IndexController extends Zend_Controller_Action
         //participar porque são livres
        
         //utimos resultados de alguna penca o de todas?
+        
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+   
+        $penca = new Application_Model_Penca();
+                
+        $pencas = $penca->load_penca__puntagem_usuario($data['us_id']);
+        
+        $this->view->pencas = $pencas;
+        
+        
+//        print_r($data);
+//        die(".");
     }
     
     public function registerAction() {
