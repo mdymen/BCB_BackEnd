@@ -71,6 +71,33 @@ class RegisterController extends Zend_Controller_Action
         
     }
     
+    public function addteamsAction() {
+  
+        
+    }
+    
+    public function addteamspostAction() {
+        $params = $this->_request->getParams();
+        
+        $champion = $params['tm_idchampionship'];
+        
+        $teams = $params['tm_name'];
+        $teams = explode(",", $teams);
+        
+        $team_save = new Application_Model_Teams();
+                    
+        for ($i = 0; $i < count($teams); $i = $i + 1) {
+            $obj_team = array( 
+                'tm_name'=> $teams[$i], 
+                'tm_idchampionship' => $champion
+            );
+            
+            $team_save->save($obj_team);
+        }
+        
+        print_r($teams);
+        die(".");
+    }
   
 }
 

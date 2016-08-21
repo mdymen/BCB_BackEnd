@@ -1,0 +1,19 @@
+<?php 
+
+include APPLICATION_PATH.'/forms/teamlote.php';
+include APPLICATION_PATH.'/decorators/Form.php';
+
+
+?>
+
+
+    
+<?php
+    
+
+
+$decform = new Decorators_Form();
+$form = new Form_TeamLote(array('titulo' => 'Editar: '));
+
+$form->addDecorator($decform);
+echo $form;

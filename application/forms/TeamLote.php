@@ -8,7 +8,7 @@ class Form_TeamLote extends Zend_Form {
         
         $root = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/penca/public';
         
-        $this->setAction($root."/team/addteam")->setMethod("post");
+        $this->setAction($root."/register/addteamspost")->setMethod("post");
 
         $decorator = new Decorators_Decorator1();
         $id = new Zend_Form_Element_Text('tm_name', array('placeholder' => 'Nome do time', 'icono' => 'fa fa-key'/*, 'col' => 'col-sm-6'*/));

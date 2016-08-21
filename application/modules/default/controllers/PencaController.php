@@ -11,13 +11,37 @@
  *
  * @author Martin Dymenstein
  */
+include APPLICATION_PATH.'/models/teams.php';
+include APPLICATION_PATH.'/models/pencas.php';
 class PencaController extends Zend_Controller_Action {
     
     public function indexAction() {
+        $params = $this->_request->getParams();
+        $id_penca = $params['penca'];
         
+        $penca = new Application_Model_Penca();
+        $participantes = $penca->load_participantes($id_penca);
+        
+        $info_penca = $penca->load_penca($id_penca);
+        
+        $teams = new Application_Model_Teams();
+        $teams = $teams->load_penca_limit($info_penca[0]['pn_idchampionship'], 0);
+
+        $this->view->info_penca = $info_penca;
+        $this->view->teams = $teams;
+        $this->view->participantes = $participantes;
     }
     
     public function listAction() {
+        
+    }
+    
+    public function proximostimesAction() {
+        $params = $this->_request->getParams();
+        
+        $proximos = $params['proximos'];
+        $penca = $params['penca'];
+        
         
     }
 }

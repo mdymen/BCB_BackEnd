@@ -23,6 +23,31 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
         );       
         $this->insert($info);
     }
-        
     
+    public function load($championship) {
+        
+
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $teams = $db->select()->from("team")
+          ->where("tm_idchampionship = ?",$championship)
+          ->query()->fetchAll();
+
+        return $teams;
+    }
+        
+    public function load_penca_limit($championship, $limit) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from('team')
+                ->where('team.tm_idchampionship = ?', $championship)
+                ->limit($limit, $limit + 12)
+                 ->__toString();
+//                ->query()
+//                ->__toString();
+               // ->fetchAll();
+        print_r($result);
+        die('.');
+        return $result;        
+    }
 }

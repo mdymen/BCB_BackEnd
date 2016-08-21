@@ -66,7 +66,26 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
                 ->query()->fetchAll();
         
         return $return;
-//        print_r($return);
-//        die(".");
+    }
+    
+    public function load_participantes($penca) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from('user_penca', array('count(*) as participantes'))
+                ->where('user_penca.up_idpenca = ?', $penca)->query()->fetchAll();
+        
+        return $result;
+    }
+    
+    public function load_penca($penca) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from('penca')
+                ->where('penca.pn_id = ?', $penca)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+
     }
 }

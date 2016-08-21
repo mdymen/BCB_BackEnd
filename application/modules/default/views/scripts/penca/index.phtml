@@ -1,3 +1,12 @@
+<?php
+
+    $teams = $this->teams;
+    $participantes = $this->participantes;
+    $participantes = $participantes[0];
+
+    $info_penca = $this->info_penca;
+?>
+
 <div class="row profile">
 				
 				<div class="col-sm-3">
@@ -51,12 +60,12 @@
 					
 					<ul class="nav nav-tabs" id="myTab">
 					  	<li class="active"><a href="page-profile.html#skills">Skills</a></li>
-					  	<li class=""><a href="page-profile.html#friends">Friends</a></li>
-					  	<li class=""><a href="page-profile.html#photos">Photos</a></li>
+					  	
+					  	
 					</ul>
 
 					<div class="tab-content">
-						<div class="tab-pane active" id="skills">
+						<div class="tab-pane" id="skills">
 							
 							<div class="row">
 								
@@ -191,49 +200,195 @@
 							</ul>	
 						
 					  	</div>
-					  	<div class="tab-pane" id="photos">
-					  		
-							<div class="row">
-																<div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
-									<img class="img-thumbnail" src="assets/img/gallery/photo1.jpg" alt="Sample Image">
-								</div>
-																<div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
-									<img class="img-thumbnail" src="assets/img/gallery/photo2.jpg" alt="Sample Image">
-								</div>
-																<div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
-									<img class="img-thumbnail" src="assets/img/gallery/photo3.jpg" alt="Sample Image">
-								</div>
-																<div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
-									<img class="img-thumbnail" src="assets/img/gallery/photo4.jpg" alt="Sample Image">
-								</div>
-																<div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
-									<img class="img-thumbnail" src="assets/img/gallery/photo5.jpg" alt="Sample Image">
-								</div>
-																<div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
-									<img class="img-thumbnail" src="assets/img/gallery/photo6.jpg" alt="Sample Image">
-								</div>
-																<div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
-									<img class="img-thumbnail" src="assets/img/gallery/photo7.jpg" alt="Sample Image">
-								</div>
-																<div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
-									<img class="img-thumbnail" src="assets/img/gallery/photo8.jpg" alt="Sample Image">
-								</div>
-																<div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
-									<img class="img-thumbnail" src="assets/img/gallery/photo9.jpg" alt="Sample Image">
-								</div>
-																<div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
-									<img class="img-thumbnail" src="assets/img/gallery/photo10.jpg" alt="Sample Image">
-								</div>
-																<div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
-									<img class="img-thumbnail" src="assets/img/gallery/photo11.jpg" alt="Sample Image">
-								</div>
-																<div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
-									<img class="img-thumbnail" src="assets/img/gallery/photo12.jpg" alt="Sample Image">
-								</div>
-																<div style="margin-bottom:30px" class="col-sm-2 col-xs-6">
-									<img class="img-thumbnail" src="assets/img/gallery/photo13.jpg" alt="Sample Image">
-								</div>
-															</div>
+					  	<div class="tab-pane active" id="photos">
+                                                    
+                             <!-- swewrewr -->                       
+                                        <div class="row">
+				<div class="col-lg-6">
+					<div class="box">
+						<div class="box-header">
+							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Simple Table</h2>
+							<div class="box-icon">
+								<a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
+								<a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+								<a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>
+							</div>
+						</div>
+						<div class="box-content">
+							<table class="table">
+								  <thead>
+									  <tr>
+										  <th>Time</th>
+										  <th>P</th>
+										  <th>J</th>
+										                                  
+									  </tr>
+								  </thead>   
+								  <tbody>
+                                                                      
+                                                                   <?php   
+                                                                   
+                                                                        for ($i = 0; $i < count($teams); $i = $i + 1) {
+                                                                   
+                                                                            echo '<tr>
+                                                                                    <td>'.$teams[$i]['tm_name'].'</td>
+                                                                                    <td>'.$teams[$i]['tm_points'].'</td>
+                                                                                    <td>Member</td>
+                                                                                                                         
+                                                                            </tr>';
+                                                                        
+                                                                        }
+                                                                        
+                                                                    ?>    
+                                                                                                          
+								  </tbody>
+							 </table>  
+							 <div class="pagination pagination-centered">
+							  <ul class="pagination">
+								<li><a href="table.html#">Prev</a></li>
+								<li class="active">
+								  <a href="table.html#">1</a>
+								</li>
+								<li><a href="table.html#">2</a></li>
+								<li><a href="table.html#">3</a></li>
+								<li><a href="table.html#">4</a></li>
+								<li><a href="table.html#">Next</a></li>
+							  </ul>
+							</div>     
+						</div>
+					</div>
+				</div><!--/col-->
+				
+				<!--/col-->
+                                
+                                
+                                
+                                <!-- PARTICIPANTES   -->
+                                
+                                <div class="col-lg-5 col-sm-6">
+					<div class="smallchart blue box">
+						<div class="title">Situacao</div>
+						<div class="content"></div>
+						<div class="value"></div>
+					</div>
+				</div>
+                                
+                                <div class="col-lg-5 col-sm-6">
+					<div class="smallchart blue box">
+						<div class="title">Participantes</div>
+						<div class="content"><?php echo $participantes['participantes']; ?></div>
+						<div class="value"></div>
+					</div>
+				</div>
+                                
+                                  <div class="col-lg-5 col-sm-6">
+					<div class="smallchart blue box">
+						<div class="title">Acumulado</div>
+						<div class="content">R$ <?php echo $info_penca[0]['pn_valueaccumulated']; ?></div>
+						<div class="value"></div>
+					</div>
+				</div>
+                                
+			</div>     
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                          <!-- dfsdgsgfsf -->                          
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    <div class="row">	
+				<div class="col-lg-12">
+					<div class="box">
+						<div class="box-header">
+							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Combined All Table</h2>
+							<div class="box-icon">
+								<a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
+								<a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+								<a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>
+							</div>
+						</div>
+						<div class="box-content">
+							<table class="table table-bordered table-striped table-condensed">
+								  <thead>
+									  <tr>
+										  <th>Username</th>
+										  <th>Date registered</th>
+										  <th>Role</th>
+										  <th>Status</th>                                          
+									  </tr>
+								  </thead>   
+								  <tbody>
+									<tr>
+										<td>Vishnu Serghei</td>
+										<td>2012/01/01</td>
+										<td>Member</td>
+										<td>
+											<span class="label label-success">Active</span>
+										</td>                                       
+									</tr>
+									<tr>
+										<td>Zbyněk Phoibos</td>
+										<td>2012/02/01</td>
+										<td>Staff</td>
+										<td>
+											<span class="label label-important">Banned</span>
+										</td>                                       
+									</tr>
+									<tr>
+										<td>Einar Randall</td>
+										<td>2012/02/01</td>
+										<td>Admin</td>
+										<td>
+											<span class="label label-default">Inactive</span>
+										</td>                                        
+									</tr>
+									<tr>
+										<td>Félix Troels</td>
+										<td>2012/03/01</td>
+										<td>Member</td>
+										<td>
+											<span class="label label-warning">Pending</span>
+										</td>                                       
+									</tr>
+									<tr>
+										<td>Aulus Agmundr</td>
+										<td>2012/01/21</td>
+										<td>Staff</td>
+										<td>
+											<span class="label label-success">Active</span>
+										</td>                                        
+									</tr>                                   
+								  </tbody>
+							 </table>  
+							 <div class="pagination pagination-centered">
+							  <ul class="pagination">
+								<li><a href="table.html#">Prev</a></li>
+								<li class="active">
+								  <a href="table.html#">1</a>
+								</li>
+								<li><a href="table.html#">2</a></li>
+								<li><a href="table.html#">3</a></li>
+								<li><a href="table.html#">4</a></li>
+								<li><a href="table.html#">Next</a></li>
+							  </ul>
+							</div>     
+						</div>
+					</div>
+				</div><!--/col-->
+			</div>  
+							
 					
 					  	</div>
 					</div>
