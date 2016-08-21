@@ -1,69 +1,23 @@
-<?php 
+<?php
 
-print_r($this->pencas);
-//die(";");
+    $pencas = $this->pencas;
 
-echo '<div class="col-lg-8">
-					
-					<div class="row">
-						
-						<div class="col-lg-6 col-md-6 col-sm-6">
-                                                    
-                                                    
-							<div class="box">
-								<div class="box-header">
-									<h2><i class="fa fa-list"></i>Meu bolao</h2>
-									<div class="box-icon">
-										<a href="widgets.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-										<a href="widgets.html#" class="btn-close"><i class="fa fa-times"></i></a>
-									</div>
-								</div>
-								<div class="box-content">
-									<ul class="dashboard-list">
-
-									 ';
-$pencas = $this->pencas;
-
-for ($i = 0; $i < count($pencas); $i = $i + 1) {
-    	
-//print_r($pencas);
-//die(".");
-//    
-            echo '<li>
-                    <a href="widgets.html#">
-                            <i class="fa fa-arrow-up green"></i>                               
-                            <span class="green">'.$i.'</span>
-                            '.$pencas[$i]['ch_nome'].'                                  
-                    </a>
-            </li>';
-									  
-}
-								
-									
-echo '									</ul>
-								</div>
-							</div>
-						</div><!--/col-->
-
-						<!--/col-->
-						
-					</div><!--/row-->	
-					
-				</div>';
-
+//
+//    print_r($pencas);
+//    die(";");
+    
 ?>
+
 <div class="row">
 				
-				<div class="col-lg-8">
+				<div class="col-lg-12">
 					
 					<div class="row">
 						
-						<div class="col-lg-6 col-md-6 col-sm-6">
-                                                    
-                                                    
+						<div class="col-lg-4 col-md-6 col-sm-6">
 							<div class="box">
 								<div class="box-header">
-									<h2><i class="fa fa-list"></i>Meu bolao</h2>
+									<h2><i class="fa fa-list"></i>Weekly Stat</h2>
 									<div class="box-icon">
 										<a href="widgets.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
 										<a href="widgets.html#" class="btn-close"><i class="fa fa-times"></i></a>
@@ -92,7 +46,41 @@ echo '									</ul>
 										  New Articles                                    
 										</a>
 									  </li>
-									
+									  <li>
+										<a href="widgets.html#">
+										  <i class="fa fa-comment yellow"></i>
+										  <span class="yellow">45</span>
+										  User reviews                                    
+										</a>
+									  </li>
+									  <li>
+										<a href="widgets.html#">
+										  <i class="fa fa-arrow-up green"></i>                               
+										  <span class="green">112</span>
+										  New Comments                                    
+										</a>
+									  </li>
+									  <li>
+										<a href="widgets.html#">
+										  <i class="fa fa-arrow-down red"></i>
+										  <span class="red">31</span>
+										  New Registrations
+										</a>
+									  </li>
+									  <li>
+										<a href="widgets.html#">
+										  <i class="fa fa-minus blue"></i>
+										  <span class="blue">93</span>
+										  New Articles                                    
+										</a>
+									  </li>
+									  <li>
+										<a href="widgets.html#">
+										  <i class="fa fa-comment yellow"></i>
+										  <span class="yellow">254</span>
+										  User reviews                                    
+										</a>
+									  </li>
 									</ul>
 								</div>
 							</div>
@@ -109,13 +97,19 @@ echo '									</ul>
 								</div>
 								<div class="box-content no-padding">
 									<ul class="users-list">
-										<li>
+
+                                                                                    <?php
+                                                                                    
+                                                                                    for ($i = 0; $i < count($pencas); $i = $i + 1) {
+                                                                                        echo '<li>
 											<a href="widgets.html#">
 												<img class="avatar" alt="Lucas" src="assets/img/avatar.jpg">
 											</a>
-											<div class="name">Łukasz Holeczek 
+                                                                                    
+											<div class="name">'.$pencas[$i]['pn_name'].' 
 												<div class="dropdown pull-right">
-													<a class="fa fa-cogs" data-toggle="dropdown" href="widgets.html#"></a>
+                                                                                                <span class="label label-success">this week</span>
+												
 													<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 														<li><a href="widgets.html#"><i class="fa fa-check"></i> Accept</a></li>
 														<li><a href="widgets.html#"><i class="fa fa-times"></i>Reject</a></li>
@@ -124,81 +118,15 @@ echo '									</ul>
 													</ul>
 												</div>
 											</div>
-											<span class="place"><i class="fa fa-map-marker"></i>Mikolow, POLAND</span>
-											<span class="job"><i class="fa fa-briefcase"></i>Founder, BootstrapMaster.com</span>                                 
+											<span class="place"><i class="fa fa-map-marker"></i>'.$pencas[$i]['ch_nome'].'</span>
+											<span class="job"><i class="fa fa-briefcase"></i>Bolao: '.$pencas[$i]['pn_valueaccumulated'].'</span>                                 
+                                                                                        
 										</li>
-										<li>
-											<a href="widgets.html#">
-												<img class="avatar" alt="Bill" src="assets/img/avatar9.jpg">
-											</a>
-											<div class="name">Bill Cole
-												<div class="dropdown pull-right">
-													<a class="fa fa-cogs" data-toggle="dropdown" href="widgets.html#"></a>
-													<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-														<li><a href="widgets.html#"><i class="fa fa-check"></i> Accept</a></li>
-														<li><a href="widgets.html#"><i class="fa fa-times"></i>Reject</a></li>
-														<li><a href="widgets.html#"><i class="fa fa-minus-sign-alt"></i>Block</a></li>
-														<li><a href="widgets.html#"><i class="fa fa-trash"></i>Delete</a></li>
-													</ul>
-												</div>
-											</div>
-											<span class="place"><i class="fa fa-map-marker"></i>London, ENGLAND</span>
-											<span class="job"><i class="fa fa-briefcase"></i>CEO, Rainbow INC</span>                                 
-										</li>
-										<li>
-											<a href="widgets.html#">
-												<img class="avatar" alt="Jane" src="assets/img/avatar5.jpg">
-											</a>
-											<div class="name">Jane Sanchez
-												<div class="dropdown pull-right">
-													<a class="fa fa-cogs" data-toggle="dropdown" href="widgets.html#"></a>
-													<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-														<li><a href="widgets.html#"><i class="fa fa-check"></i> Accept</a></li>
-														<li><a href="widgets.html#"><i class="fa fa-times"></i>Reject</a></li>
-														<li><a href="widgets.html#"><i class="fa fa-minus-sign-alt"></i>Block</a></li>
-														<li><a href="widgets.html#"><i class="fa fa-trash"></i>Delete</a></li>
-													</ul>
-												</div>
-											</div>
-											<span class="place"><i class="fa fa-map-marker"></i>Berlin, GERMANY</span>
-											<span class="job"><i class="fa fa-briefcase"></i>Head of Stars Group</span>                               
-										</li>
-										<li>
-											<a href="widgets.html#">
-												<img class="avatar" alt="Kate" src="assets/img/avatar6.jpg">
-											</a>
-											<div class="name">Kate Presley
-												<div class="dropdown pull-right">
-													<a class="fa fa-cogs" data-toggle="dropdown" href="widgets.html#"></a>
-													<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-														<li><a href="widgets.html#"><i class="fa fa-check"></i> Accept</a></li>
-														<li><a href="widgets.html#"><i class="fa fa-times"></i>Reject</a></li>
-														<li><a href="widgets.html#"><i class="fa fa-minus-sign-alt"></i>Block</a></li>
-														<li><a href="widgets.html#"><i class="fa fa-trash"></i>Delete</a></li>
-													</ul>
-												</div>
-											</div>
-											<span class="place"><i class="fa fa-map-marker"></i>Madrid, SPAIN</span>
-											<span class="job"><i class="fa fa-briefcase"></i>Creative Director, IdeaLab LTD</span>                                  
-										</li>
-										<li>
-											<a href="widgets.html#">
-												<img class="avatar" alt="Lucas" src="assets/img/avatar7.jpg">
-											</a>
-											<div class="name">Anna Holmes 
-												<div class="dropdown pull-right">
-													<a class="fa fa-cogs" data-toggle="dropdown" href="widgets.html#"></a>
-													<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-														<li><a href="widgets.html#"><i class="fa fa-check"></i> Accept</a></li>
-														<li><a href="widgets.html#"><i class="fa fa-times"></i>Reject</a></li>
-														<li><a href="widgets.html#"><i class="fa fa-minus-sign-alt"></i>Block</a></li>
-														<li><a href="widgets.html#"><i class="fa fa-trash"></i>Delete</a></li>
-													</ul>
-												</div>
-											</div>
-											<span class="place"><i class="fa fa-map-marker"></i>Paris, FRANCE</span>
-											<span class="job"><i class="fa fa-briefcase"></i>Co-Founder, ArtStudio</span>                                 
-										</li>
+                                                                                ';
+                                                                                    }
+                                                                                    ?>
+                                                                                    
+                                                        
 									</ul>
 								</div>
 							</div>
@@ -208,255 +136,6 @@ echo '									</ul>
 					
 				</div><!--/col-->
 				
-				<div class="col-lg-4">
-					
-					<div class="row">	
-
-						<div class="col-lg-12 col-md-12 col-sm-12">
-							<div class="box">
-								<div class="box-header">
-									<h2><i class="fa fa-check"></i>To Do List</h2>
-									<div class="box-icon">
-										<a href="widgets.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
-										<a href="widgets.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-										<a href="widgets.html#" class="btn-close"><i class="fa fa-times"></i></a>
-									</div>
-								</div>
-								<div class="box-content">
-									<div class="todo">
-										<ul class="todo-list ui-sortable">
-											<li>
-												<span class="todo-actions">
-													<a href="widgets.html#"><i class="fa fa-check"></i></a>
-												</span>
-												<span class="desc">Windows Phone 8 App</span> 
-												<span class="label label-important">today</span>
-												<a class="remove" href="widgets.html#"><i class="fa fa-times"></i></a>					
-											</li>
-											<li>
-												<span class="todo-actions">
-													<a href="widgets.html#"><i class="fa fa-check"></i></a>
-												</span>
-												<span class="desc">New frontend layout</span>
-												<span class="label label-important">today</span>
-												<a class="remove" href="widgets.html#"><i class="fa fa-times"></i></a>	
-											</li>
-											<li>
-												<span class="todo-actions">
-													<a href="widgets.html#"><i class="fa fa-check"></i></a>
-												</span>
-												<span class="desc">Hire developers</span>
-												<span class="label label-warning">tommorow</span>
-												<a class="remove" href="widgets.html#"><i class="fa fa-times"></i></a>	
-											</li>
-											<li>
-												<span class="todo-actions">
-													<a href="widgets.html#"><i class="fa fa-check"></i></a>
-												</span>
-												<span class="desc">Windows Phone 8 App</span>
-												<span class="label label-warning">tommorow</span>
-												<a class="remove" href="widgets.html#"><i class="fa fa-times"></i></a>	
-											</li>
-											<li>
-												<span class="todo-actions">
-													<a href="widgets.html#"><i class="fa fa-check"></i></a>
-												</span>
-												<span class="desc">New frontend layout</span>
-												<span class="label label-success">this week</span>
-												<a class="remove" href="widgets.html#"><i class="fa fa-times"></i></a>	
-											</li>
-											<li>
-												<span class="todo-actions">
-													<a href="widgets.html#"><i class="fa fa-check"></i></a>
-												</span>
-												<span class="desc">Hire developers</span>
-												<span class="label label-success">this week</span>
-												<a class="remove" href="widgets.html#"><i class="fa fa-times"></i></a>	
-											</li>
-											<li>
-												<span class="todo-actions">
-													<a href="widgets.html#"><i class="fa fa-check"></i></a>
-												</span>
-												<span class="desc">New frontend layout</span>
-												<span class="label label-info">this month</span>
-												<a class="remove" href="widgets.html#"><i class="fa fa-times"></i></a>	
-											</li>
-											<li>
-												<span class="todo-actions">
-													<a href="widgets.html#"><i class="fa fa-check"></i></a>
-												</span>
-												<span class="desc">Hire developers</span>
-												<span class="label label-info">this month</span>
-												<a class="remove" href="widgets.html#"><i class="fa fa-times"></i></a>	
-											</li>
-										</ul>
-									</div>	
-								</div>
-								
-							</div>
-						</div><!--/col-->			
-					</div>
-					
-				</div><!--/col-->
+				<!--/col-->
 				
-                                <div class="row">
-				<div class="col-lg-6">
-					<div class="box">
-						<div class="box-header">
-							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Simple Table</h2>
-							<div class="box-icon">
-								<a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
-								<a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-								<a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>
-							</div>
-						</div>
-						<div class="box-content">
-							<table class="table">
-								  <thead>
-									  <tr>
-										  <th>Username</th>
-										  <th>Date registered</th>
-										  <th>Role</th>
-										  <th>Status</th>                                          
-									  </tr>
-								  </thead>   
-								  <tbody>
-									<tr>
-										<td>Samppa Nori</td>
-										<td>2012/01/01</td>
-										<td>Member</td>
-										<td>
-											<span class="label label-success">Active</span>
-										</td>                                       
-									</tr>
-									<tr>
-										<td>Estavan Lykos</td>
-										<td>2012/02/01</td>
-										<td>Staff</td>
-										<td>
-											<span class="label label-important">Banned</span>
-										</td>                                       
-									</tr>
-									<tr>
-										<td>Chetan Mohamed</td>
-										<td>2012/02/01</td>
-										<td>Admin</td>
-										<td>
-											<span class="label label-default">Inactive</span>
-										</td>                                        
-									</tr>
-									<tr>
-										<td>Derick Maximinus</td>
-										<td>2012/03/01</td>
-										<td>Member</td>
-										<td>
-											<span class="label label-warning">Pending</span>
-										</td>                                       
-									</tr>
-									<tr>
-										<td>Friderik Dávid</td>
-										<td>2012/01/21</td>
-										<td>Staff</td>
-										<td>
-											<span class="label label-success">Active</span>
-										</td>                                        
-									</tr>                                   
-								  </tbody>
-							 </table>  
-							 <div class="pagination pagination-centered">
-							  <ul class="pagination">
-								<li><a href="table.html#">Prev</a></li>
-								<li class="active">
-								  <a href="table.html#">1</a>
-								</li>
-								<li><a href="table.html#">2</a></li>
-								<li><a href="table.html#">3</a></li>
-								<li><a href="table.html#">4</a></li>
-								<li><a href="table.html#">Next</a></li>
-							  </ul>
-							</div>     
-						</div>
-					</div>
-				</div><!--/col-->
-				
-				<div class="col-lg-6">
-					<div class="box">
-						<div class="box-header">
-							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Striped Table</h2>
-							<div class="box-icon">
-								<a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
-								<a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-								<a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>
-							</div>
-						</div>
-						<div class="box-content">
-							<table class="table table-striped">
-								  <thead>
-									  <tr>
-										  <th>Username</th>
-										  <th>Date registered</th>
-										  <th>Role</th>
-										  <th>Status</th>                                          
-									  </tr>
-								  </thead>   
-								  <tbody>
-									<tr>
-										<td>Yiorgos Avraamu</td>
-										<td>2012/01/01</td>
-										<td>Member</td>
-										<td>
-											<span class="label label-success">Active</span>
-										</td>                                       
-									</tr>
-									<tr>
-										<td>Avram Tarasios</td>
-										<td>2012/02/01</td>
-										<td>Staff</td>
-										<td>
-											<span class="label label-important">Banned</span>
-										</td>                                       
-									</tr>
-									<tr>
-										<td>Quintin Ed</td>
-										<td>2012/02/01</td>
-										<td>Admin</td>
-										<td>
-											<span class="label label-default">Inactive</span>
-										</td>                                        
-									</tr>
-									<tr>
-										<td>Enéas Kwadwo</td>
-										<td>2012/03/01</td>
-										<td>Member</td>
-										<td>
-											<span class="label label-warning">Pending</span>
-										</td>                                       
-									</tr>
-									<tr>
-										<td>Agapetus Tadeáš</td>
-										<td>2012/01/21</td>
-										<td>Staff</td>
-										<td>
-											<span class="label label-success">Active</span>
-										</td>                                        
-									</tr>                                   
-								  </tbody>
-							 </table>  
-							 <div class="pagination pagination-centered">
-							  <ul class="pagination">
-								<li><a href="table.html#">Prev</a></li>
-								<li class="active">
-								  <a href="table.html#">1</a>
-								</li>
-								<li><a href="table.html#">2</a></li>
-								<li><a href="table.html#">3</a></li>
-								<li><a href="table.html#">4</a></li>
-								<li><a href="table.html#">Next</a></li>
-							  </ul>
-							</div>     
-						</div>
-					</div>
-				</div><!--/col-->
-			</div>
-                                
 			</div>

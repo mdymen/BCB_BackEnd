@@ -28,9 +28,13 @@ class IndexController extends Zend_Controller_Action
    
         $penca = new Application_Model_Penca();
                 
-        $pencas = $penca->load_penca__puntagem_usuario($data['us_id']);
+        //$pencas = $penca->load_penca__puntagem_usuario($data['us_id']);
+        
+        $pencas = $penca->load_pencas();
         
         $this->view->pencas = $pencas;
+        
+        
         
         
 //        print_r($data);
