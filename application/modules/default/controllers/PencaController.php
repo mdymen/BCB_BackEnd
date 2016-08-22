@@ -46,4 +46,21 @@ class PencaController extends Zend_Controller_Action {
         
         
     }
+    
+    public function usuariospencaAction() {
+        $params = $this->_request->getParams();
+        
+        $id_penca = $params['penca'];
+        
+        $penca = new Application_Model_Penca();
+        $usuarios = $penca->load_usuarios($id_penca);
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($usuarios);
+    }
 }

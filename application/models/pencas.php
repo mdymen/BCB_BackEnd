@@ -90,4 +90,16 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
         return $result;
 
     }
+    
+    public function load_usuarios($id_penca) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("user_penca")
+                ->joinInner('user', 'user_penca.up_iduser = user.us_id')
+                ->where('user_penca.up_idpenca = ?', $id_penca)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+    }
 }
