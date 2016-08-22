@@ -41,13 +41,10 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
         
         $result = $db->select()->from('team')
                 ->where('team.tm_idchampionship = ?', $championship)
-                ->limit($limit, $limit + 12)
-                 ->__toString();
-//                ->query()
-//                ->__toString();
-               // ->fetchAll();
-        print_r($result);
-        die('.');
+                ->limit($limit, (($limit/10)*10)-10)
+                ->query()
+                ->fetchAll();
+
         return $result;        
     }
 }

@@ -5,6 +5,7 @@
     $participantes = $participantes[0];
 
     $info_penca = $this->info_penca;
+    $info_penca = $info_penca[0];
 ?>
 
 <div class="row profile">
@@ -16,39 +17,33 @@
 							<img class="profile-image" src="assets/img/gallery/photo9.jpg">
 						</div>
 						<div class="col-xs-5 col-sm-12">
-							<h3>General Information</h3>
+							<h3>Informacao Geral</h3>
 
 							<ul class="profile-details">
 								<li>
-									<div><i class="fa fa-briefcase"></i> position</div>
-									CEO
+									<div><i class="fa fa-briefcase"></i> Nome</div>
+									<?php echo $info_penca['pn_name']; ?>
 								</li>
 								<li>
-									<div><i class="fa fa-building-o"></i> company</div>
-									creativeLabs
+									<div><i class="fa fa-building-o"></i> Campeonato</div>
+									<?php echo $info_penca['ch_nome']; ?>
 								</li>
 							</ul>		
 
-							<h3>Contact Information</h3>
+							<h3>Usuarios</h3>
 
 							<ul class="profile-details">
 								<li>
-									<div><i class="fa fa-phone"></i> phone</div>
-									+48 123 456 789
+									<div><i class="fa fa-phone"></i> Administrador</div>
+									nome de usuario
 								</li>
 								<li>
-									<div><i class="fa fa-tablet"></i> mobile phone</div>
-									+48 123 456 789
+									<div><i class="fa fa-tablet"></i>Disponibilidade</div>
+									aberto
 								</li>
 								<li>
-									<div><i class="fa fa-envelope"></i> e-mail</div>
-									lukasz@bootstrapmaster.com
-								</li>
-								<li>
-									<div><i class="fa fa-map-marker"></i> address</div>
-									Konopnickiej 42<br>
-									43-190 Mikolow<br>
-									Slask, Poland
+									<div><i class="fa fa-envelope"></i>Status</div>
+									comecou
 								</li>
 							</ul>
 						</div>	
@@ -284,7 +279,7 @@
                                   <div class="col-lg-5 col-sm-6">
 					<div class="smallchart blue box">
 						<div class="title">Acumulado</div>
-						<div class="content">R$ <?php echo $info_penca[0]['pn_valueaccumulated']; ?></div>
+						<div class="content">R$ <?php echo $info_penca['pn_valueaccumulated']; ?></div>
 						<div class="value"></div>
 					</div>
 				</div>

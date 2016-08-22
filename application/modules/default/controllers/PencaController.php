@@ -24,8 +24,10 @@ class PencaController extends Zend_Controller_Action {
         
         $info_penca = $penca->load_penca($id_penca);
         
+    
+        
         $teams = new Application_Model_Teams();
-        $teams = $teams->load_penca_limit($info_penca[0]['pn_idchampionship'], 0);
+        $teams = $teams->load_penca_limit($info_penca[0]['pn_idchampionship'], 10);
 
         $this->view->info_penca = $info_penca;
         $this->view->teams = $teams;
