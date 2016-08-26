@@ -31,7 +31,11 @@
 	<link href="<?php echo $this->baseUrl("assets/css/print.css"); ?>" rel="stylesheet" type="text/css" media="print"/>
 	<!-- end: CSS -->
 	
-
+   <?php echo $this->headScript()->appendFile($this->baseUrl('jquery/jquery-1.8.3.js')); ?>
+   <?php echo $this->headScript()->appendFile($this->baseUrl('jquery/jquery-ui-1.9.2.custom.js')); ?>
+   <?php echo $this->headScript()->appendFile($this->baseUrl('jquery/jquery-ui-1.9.2.custom.min.js')); ?> 
+        
+        
 	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
 		

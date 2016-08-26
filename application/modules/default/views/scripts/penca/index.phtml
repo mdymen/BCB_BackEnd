@@ -9,55 +9,34 @@
     
     
 ?>
+<input type="hidden" id="idpenca" value="<?php echo $info_penca['pn_id']; ?>" >
 
-<div class="row profile">
-				
-				<div class="col-sm-3">
-					
-					<div class="row">
-						<div class="col-xs-7 col-sm-12">
-							<img class="profile-image" src="assets/img/gallery/photo9.jpg">
-						</div>
-						
-                                            <?php echo $this->render('penca/index/info_geral.phtml'); ?>
-                                            
-					</div><!--/row-->	
 
-				</div><!--/col-->
-				
-				<div class="col-sm-9">
-					
-					<ul class="nav nav-tabs" id="myTab">
-					  	<li class="active"><a href="page-profile.html#skills">Skills</a></li>
-					  	
-					  	<li class=""><a href="page-profile.html#participantes">Participantes</a></li>
-					</ul>
+<div class="row profile">	
+    <div class="col-sm-3">
+        <div class="row">
+            <div class="col-xs-7 col-sm-12">
+                    <img class="profile-image" src="assets/img/gallery/photo9.jpg">
+            </div>
+            <?php echo $this->render('penca/index/info_geral.phtml'); ?>
+        </div>	
+    </div>
 
-					<div class="tab-content">
-						<div class="tab-pane" id="skills">
-							
-							<div class="row">
-								
-							
-									
-							</div><!--/row-->		
-							
-						</div>
-					  
-                                          
-                                            
-					  	<div class="tab-pane active" id="photos">
-                                                    
-                                           
-                              <?php echo $this->render('penca/index/principal.phtml');  ?>
-					
-                                                
-                                         
-                                            </div>
-                                                
-                                           
-					
-                                     
-				</div><!--/col-->	
+    <div class="col-sm-9">
 
-			</div>
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="page-profile.html#principal">Principal</a></li>					  	
+            <li class="" id="tbParticipantes"><a href="page-profile.html#participantes">Participantes</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane" id="participantes">
+                <?php echo $this->render('penca/index/participantes.phtml');  ?>
+            </div>
+            <div class="tab-pane active" id="principal">
+                <?php echo $this->render('penca/index/principal.phtml');  ?>
+            </div>
+        </div>	
+
+    </div>
+</div>
