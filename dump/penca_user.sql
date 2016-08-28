@@ -28,8 +28,9 @@ CREATE TABLE `user` (
   `us_id` int(11) NOT NULL AUTO_INCREMENT,
   `us_username` varchar(155) NOT NULL,
   `us_password` varchar(45) NOT NULL,
+  `us_cash` varchar(45) DEFAULT '0',
   PRIMARY KEY (`us_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +39,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'mdymen','3345531');
+INSERT INTO `user` VALUES (1,'mdymen','3345531','0');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-12 21:08:06
+-- Dump completed on 2016-08-28 19:16:51

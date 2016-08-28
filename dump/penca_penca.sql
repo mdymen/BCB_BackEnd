@@ -31,8 +31,10 @@ CREATE TABLE `penca` (
   `pn_iduser` int(11) DEFAULT NULL,
   `pn_valueaccumulated` decimal(3,2) NOT NULL,
   `pn_idchampionship` int(11) NOT NULL,
+  `pn_justfriends` binary(1) DEFAULT '0',
+  `pn_password` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`pn_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +43,7 @@ CREATE TABLE `penca` (
 
 LOCK TABLES `penca` WRITE;
 /*!40000 ALTER TABLE `penca` DISABLE KEYS */;
+INSERT INTO `penca` VALUES (1,'penc1',10,1,0.00,1,'0',NULL),(2,'penca2',15,1,0.00,1,'0',NULL),(3,'p1',40,1,0.00,1,'0',NULL),(4,'penca1 teste 28-08-2016',10,1,0.00,1,NULL,''),(5,'Martin Dymenstein',40,1,0.00,1,'o','xx');
 /*!40000 ALTER TABLE `penca` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-12 21:07:59
+-- Dump completed on 2016-08-28 19:16:50

@@ -28,8 +28,9 @@ CREATE TABLE `user_penca` (
   `up_id` int(11) NOT NULL AUTO_INCREMENT,
   `up_idpenca` int(11) NOT NULL,
   `up_iduser` int(11) NOT NULL,
+  `up_puntagem` int(11) DEFAULT NULL,
   PRIMARY KEY (`up_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +39,7 @@ CREATE TABLE `user_penca` (
 
 LOCK TABLES `user_penca` WRITE;
 /*!40000 ALTER TABLE `user_penca` DISABLE KEYS */;
+INSERT INTO `user_penca` VALUES (1,1,1,NULL);
 /*!40000 ALTER TABLE `user_penca` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-12 21:08:31
+-- Dump completed on 2016-08-28 19:16:49

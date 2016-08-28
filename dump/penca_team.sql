@@ -28,8 +28,9 @@ CREATE TABLE `team` (
   `tm_id` int(11) NOT NULL AUTO_INCREMENT,
   `tm_name` varchar(100) NOT NULL,
   `tm_idchampionship` int(11) NOT NULL,
+  `tm_points` int(11) DEFAULT '0',
   PRIMARY KEY (`tm_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +39,7 @@ CREATE TABLE `team` (
 
 LOCK TABLES `team` WRITE;
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
+INSERT INTO `team` VALUES (45,'Palmeiras',1,0),(46,'Atlético-MG',1,0),(47,'Flamengo',1,0),(48,'Santos',1,0),(49,'Grêmio',1,0),(50,'Corinthians',1,0),(51,'Atlético-PR',1,0),(52,'Ponte Preta',1,0),(53,'Chapecoense',1,0),(54,'Fluminense',1,0),(55,'São Paulo',1,0),(56,'Sport',1,0),(57,'Botafogo',1,0),(58,'Vitória',1,0),(59,'Internacional',1,0),(60,'Coritiba',1,0),(61,'Figueirense',1,0),(62,'Cruzeiro',1,0),(63,'Santa Cruz',1,0),(64,'América-MG',1,0);
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-12 21:08:12
+-- Dump completed on 2016-08-28 19:16:50

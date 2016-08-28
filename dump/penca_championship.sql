@@ -28,8 +28,9 @@ CREATE TABLE `championship` (
   `ch_id` int(11) NOT NULL AUTO_INCREMENT,
   `ch_nome` varchar(100) NOT NULL,
   `ch_idfixture` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ch_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`ch_id`),
+  UNIQUE KEY `ch_nome_UNIQUE` (`ch_nome`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +39,7 @@ CREATE TABLE `championship` (
 
 LOCK TABLES `championship` WRITE;
 /*!40000 ALTER TABLE `championship` DISABLE KEYS */;
+INSERT INTO `championship` VALUES (1,'Brasileirão 2016',NULL);
 /*!40000 ALTER TABLE `championship` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-12 21:07:52
+-- Dump completed on 2016-08-28 19:16:48

@@ -18,28 +18,31 @@ USE `penca`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `match`
+-- Table structure for table `result`
 --
 
-DROP TABLE IF EXISTS `match`;
+DROP TABLE IF EXISTS `result`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `match` (
-  `mt_id` int(11) NOT NULL AUTO_INCREMENT,
-  `mt_idteam1` int(11) NOT NULL,
-  `mt_idteam2` int(11) NOT NULL,
-  `mt_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`mt_id`)
+CREATE TABLE `result` (
+  `rs_id` int(11) NOT NULL,
+  `rs_idmatch` int(11) NOT NULL,
+  `rs_res1` int(11) NOT NULL,
+  `rs_res2` int(11) NOT NULL,
+  `rs_date` datetime NOT NULL,
+  `rs_idpenca` int(11) NOT NULL,
+  `rs_iduser` int(11) NOT NULL,
+  PRIMARY KEY (`rs_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `match`
+-- Dumping data for table `result`
 --
 
-LOCK TABLES `match` WRITE;
-/*!40000 ALTER TABLE `match` DISABLE KEYS */;
-/*!40000 ALTER TABLE `match` ENABLE KEYS */;
+LOCK TABLES `result` WRITE;
+/*!40000 ALTER TABLE `result` DISABLE KEYS */;
+/*!40000 ALTER TABLE `result` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-28 19:16:51
+-- Dump completed on 2016-08-28 19:16:50
