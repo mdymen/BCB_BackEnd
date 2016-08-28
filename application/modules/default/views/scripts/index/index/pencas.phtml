@@ -17,11 +17,15 @@
                 <img class="avatar" alt="Lucas" src="assets/img/avatar.jpg">
         </a>
 
-        <div class="name">'.$pencas[$i]['pn_name'].' 
-                <div class="dropdown pull-right">
-                <span class="label label-success">this week</span>
+        <div class="name"><a href="'.$this->baseUrl().'/penca/index?penca='.$pencas[$i]['pn_id'].'">'.$pencas[$i]['pn_name'].'</a> 
+                <div class="dropdown pull-right">';
+                if (empty($pencas[$i]['pn_justfriends'])) {
+                    echo '<span class="label label-success" style="color:white;">Disponivel</span>';
+                } else {
+                    echo '<span class="label label-important" style="color:white;">Bloqueado</span>';
+                }
 
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        echo'<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                 <li><a href="widgets.html#"><i class="fa fa-check"></i> Accept</a></li>
                                 <li><a href="widgets.html#"><i class="fa fa-times"></i>Reject</a></li>
                                 <li><a href="widgets.html#"><i class="fa fa-minus-sign-alt"></i>Block</a></li>
@@ -30,7 +34,7 @@
                 </div>
         </div>
         <span class="place"><i class="fa fa-map-marker"></i>'.$pencas[$i]['ch_nome'].'</span>
-        <span class="job"><i class="fa fa-briefcase"></i>Bolao: '.$pencas[$i]['pn_valueaccumulated'].'</span>                                 
+        <span class="job"><i class="fa fa-dollar"></i>Bolao: '.$pencas[$i]['pn_valueaccumulated'].'</span>                                 
 
 </li>
 ';

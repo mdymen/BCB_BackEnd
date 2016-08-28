@@ -26,14 +26,19 @@ class IndexController extends Zend_Controller_Action
         $storage = new Zend_Auth_Storage_Session();
         $data = (get_object_vars($storage->read()));
    
+//        print_r($data);
+//        die(".");
+//        
         $penca = new Application_Model_Penca();
-                
+              
+        
         //$pencas = $penca->load_penca__puntagem_usuario($data['us_id']);
         
         $pencas = $penca->load_pencas();
+        $pencas_usuario = $penca->load_pencas_usuario($data['us_id']);
         
         $this->view->pencas = $pencas;
-        
+        $this->view->pencas_usuario = $pencas_usuario;
         
         
         

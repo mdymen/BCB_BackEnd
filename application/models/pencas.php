@@ -70,6 +70,17 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
         return $return;
     }
     
+    public function load_pencas_usuario($id_usuario) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $return = $db->select()->from("penca") 
+                ->where("pn_iduser = ?", $id_usuario)
+                ->query()
+                ->fetchAll();
+        
+        return $return;
+    }
+    
     public function load_participantes($penca) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
