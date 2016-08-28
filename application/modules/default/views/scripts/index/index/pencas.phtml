@@ -1,0 +1,41 @@
+<?php
+
+    $pencas = $this->pencas;
+
+//
+//    print_r($pencas);
+//    die(";");
+    
+?>
+<ul class="users-list">
+
+    <?php
+
+    for ($i = 0; $i < count($pencas); $i = $i + 1) {
+        echo '<li>
+        <a href="widgets.html#">
+                <img class="avatar" alt="Lucas" src="assets/img/avatar.jpg">
+        </a>
+
+        <div class="name">'.$pencas[$i]['pn_name'].' 
+                <div class="dropdown pull-right">
+                <span class="label label-success">this week</span>
+
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <li><a href="widgets.html#"><i class="fa fa-check"></i> Accept</a></li>
+                                <li><a href="widgets.html#"><i class="fa fa-times"></i>Reject</a></li>
+                                <li><a href="widgets.html#"><i class="fa fa-minus-sign-alt"></i>Block</a></li>
+                                <li><a href="widgets.html#"><i class="fa fa-trash"></i>Delete</a></li>
+                        </ul>
+                </div>
+        </div>
+        <span class="place"><i class="fa fa-map-marker"></i>'.$pencas[$i]['ch_nome'].'</span>
+        <span class="job"><i class="fa fa-briefcase"></i>Bolao: '.$pencas[$i]['pn_valueaccumulated'].'</span>                                 
+
+</li>
+';
+    }
+    ?>
+
+
+</ul>

@@ -1,8 +1,13 @@
 <?php
 
+    $info_penca = $this->info_penca;
+    $info_penca = $info_penca[0];
+
     $teams = $this->teams;
     
-    ?>
+    $participantes = $this->participantes;
+    $participantes = $participantes[0];
+?>
 
 	<div class="tab-pane active" id="photos">
                                                     
@@ -72,7 +77,12 @@
                                 <div class="col-lg-5 col-sm-6">
 					<div class="smallchart blue box">
 						<div class="title">Situacao</div>
-						<div class="content"></div>
+                                                <div class="content">
+                                                    
+                                                    
+                                                    
+                                                    
+                                                </div>
 						<div class="value"></div>
 					</div>
 				</div>
@@ -81,7 +91,8 @@
 					<div class="smallchart blue box">
 						<div class="title">Participantes</div>
 						<div class="content"><?php echo $participantes['participantes']; ?></div>
-						<div class="value"></div>
+		
+                                                <div class="value"></div>
 					</div>
 				</div>
                                 

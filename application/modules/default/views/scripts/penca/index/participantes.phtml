@@ -5,9 +5,28 @@
 
 ?>
 
+<input type="hidden" value="false" name="usuarios_carregados" />
+
 <div class="row">
     
-    
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="box">
+                <div class="box-header">
+                    <h2><i class="fa fa-list"></i>Usuarios</h2>
+                    <div class="box-icon">
+                            <a href="widgets.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                            <a href="widgets.html#" class="btn-close"><i class="fa fa-times"></i></a>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <ul id="usuarios-list" class="usuarios-list">
+                        
+                           
+                        
+                    </ul>
+                </div>
+        </div>
+    </div>
     
 </div>
 					
@@ -17,9 +36,21 @@
        
        $('#tbParticipantes').bind('click', function() {
             var penca = $('#idpenca').attr("value");  
-            $.post('usuariospenca',{penca: penca}, function(response) {
-                console.log(response);
-            });
+//            if ($("#usuarios_carregados").value() == "") {
+//                $.post('../usuariospenca',{penca: penca}, function(response) {
+//                    for (var i = 0; i < response.length; i = i + 1) {
+//                        $("#usuarios-list").append(
+//                        '<li>\n\
+//                            <a href="widgets.html#">\n\
+//                                <i class="fa fa-dollar"></i>\n\
+//                                <span class="green">92</span>'+response[i].us_username+'\n\
+//                            </a>\n\
+//                        </li>'      
+//                        );
+//                    }
+//                   // console.log(response[0].us_username);
+//                });
+//            }
        });
    });
     

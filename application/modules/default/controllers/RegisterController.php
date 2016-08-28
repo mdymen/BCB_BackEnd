@@ -50,6 +50,9 @@ class RegisterController extends Zend_Controller_Action
     public function addpencaAction() {
         $params = $this->_request->getParams();
         
+//        print_r($params);
+//        die(".");
+        
         $storage = new Zend_Auth_Storage_Session();
         $data = $storage->read();
 

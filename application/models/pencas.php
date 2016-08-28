@@ -22,6 +22,8 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
             'pn_value'=>$params['pn_value'],
             'pn_iduser'=>$params['pn_iduser'],
             'pn_idchampionship' =>$params['tm_idchampionship'],
+            'pn_justfriends' => $params['pn_justfriends'],
+            'pn_password' => $params['pn_password']
         );       
         
         $this->insert($info);

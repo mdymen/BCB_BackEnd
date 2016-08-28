@@ -52,9 +52,9 @@ class PencaController extends Zend_Controller_Action {
         
         $id_penca = $params['penca'];
         
-        print_r($id_penca);
-        die(".");
-        
+//        print_r($id_penca);
+//        die(".");
+//        
         $penca = new Application_Model_Penca();
         $usuarios = $penca->load_usuarios($id_penca);
         
@@ -64,6 +64,6 @@ class PencaController extends Zend_Controller_Action {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json("holaaaaaaaaaaaaaaaaaaaaaaa");
+        $this->_helper->json($usuarios);
     }
 }
