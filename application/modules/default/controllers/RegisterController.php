@@ -43,7 +43,8 @@ class RegisterController extends Zend_Controller_Action
     }        
     
     public function pencaAction() {
-        
+        $championship = new Application_Model_Championships();
+        $this->view->championships = $championship->load();
     }
     
     public function addpencaAction() {

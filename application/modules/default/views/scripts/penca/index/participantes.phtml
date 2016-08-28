@@ -16,10 +16,10 @@
    $(function() {
        
        $('#tbParticipantes').bind('click', function() {
-            alert($('#idpenca').attr("value"));   
-//            $.post('usuariospenca',{penca: curso}, function(response) {
-//               
-//           });
+            var penca = $('#idpenca').attr("value");  
+            $.post('usuariospenca',{penca: penca}, function(response) {
+                console.log(response);
+            });
        });
    });
     

@@ -99,7 +99,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
                 ->where('user_penca.up_idpenca = ?', $id_penca)
                 ->query()
                 ->fetchAll();
-        
+
         return $result;
     }
 }
