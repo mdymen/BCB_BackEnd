@@ -3,7 +3,7 @@
 //    print_r($teams1);
 //    die(".");
     $teams2 = $this->team2;
-
+    $championships = $this->championship;
 ?>
 
 <div class="row">
@@ -24,6 +24,7 @@
 								<div class="step-pane active" id="step1">
 								<form action="http://localhost/penca/public/register/addmatch" method="post">
                                                                     
+                                                                    <input type="hidden" value="<?php echo $championships; ?>" name="championship" />
                                                                     <?php
                                                                         
                                                                         for ($j = 0; $j < count(($teams1))/2; $j = $j + 1) {

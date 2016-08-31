@@ -3,6 +3,8 @@
 include APPLICATION_PATH.'/models/users.php';
 include APPLICATION_PATH.'/models/championships.php';
 include APPLICATION_PATH.'/models/pencas.php';
+include APPLICATION_PATH.'/models/matchs.php';
+
 class RegisterController extends Zend_Controller_Action
 {
 
@@ -76,16 +78,33 @@ class RegisterController extends Zend_Controller_Action
         $team = new Application_Model_Teams();
         $teams1 = $team->load($params['championship']);
         $teams2 = $teams1;
+        $championship = $params['championship'];
+        
         
         $this->view->team1 = $teams1;
         $this->view->team2 = $teams2;
+        $this->view->championship = $championship;
       
     }
     
     public function addmatchAction() {
         $params = $this->_request->getParams();
-        print_r($params);
-        die(".");
+        
+        $match = new Application_Model_Matchs();
+        $j = 0;
+        for ($i = 0; $i < count($params); $i = $i + 1) {
+            $id1 = $params['tm_idchampionship1'.$j];
+            $id2 = $params['tm_idchampionship2'.$j];
+            
+            $match->save(array(
+                'team1' => $id1,
+                'team2' => $id2,
+                'date' => date('d-n-y'),     
+            ));
+            $j = $j + 1;
+        }
+        
+        $this->redirect("/register/match");
     }
     
     public function addteamsAction() {

@@ -14,15 +14,13 @@
 class Application_Model_Matchs extends Zend_Db_Table_Abstract
 {
 
-    protected $_name = 'matchs';
+    protected $_name = 'match';
     
     public function save($params) {
         $info = array(
-            'mt_team1'=>$params['team1'],
-            'mt_team2'=>$params['team2'],
+            'mt_idteam1'=>$params['team1'],
+            'mt_idteam2'=>$params['team2'],
             'mt_date'=>$params['date'],
-            'mt_goal1'=>$params['goal1'],
-            'mt_goal2'=>$params['goal2'],
         );       
         $this->insert($info);
     }
