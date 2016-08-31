@@ -69,10 +69,23 @@ class RegisterController extends Zend_Controller_Action
         $this->redirect("/register/penca");
     }
     
-    public function matchAction() {}
+    public function matchAction() {
+     
+        $params = $this->_request->getParams();
+        
+        $team = new Application_Model_Teams();
+        $teams1 = $team->load($params['championship']);
+        $teams2 = $teams1;
+        
+        $this->view->team1 = $teams1;
+        $this->view->team2 = $teams2;
+      
+    }
     
     public function addmatchAction() {
-        
+        $params = $this->_request->getParams();
+        print_r($params);
+        die(".");
     }
     
     public function addteamsAction() {
