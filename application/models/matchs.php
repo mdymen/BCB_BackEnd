@@ -21,9 +21,35 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
             'mt_idteam1'=>$params['team1'],
             'mt_idteam2'=>$params['team2'],
             'mt_date'=>$params['date'],
+            'mt_idchampionship' => $params['championship'],
         );       
         $this->insert($info);
     }
         
+    public function load($championship) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("match")
+                ->where("mt_idchampionship = ?", $championship)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+        
+    }
     
+    public function save_penca_match($dados) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $d = array(
+            'rs_idmatch' => $dados['idmatch'],
+            'rs_idpenca' => $dados['idpenca'],
+            'rs_iduser' => $dados['us_id'],
+            'rs_res1' => 0,
+            'rs_res2' => 0,
+            'rs_date' => $dados['date']
+        );
+        
+        $db->insert("result", $d);
+    }
 }

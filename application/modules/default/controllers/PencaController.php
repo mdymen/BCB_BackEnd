@@ -13,6 +13,7 @@
  */
 include APPLICATION_PATH.'/models/teams.php';
 include APPLICATION_PATH.'/models/pencas.php';
+include APPLICATION_PATH.'/models/matchs.php';
 class PencaController extends Zend_Controller_Action {
     
     public function indexAction() {
@@ -65,5 +66,35 @@ class PencaController extends Zend_Controller_Action {
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
         $this->_helper->json($usuarios);
+    }
+    
+    public function inscribirAction() {
+        $params = $this->_request->getParams();
+        
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
+        print_r($data);
+        die(".");
+        
+        $penca = $params['penca'];
+        $championship = $params['championship'];
+        
+        $matchs_obj = new Application_Model_Matchs();
+        $matchs = $matchs_obj->load($championship);
+        
+//        print_r($matchs);
+//        die(".");
+        
+        for ($i = 0; $i < count($matchs); $i = $i + 1) {
+            $matchs_obj->save_penca_match(
+                    array(
+                        'idmatch' => $matchs[$i]['mt_id'],
+                        'idpenca' => $penca,
+                        'iduser' => $data['us_id'],
+                        'date' => $matchs[$i]['mt_date'],
+                    )
+            );
+        } 
     }
 }

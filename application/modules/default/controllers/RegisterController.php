@@ -99,7 +99,8 @@ class RegisterController extends Zend_Controller_Action
             $match->save(array(
                 'team1' => $id1,
                 'team2' => $id2,
-                'date' => date('d-n-y'),     
+                'date' => date('d-n-y'),
+                'championship' => $params['championship'],
             ));
             $j = $j + 1;
         }
