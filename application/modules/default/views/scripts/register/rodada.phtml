@@ -1,19 +1,18 @@
-<?php 
+<?php
 
-    $info_penca = $this->info_penca;
-    $info_penca = $info_penca[0];
+    $matchs = $this->matchs;
     
-    $palpites = $this->palpites;
-
+//    print_r($matchs);
+//    die(".");
 ?>
 <div class="tab-pane active" id="palpites">
                                                     
     <div class="row">
-        <form action="aceitarpalpites" method="post" id="formPalpites">
+        <form action="rodada_add" method="post" id="formPalpites">
         <div class="col-lg-10">
                 <div class="box">
                         <div class="box-header">
-                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Rodada: <?php echo $palpites[0]['rs_round']; ?></h2>
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Rodada: <?php echo $matchs[0]['mt_round']; ?></h2>
                                 <div class="box-icon">
                                         <a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
                                         <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
@@ -34,21 +33,21 @@
                                           <tbody>
                                               
                                               <?php
-                                              echo '<input type="hidden" value="'.count($palpites).'" name="count_palpites">';
-                                                for ($i = 0; $i < count($palpites); $i = $i + 1) {
-                                                    echo '<input type="hidden" name="rs_'.$i.'" value="'.$palpites[$i]['rs_id'].'" />';
+                                              echo '<input type="hidden" value="'.count($matchs).'" name="count_palpites">';
+                                                for ($i = 0; $i < count($matchs); $i = $i + 1) {
+                                                    echo '<input type="hidden" name="mt_'.$i.'" value="'.$matchs[$i]['mt_id'].'" />';
                                                     echo '<tr>
                                                             <td width="15%">
                                                                 <div class="input-group col-sm-7">
-                                                                    <input class="form-control"name="result1_'.$i.'" value="'.$palpites[$i]['rs_res1'].'"  type="text" placeholder="0">
+                                                                    <input class="form-control"name="result1_'.$i.'" value="'.$matchs[$i]['mt_goal1'].'"  type="text" placeholder="0">
                                                                 </div>
                                                             </td>
-                                                            <td>'.$palpites[$i]['t1nome'].'</td>
-                                                            <td width="40%">'.$palpites[$i]['mt_date'].'</td>
-                                                            <td>'.$palpites[$i]['t2nome'].'</td>
+                                                            <td>'.$matchs[$i]['t1nome'].'</td>
+                                                            <td width="40%">'.$matchs[$i]['mt_date'].'</td>
+                                                            <td>'.$matchs[$i]['t2nome'].'</td>
                                                             <td width="15%">     
                                                                 <div class="input-group col-sm-7">		
-                                                                    <input class="form-control" value="'.$palpites[$i]['rs_res2'].'" name="result2_'.$i.'" type="text" placeholder="0">
+                                                                    <input class="form-control" value="'.$matchs[$i]['mt_goal2'].'" name="result2_'.$i.'" type="text" placeholder="0">
                                                                 </div>
                                                             </td>
                                                             </td>                                      
@@ -73,7 +72,7 @@
                                         <li><a href="table.html#">Next</a></li>
                                   </ul>
                                      
-                                     <a href="javascript:void(0)" id="btnAceitarPalpites" class="btn btn-success">Aceitar Palpites</a> 
+                                     <input type="submit" class="btn btn-success" value="Registrar Rodada" />
                                      
                                 </div>     
                         </div>
@@ -83,14 +82,3 @@
     </div>
 
 </div>
-
-<script type="text/javascript">
-    $(function() {
-        $('#btnAceitarPalpites').bind('click', function() {
-            $.post("aceitarpalpites", $('#formPalpites').serialize(), function(response) {
-               console.log(response); 
-            });
-        })
-    });
-    
-</script>

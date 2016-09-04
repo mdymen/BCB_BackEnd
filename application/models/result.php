@@ -11,6 +11,21 @@
  *
  * @author Martin Dymenstein
  */
-class result {
-    //put your code here
+class Application_Model_Result extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'result';
+    
+    public function update($params) {
+        
+        $db = Zend_Db_Table::getDefaultAdapter(); 
+        
+
+        
+        $info = array(
+            'rs_res1'=>$params['res1'],
+            'rs_res2'=>$params['res2'],
+        );       
+        
+        $db->update('result',$info, 'rs_id = '.$params['rs_id']);
+    }
 }

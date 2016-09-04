@@ -39,6 +39,21 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         
     }
     
+    public function load_rodada($championship, $rodada) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("match")
+                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
+                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
+                ->where("match.mt_idchampionship = ?", $championship)
+                ->where("match.mt_round = ?", $rodada)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+        
+    }
+    
     public function save_penca_match($dados) {
         $db = Zend_Db_Table::getDefaultAdapter();
         

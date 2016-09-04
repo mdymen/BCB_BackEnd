@@ -121,8 +121,8 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
         
         $result = $db->select()->from("result")
                 ->joinInner('match','result.rs_idmatch = match.mt_id')
-                ->joinInner('team', 'team.tm_id = match.mt_idteam1')
-                ->joinInner('team', 'team.tm_id = match.mt_idteam2')
+                ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('t1nome' => 't1.tm_name'))
+                ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('t2nome' => 't2.tm_name'))
                 ->where('result.rs_idpenca = ?', $penca)
                 ->where('result.rs_round = ?', $round)
                 ->where('result.rs_iduser = ?', $usuario)

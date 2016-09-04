@@ -137,5 +137,24 @@ class RegisterController extends Zend_Controller_Action
         die(".");
     }
   
+    
+    public function rodadaAction() {
+        $params = $this->_request->getParams();
+        
+        $championship = $params['championship'];
+        $rodada = $params['rodada'];
+        
+        $match = new Application_Model_Matchs();
+        $matchs = $match->load_rodada($championship, $rodada);
+        
+        $this->view->matchs = $matchs;
+    }
+    
+    public function rodadaaddAction() {
+        $params = $this->_request->getParams();
+        
+        print_r($params);
+        die(".");
+    }
 }
 

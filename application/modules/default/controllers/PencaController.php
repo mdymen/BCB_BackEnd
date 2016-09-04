@@ -14,6 +14,7 @@
 include APPLICATION_PATH.'/models/teams.php';
 include APPLICATION_PATH.'/models/pencas.php';
 include APPLICATION_PATH.'/models/matchs.php';
+include APPLICATION_PATH.'/models/result.php';
 class PencaController extends Zend_Controller_Action {
     
     public function indexAction() {
@@ -110,4 +111,26 @@ class PencaController extends Zend_Controller_Action {
             );
         } 
     }
+    
+    public function aceitarpalpitesAction() {
+        $params = $this->_request->getParams();
+        
+        $result = new Application_Model_Result();
+        
+        $n_palpites = $params['count_palpites'];
+        for ($i = 0; $i < $n_palpites; $i = $i + 1) {
+            $dados = array( 
+                'res1' => $params['result1_'.$i],
+                'res2' => $params['result2_'.$i],
+                'rs_id' => $params['rs_'.$i],
+            
+            );
+            $result->update($dados);
+        }
+        
+        print_r($params);
+        die(".");
+    }
+    
+    
 }
