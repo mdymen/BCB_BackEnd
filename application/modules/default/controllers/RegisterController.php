@@ -153,8 +153,72 @@ class RegisterController extends Zend_Controller_Action
     public function rodadaaddAction() {
         $params = $this->_request->getParams();
         
-        print_r($params);
-        die(".");
+        $count_palpites = $params['count_palpites'];
+        
+        $result = new Application_Model_Result();
+        
+        $matchs = new Application_Model_Matchs();
+        
+        $match = array();
+        $m_res1 = array();
+        $m_res2 = array();
+        //Actualiza el tanteador de una rodada
+        for ($i = 0; $i < count($count_palpites); $i = $i + 1) {
+            $id_match = $params['mt_'.$i];
+            $res1 = $params['result1_'.$i];
+            $res2 = $params['result2_'.$i];
+            
+            $match[$i] = $id_match;
+            $m_res1[$i] = $res1;
+            $m_res2[$i] = $res2;
+            
+            $result->update_resultado($id_match, $res1, $res2);
+            
+            $match = $matchs->load_resultados_palpitados($id_match);
+              
+            for ($j = 0; $j < count($match); $j = $j + 1) {
+                $puntagem = $this->puntuacao($match[$i], $res1, $res2);
+                $result->update_puntagem($match[$j]['rs_iduser'], $match[$j]['rs_idpenca'], $puntagem);
+            }
+            
+           
+            
+            print_r($match);
+            die('.');
+        }
+        
+       
+    }
+    
+    private function puntuacao($match, $res1, $res2) {
+        $v1 = $match['rs_res1'];
+        $v2 = $match['rs_res2'];
+        
+        if ($v1 == $res1 && $v2 == $res2) {
+            return 5;
+        }
+        
+        $ganador_visitante = $v1 < $v2;
+        $ganador_visitante_palpite = $res1 < $res2;        
+        
+        if ($ganador_visitante && $ganador_visitante_palpite) {
+            return 1;
+        }
+        
+        $empate1 = $res1 == $res2;
+        $empate2 = $v1 == $v2;
+        if ($empate1 && $empate2) {
+            return 1;
+        }
+        
+        $perdedor_visitante = $v1 > $v2;
+        $perdedor_visitante_palpite = $res1 > $res2;
+        
+        if ($perdedor_visitante && $perdedor_visitante_palpite) {
+            return 1;
+        }
+        
+        return 0;
     }
 }
 

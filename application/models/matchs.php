@@ -72,4 +72,15 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         
         $db->insert("result", $d);
     }
+    
+    public function load_resultados_palpitados($match) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("result")
+                ->where("rs_idmatch = ?", $match)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+    }
 }
