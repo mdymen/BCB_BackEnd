@@ -25,11 +25,15 @@
     <div class="col-sm-9">
 
         <ul class="nav nav-tabs" id="myTab">
-            <li class="active"><a href="page-profile.html#principal">Principal</a></li>					  	
-            <li class="" id="tbParticipantes"><a href="page-profile.html#participantes">Participantes</a></li>
+            <li class="active"><a href="#principal">Principal</a></li>					  	
+            <li class="" id="tbParticipantes"><a href="#participantes">Participantes</a></li>
+            <li class="" id="tbPalpites"><a href="#palpites">Palpites</a></li>
         </ul>
 
         <div class="tab-content">
+            <div class="tab-pane" id="palpites">
+                <?php echo $this->render('penca/index/palpites.phtml');  ?>
+            </div>            
             <div class="tab-pane" id="participantes">
                 <?php echo $this->render('penca/index/participantes.phtml');  ?>
             </div>

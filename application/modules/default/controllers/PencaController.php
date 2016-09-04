@@ -20,12 +20,17 @@ class PencaController extends Zend_Controller_Action {
         $params = $this->_request->getParams();
         $id_penca = $params['penca'];
         
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
         $penca = new Application_Model_Penca();
         $participantes = $penca->load_participantes($id_penca);
         
         $info_penca = $penca->load_penca($id_penca);
+        $palpites = $penca->palpites($id_penca, 1, $data['us_id']);
         
-    
+//        print_r($palpites);
+//        die('.');
         
         $teams = new Application_Model_Teams();
         $teams = $teams->load_penca_limit($info_penca[0]['pn_idchampionship'], 10);
@@ -33,6 +38,7 @@ class PencaController extends Zend_Controller_Action {
         $this->view->info_penca = $info_penca;
         $this->view->teams = $teams;
         $this->view->participantes = $participantes;
+        $this->view->palpites = $palpites;
     }
     
     public function listAction() {
@@ -68,14 +74,20 @@ class PencaController extends Zend_Controller_Action {
         $this->_helper->json($usuarios);
     }
     
+    /*
+     * Cuando un usuario se inscribe a una penca se 
+     * graban en una tabla todos los partidos para que 
+     * la persona pueda escribir los resultados
+     * que estima.
+     */
     public function inscribirAction() {
         $params = $this->_request->getParams();
         
         $storage = new Zend_Auth_Storage_Session();
         $data = (get_object_vars($storage->read()));
         
-        print_r($data);
-        die(".");
+//        print_r($data);
+//        die(".");
         
         $penca = $params['penca'];
         $championship = $params['championship'];
@@ -93,6 +105,7 @@ class PencaController extends Zend_Controller_Action {
                         'idpenca' => $penca,
                         'iduser' => $data['us_id'],
                         'date' => $matchs[$i]['mt_date'],
+                        'round' => $matchs[$i]['mt_round']
                     )
             );
         } 

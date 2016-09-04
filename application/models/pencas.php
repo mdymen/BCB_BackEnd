@@ -115,4 +115,20 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
 
         return $result;
     }
+    
+    public function palpites($penca, $round, $usuario) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("result")
+                ->joinInner('match','result.rs_idmatch = match.mt_id')
+                ->joinInner('team', 'team.tm_id = match.mt_idteam1')
+                ->joinInner('team', 'team.tm_id = match.mt_idteam2')
+                ->where('result.rs_idpenca = ?', $penca)
+                ->where('result.rs_round = ?', $round)
+                ->where('result.rs_iduser = ?', $usuario)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+    }
 }

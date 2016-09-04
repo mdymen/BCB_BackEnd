@@ -22,6 +22,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
             'mt_idteam2'=>$params['team2'],
             'mt_date'=>$params['date'],
             'mt_idchampionship' => $params['championship'],
+            'mt_round' => $params['round']
         );       
         $this->insert($info);
     }
@@ -41,13 +42,17 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     public function save_penca_match($dados) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
+//        print_r($dados);
+//        die(".");
+        
         $d = array(
             'rs_idmatch' => $dados['idmatch'],
             'rs_idpenca' => $dados['idpenca'],
-            'rs_iduser' => $dados['us_id'],
+            'rs_iduser' => $dados['iduser'],
             'rs_res1' => 0,
             'rs_res2' => 0,
-            'rs_date' => $dados['date']
+            'rs_date' => $dados['date'],
+            'rs_round' => $dados['round']
         );
         
         $db->insert("result", $d);
