@@ -150,6 +150,12 @@ class RegisterController extends Zend_Controller_Action
         $this->view->matchs = $matchs;
     }
     
+    /*
+     * [count_palpites] => 10 numero de palpites ex 10
+     * [mt_x] => 41 ID del match
+     * [result1_x] => 1 
+     * [result2_x] => 2   resultados
+     */
     public function rodadaaddAction() {
         $params = $this->_request->getParams();
         
@@ -174,20 +180,20 @@ class RegisterController extends Zend_Controller_Action
             
             $result->update_resultado($id_match, $res1, $res2);
             
+            /* Retorna los RESULT con ID MATCH 
+             *  [rs_id] => 11 [rs_idmatch] => 41 [rs_res1] => 9 [rs_res2] => 2 
+                [rs_date] => 2004-09-16 00:00:00 [rs_idpenca] => 1 [rs_iduser] => 1 
+                [rs_round] => 1 [rs_result] => [rs_points] => 0 ) )
+             */
             $match = $matchs->load_resultados_palpitados($id_match);
-              
+            
             for ($j = 0; $j < count($match); $j = $j + 1) {
                 $puntagem = $this->puntuacao($match[$i], $res1, $res2);
-                $result->update_puntagem($match[$j]['rs_iduser'], $match[$j]['rs_idpenca'], $puntagem);
+                $result->update_puntagem($puntagem, $match[$j]['rs_idmatch']);
             }
-            
-           
-            
-            print_r($match);
-            die('.');
         }
         
-       
+        $this->redirect("/register/rodada?championship=1&rodada=1");
     }
     
     private function puntuacao($match, $res1, $res2) {
