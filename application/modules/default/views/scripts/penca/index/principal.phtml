@@ -1,12 +1,14 @@
 <?php
 
-    $info_penca = $this->info_penca;
-    $info_penca = $info_penca[0];
+    $i = $this->info_penca;
+    $info_penca = $i[0];
 
     $teams = $this->teams;
     
-    $participantes = $this->participantes;
-    $participantes = $participantes[0];
+    $p = $this->participantes;
+    $participantes = $p[0];
+    
+    $round = $this->rodada;
 ?>
 
 	<div class="tab-pane active" id="photos">
@@ -74,28 +76,29 @@
                                 
                                 <!-- PARTICIPANTES   -->
                                 
-                                <div class="col-lg-5 col-sm-6">
-					<div class="smallchart blue box">
-						<div class="title">Situacao</div>
-                                                <div class="content">
-                                                    
-                                                    
-                                                    
-                                                    
-                                                </div>
-						<div class="value"></div>
+                                <div class="col-lg-5 col-sm-6 col-xs-6 col-xxs-12">
+					<div class="smallstat box">
+						<i class="fa fa-laptop darkGreen"></i>
+						<span class="title">Income</span>
+						<span class="value">$1 999,99</span>
+						<a href="" class="more">
+							<span>View More</span>
+							<i class="fa fa-chevron-right"></i>
+						</a>
 					</div>
 				</div>
                                 
-                                <div class="col-lg-5 col-sm-6">
-					<div class="smallchart blue box">
-						<div class="title">Participantes</div>
-						<div class="content"><?php echo $participantes['participantes']; ?></div>
-		
-                                                <div class="value"></div>
+                                <div class="col-lg-5 col-sm-6 col-xs-6 col-xxs-12">
+					<div class="smallstat box">
+						<i class="fa fa-user blue"></i>
+						<span class="title">Participantes</span>
+						<span class="value"><?php echo $participantes['participantes']; ?></span>
+						<a href="" class="more">
+							
+						</a>
 					</div>
 				</div>
-                                
+
                                   <div class="col-lg-5 col-sm-6">
 					<div class="smallchart blue box">
 						<div class="title">Acumulado</div>
@@ -127,7 +130,7 @@
 				<div class="col-lg-12">
 					<div class="box">
 						<div class="box-header">
-							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Combined All Table</h2>
+							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Rodada <?php echo $round[0]['mt_round']; ?></h2>
 							<div class="box-icon">
 								<a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
 								<a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
@@ -138,53 +141,27 @@
 							<table class="table table-bordered table-striped table-condensed">
 								  <thead>
 									  <tr>
-										  <th>Username</th>
-										  <th>Date registered</th>
-										  <th>Role</th>
-										  <th>Status</th>                                          
+                                                                                  
+										  <th></th>
+										  <th>Data</th>
+										  <th></th>
+										                                         
 									  </tr>
 								  </thead>   
 								  <tbody>
-									<tr>
-										<td>Vishnu Serghei</td>
-										<td>2012/01/01</td>
-										<td>Member</td>
-										<td>
-											<span class="label label-success">Active</span>
-										</td>                                       
-									</tr>
-									<tr>
-										<td>Zbyněk Phoibos</td>
-										<td>2012/02/01</td>
-										<td>Staff</td>
-										<td>
-											<span class="label label-important">Banned</span>
-										</td>                                       
-									</tr>
-									<tr>
-										<td>Einar Randall</td>
-										<td>2012/02/01</td>
-										<td>Admin</td>
-										<td>
-											<span class="label label-default">Inactive</span>
-										</td>                                        
-									</tr>
-									<tr>
-										<td>Félix Troels</td>
-										<td>2012/03/01</td>
-										<td>Member</td>
-										<td>
-											<span class="label label-warning">Pending</span>
-										</td>                                       
-									</tr>
-									<tr>
-										<td>Aulus Agmundr</td>
-										<td>2012/01/21</td>
-										<td>Staff</td>
-										<td>
-											<span class="label label-success">Active</span>
-										</td>                                        
-									</tr>                                   
+                                                                      
+                                                                      <?php
+                                                                        for ($i = 0; $i < count($round); $i = $i + 1) {
+                                                                            echo '<tr>                                                                                    
+                                                                                    <td>'.$round[$i]['t1nome'].'</td>
+                                                                                    <td>'.$round[$i]['mt_date'].'</td>
+                                                                                    <td>'.$round[$i]['t2nome'].'</td>                                       
+                                                                                </tr>';   
+                                                                        }
+                                                                      
+                                                                      
+                                                                      ?>
+                            
 								  </tbody>
 							 </table>  
 							 <div class="pagination pagination-centered">

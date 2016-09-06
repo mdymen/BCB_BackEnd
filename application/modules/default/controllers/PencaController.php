@@ -29,17 +29,17 @@ class PencaController extends Zend_Controller_Action {
         
         $info_penca = $penca->load_penca($id_penca);
         $palpites = $penca->palpites($id_penca, 1, $data['us_id']);
-        
-//        print_r($palpites);
-//        die('.');
+        $rodada = $penca->rodada($info_penca[0]['pn_idchampionship'], $info_penca[0]['ch_atualround']);
         
         $teams = new Application_Model_Teams();
-        $teams = $teams->load_penca_limit($info_penca[0]['pn_idchampionship'], 10);
-
+        $teams = $teams->load_penca_limit($info_penca[0]['pn_idchampionship'], 10); 
+        
         $this->view->info_penca = $info_penca;
         $this->view->teams = $teams;
         $this->view->participantes = $participantes;
         $this->view->palpites = $palpites;
+        $this->view->rodada = $rodada;
+
     }
     
     public function listAction() {

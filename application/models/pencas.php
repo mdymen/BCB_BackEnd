@@ -131,4 +131,19 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
         
         return $result;
     }
+    
+    public function rodada($idcham, $round) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("match")
+                ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('t1nome' => 't1.tm_name'))
+                ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('t2nome' => 't2.tm_name'))
+                ->where('mt_round = ?', $round)
+                ->where('mt_idchampionship = ?', $idcham)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+    }
+
 }
