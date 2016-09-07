@@ -32,13 +32,15 @@ class PencaController extends Zend_Controller_Action {
         $rodada = $penca->rodada($info_penca[0]['pn_idchampionship'], $info_penca[0]['ch_atualround']);
         
         $teams = new Application_Model_Teams();
-        $teams = $teams->load_penca_limit($info_penca[0]['pn_idchampionship'], 10); 
+        $teams = $teams->load_penca_limit($info_penca[0]['pn_idchampionship'], 4); 
         
         $this->view->info_penca = $info_penca;
         $this->view->teams = $teams;
         $this->view->participantes = $participantes;
         $this->view->palpites = $palpites;
         $this->view->rodada = $rodada;
+        $this->view->penca = $id_penca;
+        $this->view->championship = $info_penca[0]['pn_idchampionship'];
 
     }
     
@@ -87,17 +89,12 @@ class PencaController extends Zend_Controller_Action {
         $storage = new Zend_Auth_Storage_Session();
         $data = (get_object_vars($storage->read()));
         
-//        print_r($data);
-//        die(".");
-        
         $penca = $params['penca'];
         $championship = $params['championship'];
         
         $matchs_obj = new Application_Model_Matchs();
         $matchs = $matchs_obj->load($championship);
         
-//        print_r($matchs);
-//        die(".");
         
         for ($i = 0; $i < count($matchs); $i = $i + 1) {
             $matchs_obj->save_penca_match(
@@ -130,6 +127,19 @@ class PencaController extends Zend_Controller_Action {
         
         print_r($params);
         die(".");
+    }
+    
+    public function pencasAction() {
+        $param = $this->_request->getParams();
+       
+        $champ = new Application_Model_Championships();
+        $pencas = new Application_Model_Penca();
+        
+        $this->view->championships = $champ->load();
+        
+        if (!empty($param['championship'])) {
+            $this->view->pencas = $pencas->load_pencas_byChamp($param['championship']);
+        }
     }
     
     

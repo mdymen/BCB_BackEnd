@@ -145,5 +145,17 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
         
         return $result;
     }
+    
+    public function load_pencas_byChamp($id_championship) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("penca")
+                ->joinInner("championship", 'championship.ch_id = penca.pn_idchampionship')
+                ->where("championship.ch_id = ?", $id_championship)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+    }
 
 }

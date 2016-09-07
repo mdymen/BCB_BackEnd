@@ -6,28 +6,24 @@
 ?>
 
 <div class="col-xs-5 col-sm-12">
-    <h3>Informacao Geral</h3>
-
     <ul class="profile-details">
             <li>
-                    <div><i class="fa fa-briefcase"></i> Nome</div>
+                    <div><i class="fa fa-briefcase"></i></div>
                     <?php echo $info_penca['pn_name']; ?>
             </li>
             <li>
-                    <div><i class="fa fa-building-o"></i> Campeonato</div>
+                    <div><i class="fa fa-building-o"></i></div>
                     <?php echo $info_penca['ch_nome']; ?>
             </li>
-    </ul>		
-
-    <h3>Usuarios</h3>
+    </ul>
 
     <ul class="profile-details">
             <li>
-                <div><i class="fa fa-phone"></i> Administrador</div>
+                <div><i class="fa fa-phone"></i></div>
                 <?php echo $info_penca['us_username']; ?>
             </li>
             <li>
-                <div><i class="fa fa-tablet"></i>Disponibilidade</div>
+                <div><i class="fa fa-tablet"></i></div>
                 <?php
                     if (empty($info_penca['pn_justfriends'])) {
                         echo '<span class="label label-success">Aberto</span>';
@@ -37,8 +33,19 @@
                 ?>
             </li>
             <li>
-                <div><i class="fa fa-envelope"></i>Status</div>
+                <div><i class="fa fa-envelope"></i></div>
                 comecou
+            </li>
+            <li>
+                <?php 
+                if (!($info_penca['pn_justfriends'])) {
+                    echo '<form action="inscribir" method="post">'
+                    .'<input type="hidden" value="'.$this->penca.'" name="penca">'
+                    .'<input type="hidden" value="'.$this->championship.'" name="championship">'        
+                    . '<button class="btn btn-lg btn-success"><b>PARTICIPAR</b></button>'
+                    . '</form>';
+                }
+                ?>
             </li>
     </ul>
 </div>	

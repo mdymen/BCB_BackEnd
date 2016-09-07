@@ -41,7 +41,7 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
         
         $result = $db->select()->from('team')
                 ->where('team.tm_idchampionship = ?', $championship)
-                ->limit($limit, (($limit/10)*10)-10)
+                ->limit($limit, (($limit/4)*4)-4)
                 ->query()
                 ->fetchAll();
 

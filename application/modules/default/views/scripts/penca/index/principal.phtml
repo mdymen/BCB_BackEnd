@@ -2,7 +2,7 @@
 
     $i = $this->info_penca;
     $info_penca = $i[0];
-
+    
     $teams = $this->teams;
     
     $p = $this->participantes;
@@ -18,20 +18,17 @@
 				<div class="col-lg-6">
 					<div class="box">
 						<div class="box-header">
-							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Simple Table</h2>
-							<div class="box-icon">
-								<a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
-								<a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-								<a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>
-							</div>
+							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Tabela de posicoes</h2>
+							
 						</div>
 						<div class="box-content">
 							<table class="table">
 								  <thead>
 									  <tr>
-										  <th>Time</th>
-										  <th>P</th>
-										  <th>J</th>
+                                                                            <th>Pos</th>
+                                                                            <th>Time</th>
+                                                                            <th>P</th>
+                                                                            <th>J</th>
 										                                  
 									  </tr>
 								  </thead>   
@@ -42,9 +39,10 @@
                                                                         for ($i = 0; $i < count($teams); $i = $i + 1) {
                                                                    
                                                                             echo '<tr>
+                                                                                    <td>'.($i+1).'</td>
                                                                                     <td>'.$teams[$i]['tm_name'].'</td>
                                                                                     <td>'.$teams[$i]['tm_points'].'</td>
-                                                                                    <td>Member</td>
+                                                                                    <td>'.$teams[$i]['tm_played'].'</td>
                                                                                                                          
                                                                             </tr>';
                                                                         
@@ -78,12 +76,27 @@
                                 
                                 <div class="col-lg-5 col-sm-6 col-xs-6 col-xxs-12">
 					<div class="smallstat box">
-						<i class="fa fa-laptop darkGreen"></i>
-						<span class="title">Income</span>
-						<span class="value">$1 999,99</span>
+                                                <?php
+                                                    if ($info_penca['pn_justfriends'] == 1) {
+                                                        echo '<i class="fa fa-flag red"></i>';                                                        
+                                                    } else {
+                                                        echo '<i class="fa fa-flag green"></i>';
+                                                    }
+                                                ?>
+						
+						<span class="title">Status</span>
+						<span class="value">
+                                                <?php
+                                                    if ($info_penca['pn_justfriends'] == 1) { 
+                                                        echo 'Fechado';
+                                                    } else {
+                                                        echo 'Aberto';
+                                                    }
+                                                
+                                                ?>
+                                                </span>
 						<a href="" class="more">
-							<span>View More</span>
-							<i class="fa fa-chevron-right"></i>
+							
 						</a>
 					</div>
 				</div>
@@ -98,14 +111,17 @@
 						</a>
 					</div>
 				</div>
-
-                                  <div class="col-lg-5 col-sm-6">
-					<div class="smallchart blue box">
-						<div class="title">Acumulado</div>
-						<div class="content">R$ <?php echo $info_penca['pn_valueaccumulated']; ?></div>
-						<div class="value"></div>
+                                
+                                <div class="col-lg-5 col-sm-6 col-xs-6 col-xxs-12">
+					<div class="smallstat box">
+						<i class="fa fa-dollar green"></i>
+						<span class="title">Acumulado</span>
+						<span class="value">R$ <?php echo $info_penca['pn_valueaccumulated']; ?></span>
+						<a href="" class="more">
+							
+						</a>
 					</div>
-				</div>
+				</div>                                
                                 
 			</div>     
                                                     

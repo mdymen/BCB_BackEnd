@@ -7,15 +7,108 @@
 //    die(";");
     
 ?>
-<ul class="users-list">
+
+
+
+<div class="row">
+				
+    <div class="col-lg-12">
+            <div class="box">
+                    <div class="box-header">
+                            <h2><i class="fa fa-list"></i>Boloes</h2>
+                    </div>
+                    <div class="box-content">
+                            <table class="table bootstrap-datatable datatable small-font">
+<!--                                    <thead>
+                                            <tr>
+                                                    <th>Status</th>
+                                                    <th>Date</th>
+                                                    <th>Description</th>
+                                                    <th>User</th>
+                                                    <th>Number</th>
+                                            </tr>
+                                    </thead>   -->
+                                    <tbody>
+                                        
+                                        <?php
+                                            
+                                            for ($i = 0; $i < count($pencas); $i = $i + 1) {
+                                                $color_lock = 'success';
+                                                if ($pencas[$i]['pn_justfriends']) {
+                                                    $color_lock = 'important';
+                                                }    
+      
+                                                echo '<tr>
+                                                    <td><span class="label label-'.$color_lock.'">';
+                                                    if ($pencas[$i]['pn_justfriends']) {
+                                                       echo ' <i class="fa fa-lock" title="Bolao fechado"></i>';
+                                                    } else {
+                                                        echo '<i class="fa fa-unlock" title="Bolao aberto"></i>';
+                                                    }   
+
+                                                    echo '</span>
+                                                    <span class="label label-success">';
+                                                                                                        
+                                                    $preco = 0;
+                                                    if ($pencas[$i]['pn_value'] > 0) {
+                                                        echo '<i class="fa fa-dollar" title="Premiacao"></i>';
+                                                    }
+
+                                                    echo '</span>
+                                                    </td>
+                                                    <td style="width: 20%">'.$pencas[$i]['ch_nome'].'</td>
+                                                    <td style="width: 70%"><a href="'.$this->baseUrl().'/penca/index?penca='.$pencas[$i]['pn_id'].'">'.$pencas[$i]['pn_name'].'</a></td>
+                                                </tr>';
+                                            }
+                                        ?>
+                                    </tbody>
+                            </table>
+                    </div>
+            </div>
+    </div><!--/col-->
+
+    <!--/col-->	
+
+</div>
+<!--
+
+
+<div class="row">
+			
+    <?php
+    
+        for ($i = 0; $i < count($pencas); $i = $i + 1) {
+            echo '<div class="col-lg-12 col-sm-6 col-xs-6 col-xxs-12">
+                    <div class="smallstat box">';
+            
+                            if ($pencas[$i]['pn_justfriends']) {
+                                echo '<i class="fa fa-lock-alt red"></i>';
+                            } else {
+                                echo '<i class="fa fa-bell blue"></i>';
+                            }
+            
+                            echo '<span class="title">Income</span>
+                            <span class="value">$1 999,99</span>
+                            <a href="" class="more">
+                                    <span>Mais informacao...</span>
+                                    <i class="fa fa-chevron-right"></i>
+                            </a>
+                    </div>
+            </div>';
+        }
+        
+    ?>
+			
+</div>-->
+
+
+<!--<ul class="users-list">
 
     <?php
 
     for ($i = 0; $i < count($pencas); $i = $i + 1) {
         echo '<li>
-        <a href="widgets.html#">
-                <img class="avatar" alt="Lucas" src="assets/img/avatar.jpg">
-        </a>
+        <i class="fa fa-usd green"></i>
 
         <div class="name"><a href="'.$this->baseUrl().'/penca/index?penca='.$pencas[$i]['pn_id'].'">'.$pencas[$i]['pn_name'].'</a> 
                 <div class="dropdown pull-right">';
@@ -42,4 +135,4 @@
     ?>
 
 
-</ul>
+</ul>-->
