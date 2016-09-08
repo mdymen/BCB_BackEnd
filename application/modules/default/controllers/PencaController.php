@@ -142,5 +142,24 @@ class PencaController extends Zend_Controller_Action {
         }
     }
     
+    public function pencatimesAction() {
+        $params = $this->_request->getParams();
+        
+        
+        $teams = new Application_Model_Teams();
+     //   $teams = $teams->load_penca_limit($params[0]['pn_idchampionship'],); 
+        
+    }
+    
+    public function meusbaloesAction() {
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
+        $pencas = new Application_Model_Penca();
+
+        $penca = $pencas->load_pencas_usuario($data['us_id']);   
+        $this->view->pencas = $penca;
+    }
+    
     
 }

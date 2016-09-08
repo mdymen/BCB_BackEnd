@@ -103,7 +103,7 @@
                                             <li><a href="<?php echo $this->baseUrl("/"); ?>"><i class="fa fa-home"></i><span class="hidden-sm text"> Home</span></a></li>
                                                 <li><a href="index.html"><i class="fa fa-dollar"></i><span class="hidden-sm text"> Caixa</span></a></li>	
 						<li><a href="<?php echo $this->baseUrl("/penca/pencas"); ?>"><i class="fa fa-dribbble"></i><span class="hidden-sm text"> Baloes</span></a></li>	
-                                                <li><a href="index.html" ><i class="fa fa-globe"></i><span class="hidden-sm text"> Meus Baloes </span></a></li>	
+                                                <li><a href="<?php echo $this->baseUrl("/penca/meusbaloes"); ?>" ><i class="fa fa-globe"></i><span class="hidden-sm text"> Meus Baloes </span></a></li>	
                                                 <li><a href="<?php echo $this->baseUrl("/register/penca"); ?>"><i class="fa fa-legal"></i><span class="hidden-sm text"> Criar Balão </span></a></li>                                                
 					</ul>
 				</div>
