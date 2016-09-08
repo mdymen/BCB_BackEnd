@@ -1,20 +1,51 @@
 <?php
 
-//    print_r($this->pencas);
-//    die(".");
 
+$penca = $this->pencas;
+
+$p_carregada = 0;
 
 ?>
 
 
-<div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
+<input type="hidden" value="<?php echo $p_carregada; ?>" name="p_carregada">
+
+<?php 
+
+for ($i = 0; $i < count($penca); $i = $i + 1) {
+
+ echo '<div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
         <div class="smallstat box">
                 <i class="fa fa-bell blue"></i>
-                <span class="title">Income</span>
-                <span class="value">$1 999,99</span>
-                <a href="" class="more">
-                        <span>View More</span>
-                        <i class="fa fa-chevron-right"></i>
+                <span class="change">'.$penca[$i]['ch_nome'].'</span>
+                <span class="change">';
+ 
+                    if (strlen($penca[$i]['ch_nome']) > 8) {
+                        echo substr($penca[$i]['pn_name'],0,12).'...';
+                    } else {
+                        echo $penca[$i]['pn_name'];
+                    }
+
+                echo '</span>';
+                
+                    if ($penca[$i]['pn_value'] > 0) {
+                        echo '<span class="change">R$ '.$penca[$i]['pn_value'].'</span>';
+                    }
+                
+                
+                echo '<a href="" class="more">
+                        <span>Mais informação...</span>
+                        <i class="fa fa-angle-down"></i>
                 </a>
         </div>
-</div>
+    </div>';
+
+}
+
+if ($p_carregada != 0) {
+    $this->render('penca/penca/infopencasuperficial.phtml');
+}
+
+
+
+

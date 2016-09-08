@@ -74,6 +74,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         
         $return = $db->select()->from("penca") 
+                ->joinInner("championship", "penca.pn_idchampionship = championship.ch_id")
                 ->where("pn_iduser = ?", $id_usuario)
                 ->query()
                 ->fetchAll();

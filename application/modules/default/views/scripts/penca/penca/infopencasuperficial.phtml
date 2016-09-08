@@ -1,0 +1,62 @@
+<?php
+
+    $pencas = $this->pencas;
+
+?>
+
+<div class="col-lg-12">
+            <div class="box">
+                    <div class="box-header">
+                            <h2><i class="fa fa-list"></i>Boloes</h2>
+                    </div>
+                    <div class="box-content">
+                            <table class="table bootstrap-datatable datatable small-font">
+<!--                                    <thead>
+                                            <tr>
+                                                    <th>Status</th>
+                                                    <th>Date</th>
+                                                    <th>Description</th>
+                                                    <th>User</th>
+                                                    <th>Number</th>
+                                            </tr>
+                                    </thead>   -->
+                                    <tbody>
+                                        
+                                        <?php
+
+                                            for ($i = 0; $i < count($pencas); $i = $i + 1) {
+                                                $color_lock = 'success';
+                                                if ($pencas[$i]['pn_justfriends']) {
+                                                    $color_lock = 'important';
+                                                }    
+      
+                                                echo '<tr>
+                                                    <td width="10%"><span class="label label-'.$color_lock.'">';
+                                                        if ($pencas[$i]['pn_justfriends']) {
+                                                           echo ' <i class="fa fa-lock" title="Bolao fechado"></i>';
+                                                        } else {
+                                                            echo '<i class="fa fa-unlock" title="Bolao aberto"></i>';
+                                                        }   
+
+                                                        echo '</span>
+                                                        <span class="label label-success">';
+
+                                                        $preco = 0;
+                                                        if ($pencas[$i]['pn_value'] > 0) {
+                                                            echo '<i class="fa fa-dollar" title="Premiacao"></i>';
+                                                        }
+
+                                                        echo '</span>
+                                                    </td>
+                                                    <td><a href="'.$this->baseUrl().'/penca/index?penca='.$pencas[$i]['pn_id'].'">'.$pencas[$i]['pn_name'].'</a></td>
+                                                </tr>';
+                                            }
+                                        ?>
+                                    </tbody>
+                            </table>
+                    </div>
+            </div>
+    </div>
+</div>
+    		
+    
