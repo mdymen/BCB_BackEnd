@@ -8,22 +8,22 @@
 <div class="col-xs-5 col-sm-12">
     <ul class="profile-details">
             <li>
-                    <div><i class="fa fa-briefcase"></i></div>
+                    <div><i class="fa <?php echo $info_penca['pn_icone']; ?>"></i></div>
                     <?php echo $info_penca['pn_name']; ?>
             </li>
             <li>
-                    <div><i class="fa fa-building-o"></i></div>
+                    <div><i class="fa fa-dribbble"></i></div>
                     <?php echo $info_penca['ch_nome']; ?>
             </li>
     </ul>
 
     <ul class="profile-details">
             <li>
-                <div><i class="fa fa-phone"></i></div>
+                <div><i class="fa fa-user"></i></div>
                 <?php echo $info_penca['us_username']; ?>
             </li>
             <li>
-                <div><i class="fa fa-tablet"></i></div>
+                <div><i class="fa fa-unlock"></i></div>
                 <?php
                     if (empty($info_penca['pn_justfriends'])) {
                         echo '<span class="label label-success">Aberto</span>';
@@ -33,7 +33,7 @@
                 ?>
             </li>
             <li>
-                <div><i class="fa fa-envelope"></i></div>
+                <div><i class="fa fa-caret-right"></i></div>
                 comecou
             </li>
             <li>

@@ -26,7 +26,7 @@
                                                   <tr>
                                                           <th width="15%"></th>
                                                           <th></th>
-                                                          <th width="40%">Data</th>
+                                                          <th width="15%"></th>
                                                           <th></th> 
                                                           <th width="15%"></th> 
                                                   </tr>
@@ -37,14 +37,21 @@
                                               echo '<input type="hidden" value="'.count($palpites).'" name="count_palpites">';
                                                 for ($i = 0; $i < count($palpites); $i = $i + 1) {
                                                     echo '<input type="hidden" name="rs_'.$i.'" value="'.$palpites[$i]['rs_id'].'" />';
-                                                    echo '<tr>
+                                                    echo '
+                                                        <tr>
+                                                            <td></td>
+                                                            <td>
+                                                           '.$palpites[$i]['mt_date'].'
+                                                            </td>                                      
+                                                        </tr>
+                                                            <tr>
                                                             <td width="15%">
                                                                 <div class="input-group col-sm-7">
                                                                     <input class="form-control"name="result1_'.$i.'" value="'.$palpites[$i]['rs_res1'].'"  type="text" placeholder="0">
                                                                 </div>
                                                             </td>
                                                             <td>'.$palpites[$i]['t1nome'].'</td>
-                                                            <td width="40%">'.$palpites[$i]['mt_date'].'</td>
+                                                            <td></td>
                                                             <td>'.$palpites[$i]['t2nome'].'</td>
                                                             <td width="15%">     
                                                                 <div class="input-group col-sm-7">		

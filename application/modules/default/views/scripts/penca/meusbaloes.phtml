@@ -16,22 +16,28 @@ for ($i = 0; $i < count($penca); $i = $i + 1) {
 
  echo '<div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
         <div class="smallstat box">
-                <i class="fa fa-bell blue"></i>
-                <span class="change">'.$penca[$i]['ch_nome'].'</span>
+                
+                <i class="'.$penca[$i]['pn_icone'].'"></i>
+                <span class="change">'.$penca[$i]['ch_nome'].'</span><br>
                 <span class="change">';
  
                     if (strlen($penca[$i]['ch_nome']) > 8) {
-                        echo substr($penca[$i]['pn_name'],0,12).'...';
+                        echo '<a href="'.$this->baseUrl('/penca/index/?penca=1').'">'.substr($penca[$i]['pn_name'],0,12).'...</a>';
                     } else {
                         echo $penca[$i]['pn_name'];
                     }
 
-                echo '</span>';
+                echo '</span><br>';
                 
                     if ($penca[$i]['pn_value'] > 0) {
-                        echo '<span class="change">R$ '.$penca[$i]['pn_value'].'</span>';
+                        echo '<span class="title"><i style="float:right;width:20px;font-wight:normal;font-size:16px;padding-top:0px;padding-bottom:0px;background: none;color:green;text-align:right" class="fa fa-dollar green"></i>R$ '.$penca[$i]['pn_value'].'</span><br>';
+                    }
+                    
+                    if ($penca[$i]['pn_justfriends']) {
+                        echo '<span class="title"><i style="float:right;width:20px;font-wight:normal;font-size:16px;padding-top:0px;padding-bottom:0px;background: none;color:red;text-align:right" class="fa fa-lock green"></i></span><br>';
                     }
                 
+                echo '';
                 
                 echo '<a href="" class="more">
                         <span>Mais informação...</span>

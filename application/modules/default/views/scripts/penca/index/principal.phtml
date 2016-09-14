@@ -9,7 +9,17 @@
     $participantes = $p[0];
     
     $round = $this->rodada;
+    
+//    print_r($round);
+//    die(".");
+    
+    $rodada = $round[0]['mt_round'];
+    $champ = $round[0]['mt_idchampionship'];
 ?>
+
+<input type="hidden" id="round" value="<?php echo $rodada; ?>" />
+<input type="hidden" id="champ" value="<?php echo $champ; ?>" />
+
 
 	<div class="tab-pane active" id="photos">
                                                     
@@ -169,9 +179,9 @@
                                                                       <?php
                                                                         for ($i = 0; $i < count($round); $i = $i + 1) {
                                                                             echo '<tr>                                                                                    
-                                                                                    <td>'.$round[$i]['t1nome'].'</td>
+                                                                                    <td name="um'.$i.'" id="um'.$i.'">'.$round[$i]['t1nome'].'</td>
                                                                                     <td>'.$round[$i]['mt_date'].'</td>
-                                                                                    <td>'.$round[$i]['t2nome'].'</td>                                       
+                                                                                    <td name="dos'.$i.'" id="dom'.$i.'">'.$round[$i]['t2nome'].'</td>                                       
                                                                                 </tr>';   
                                                                         }
                                                                       
@@ -182,14 +192,61 @@
 							 </table>  
 							 <div class="pagination pagination-centered">
 							  <ul class="pagination">
-								<li><a href="table.html#">Prev</a></li>
-								<li class="active">
-								  <a href="table.html#">1</a>
-								</li>
-								<li><a href="table.html#">2</a></li>
-								<li><a href="table.html#">3</a></li>
-								<li><a href="table.html#">4</a></li>
-								<li><a href="table.html#">Next</a></li>
+                                                              
+							<?php
+                                                            if ($rodada > 2) {
+                                                                $n1 = $rodada - 2;
+                                                                $n2 = $rodada - 1;
+                                                                $n3 = $rodada;
+                                                                $n4 = $rodada + 1;
+                                                                $n5 = $rodada + 2;
+                                                                
+                                                                $a1 = "";
+                                                                $a2 = "";
+                                                                $a3 = "active";
+                                                                $a4 = "";
+                                                                $a5 = "";
+                                                                
+                                                            }
+                                                            
+                                                            if ($rodada == 1) {
+                                                                $n1 = $rodada;
+                                                                $n2 = $rodada + 1;
+                                                                $n3 = $rodada + 2;
+                                                                $n4 = $rodada + 3;
+                                                                $n5 = $rodada + 4;
+                                                                
+                                                                $a1 = "active";
+                                                                $a2 = "";
+                                                                $a3 = "";
+                                                                $a4 = "";
+                                                                $a5 = "";
+                                                            }
+                                                            
+                                                            if ($rodada == 2) {
+                                                                $n1 = $rodada - 1;
+                                                                $n2 = $rodada;
+                                                                $n3 = $rodada + 1;
+                                                                $n4 = $rodada + 2;
+                                                                $n5 = $rodada + 3;
+                                                                
+                                                                $a1 = "";
+                                                                $a2 = "active";
+                                                                $a3 = "";
+                                                                $a4 = "";
+                                                                $a5 = "";
+                                                            }
+                                                        
+                                                        
+                                                            echo '<li><a name="prev" href="javascript:void(0)">Prev</a></li>
+								<li class="'.$a1.'"><a id="um" href="javascript:void(0)">'.$n1.'</a></li>
+								<li class="'.$a2.'"><a name="dos" href="javascript:void(0)">'.$n2.'</a></li>
+								<li class="'.$a3.'"><a name="tres" href="javascript:void(0)">'.$n3.'</a></li>
+								<li class="'.$a4.'"><a name="quatro" href="javascript:void(0)">'.$n4.'</a></li>
+                                                                <li class="'.$a5.'"><a name="cinco" href="javascript:void(0)">'.$n5.'</a></li>
+								<li><a href="javascript:void(0)" name="next">Next</a></li>';
+                                                                
+                                                                ?>
 							  </ul>
 							</div>     
 						</div>
@@ -197,5 +254,21 @@
 				</div><!--/col-->
 			</div>  
 							
-					
-					  	</div>
+<script type="text/javascript">
+    
+    $(function() {
+       $("#um").bind("click", function() {
+          // alert($("#round").attr("value"));
+           $.post("../getrodada", {round : $("#round").attr("value"), champ : $("#champ").attr("value")}, function(response) {
+              
+              console.log(response);
+           });
+       }) 
+    });
+    
+    
+    
+</script>    
+		
+        </div>
+

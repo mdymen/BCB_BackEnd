@@ -59,7 +59,8 @@ class PencaController extends Zend_Controller_Action {
     
     public function usuariospencaAction() {
         $params = $this->_request->getParams();
-        
+//       print_r($params);
+//       die(".");
         $id_penca = $params['penca'];
         
 //        print_r($id_penca);
@@ -159,6 +160,23 @@ class PencaController extends Zend_Controller_Action {
 
         $penca = $pencas->load_pencas_usuario($data['us_id']);   
         $this->view->pencas = $penca;
+    }
+    
+    public function getrodadaAction() { 
+        $params = $this->_request->getParams(); 
+        
+        $penca = new Application_Model_Penca();
+
+        $rodada = $penca->rodada($params['champ'], $params['round']);
+        
+                $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($rodada);
+        
     }
     
     

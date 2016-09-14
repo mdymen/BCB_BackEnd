@@ -14,12 +14,12 @@
                 <div class="box-header">
                     <h2><i class="fa fa-list"></i>Usuarios</h2>
                     <div class="box-icon">
-                            <a href="widgets.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                            <a href="widgets.html#" class="btn-close"><i class="fa fa-times"></i></a>
+<!--                            <a href="widgets.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                            <a href="widgets.html#" class="btn-close"><i class="fa fa-times"></i></a>-->
                     </div>
                 </div>
                 <div class="box-content">
-                    <ul id="usuarios-list" class="usuarios-list">
+                    <ul id="usuarios-list" class="usuarios-list" style="list-style-type: none;">
                         
                            
                         
@@ -36,21 +36,21 @@
        
        $('#tbParticipantes').bind('click', function() {
             var penca = $('#idpenca').attr("value");  
-//            if ($("#usuarios_carregados").value() == "") {
-//                $.post('../usuariospenca',{penca: penca}, function(response) {
-//                    for (var i = 0; i < response.length; i = i + 1) {
-//                        $("#usuarios-list").append(
-//                        '<li>\n\
-//                            <a href="widgets.html#">\n\
-//                                <i class="fa fa-dollar"></i>\n\
-//                                <span class="green">92</span>'+response[i].us_username+'\n\
-//                            </a>\n\
-//                        </li>'      
-//                        );
-//                    }
-//                   // console.log(response[0].us_username);
-//                });
-//            }
+//            alert("HOLA");
+            //if ($("#usuarios_carregados").value() === '') {
+                $.post('../usuariospenca',{penca: penca}, function(response) {
+                    for (var i = 0; i < response.length; i = i + 1) {
+                        $("#usuarios-list").append(
+                        '<li>\n\
+                            <a href="widgets.html#">\n\
+                                <span class="green">'+i+'</span>'+response[i].us_username+'\n\
+                            </a>\n\
+                        </li>');  
+                    };
+
+                    console.log(response);
+                });
+          //  }
        });
    });
     

@@ -26,6 +26,18 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         
         $db->insert($this->_name, $info);
     }
+    
+    public function user_penca($penca) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from('user_penca')
+                ->joinInner('user', 'user_penca.up_iduser = user.us_id')
+                ->where('user_penca.up_idpenca = ?', $penca)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+    }
         
     
 }
