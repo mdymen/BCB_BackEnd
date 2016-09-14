@@ -177,11 +177,12 @@
 								  <tbody>
                                                                       
                                                                       <?php
+                                                                        echo '<input type="hidden" value="'.count($round).'" id="cantidad" />';
                                                                         for ($i = 0; $i < count($round); $i = $i + 1) {
                                                                             echo '<tr>                                                                                    
-                                                                                    <td name="um'.$i.'" id="um'.$i.'">'.$round[$i]['t1nome'].'</td>
-                                                                                    <td>'.$round[$i]['mt_date'].'</td>
-                                                                                    <td name="dos'.$i.'" id="dom'.$i.'">'.$round[$i]['t2nome'].'</td>                                       
+                                                                                    <td id="um'.$i.'">'.$round[$i]['t1nome'].'</td>
+                                                                                    <td id="data'.$i.'">'.$round[$i]['mt_date'].'</td>
+                                                                                    <td id="dos'.$i.'">'.$round[$i]['t2nome'].'</td>                                       
                                                                                 </tr>';   
                                                                         }
                                                                       
@@ -191,7 +192,7 @@
 								  </tbody>
 							 </table>  
 							 <div class="pagination pagination-centered">
-							  <ul class="pagination">
+							  <ul class="pagination" id="pagjogos">
                                                               
 							<?php
                                                             if ($rodada > 2) {
@@ -238,13 +239,13 @@
                                                             }
                                                         
                                                         
-                                                            echo '<li><a name="prev" href="javascript:void(0)">Prev</a></li>
-								<li class="'.$a1.'"><a id="um" href="javascript:void(0)">'.$n1.'</a></li>
-								<li class="'.$a2.'"><a name="dos" href="javascript:void(0)">'.$n2.'</a></li>
-								<li class="'.$a3.'"><a name="tres" href="javascript:void(0)">'.$n3.'</a></li>
-								<li class="'.$a4.'"><a name="quatro" href="javascript:void(0)">'.$n4.'</a></li>
-                                                                <li class="'.$a5.'"><a name="cinco" href="javascript:void(0)">'.$n5.'</a></li>
-								<li><a href="javascript:void(0)" name="next">Next</a></li>';
+                                                            echo '<li><a id="prev" href="javascript:void(0)" rodada="'.$n1.'">Prev</a></li>
+								<li class="'.$a1.'"><a class="x" id="um" rodada="'.$n1.'" href="javascript:void(0)">'.$n1.'</a></li>
+								<li class="'.$a2.'"><a id="dos" rodada="'.$n2.'" class="x" href="javascript:void(0)">'.$n2.'</a></li>
+								<li class="'.$a3.'"><a id="tres" rodada="'.$n3.'" class="x" href="javascript:void(0)">'.$n3.'</a></li>
+								<li class="'.$a4.'"><a id="quatro" rodada="'.$n4.'" class="x" href="javascript:void(0)">'.$n4.'</a></li>
+                                                                <li class="'.$a5.'"><a id="cinco" rodada="'.$n5.'" class="x" href="javascript:void(0)">'.$n5.'</a></li>
+								<li><a href="javascript:void(0)" rodada="'.$n1.'" class="x" id="next">Next</a></li>';
                                                                 
                                                                 ?>
 							  </ul>
@@ -255,15 +256,95 @@
 			</div>  
 							
 <script type="text/javascript">
+    function load_teams(response) {
+        for (var i = 0; i < response.length; i = i + 1) {
+            $("#um"+i).html(response[i].t1nome);
+            $("#dos"+i).html(response[i].t2nome);
+            $("#data"+i).html(response[i].mt_data);
+            console.log(response[i].t1nome); 
+        };
+    };
+    
+    function paginacion(rodada) {
+        var n1 = 0;
+        var n2 = 0;
+        var n3 = 0;
+        var n4 = 0;
+        var n5 = 0;
+
+        var a1 = "";
+        var a2 = "";
+        var a3 = "";
+        var a4 = "";
+        var a5 = "";
+        
+        
+        if (rodada > 2) {
+            n1 = rodada - 2;
+            n2 = rodada - 1;
+            n3 = rodada;
+            n4 = rodada + 1;
+            n5 = rodada + 2;
+
+            a1 = "";
+            a2 = "";
+            a3 = "active";
+            a4 = "";
+            a5 = "";
+
+        }
+
+        if (rodada === 1) {
+            n1 = rodada;
+            n2 = rodada + 1;
+            n3 = rodada + 2;
+            n4 = rodada + 3;
+            n5 = rodada + 4;
+
+            a1 = "active";
+            a2 = "";
+            a3 = "";
+            a4 = "";
+            a5 = "";
+        }
+
+        if (rodada === 2) {
+            n1 = rodada - 1;
+            n2 = rodada;
+            n3 = rodada + 1;
+            n4 = rodada + 2;
+            n5 = rodada + 3;
+
+            a1 = "";
+            a2 = "active";
+            a3 = "";
+            a4 = "";
+            a5 = "";
+        }
+        
+        
+        
+        $("#pagjogos").html('<li><a id="prev" href="javascript:void(0)" rodada="'+n1+'">Prev</a></li>\n\
+<li class="'+a1+'"><a class="x" id="um" rodada="'+n1+'" href="javascript:void(0)">'+n1+'</a></li>\n\
+<li class="'+a2+'"><a id="dos" rodada="'+n2+'" class="x" href="javascript:void(0)">'+n2+'</a></li>\n\
+<li class="'+a3+'"><a id="tres" rodada="'+n3+'" class="x" href="javascript:void(0)">'+n3+'</a></li>\n\
+<li class="'+a4+'"><a id="quatro" rodada="'+n4+'" class="x" href="javascript:void(0)">'+n4+'</a></li>\n\
+<li class="'+a5+'"><a id="cinco" rodada="'+n5+'" class="x" href="javascript:void(0)">'+n5+'</a></li>\n\
+<li><a href="javascript:void(0)" rodada="'+n1+'" class="x" id="next">Next</a></li>');
+        
+    };
+    
     
     $(function() {
-       $("#um").bind("click", function() {
-          // alert($("#round").attr("value"));
-           $.post("../getrodada", {round : $("#round").attr("value"), champ : $("#champ").attr("value")}, function(response) {
-              
-              console.log(response);
+       var champ = $("#champ").attr("value");
+       
+       $(".x").bind("click", function() {
+           var rodada = $(this).attr("rodada");
+           $.post("../getrodada", {round : rodada, champ : champ }, function(response) {
+               load_teams(response);
+               paginacion(rodada);
            });
-       }) 
+       });
     });
     
     

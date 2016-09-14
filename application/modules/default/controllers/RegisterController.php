@@ -101,7 +101,7 @@ class RegisterController extends Zend_Controller_Action
                 'team2' => $id2,
                 'date' => date('d-n-y'),
                 'championship' => $params['championship'],
-                'round' => 1
+                'round' => 2
             ));
             $j = $j + 1;
         }
