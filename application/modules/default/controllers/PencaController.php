@@ -32,7 +32,7 @@ class PencaController extends Zend_Controller_Action {
         $rodada = $penca->rodada($info_penca[0]['pn_idchampionship'], $info_penca[0]['ch_atualround']);
         
         $teams = new Application_Model_Teams();
-        $teams = $teams->load_penca_limit($info_penca[0]['pn_idchampionship'], 4); 
+        $teams = $teams->load_penca_limit($info_penca[0]['pn_idchampionship'], 1); 
         
         $this->view->info_penca = $info_penca;
         $this->view->teams = $teams;
@@ -51,10 +51,20 @@ class PencaController extends Zend_Controller_Action {
     public function proximostimesAction() {
         $params = $this->_request->getParams();
         
-        $proximos = $params['proximos'];
-        $penca = $params['penca'];
+        //$proximos = $params['proximos'];
+        $champ = $params['champ'];
+        $pagina = $params['pagina'];
         
+        $teams = new Application_Model_Teams();
+        $teams = $teams->load_penca_limit($champ, $pagina); 
         
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($teams);
     }
     
     public function usuariospencaAction() {

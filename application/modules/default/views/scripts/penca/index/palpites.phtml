@@ -15,9 +15,9 @@
                         <div class="box-header">
                                 <h2><i class="fa fa-align-justify"></i><span class="break"></span>Rodada: <?php echo $palpites[0]['rs_round']; ?></h2>
                                 <div class="box-icon">
-                                        <a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
+<!--                                        <a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
                                         <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                                        <a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>
+                                        <a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>-->
                                 </div>
                         </div>
                         <div class="box-content">
@@ -41,7 +41,7 @@
                                                         <tr>
                                                             <td></td>
                                                             <td>
-                                                           '.$palpites[$i]['mt_date'].'
+                                                           '.date("H:i",strtotime($palpites[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($palpites[$i]['mt_date']) ).'
                                                             </td>                                      
                                                         </tr>
                                                             <tr>
@@ -80,9 +80,12 @@
                                         <li><a href="table.html#">Next</a></li>
                                   </ul>
                                      
-                                     <a href="javascript:void(0)" id="btnAceitarPalpites" class="btn btn-success">Aceitar Palpites</a> 
                                      
-                                </div>     
+                                     
+                                </div> 
+                            <div class="form-action">
+                                <a href="javascript:void(0)" id="btnAceitarPalpites" class="btn btn-success">Aceitar Palpites</a> 
+                            </div>
                         </div>
                 </div>
         </div>

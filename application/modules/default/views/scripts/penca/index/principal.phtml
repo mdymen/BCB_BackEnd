@@ -15,6 +15,8 @@
     
     $rodada = $round[0]['mt_round'];
     $champ = $round[0]['mt_idchampionship'];
+    
+    $teams_v = 1;
 ?>
 
 <input type="hidden" id="round" value="<?php echo $rodada; ?>" />
@@ -49,10 +51,10 @@
                                                                         for ($i = 0; $i < count($teams); $i = $i + 1) {
                                                                    
                                                                             echo '<tr>
-                                                                                    <td>'.($i+1).'</td>
-                                                                                    <td>'.$teams[$i]['tm_name'].'</td>
-                                                                                    <td>'.$teams[$i]['tm_points'].'</td>
-                                                                                    <td>'.$teams[$i]['tm_played'].'</td>
+                                                                                    <td id="tm_id'.$i.'">'.($i+1).'</td>
+                                                                                    <td id="tm_name'.$i.'">'.$teams[$i]['tm_name'].'</td>
+                                                                                    <td id="tm_points'.$i.'">'.$teams[$i]['tm_points'].'</td>
+                                                                                    <td id="tm_played'.$i.'">'.$teams[$i]['tm_played'].'</td>
                                                                                                                          
                                                                             </tr>';
                                                                         
@@ -63,25 +65,76 @@
 								  </tbody>
 							 </table>  
 							 <div class="pagination pagination-centered">
-							  <ul class="pagination">
-								<li><a href="table.html#">Prev</a></li>
-								<li class="active">
-								  <a href="table.html#">1</a>
-								</li>
-								<li><a href="table.html#">2</a></li>
-								<li><a href="table.html#">3</a></li>
-								<li><a href="table.html#">4</a></li>
-								<li><a href="table.html#">Next</a></li>
+							  <ul class="pagination" id="ul_positions">
+                                                              
+							
+
+                                                            <?php    
+                                                            
+                                                            $inicio = 1;
+                                                            
+                                                                if ($teams_v > 2) {
+                                                                    $inicio = $team_v - 1;
+                                                                    $n1 = $teams_v - 2;
+                                                                    $n2 = $teams_v - 1;
+                                                                    $n3 = $teams_v;
+                                                                    $n4 = $teams_v + 1;
+                                                                    $n5 = $teams_v + 2;
+
+                                                                    $a1 = "";
+                                                                    $a2 = "";
+                                                                    $a3 = "active";
+                                                                    $a4 = "";
+                                                                    $a5 = "";
+
+                                                                }
+                                                            
+                                                            if ($teams_v == 1) {
+                                                                $inicio = 1;
+                                                                $n1 = $teams_v;
+                                                                $n2 = $teams_v + 1;
+                                                                $n3 = $teams_v + 2;
+                                                                $n4 = $teams_v + 3;
+                                                                $n5 = $teams_v + 4;
+                                                                
+                                                                $a1 = "active";
+                                                                $a2 = "";
+                                                                $a3 = "";
+                                                                $a4 = "";
+                                                                $a5 = "";
+                                                            }
+                                                            
+                                                            if ($teams_v == 2) {
+                                                                $inicio = $team_v - 1;
+                                                                $n1 = $teams_v - 1;
+                                                                $n2 = $teams_v;
+                                                                $n3 = $teams_v + 1;
+                                                                $n4 = $teams_v + 2;
+                                                                $n5 = $teams_v + 3;
+                                                                
+                                                                $a1 = "";
+                                                                $a2 = "active";
+                                                                $a3 = "";
+                                                                $a4 = "";
+                                                                $a5 = "";
+                                                            }
+                                                        
+                                                        
+                                                            echo '<li><a id="prev" class="teamsclass" href="javascript:void(0)" teams="'.($inicio).'">Prev</a></li>
+								<li class="'.$a1.'"><a class="teamsclass" id="umt" teams="'.$n1.'" href="javascript:void(0)">'.$n1.'</a></li>
+								<li class="'.$a2.'"><a id="dost" teams="'.$n2.'" class="teamsclass" href="javascript:void(0)">'.$n2.'</a></li>
+								<li class="'.$a3.'"><a id="trest" teams="'.$n3.'" class="teamsclass" href="javascript:void(0)">'.$n3.'</a></li>
+								<li class="'.$a4.'"><a id="quatrot" teams="'.$n4.'" class="teamsclass" href="javascript:void(0)">'.$n4.'</a></li>
+                                                                <li class="'.$a5.'"><a id="cincot" teams="'.$n5.'" class="teamsclass" href="javascript:void(0)">'.$n5.'</a></li>
+								<li><a href="javascript:void(0)" teams="'.($teams_v + 1).'" class="teamsclass" id="next">Next</a></li>';
+                                                                
+                                                                ?>
 							  </ul>
 							</div>     
 						</div>
 					</div>
-				</div><!--/col-->
-				
-				<!--/col-->
-                                
-                                
-                                
+				</div>
+                                            
                                 <!-- PARTICIPANTES   -->
                                 
                                 <div class="col-lg-5 col-sm-6 col-xs-6 col-xxs-12">
@@ -133,32 +186,14 @@
 					</div>
 				</div>                                
                                 
-			</div>     
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                          <!-- dfsdgsgfsf -->                          
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    <div class="row">	
+			</div>                                            
+                           <div class="row">	
 				<div class="col-lg-12">
 					<div class="box">
 						<div class="box-header">
 							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Rodada <?php echo $round[0]['mt_round']; ?></h2>
 							<div class="box-icon">
-								<a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
+<!--								<a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>-->
 								<a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
 								<a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>
 							</div>
@@ -280,11 +315,11 @@
         
         
         if (rodada > 2) {
-            n1 = rodada - 2;
-            n2 = rodada - 1;
+            n1 = parseInt(rodada) - 2;
+            n2 = parseInt(rodada) - 1;
             n3 = rodada;
-            n4 = rodada + 1;
-            n5 = rodada + 2;
+            n4 = parseInt(rodada) + 1;
+            n5 = parseInt(rodada) + 2;
 
             a1 = "";
             a2 = "";
@@ -294,12 +329,12 @@
 
         }
 
-        if (rodada === 1) {
-            n1 = rodada;
-            n2 = rodada + 1;
-            n3 = rodada + 2;
-            n4 = rodada + 3;
-            n5 = rodada + 4;
+        if (rodada === '1') {
+            n1 = parseInt(rodada);
+            n2 = parseInt(rodada) + 1;
+            n3 = parseInt(rodada) + 2;
+            n4 = parseInt(rodada) + 3;
+            n5 = parseInt(rodada) + 4;
 
             a1 = "active";
             a2 = "";
@@ -308,12 +343,12 @@
             a5 = "";
         }
 
-        if (rodada === 2) {
-            n1 = rodada - 1;
-            n2 = rodada;
-            n3 = rodada + 1;
-            n4 = rodada + 2;
-            n5 = rodada + 3;
+        if (rodada === '2') {
+            n1 = parseInt(rodada) - 1;
+            n2 = parseInt(rodada);
+            n3 = parseInt(rodada) + 1;
+            n4 = parseInt(rodada) + 2;
+            n5 = parseInt(rodada) + 3;
 
             a1 = "";
             a2 = "active";
@@ -325,17 +360,17 @@
         
         
         $("#pagjogos").html('<li><a id="prev" href="javascript:void(0)" rodada="'+n1+'">Prev</a></li>\n\
-<li class="'+a1+'"><a class="x" id="um" rodada="'+n1+'" href="javascript:void(0)">'+n1+'</a></li>\n\
-<li class="'+a2+'"><a id="dos" rodada="'+n2+'" class="x" href="javascript:void(0)">'+n2+'</a></li>\n\
-<li class="'+a3+'"><a id="tres" rodada="'+n3+'" class="x" href="javascript:void(0)">'+n3+'</a></li>\n\
-<li class="'+a4+'"><a id="quatro" rodada="'+n4+'" class="x" href="javascript:void(0)">'+n4+'</a></li>\n\
-<li class="'+a5+'"><a id="cinco" rodada="'+n5+'" class="x" href="javascript:void(0)">'+n5+'</a></li>\n\
-<li><a href="javascript:void(0)" rodada="'+n1+'" class="x" id="next">Next</a></li>');
+        <li class="'+a1+'"><a class="x" id="um" rodada="'+n1+'" href="javascript:void(0)">'+n1+'</a></li>\n\
+        <li class="'+a2+'"><a id="dos" rodada="'+n2+'" class="x" href="javascript:void(0)">'+n2+'</a></li>\n\
+        <li class="'+a3+'"><a id="tres" rodada="'+n3+'" class="x" href="javascript:void(0)">'+n3+'</a></li>\n\
+        <li class="'+a4+'"><a id="quatro" rodada="'+n4+'" class="x" href="javascript:void(0)">'+n4+'</a></li>\n\
+        <li class="'+a5+'"><a id="cinco" rodada="'+n5+'" class="x" href="javascript:void(0)">'+n5+'</a></li>\n\
+        <li><a href="javascript:void(0)" rodada="'+n1+'" class="x" id="next">Next</a></li>');
         
+        change_round();
     };
     
-    
-    $(function() {
+    function change_round() {
        var champ = $("#champ").attr("value");
        
        $(".x").bind("click", function() {
@@ -345,6 +380,117 @@
                paginacion(rodada);
            });
        });
+    }
+    
+    function load_positions(response, pagina) {
+        var tem = false;
+        for (var i = 0; i < response.length; i = i + 1) {
+            $("#tm_id"+i).html((((parseInt(pagina)-1))*4)+(i+1));
+            $("#tm_name"+i).html(response[i].tm_name);
+            $("#tm_points"+i).html(response[i].tm_points);
+            $("#tm_played"+i).html(response[i].tm_played);
+            console.log(response[i].tm_name); 
+            tem = true;
+        };
+        
+        if (tem) {
+            paginacao_teams(pagina);
+        }
+    }
+    
+    function paginacao_teams(pagina) {
+        
+        var n1 = 0;
+        var n2 = 0;
+        var n3 = 0;
+        var n4 = 0;
+        var n5 = 0;
+
+        var a1 = "";
+        var a2 = "";
+        var a3 = "";
+        var a4 = "";
+        var a5 = "";
+        
+        var p = pagina;
+        
+        if (parseInt(pagina) > 2) {
+            n1 = parseInt(pagina) - 2;
+            n2 = parseInt(pagina) - 1;
+            n3 = pagina;
+            n4 = parseInt(pagina) + 1;
+            n5 = parseInt(pagina) + 2;
+
+            a1 = "";
+            a2 = "";
+            a3 = "active";
+            a4 = "";
+            a5 = "";
+            
+            p = parseInt(pagina) + 1;
+            
+
+        }
+
+        if (pagina === '1') {
+            n1 = parseInt(pagina);
+            n2 = parseInt(pagina) + 1;
+            n3 = parseInt(pagina) + 2;
+            n4 = parseInt(pagina) + 3;
+            n5 = parseInt(pagina) + 4;
+
+            a1 = "active";
+            a2 = "";
+            a3 = "";
+            a4 = "";
+            a5 = "";
+            
+            p = parseInt(pagina) + 1;
+        }
+
+        if (pagina === '2') {
+            n1 = parseInt(pagina) - 1;
+            n2 = parseInt(pagina);
+            n3 = parseInt(pagina) + 1;
+            n4 = parseInt(pagina) + 2;
+            n5 = parseInt(pagina) + 3;
+
+            a1 = "";
+            a2 = "active";
+            a3 = "";
+            a4 = "";
+            a5 = "";
+            
+            p = parseInt(pagina) + 1;
+        }
+
+        $("#ul_positions").html('<li><a class="teamsclass" id="prev" href="javascript:void(0)" teams="'+n1+'">Prev</a></li>\n\
+        <li class="'+a1+'"><a class="teamsclass" id="umt" teams="'+n1+'" href="javascript:void(0)">'+n1+'</a></li>\n\
+        <li class="'+a2+'"><a id="dost" teams="'+n2+'" class="teamsclass" href="javascript:void(0)">'+n2+'</a></li>\n\
+        <li class="'+a3+'"><a id="trest" teams="'+n3+'" class="teamsclass" href="javascript:void(0)">'+n3+'</a></li>\n\
+        <li class="'+a4+'"><a id="quatrot" teams="'+n4+'" class="teamsclass" href="javascript:void(0)">'+n4+'</a></li>\n\
+        <li class="'+a5+'"><a id="cincot" teams="'+n5+'" class="teamsclass" href="javascript:void(0)">'+n5+'</a></li>\n\
+        <li><a href="javascript:void(0)" teams="'+p+'" class="teamsclass" id="next">Next</a></li>');
+        
+        change_teams_position();
+    };
+    
+    function change_teams_position() {
+       var champ = $("#champ").attr("value");
+       
+       $(".teamsclass").bind("click", function() {
+           var pagina = $(this).attr("teams");
+
+           $.post("proximostimes", {pagina: pagina, champ : champ }, function(response) {
+               console.log(response);
+               load_positions(response, pagina);
+           });
+       });        
+    }
+    
+    $(function() {
+        change_teams_position();
+        change_round();
     });
     
     

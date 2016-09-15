@@ -38,12 +38,12 @@
             var penca = $('#idpenca').attr("value");  
 //            alert("HOLA");
             //if ($("#usuarios_carregados").value() === '') {
-                $.post('../usuariospenca',{penca: penca}, function(response) {
+                $.post('usuariospenca',{penca: penca}, function(response) {
                     for (var i = 0; i < response.length; i = i + 1) {
                         $("#usuarios-list").append(
                         '<li>\n\
                             <a href="widgets.html#">\n\
-                                <span class="green" style="padding-left:-100px">'+i+'</span>'+response[i].us_username+'\n\
+                                <span class="green" style="padding-left:-100px">'+(parseInt(i)+1)+'</span>'+response[i].us_username+'\n\
                             </a>\n\
                         </li>');  
                     };
