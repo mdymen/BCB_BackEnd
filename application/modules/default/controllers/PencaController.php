@@ -190,4 +190,23 @@ class PencaController extends Zend_Controller_Action {
     }
     
     
+    public function proximopalpiteAction() {
+        $params = $this->_request->getParams();
+   
+        $champ = $params['champ'];
+        $round = $params['round'];
+        
+        $penca = new Application_Model_Penca();
+        $rodada = $penca->rodada($champ, $round);
+        
+         $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($rodada);
+    }
+    
+    
 }

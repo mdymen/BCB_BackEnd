@@ -4,8 +4,13 @@
     $info_penca = $info_penca[0];
     
     $palpites = $this->palpites;
-
+    
+    $rodada = $palpites[0]['rs_round'];
+    
 ?>
+
+<input type="hidden" value="<?php echo $palpites[0]['mt_idchampionship']; ?>" name="champ" id="champ" />
+
 <div class="tab-pane active" id="palpites">
                                                     
     <div class="row">
@@ -40,22 +45,22 @@
                                                     echo '
                                                         <tr>
                                                             <td></td>
-                                                            <td>
+                                                            <td id="date'.$i.'"><b>
                                                            '.date("H:i",strtotime($palpites[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($palpites[$i]['mt_date']) ).'
-                                                            </td>                                      
+                                                            </b></td>                                      
                                                         </tr>
                                                             <tr>
                                                             <td width="15%">
                                                                 <div class="input-group col-sm-7">
-                                                                    <input class="form-control"name="result1_'.$i.'" value="'.$palpites[$i]['rs_res1'].'"  type="text" placeholder="0">
+                                                                    <input class="form-control"name="result1_'.$i.'" value="'.$palpites[$i]['rs_res1'].'" id="result1_'.$i.'"  type="text" placeholder="0">
                                                                 </div>
                                                             </td>
-                                                            <td>'.$palpites[$i]['t1nome'].'</td>
+                                                            <td id="team1'.$i.'">'.$palpites[$i]['t1nome'].'</td>
                                                             <td></td>
-                                                            <td>'.$palpites[$i]['t2nome'].'</td>
+                                                            <td id="team2'.$i.'">'.$palpites[$i]['t2nome'].'</td>
                                                             <td width="15%">     
                                                                 <div class="input-group col-sm-7">		
-                                                                    <input class="form-control" value="'.$palpites[$i]['rs_res2'].'" name="result2_'.$i.'" type="text" placeholder="0">
+                                                                    <input class="form-control" value="'.$palpites[$i]['rs_res2'].'" name="result2_'.$i.'" id="result2_'.$i.'" type="text" placeholder="0">
                                                                 </div>
                                                             </td>
                                                             </td>                                      
@@ -70,14 +75,61 @@
                                  <div class="pagination pagination-centered">
                                   <ul class="pagination">
                                       
-                                      <li><a href="table.html#">Prev</a></li>
-                                        <li class="active">
-                                          <a href="table.html#">1</a>
-                                        </li>
-                                        <li><a href="table.html#">2</a></li>
-                                        <li><a href="table.html#">3</a></li>
-                                        <li><a href="table.html#">4</a></li>
-                                        <li><a href="table.html#">Next</a></li>
+                                    <?php
+                                    
+                                    if ($rodada > 2) {
+                                                                $n1 = $rodada - 2;
+                                                                $n2 = $rodada - 1;
+                                                                $n3 = $rodada;
+                                                                $n4 = $rodada + 1;
+                                                                $n5 = $rodada + 2;
+                                                                
+                                                                $a1 = "";
+                                                                $a2 = "";
+                                                                $a3 = "active";
+                                                                $a4 = "";
+                                                                $a5 = "";
+                                                                
+                                                            }
+                                                            
+                                                            if ($rodada == 1) {
+                                                                $n1 = $rodada;
+                                                                $n2 = $rodada + 1;
+                                                                $n3 = $rodada + 2;
+                                                                $n4 = $rodada + 3;
+                                                                $n5 = $rodada + 4;
+                                                                
+                                                                $a1 = "active";
+                                                                $a2 = "";
+                                                                $a3 = "";
+                                                                $a4 = "";
+                                                                $a5 = "";
+                                                            }
+                                                            
+                                                            if ($rodada == 2) {
+                                                                $n1 = $rodada - 1;
+                                                                $n2 = $rodada;
+                                                                $n3 = $rodada + 1;
+                                                                $n4 = $rodada + 2;
+                                                                $n5 = $rodada + 3;
+                                                                
+                                                                $a1 = "";
+                                                                $a2 = "active";
+                                                                $a3 = "";
+                                                                $a4 = "";
+                                                                $a5 = "";
+                                                            }
+                                                        
+                                      
+                                      echo '<li><a class="palpite" href="javascript:void(0)">Prev</a></li>
+                                        <li class="'.$a1.'"><a class="palpite" rodada='.$n1.' href="javascript:void(0)">'.$n1.'</a></li>
+                                        <li class="'.$a2.'"><a class="palpite" rodada='.$n2.' href="javascript:void(0)">'.$n2.'</a></li>
+                                        <li class="'.$a3.'"><a class="palpite" rodada='.$n3.' href="javascript:void(0)">'.$n3.'</a></li>
+                                        <li class="'.$a4.'"><a class="palpite" rodada='.$n4.' href="javascript:void(0)">'.$n4.'</a></li>
+                                        <li><a class="palpite" href="javascript:void(0)">Next</a></li>';
+                                    
+                                     ?>
+
                                   </ul>
                                      
                                      
@@ -100,7 +152,21 @@
             $.post("aceitarpalpites", $('#formPalpites').serialize(), function(response) {
                console.log(response); 
             });
-        })
+        });
+        
+        $('.palpite').bind('click', function() {
+            $.post("proximopalpite", { champ : $("#champ").attr("value") ,round : $(this).attr("rodada") }, function(response) {
+                for (var i = 0; i < response.length; i = i + 1) {
+                    $("#team1"+i).html(response[i].t1nome);
+                    $("#team2"+i).html(response[i].t2nome);
+                    $("#date"+i).html(response[i].mt_date);
+                    $("#result1_"+i).val(response[i].rs_res1);
+                    $("#result2_"+i).val(response[i].rs_res1);                    
+                }
+        
+                console.log(response);
+            });
+        });
     });
     
 </script>
