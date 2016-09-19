@@ -56,7 +56,7 @@
 
                                                     echo '</span>
                                                     </td>
-                                                    <td style="width: 20%">'.$pencas[$i]['ch_nome'].'</td>
+                                                    <td style="width: 20%"><a href="'.$this->baseUrl("championship/index?championship=".$pencas[$i]['pn_idchampionship']).'">'.$pencas[$i]['ch_nome'].'</a></td>
                                                     <td style="width: 70%"><a href="'.$this->baseUrl().'/penca/index?penca='.$pencas[$i]['pn_id'].'">'.$pencas[$i]['pn_name'].'</a></td>
                                                 </tr>';
                                             }

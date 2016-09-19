@@ -5,11 +5,17 @@
     
     $palpites = $this->palpites;
     
-    $rodada = $palpites[0]['rs_round'];
-    
-?>
+    if (!empty($palpites)) {
+        $rodada = $palpites[0]['rs_round'];   
+    }
+
+
+if (!empty($palpites)) {
+
+   ?>
 
 <input type="hidden" value="<?php echo $palpites[0]['mt_idchampionship']; ?>" name="champ" id="champ" />
+<input type="hidden" value="<?php echo $palpites[0]['rs_idpenca']; ?>" name="idpenca" id="idpenca" />
 
 <div class="tab-pane active" id="palpites">
                                                     
@@ -41,7 +47,7 @@
                                               <?php
                                               echo '<input type="hidden" value="'.count($palpites).'" name="count_palpites">';
                                                 for ($i = 0; $i < count($palpites); $i = $i + 1) {
-                                                    echo '<input type="hidden" name="rs_'.$i.'" value="'.$palpites[$i]['rs_id'].'" />';
+                                                    echo '<input type="hidden" name="rs_'.$i.'" id="rs_'.$i.'" value="'.$palpites[$i]['rs_id'].'" />';
                                                     echo '
                                                         <tr>
                                                             <td></td>
@@ -146,6 +152,11 @@
 
 </div>
 
+<?php
+}
+
+?>
+
 <script type="text/javascript">
     $(function() {
         $('#btnAceitarPalpites').bind('click', function() {
@@ -155,13 +166,15 @@
         });
         
         $('.palpite').bind('click', function() {
-            $.post("proximopalpite", { champ : $("#champ").attr("value") ,round : $(this).attr("rodada") }, function(response) {
+            $.post("proximopalpite", { penca : $("#idpenca").attr("value"), champ : $("#champ").attr("value") ,round : $(this).attr("rodada") }, function(response) {
                 for (var i = 0; i < response.length; i = i + 1) {
                     $("#team1"+i).html(response[i].t1nome);
                     $("#team2"+i).html(response[i].t2nome);
                     $("#date"+i).html(response[i].mt_date);
                     $("#result1_"+i).val(response[i].rs_res1);
-                    $("#result2_"+i).val(response[i].rs_res1);                    
+                    $("#result2_"+i).val(response[i].rs_res1); 
+                    $("#rs_"+i).val(response[i].rs_id); 
+                  //  $("#rs_"+i).attr("value", response[i].rs_res1); 
                 }
         
                 console.log(response);

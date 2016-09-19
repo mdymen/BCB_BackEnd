@@ -12,6 +12,10 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        
+//        print_r("HOLA");
+//        die(".");
+        
         //Retorna las posiciones de todas las pencas 
         //en la cual el usuario participa.
         //en verde al ganador con el puntaje
@@ -29,18 +33,19 @@ class IndexController extends Zend_Controller_Action
 //        print_r($data);
 //        die(".");
 //        
-        $penca = new Application_Model_Penca();
+        if (!empty($data)) {
+            $penca = new Application_Model_Penca();
               
         
         //$pencas = $penca->load_penca__puntagem_usuario($data['us_id']);
         
-        $pencas = $penca->load_pencas();
-        $pencas_usuario = $penca->load_pencas_usuario($data['us_id']);
-        
-        $this->view->pencas = $pencas;
-        $this->view->pencas_usuario = $pencas_usuario;
-        
-        
+            $pencas = $penca->load_pencas();
+            $pencas_usuario = $penca->load_pencas_usuario($data['us_id']);
+
+            $this->view->pencas = $pencas;
+            $this->view->pencas_usuario = $pencas_usuario;
+//        
+        }
         
 //        print_r($data);
 //        die(".");
@@ -81,7 +86,7 @@ class IndexController extends Zend_Controller_Action
             
         }
         
-        $this->render("index");
+        $this->_redirect('/index');
     }
     
     public function registerteamsAction() {
@@ -98,6 +103,7 @@ class IndexController extends Zend_Controller_Action
         print_r($teams);
         die(".");
     }
+    
    
 }
 

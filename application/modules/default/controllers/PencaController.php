@@ -41,10 +41,23 @@ class PencaController extends Zend_Controller_Action {
         $this->view->rodada = $rodada;
         $this->view->penca = $id_penca;
         $this->view->championship = $info_penca[0]['pn_idchampionship'];
-
+        $this->view->is_iscripto = $penca->isIscriptoEmPenca($data['us_id'], $id_penca);
     }
     
     public function listAction() {
+        
+    }
+    
+    public function sairpencaAction() {
+        $params = $this->_request->getParams();
+        
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+           
+        $p = new Application_Model_Penca();
+        $p->sair_penca($data['us_id'], $params['penca']);
+        
+        $this->redirect("/penca/index?penca=".$params['penca']);
         
     }
     
@@ -106,6 +119,11 @@ class PencaController extends Zend_Controller_Action {
         $matchs_obj = new Application_Model_Matchs();
         $matchs = $matchs_obj->load($championship);
         
+//            'up_idpenca' => $params['up_idpenca'],
+//            'up_iduser' => $params['up_iduser'],
+        
+        $p = new Application_Model_Penca();
+        $p->save_userpenca(array('up_idpenca' => $penca, 'up_iduser' => $data['us_id']));
         
         for ($i = 0; $i < count($matchs); $i = $i + 1) {
             $matchs_obj->save_penca_match(
@@ -118,6 +136,8 @@ class PencaController extends Zend_Controller_Action {
                     )
             );
         } 
+        
+        $this->redirect("/penca/index?penca=".$params['penca']);
     }
     
     public function aceitarpalpitesAction() {
@@ -168,7 +188,8 @@ class PencaController extends Zend_Controller_Action {
         
         $pencas = new Application_Model_Penca();
 
-        $penca = $pencas->load_pencas_usuario($data['us_id']);   
+        $penca = $pencas->load_pencas_incripto_usuario($data['us_id']);   
+        
         $this->view->pencas = $penca;
     }
     
@@ -193,11 +214,16 @@ class PencaController extends Zend_Controller_Action {
     public function proximopalpiteAction() {
         $params = $this->_request->getParams();
    
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
         $champ = $params['champ'];
         $round = $params['round'];
+        $id_penca = $params['penca'];
         
         $penca = new Application_Model_Penca();
-        $rodada = $penca->rodada($champ, $round);
+        
+        $palpites = $penca->palpites($id_penca, $round, $data['us_id']);
         
          $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
@@ -205,7 +231,7 @@ class PencaController extends Zend_Controller_Action {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json($rodada);
+        $this->_helper->json($palpites);
     }
     
     

@@ -72,13 +72,15 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     
     public function load_pencas_usuario($id_usuario) {
         $db = Zend_Db_Table::getDefaultAdapter();
-        
+
         $return = $db->select()->from("penca") 
                 ->joinInner("championship", "penca.pn_idchampionship = championship.ch_id")
-                ->where("pn_iduser = ?", $id_usuario)
-                ->query()
-                ->fetchAll();
+                ->where("pn_iduser = ?", $id_usuario);
+              //  ->query();
         
+
+//                ->fetchAll();
+//        
         return $return;
     }
     
@@ -157,6 +159,38 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
                 ->fetchAll();
         
         return $result;
+    }
+    
+    public function load_pencas_incripto_usuario($usuario) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("user_penca")
+            ->joinInner("penca", 'user_penca.up_idpenca = penca.pn_id')
+             ->joinInner("championship", 'championship.ch_id = penca.pn_idchampionship')
+            ->where("user_penca.up_iduser = ?", $usuario)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+                    
+    }
+    
+    public function sair_penca($usuario, $penca) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $db->delete("user_penca",'up_iduser = '.$usuario.' and up_idpenca = '.$penca);
+        $db->delete("result", 'rs_iduser = '.$usuario.' and rs_idpenca = '.$penca);
+    }
+    
+    public function isIscriptoEmPenca($user, $penca) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("user_penca")
+                ->where("up_idpenca = ? ", $penca)
+                ->where("up_iduser = ? ", $user)
+                ->query()
+                ->fetch();
+        return !empty($result);
     }
 
 }

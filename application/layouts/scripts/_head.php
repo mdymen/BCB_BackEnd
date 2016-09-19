@@ -14,7 +14,7 @@
 	
 	<!-- start: Meta -->
 	<meta charset="utf-8">
-	<title>Bolao Dym</title>
+	<title>Bolao Pipo</title>
 	<meta name="description" content="Genius Dashboard - Bootstrap Admin Template.">
 	<meta name="author" content="Łukasz Holeczek">
 	<meta name="keyword" content="Genius, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
@@ -69,12 +69,11 @@
 			<!-- start: Header Menu -->
 			<div class="nav-no-collapse header-nav">
 				<ul class="nav navbar-nav pull-right">
-					<li class="dropdown">
-						<a class="btn account dropdown-toggle" data-toggle="dropdown" href="2nd-level.html#">
-							<div class="avatar"><img src="assets/img/avatar.jpg" alt="Avatar"></div>
+					<li class="dropdown" >
+						<a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="2nd-level.html#">							
 							<div class="user">
-								<span class="hello">Welcome!</span>
-								<span class="name">mdymen</span>
+								<span class="hello">Bem-vindo!</span>
+								<span class="name"><?php echo $data->us_username; ?></span>
 							</div>
 						</a>
 						<ul class="dropdown-menu">
@@ -84,6 +83,12 @@
 							<li><a href="/penca/public/index/logout"><i class="fa fa-off"></i> Logout</a></li>
 						</ul>
 					</li>
+                                        <li>
+                                            <a class="btn" href="index/logout">
+							<i class="fa fa-power-off"></i>
+						</a>
+                                            
+                                        </li>
 				</ul>
 			</div>
 			<!-- end: Header Menu -->
@@ -114,8 +119,10 @@
 			<!-- start: Content -->
 			<div id="content" class="col-lg-10 col-sm-11 ">
 			<ol class="breadcrumb">
-			  	<li><a href="widgets.html#">Genius</a></li>
-			  	<li class="active">Widgets</li>
+			  	<?php 
+                                    include("breadcrumb.php");                                
+                                    echo breadcrumb();
+                                ?>
 			</ol>
 			
                             <?php echo $this->layout()->content; ?>

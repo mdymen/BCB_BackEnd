@@ -3,6 +3,7 @@
     $info_penca = $this->info_penca;
     $info_penca = $info_penca[0];
 
+    $palpites = $this->palpites;
 ?>
 
 <div class="col-xs-5 col-sm-12">
@@ -39,11 +40,21 @@
             <li>
                 <?php 
                 if (!($info_penca['pn_justfriends'])) {
-                    echo '<form action="inscribir" method="post">'
-                    .'<input type="hidden" value="'.$this->penca.'" name="penca">'
-                    .'<input type="hidden" value="'.$this->championship.'" name="championship">'        
-                    . '<button class="btn btn-lg btn-success"><b>PARTICIPAR</b></button>'
-                    . '</form>';
+//                    print_r($this->is_inscripto);
+//                    die("insc");
+                    if (empty($this->is_iscripto)) {
+                        echo '<form action="inscribir" method="post">'
+                        .'<input type="hidden" value="'.$this->penca.'" name="penca">'
+                        .'<input type="hidden" value="'.$this->championship.'" name="championship">'        
+                        . '<button class="btn btn-lg btn-success"><b>PARTICIPAR</b></button>'
+                        . '</form>';
+                    } else  {
+                        echo '<form action="sairpenca" method="post">'
+                        .'<input type="hidden" value="'.$this->penca.'" name="penca">'
+                        .'<input type="hidden" value="'.$this->championship.'" name="championship">'        
+                        . '<button class="btn btn-lg btn-danger"><b>SAIR</b></button>'
+                        . '</form>';                        
+                    }
                 }
                 ?>
             </li>
