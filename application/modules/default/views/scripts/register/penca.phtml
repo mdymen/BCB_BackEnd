@@ -6,19 +6,35 @@ include APPLICATION_PATH.'/decorators/Form.php';
 $championships = $this->championships;
 
 ?>
+
 <div class="row">
-				
+    <form action="http://localhost/penca/public/register/addpenca" method="post">		
 				<div class="col-lg-12">
 					<div class="box">
 						<div class="box-header">
-							<h2><i class="fa fa-edit"></i>Criar Penca</h2>
+							<h2><i class="fa fa-edit"></i>Criar bolao</h2>
+							<div class="box-icon">
+<!--								<a href="form-wizard.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
+								<a href="form-wizard.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+								<a href="form-wizard.html#" class="btn-close"><i class="fa fa-times"></i></a>-->
+							</div>
 						</div>
 						<div class="box-content">
-							
+							<div id="MyWizard" class="wizard">
+								<ul class="steps">
+									<li data-target="#step1" id="paso1" class="active"><span id="badge1" class="badge badge-info">1</span><span class="chevron"></span>Paso 1</li>
+									<li data-target="#step2" id="paso2" class=""><span id="badge2"  class="badge">2</span><span class="chevron"></span>Paso 2</li>
+									<li data-target="#step3" id="paso3" class=""><span id="badge3" class="badge">3</span>Paso 3</li>
+								</ul>
+								<div class="actions">
+									<button step="0" id="btnPrev" type="button" class="btn btn-prev"> <i class="fa fa-arrow-left"></i> Prev</button>
+									<button step="1" id="btnSeguinte" type="button" class="btn btn-success btn-next" data-last="Finish">Seguinte<i class="fa fa-arrow-right"></i></button>
+								</div>
+							</div>
 							<div class="step-content">
 								<div class="step-pane active" id="step1">
-								<form action="http://localhost/penca/public/register/addpenca" method="post">
-                                                                    <div class="form-group">
+									
+											 <div class="form-group">
                                                                         <div class="controls">
                                                                             <div class="input-group"> 
                                                                                 <span class="input-group-addon">
@@ -49,6 +65,10 @@ $championships = $this->championships;
                                                                             </div>
                                                                         </div>
                                                                     </div>
+									
+								</div>
+								<div class="step-pane" id="step2">
+									<form class="form-horizontal">
                                                                     <div class="form-group">                                                                        
                                                                         <div class="controls">
                                                                                 <select id="tm_idchampionship" name="tm_idchampionship" class="form-control">
@@ -60,8 +80,12 @@ $championships = $this->championships;
                                                                                     ?>
                                                                                 </select>
                                                                         </div>
-                                                                    </div>                       
-                                                                    <div class="form-group">									
+                                                                    </div>   
+									</form>
+								</div>
+								<div class="step-pane" id="step3">
+									<form class="form-horizontal">
+											<div class="form-group">									
 									<div class="controls">
 									  <label class="checkbox">
 										<input type="checkbox" id="pn_justfriends" name="pn_justfriends">
@@ -78,18 +102,11 @@ $championships = $this->championships;
                                                                                 <input id="pn_justfriends" name="pn_password" class="form-control" placeholder="Senha" type="" value="">
                                                                             </div>
                                                                         </div>
-                                                                    </div>                                                                    
-                                                                    <dt id="Registrar-label">&nbsp;</dt>
-                                                                    <dd id="Registrar-element">
-                                                                        <button name="Registrar" id="Registrar" type="submit" class="btn btn-success btn-next">Registrar</button>
-                                                                    </dd>
-                                                                </form>
-                                                                    
-                                                                    
+                                                                    </div>
+											
+									</form>	
 								</div>
-								
-								
-								
+
 								
 
 							</div>
@@ -99,8 +116,74 @@ $championships = $this->championships;
 					</div>
 					
 				</div><!--/col-->
-
+</form>
 			</div>
-    <div class="row">
+
     
-<?php
+<script type="text/javascript">
+    
+    function seguinte() {
+        $("#btnSeguinte").bind('click', function() {
+            var step = $(this).attr("step");
+            if (step != 3) {
+                $("#paso"+step).removeClass("active");
+                $("#badge"+step).removeClass("badge-info");
+                $("#badge"+step).addClass("badge-success");
+                $("#paso"+step).addClass("complete");
+                $("#step"+step).removeClass("active");
+
+
+                var stepAtual = parseInt(step) + 1;
+                $("#btnSeguinte").attr("step", stepAtual);
+                $("#badge"+stepAtual).addClass("badge-info")
+                $("#paso"+stepAtual).addClass("active");
+                $("#step"+stepAtual).addClass("active");
+
+                $("#btnPrev").attr("step", stepAtual);
+                
+                if (stepAtual == 3) {
+                    $("#btnSeguinte").attr("type","submit");
+                    $("#btnSeguinte").html('Criar<i class="fa fa-arrow-right"></i>');
+                }
+            }
+        
+        
+        });
+    }
+    
+    function prev() {
+        $("#btnPrev").bind('click', function() {
+  
+            var step = $(this).attr("step");
+            if (step != 1) {
+                $("#paso"+step).removeClass("active");
+                $("#badge"+step).removeClass("badge-info");
+                $("#paso"+step).removeClass("complete");
+                $("#badge"+step).removeClass("badge-success");
+                $("#step"+step).removeClass("active");
+
+                var stepAtual = parseInt(step) - 1;
+                $("#btnSeguinte").attr("step", stepAtual);
+                $("#badge"+stepAtual).addClass("badge-info")
+                $("#paso"+stepAtual).addClass("active");
+                $("#step"+stepAtual).addClass("active");
+            
+                if (stepAtual != 3) {
+                    $("#btnSeguinte").html('Seguinte<i class="fa fa-arrow-right"></i>');
+                    $("#btnSeguinte").attr("type","button");
+                }
+            
+                $("#btnPrev").attr("step", stepAtual);
+             }
+        
+        });
+    }
+    
+    $(function() {
+        seguinte();
+        prev();
+        
+
+    })
+    
+</script>

@@ -213,6 +213,9 @@ class PencaController extends Zend_Controller_Action {
     
     public function proximopalpiteAction() {
         $params = $this->_request->getParams();
+        
+//        print_r("HOLA");
+//        die("..");
    
         $storage = new Zend_Auth_Storage_Session();
         $data = (get_object_vars($storage->read()));

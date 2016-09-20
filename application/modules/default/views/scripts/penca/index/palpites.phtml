@@ -166,7 +166,8 @@ if (!empty($palpites)) {
         });
         
         $('.palpite').bind('click', function() {
-            $.post("proximopalpite", { penca : $("#idpenca").attr("value"), champ : $("#champ").attr("value") ,round : $(this).attr("rodada") }, function(response) {
+            $.post("../proximopalpite", { penca : $("#idpenca").attr("value"), champ : $("#champ").attr("value") ,round : $(this).attr("rodada") }, function(response) {
+                console.log(response);
                 for (var i = 0; i < response.length; i = i + 1) {
                     $("#team1"+i).html(response[i].t1nome);
                     $("#team2"+i).html(response[i].t2nome);
@@ -177,7 +178,7 @@ if (!empty($palpites)) {
                   //  $("#rs_"+i).attr("value", response[i].rs_res1); 
                 }
         
-                console.log(response);
+                
             });
         });
     });
