@@ -1,0 +1,109 @@
+ <?php   
+    $palpites = $this->rodadas;
+    
+    if (!empty($palpites)) {
+        $rodada = $palpites[0]['mt_round'];   
+    }
+
+
+if (!empty($palpites)) {
+
+   ?>
+
+<input type="hidden" value="<?php echo $palpites[0]['mt_idchampionship']; ?>" name="champ" id="champ" />
+
+
+        
+        <div class="col-lg-8">
+                <div class="box">
+                        <div class="box-header">
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Rodada: <?php echo $palpites[0]['mt_round']; ?></h2>
+                                <div class="box-icon">
+<!--                                        <a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
+                                        <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                                        <a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>-->
+                                </div>
+                        </div>
+                        <div class="box-content">
+                                <table class="table">
+                                          <thead>
+                                                  <tr>
+                                                          <th width="15%"></th>
+                                                          <th></th>
+                                                          <th width="15%"></th>
+                                                          <th></th> 
+                                                          <th width="15%"></th> 
+                                                  </tr>
+                                          </thead>   
+                                          <tbody>
+                                              
+                                              <?php
+                                              echo '<input type="hidden" value="'.count($palpites).'" name="count_palpites">';
+                                                for ($i = 0; $i < count($palpites); $i = $i + 1) {
+                                                    echo '<input type="hidden" name="rs_'.$i.'" id="rs_'.$i.'" value="'.$palpites[$i]['mt_id'].'" />';
+                                                    echo '
+                                                        <tr>
+                                                            <td></td>
+                                                            <td id="date'.$i.'">
+                                                                <b>
+                                                               '.date("H:i",strtotime($palpites[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($palpites[$i]['mt_date']) ).'
+                                                                </b>';
+                                                                if (empty($palpites['rs_id'])) {
+                                                                    echo '<button it="'.$i.'" match="'.$palpites[$i]['mt_id'].'" class="btn btn-xs btn-success palpite">Palpitar</button>';
+                                                                }
+                                                                
+                                                            echo '</td>                                      
+                                                        </tr>
+                                                            <tr>
+                                                            <td width="15%">
+                                                                <div class="input-group col-sm-7">
+                                                                    <input class="form-control"name="result1_'.$i.'" id="result1_'.$i.'"  type="text" placeholder="0">
+                                                                </div>
+                                                            </td>
+                                                            <td id="team1'.$i.'">'.$palpites[$i]['t1nome'].'</td>
+                                                            <td></td>
+                                                            <td id="team2'.$i.'">'.$palpites[$i]['t2nome'].'</td>
+                                                            <td width="15%">     
+                                                                <div class="input-group col-sm-7">		
+                                                                    <input class="form-control" name="result2_'.$i.'" id="result2_'.$i.'" type="text" placeholder="0">
+                                                                </div>
+                                                            </td>
+                                                            </td>                                      
+                                                        </tr>';
+                                                }
+                                              
+                                              ?>
+                                              
+                                                                           
+                                          </tbody>
+                                 </table>  
+                               
+                            <div class="form-action">
+                                <!--<a href="javascript:void(0)" id="btnAceitarPalpites" class="btn btn-success">Aceitar Palpites</a>--> 
+                            </div>
+                        </div>
+                </div>
+        </div>
+<?php
+}
+
+?>
+
+<script type="text/javascript">
+
+    $(function() {
+        $(".palpite").bind('click', function() {
+           var it = $(this).attr("it");
+           var match = $(this).attr("match");
+           var r1 = $("result" + it
+           
+           alert(it);
+           alert(match);
+           
+           $.post("submeterpalpiteAction",{ match : match, result1 : r1, result2 : rs  }, function() {
+               
+           });
+        });
+    })
+
+</script>

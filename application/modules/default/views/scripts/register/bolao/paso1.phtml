@@ -1,338 +1,37 @@
 <?php 
-
-include APPLICATION_PATH.'/forms/penca.php';
-include APPLICATION_PATH.'/decorators/Form.php';
-
 $championships = $this->championships;
-
 ?>
 
-<div class="row">
-				
-				<div class="col-lg-12">
-					<div class="box">
-						<div class="box-header">
-							<h2><i class="fa fa-edit"></i>Wizard</h2>
-							<div class="box-icon">
-								<a href="form-wizard.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
-								<a href="form-wizard.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-								<a href="form-wizard.html#" class="btn-close"><i class="fa fa-times"></i></a>
-							</div>
-						</div>
-						<div class="box-content">
-							<div id="MyWizard" class="wizard">
-								<ul class="steps">
-									<li data-target="#step1" class="complete"><span class="badge badge-success">1</span><span class="chevron"></span>Paso 1</li>
-									<li data-target="#step2" class="complete"><span class="badge badge-success">2</span><span class="chevron"></span>Paso 2</li>
-									<li data-target="#step5"><span class="badge">5</span>Paso 3</li>
-								</ul>
-								<div class="actions">
-									<button type="button" class="btn btn-prev"> <i class="fa fa-arrow-left"></i> Prev</button>
-									<button type="button" class="btn btn-success btn-next" data-last="Finish">Seguinte<i class="fa fa-arrow-right"></i></button>
-								</div>
-							</div>
-							<div class="step-content">
-								<div class="step-pane" id="step1">
-									<form class="form-horizontal">
-											<div class="form-group">
-												<label class="control-label" for="selectError30">Plain Select</label>
-												<div class="controls">
-												  	<select id="selectError30" class="form-control">
-														<option>Option 1</option>
-														<option>Option 2</option>
-														<option>Option 3</option>
-														<option>Option 4</option>
-														<option>Option 5</option>
-												  	</select>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="control-label" for="selectError0">Modern Select</label>
-												<div class="controls">
-												  	<select id="selectError0" class="form-control" style="width: 100%; display: none;" data-rel="chosen">
-														<option>Option 1</option>
-														<option>Option 2</option>
-														<option>Option 3</option>
-														<option>Option 4</option>
-														<option>Option 5</option>
-												  	</select><div class="chosen-container chosen-container-single" style="width: 999px;" title="" id="selectError0_chosen"><a class="chosen-single" tabindex="-1"><span>Option 1</span><div><b></b></div></a><div class="chosen-drop"><div class="chosen-search"><input type="text" autocomplete="off"></div><ul class="chosen-results"></ul></div></div>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="control-label" for="selectError10">Multiple Select / Tags</label>
-												<div class="controls">
-												  	<select id="selectError10" class="form-control" multiple="" data-rel="chosen" style="display: none;">
-														<option>Option 1</option>
-														<option selected="">Option 2</option>
-														<option>Option 3</option>
-														<option>Option 4</option>
-														<option>Option 5</option>
-												  	</select><div class="chosen-container chosen-container-multi" style="width: 999px;" title="" id="selectError10_chosen"><ul class="chosen-choices"><li class="search-choice"><span>Option 2</span><a class="search-choice-close" data-option-array-index="1"></a></li><li class="search-field"><input type="text" value="Select Some Options" class="" autocomplete="off" style="width: 25px;"></li></ul><div class="chosen-drop"><ul class="chosen-results"></ul></div></div>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="control-label" for="selectError20">Group Select</label>
-												<div class="controls">
-													<select class="form-control" data-placeholder="Your Favorite Football Team" id="selectError20" data-rel="chosen" style="display: none;">
-														<option value=""></option>
-														<optgroup label="NFC EAST">
-														  	<option>Dallas Cowboys</option>
-														  	<option>New York Giants</option>
-														  	<option>Philadelphia Eagles</option>
-														  	<option>Washington Redskins</option>
-														</optgroup>
-														<optgroup label="NFC NORTH">
-														  	<option>Chicago Bears</option>
-														  	<option>Detroit Lions</option>
-														  	<option>Green Bay Packers</option>
-														  	<option>Minnesota Vikings</option>
-														</optgroup>
-														<optgroup label="NFC SOUTH">
-														  	<option>Atlanta Falcons</option>
-														 	<option>Carolina Panthers</option>
-														  	<option>New Orleans Saints</option>
-														  	<option>Tampa Bay Buccaneers</option>
-														</optgroup>
-														<optgroup label="NFC WEST">
-														  	<option>Arizona Cardinals</option>
-														  	<option>St. Louis Rams</option>
-														  	<option>San Francisco 49ers</option>
-														  	<option>Seattle Seahawks</option>
-														</optgroup>
-														<optgroup label="AFC EAST">
-														  	<option>Buffalo Bills</option>
-														  	<option>Miami Dolphins</option>
-														  	<option>New England Patriots</option>
-														  	<option>New York Jets</option>
-														</optgroup>
-														<optgroup label="AFC NORTH">
-														  	<option>Baltimore Ravens</option>
-														  	<option>Cincinnati Bengals</option>
-														  	<option>Cleveland Browns</option>
-														  	<option>Pittsburgh Steelers</option>
-														</optgroup>
-														<optgroup label="AFC SOUTH">
-														  	<option>Houston Texans</option>
-														  	<option>Indianapolis Colts</option>
-														  	<option>Jacksonville Jaguars</option>
-														  	<option>Tennessee Titans</option>
-														</optgroup>
-														<optgroup label="AFC WEST">
-														  	<option>Denver Broncos</option>
-														  	<option>Kansas City Chiefs</option>
-														  	<option>Oakland Raiders</option>
-														  	<option>San Diego Chargers</option>
-														</optgroup>
-													</select><div class="chosen-container chosen-container-single" style="width: 999px;" title="" id="selectError20_chosen"><a class="chosen-single chosen-default" tabindex="-1"><span>Your Favorite Football Team</span><div><b></b></div></a><div class="chosen-drop"><div class="chosen-search"><input type="text" autocomplete="off"></div><ul class="chosen-results"></ul></div></div>
-												</div>
-											</div>
-									</form>
-								</div>
-								<div class="step-pane" id="step2">
-									<form class="form-horizontal">
-											<div class="form-group">
-												<label class="control-label" for="input1">Company Name</label>
-												<div class="controls">
-										  			<input type="text" class="form-control" id="input1">
-												</div>
-									  		</div>
-									  		<div class="form-group">
-												<label class="control-label" for="input2">Company Address</label>
-												<div class="controls">
-										  			<input type="text" class="form-control" id="input2">
-												</div>
-									  		</div>
-									  		<div class="form-group">
-												<label class="control-label" for="input3">WWW</label>
-												<div class="controls">
-										  			<input type="text" class="form-control" id="input3">
-												</div>
-									  		</div>
-									</form>
-								</div>
-								<div class="step-pane active" id="step3">
-									<form class="form-horizontal">
-											<div class="form-group has-warning">
-												<label class="control-label" for="inputWarning">First Name</label>
-												<div class="controls row">
-													<div class="col-sm-4">
-										  				<input type="text" class="form-control" id="inputWarning">
-													</div>
-										  			<span class="help-block col-sm-8">Something may have gone wrong</span>
-												</div>
-									  		</div>
-									  		<div class="form-group has-error">
-												<label class="control-label" for="inputError">Last Name</label>
-												<div class="controls row">
-										  			<div class="col-sm-4">
-										  				<input type="text" class="form-control" id="inputError">
-													</div>
-										  			<span class="help-block col-sm-8">Please correct the error</span>
-												</div>
-									  		</div>
-									  		<div class="form-group has-success">
-												<label class="control-label" for="inputSuccess">Phone Number</label>
-												<div class="controls row">
-										  			<div class="col-sm-4">
-										  				<input type="text" class="form-control" id="inputSuccess">
-													</div>
-										  			<span class="help-block col-sm-8">Woohoo!</span>
-												</div>
-									  		</div>	
-											
-									</form>	
-								</div>
-								<div class="step-pane" id="step4">
-									<div class="alert alert-info">
-										<button type="button" class="close" data-dismiss="alert">×</button>
-										<strong>Heads up!</strong> This alert needs your attention, but it's not super important.
-									</div>
-									<p>
-										Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.
-									</p>
-									<div class="controls">
-									  <label class="checkbox inline">
-										<input type="checkbox" id="inlineCheckbox2" value="option5"> I agree
-									  </label>
-									</div>	
-								</div>
-								<div class="step-pane" id="step5">
-									<form class="form-horizontal">
-
-											<div class="form-group">
-									     		<label class="control-label">Fullname:</label>
-												<div class="controls">
-													<span class="input-xlarge uneditable-input">Łukasz Holeczek</span>
-												</div>
-											</div>
-											<div class="form-group">
-									      		<label class="control-label">Email:</label>
-									     		<div class="controls">
-									          		<span class="input-xlarge uneditable-input">lukasz[@]clabs[dot].com</span>
-									  			</div>
-											</div>
-									        <div class="form-group">
-												<label class="control-label">Phone:</label>
-									            <div class="controls">
-													<span class="input-xlarge uneditable-input">+48 123 456 789</span>
-									     		</div>
-									   		</div>
-									   		<div class="form-group">
-									        	<label class="control-label"></label>
-									           	<div class="controls">
-									     			<label class="checkbox">
-									           			<input type="checkbox" value=""> I confirm this information
-									             	</label>
-									 			</div>
-									       	</div>
-									</form>	
-								</div>
-
-							</div>
-
-						</div>
-
-					</div>
-					
-				</div><!--/col-->
-
-			</div>
-
-<div class="row">
-				
-				<div class="col-lg-12">
-					<div class="box">
-						<div class="box-header">
-							<h2><i class="fa fa-edit"></i>Criar Penca</h2>
-						</div>
-						<div class="box-content">
-							
-							<div class="step-content">
-								<div class="step-pane active" id="step1">
-								<form action="http://localhost/penca/public/register/addpenca" method="post">
-                                                                    <div class="form-group">
-                                                                        <div class="controls">
-                                                                            <div class="input-group"> 
-                                                                                <span class="input-group-addon">
-                                                                                    <i class="fa fa-pencil"></i>
-                                                                                </span>
-                                                                                <label for="pn_name"></label>
-                                                                                <input id="pn_name" name="pn_name" class="form-control" placeholder="Nome da penca" type="" value="">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <div class="controls">
-                                                                            <div class="input-group"> 
-                                                                                <span class="input-group-addon">
-                                                                                    <i class="fa fa-users"></i>
-                                                                                </span>
-                                                                                <input id="pn_value" name="pn_value" class="form-control" placeholder="Quantidade maxima de participantes" type="" value="">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>                                                                    
-                                                                    <div class="form-group">
-                                                                        <div class="controls">
-                                                                            <div class="input-group"> 
-                                                                                <span class="input-group-addon">
-                                                                                    <i class="fa fa-dollar"></i>
-                                                                                </span>
-                                                                                <input id="pn_value" name="pn_value" class="form-control" placeholder="Valor" type="" value="">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">                                                                        
-                                                                        <div class="controls">
-                                                                                <select id="tm_idchampionship" name="tm_idchampionship" class="form-control">
-                                                                                    <?php
-                                                                                        for ($i = 0; $i < count($championships); $i = $i + 1) {
-                                                                                            echo "<option value=".$championships[$i]["ch_id"].">".$championships[$i]["ch_nome"]."</option>";
-                                                                                        }
-                                                                                    
-                                                                                    ?>
-                                                                                </select>
-                                                                        </div>
-                                                                    </div>                       
-                                                                    <div class="form-group">									
-									<div class="controls">
-									  <label class="checkbox">
-										<input type="checkbox" id="pn_justfriends" name="pn_justfriends">
-										Penca só para amigos
-									  </label>
-									</div>
-                                                                    </div>     
-                                                                    <div class="form-group">
-                                                                        <div class="controls">
-                                                                            <div class="input-group"> 
-                                                                                <span class="input-group-addon">
-                                                                                    <i class="fa fa-unlock-alt"></i>
-                                                                                </span>
-                                                                                <input id="pn_justfriends" name="pn_password" class="form-control" placeholder="Senha" type="" value="">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>                                                                    
-                                                                    <dt id="Registrar-label">&nbsp;</dt>
-                                                                    <dd id="Registrar-element">
-                                                                        <button name="Registrar" id="Registrar" type="submit" class="btn btn-success btn-next">Registrar</button>
-                                                                    </dd>
-                                                                </form>
-                                                                    
-                                                                    
-								</div>
-								
-								
-								
-								
-
-							</div>
-
-						</div>
-
-					</div>
-					
-				</div><!--/col-->
-
-			</div>
-    <div class="row">
-    
-<?php
+<form action="http://localhost/penca/public/register/addpenca" method="post">
+    <div class="form-group">
+        <div class="controls">
+            <div class="input-group"> 
+                <span class="input-group-addon">
+                    <i class="fa fa-pencil"></i>
+                </span>
+                <label for="pn_name"></label>
+                <input id="pn_name" name="pn_name" class="form-control" placeholder="Nome da penca" type="" value="">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="controls">
+            <div class="input-group"> 
+                <span class="input-group-addon">
+                    <i class="fa fa-users"></i>
+                </span>
+                <input id="pn_value" name="pn_value" class="form-control" placeholder="Quantidade maxima de participantes" type="" value="">
+            </div>
+        </div>
+    </div>                                                                    
+    <div class="form-group">
+        <div class="controls">
+            <div class="input-group"> 
+                <span class="input-group-addon">
+                    <i class="fa fa-dollar"></i>
+                </span>
+                <input id="pn_value" name="pn_value" class="form-control" placeholder="Valor" type="" value="">
+            </div>
+        </div>
+    </div>
+</form>

@@ -29,6 +29,7 @@ $championships = $this->championships;
 								<div class="actions">
 									<button step="0" id="btnPrev" type="button" class="btn btn-prev"> <i class="fa fa-arrow-left"></i> Prev</button>
 									<button step="1" id="btnSeguinte" type="button" class="btn btn-success btn-next" data-last="Finish">Seguinte<i class="fa fa-arrow-right"></i></button>
+                                                                        <button style="display:none" id="btnCriar" type="submit" class="btn btn-success btn-next" >Criar<i class="fa fa-arrow-right"></i></button>
 								</div>
 							</div>
 							<div class="step-content">
@@ -142,8 +143,8 @@ $championships = $this->championships;
                 $("#btnPrev").attr("step", stepAtual);
                 
                 if (stepAtual == 3) {
-                    $("#btnSeguinte").attr("type","submit");
-                    $("#btnSeguinte").html('Criar<i class="fa fa-arrow-right"></i>');
+                    $("#btnCriar").css("display", "inline");
+                    $("#btnSeguinte").css("display","none");
                 }
             }
         
@@ -169,8 +170,8 @@ $championships = $this->championships;
                 $("#step"+stepAtual).addClass("active");
             
                 if (stepAtual != 3) {
-                    $("#btnSeguinte").html('Seguinte<i class="fa fa-arrow-right"></i>');
-                    $("#btnSeguinte").attr("type","button");
+                    $("#btnCriar").css('display', 'none');
+                    $("#btnSeguinte").css("display","inline");
                 }
             
                 $("#btnPrev").attr("step", stepAtual);

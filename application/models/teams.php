@@ -48,4 +48,16 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
 
         return $result;        
     }
+    
+    public function load_teams_championship($champ) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from('team')
+                ->where('team.tm_idchampionship = ?', $champ)
+                ->order("team.tm_points DESC")    
+                ->query()
+                ->fetchAll();
+
+        return $result;  
+    }
 }

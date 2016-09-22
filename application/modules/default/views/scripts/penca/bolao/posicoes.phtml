@@ -1,0 +1,53 @@
+<?php
+
+    $teams = $this->teams;
+
+?>
+
+<div class="col-lg-4">
+					<div class="box">
+						<div class="box-header">
+							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Tabela de posicoes</h2>
+							
+						</div>
+						<div class="box-content">
+							<table class="table">
+								  <thead>
+									  <tr>
+                                                                            <th>Pos</th>
+                                                                            <th>Time</th>
+                                                                            <th>P</th>
+                                                                            <th>J</th>
+										                                  
+									  </tr>
+								  </thead>   
+								  <tbody>
+                                                                      
+                                                                   <?php   
+                                                                   
+                                                                        for ($i = 0; $i < count($teams); $i = $i + 1) {
+                                                                   
+                                                                            echo '<tr>
+                                                                                    <td id="tm_id'.$i.'">'.($i+1).'</td>
+                                                                                    <td id="tm_name'.$i.'">'.$teams[$i]['tm_name'].'</td>
+                                                                                    <td id="tm_points'.$i.'">'.$teams[$i]['tm_points'].'</td>
+                                                                                    <td id="tm_played'.$i.'">'.$teams[$i]['tm_played'].'</td>
+                                                                                                                         
+                                                                            </tr>';
+                                                                        
+                                                                        }
+                                                                        
+                                                                    ?>    
+                                                                                                          
+								  </tbody>
+							 </table>  
+							 <div class="pagination pagination-centered">
+							  <ul class="pagination" id="ul_positions">
+
+                                                                
+                                                                
+							  </ul>
+							</div>     
+						</div>
+					</div>
+				</div>

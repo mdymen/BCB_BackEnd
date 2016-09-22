@@ -237,5 +237,48 @@ class PencaController extends Zend_Controller_Action {
         $this->_helper->json($palpites);
     }
     
+    public function bolaoAction() {
+        $params = $this->_request->getParams();
+        
+        $rodada_id = $params['rodada'];
+        $champ_id = $params['champ'];
+        
+        $matchs_obj = new Application_Model_Matchs();
+        
+        $rodadas = $matchs_obj->load_rodada($champ_id, $rodada_id);
+        
+        $teams_obj = new Application_Model_Teams();
+        $teams = $teams_obj->load_teams_championship($champ_id); 
+        
+        $this->view->teams = $teams;
+        $this->view->rodadas = $rodadas;
+        
+//        print_r($rodadas);
+////        print_r($teams);
+//        
+//        die(".");
+        
+    }
     
+    public function submeterpalpiteAction() {
+        $params = $this->_request->getParams();
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+
+        $result1 = $params['result1'];
+        $result2 = $params['result2'];
+        $user_id = $data['us_id'];
+        $match_id = $params['match'];
+        
+        $matchs_obj = new Application_Model_Matchs();     
+        $matchs_obj->submeter_result($user_id, $result1, $result2, $match_id);
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($params);
+    }
 }

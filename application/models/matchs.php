@@ -45,6 +45,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         $result = $db->select()->from("match")
                 ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
                 ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
+                ->joinLeft("result", "match.mt_id = result.rs_idmatch")
                 ->where("match.mt_idchampionship = ?", $championship)
                 ->where("match.mt_round = ?", $rodada)
                 ->query()
@@ -71,6 +72,20 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         );
         
         $db->insert("result", $d);
+    }
+    
+    public function submeter_result($user_id, $result1, $result2, $match_id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $dados = array(
+            'rs_idmatch' => $match_id,
+            'rs_res1' => $result1,
+            'rs_res2' => $result2,
+            'rs_iduser' => $user_id
+        );
+        
+        $db->insert("result", $dados);
+        
     }
     
     public function load_resultados_palpitados($match) {
