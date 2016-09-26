@@ -1,4 +1,6 @@
  <?php   
+
+ 
     $palpites = $this->rodadas;
     
     if (!empty($palpites)) {
@@ -11,6 +13,7 @@ if (!empty($palpites)) {
    ?>
 
 <input type="hidden" value="<?php echo $palpites[0]['mt_idchampionship']; ?>" name="champ" id="champ" />
+<input type="hidden" value="<?php echo $palpites[0]['mt_round']; ?>" name="rodada" id="round" />
 
 
         
@@ -33,6 +36,7 @@ if (!empty($palpites)) {
                                                           <th width="15%"></th>
                                                           <th></th> 
                                                           <th width="15%"></th> 
+                                                          <th></th> 
                                                   </tr>
                                           </thead>   
                                           <tbody>
@@ -41,19 +45,22 @@ if (!empty($palpites)) {
                                               echo '<input type="hidden" value="'.count($palpites).'" name="count_palpites">';
                                                 for ($i = 0; $i < count($palpites); $i = $i + 1) {
                                                     echo '<input type="hidden" name="rs_'.$i.'" id="rs_'.$i.'" value="'.$palpites[$i]['mt_id'].'" />';
-                                                    echo '
-                                                        <tr>
-                                                            <td></td>
-                                                            <td id="date'.$i.'">
-                                                                <b>
-                                                               '.date("H:i",strtotime($palpites[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($palpites[$i]['mt_date']) ).'
-                                                                </b>';
-                                                                if (empty($palpites['rs_id'])) {
-                                                                    echo '<button it="'.$i.'" match="'.$palpites[$i]['mt_id'].'" class="btn btn-xs btn-success palpite">Palpitar</button>';
-                                                                }
+                                                    $date = date("H:i",strtotime($palpites[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($palpites[$i]['mt_date']) );
+                                                    $palpites[$i]['mt_date'] = $date;
+
+                                                    if (($i == 0) || ($i > 0 && strcmp($palpites[$i]['mt_date'],$palpites[$i-1]['mt_date']) != 0)) { 
+                                                        echo '
+                                                            <tr>
+                                                                <td></td>';
                                                                 
-                                                            echo '</td>                                      
-                                                        </tr>
+                                                                echo '<td id="date'.$i.'">
+                                                                    <b>
+                                                                   '.$date.'
+                                                                    </b>';
+
+                                                                echo '</td></tr>';                                      
+                                                            }
+                                                        echo '
                                                             <tr>
                                                             <td width="15%">
                                                                 <div class="input-group col-sm-7">
@@ -68,7 +75,13 @@ if (!empty($palpites)) {
                                                                     <input class="form-control" name="result2_'.$i.'" id="result2_'.$i.'" type="text" placeholder="0">
                                                                 </div>
                                                             </td>
-                                                            </td>                                      
+                                                            <td>';
+                                                                if (empty($palpites['rs_id'])) {
+                                                                    echo '<button it="'.$i.'" match="'.$palpites[$i]['mt_id'].'" class="btn btn-success palpite">'
+                                                                            . '<i class="fa fa-check"></i></button>';
+                                                                }
+                                                                
+                                                            echo '</td>                                      
                                                         </tr>';
                                                 }
                                               
@@ -95,13 +108,18 @@ if (!empty($palpites)) {
         $(".palpite").bind('click', function() {
            var it = $(this).attr("it");
            var match = $(this).attr("match");
-           var r1 = $("result" + it
+           var r1 = $("#result1_" + it).val();
+           var r2 = $("#result2_" + it).val();
+           var round = $("#round").val();
+           var team1 = $("#team1"+it).html();
+           var team2 = $("#team2"+it).html();
            
-           alert(it);
-           alert(match);
+           alert(r1);
            
-           $.post("submeterpalpiteAction",{ match : match, result1 : r1, result2 : rs  }, function() {
-               
+           $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round  }, function(response) {
+               console.log(response);
+               $("#sucesso_msg").html(team1+" "+r1+" "+team2+" "+r2+" adicionado com sucesso.");
+               $("#success").show();
            });
         });
     })

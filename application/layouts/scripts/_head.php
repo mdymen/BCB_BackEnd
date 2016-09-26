@@ -125,7 +125,8 @@
                                     echo breadcrumb();
                                 ?>
 			</ol>
-			
+           
+                            <?php echo $this->render('alerts.phtml'); ?>
                             <?php echo $this->layout()->content; ?>
      
 					
