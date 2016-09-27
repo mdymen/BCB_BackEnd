@@ -14,7 +14,7 @@ if (!empty($palpites_feitos)) {
 
 
         
-        <div class="col-lg-8">
+        <div class="col-lg-8" id="palpites_feitos">
                 <div class="box">
                         <div class="box-header">
                                 <h2><i class="fa fa-align-justify"></i><span class="break"></span>Rodada: <?php echo $palpites_feitos[0]['mt_round']; ?></h2>
@@ -25,7 +25,7 @@ if (!empty($palpites_feitos)) {
                                 </div>
                         </div>
                         <div class="box-content">
-                                <table class="table">
+                                <table class="table" id="tb_palpites_feitos">
                                           <thead>
                                                   <tr>
                                                           <th width="15%"></th>
@@ -39,11 +39,11 @@ if (!empty($palpites_feitos)) {
                                           <tbody>
                                               
                                               <?php
-                                              echo '<input type="hidden" value="'.count($palpites_feitos).'" name="count_palpites">';
+                                              echo '<input cant="'.count($palpites_feitos).'" type="hidden" value="'.count($palpites_feitos).'" id="count_palpites_feitos" name="count_palpites_feitos">';
                                                 for ($i = 0; $i < count($palpites_feitos); $i = $i + 1) {
                                                     echo '<input type="hidden" name="rs_'.$i.'" id="rs_'.$i.'" value="'.$palpites_feitos[$i]['mt_id'].'" />';
                                                     echo '
-                                                        <tr id="rstr'.$palpites_feitos[$i]['rs_id'].'">
+                                                        <tr pf_d="'.($i+1).'" id="rstr1'.$palpites_feitos[$i]['rs_id'].'">
                                                             <td></td>
                                                             <td id="date'.$i.'">
                                                                 <b>
@@ -53,7 +53,7 @@ if (!empty($palpites_feitos)) {
                                                                 
                                                             echo '</td>                                      
                                                         </tr>
-                                                            <tr>
+                                                            <tr pf="'.($i+1).'" id="rstr2'.$palpites_feitos[$i]['rs_id'].'">
                                                             <td width="15%">
                                                                 <div class="input-group col-sm-7">
                                                                     <input class="form-control" disabled="true" name="p_result1_'.$i.'" value="'.$palpites_feitos[$i]['rs_res1'].'" id="p_result1_'.$i.'"  type="text" placeholder="0">
@@ -90,19 +90,63 @@ if (!empty($palpites_feitos)) {
                             </div>
                         </div>
                 </div>
+            
+            
+<?php    
+    echo '<div id="template_palpite_feito" style="display:none"><input type="hidden" name="rs_" id="rs_" value="" />';
+    echo '<table id="tbresult">
+        <tr id="rstr1">
+            <td></td>
+            <td id="date">
+                <b></b>';
+            echo '</td>                                      
+        </tr>
+            <tr id="rstr2">
+            <td width="15%">
+                <div class="input-group col-sm-7">
+                    <input class="form-control" disabled="true" name="p_result1_" value="" id="p_result1_"  type="text" placeholder="0">
+                </div>
+            </td>
+            <td id="team1"></td>
+            <td></td>
+            <td id="team2"></td>
+            <td width="15%">     
+                <div class="input-group col-sm-7">		
+                    <input class="form-control" disabled="true" name="p_result2_" value="" id="p_result2_" type="text" placeholder="0">
+                </div>
+            </td>  
+            <td>';
+            echo '<button it="" result=""  class="btn btn-danger excluir"><i class="fa fa-trash-o "></i></button>';
+            echo '<button it="" result="" class="btn btn-info editar"><i class="fa fa-edit"></i></button>';
+            echo '</td>
+        </tr></table></div>';
+ ?>   
         </div>
 <?php
 }
 
 ?>
 
+
+
+
 <script type="text/javascript">
     $(function() { 
         $(".excluir").bind('click', function() {
             var rs = $(this).attr("result");
  
-            alert(rs);
+          //  alert(rs);
             $.post("excluirpalpite",{ result : rs }, function(response) {
+                $("#rstr1"+rs).html("");
+                $("#rstr2"+rs).html("");
+                var palpites = $("#count_palpites_feitos").attr("cant");
+                var n_palpites = parseInt(palpites);
+                if (palpites === '1') {
+                    $("#palpites_feitos").html("");
+                }
+                n_palpites = n_palpites - 1;
+                $("#count_palpites_feitos").attr("cant", n_palpites);
+                $("#count_palpites_feitos").attr("value", n_palpites);
                 console.log(response);
             }); 
         });
