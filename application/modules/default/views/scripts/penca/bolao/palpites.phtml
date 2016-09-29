@@ -28,7 +28,7 @@ if (!empty($palpites)) {
                                 </div>
                         </div>
                         <div class="box-content">
-                                <table class="table" >
+                                <table class="table" id="tb_palpites" >
                                           <thead>
                                                   <tr>
                                                           <th width="15%"></th>
@@ -47,7 +47,8 @@ if (!empty($palpites)) {
                                                     echo '<input type="hidden" name="rs_'.$i.'" id="rs_'.$i.'" value="'.$palpites[$i]['mt_id'].'" />';
                                                     $date = date("H:i",strtotime($palpites[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($palpites[$i]['mt_date']) );
                                                     $palpites[$i]['mt_date'] = $date;
-
+                                                   
+                                                    //echo '<input type="hidden" id="date_'.$i.'" value="'.$date.'" >';
                                                     if (($i == 0) || ($i > 0 && strcmp($palpites[$i]['mt_date'],$palpites[$i-1]['mt_date']) != 0)) { 
                                                         echo '
                                                             <tr>
@@ -61,23 +62,23 @@ if (!empty($palpites)) {
                                                                 echo '</td></tr>';                                      
                                                             }
                                                         echo '
-                                                            <tr>
+                                                            <tr id="trp_'.$i.'">
                                                             <td width="15%">
                                                                 <div class="input-group col-sm-7">
-                                                                    <input class="form-control"name="result1_'.$i.'" id="result1_'.$i.'"  type="text" placeholder="0">
+                                                                    <input class="form-control"name="result1_'.$i.'" id="result1p_'.$i.'"  type="text" placeholder="0">
                                                                 </div>
                                                             </td>
-                                                            <td id="team1'.$i.'">'.$palpites[$i]['t1nome'].'</td>
+                                                            <td id="team1p'.$i.'">'.$palpites[$i]['t1nome'].'</td>
                                                             <td></td>
-                                                            <td id="team2'.$i.'">'.$palpites[$i]['t2nome'].'</td>
+                                                            <td id="team2p'.$i.'">'.$palpites[$i]['t2nome'].'</td>
                                                             <td width="15%">     
                                                                 <div class="input-group col-sm-7">		
-                                                                    <input class="form-control" name="result2_'.$i.'" id="result2_'.$i.'" type="text" placeholder="0">
+                                                                    <input class="form-control" name="result2_'.$i.'" id="result2p_'.$i.'" type="text" placeholder="0">
                                                                 </div>
                                                             </td>
                                                             <td>';
                                                                 if (empty($palpites['rs_id'])) {
-                                                                    echo '<button it="'.$i.'" match="'.$palpites[$i]['mt_id'].'" class="btn btn-success palpite">'
+                                                                    echo '<button it_p="'.$i.'" match="'.$palpites[$i]['mt_id'].'" class="btn btn-success palpite">'
                                                                             . '<i class="fa fa-check"></i></button>';
                                                                 }
                                                                 
@@ -100,27 +101,62 @@ if (!empty($palpites)) {
 <?php
 }
 
+echo '<div id="template_palpite" style="display:none"><input type="hidden" name="rs_" id="rs_" value="" />';
+    echo '<table id="tbrodada">
+        <tr>
+            <td></td>';
+
+            echo '<td id="date">
+                <b>
+                </b>';
+
+            echo '</td></tr>';
+    echo '
+        <tr id="trp">
+        <td width="15%">
+            <div class="input-group col-sm-7">
+                <input class="form-control"name="result1_" id="result1p_"  type="text" placeholder="0">
+            </div>
+        </td>
+        <td id="team1p"></td>
+        <td></td>
+        <td id="team2p"></td>
+        <td width="15%">     
+            <div class="input-group col-sm-7">		
+                <input class="form-control" name="result2_" id="result2p_" type="text" placeholder="0">
+            </div>
+        </td>
+        <td>';
+   
+                echo '<button it_p="" match="" class="btn btn-success palpite">'
+                        . '<i class="fa fa-check"></i></button>';
+
+        echo '</td>                                      
+    </tr></table></div>';
+
 ?>
 
 <script type="text/javascript">
 
     $(function() {
         $(".palpite").bind('click', function() {
-           var it = $(this).attr("it");
+           var it = $(this).attr("it_p");
            var match = $(this).attr("match");
-           var r1 = $("#result1_" + it).val();
-           var r2 = $("#result2_" + it).val();
+         //  alert("#result1p_" + it);
+           var r1 = $("#result1p_" + it).attr("value");
+           var r2 = $("#result2p_" + it).attr("value");
            var round = $("#round").val();
-           var team1 = $("#team1"+it).html();
-           var team2 = $("#team2"+it).html();
+           var team1 = $("#team1p"+it).html();
+           var team2 = $("#team2p"+it).html();
            
+           
+        //   alert(r1);
            
            $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round  }, function(response) {
                console.log(response);
                $("#sucesso_msg").html(team1+" "+r1+" "+team2+" "+r2+" adicionado com sucesso.");
                var cant_pal_feitos = $("#count_palpites_feitos").attr("cant");
-//               $("#rstr1"+rs).html("");
-//               $("#rstr2"+rs).html("");
+
                 var cant_pf = $("#count_palpites_feitos").attr("value");
                 var n_palpites = parseInt(cant_pf);
 
@@ -129,7 +165,6 @@ if (!empty($palpites)) {
                 $("#count_palpites_feitos").attr("cant", n_palpites);
                 $("#count_palpites_feitos").attr("value", n_palpites);
         
-                
                 $("#tbresult tr").eq(1).attr("id","rstr"+n_palpites);
                 $("#tbresult tr").eq(1).find('td:eq(1)').attr("id","team1"+n_palpites.toString());                
                 $("#tbresult tr").eq(1).find('td:eq(3)').attr("id","team2"+n_palpites);
@@ -140,18 +175,26 @@ if (!empty($palpites)) {
                 $("#tbresult tr").eq(1).find('td:eq(0)').find('input').attr("value",r1);
                 $("#tbresult tr").eq(1).find('td:eq(0)').find('input').attr("disabled",true);
                 
-                $("#tbresult tr").eq(1).find('td:eq(2)').find('input').attr("disabled",false);
-                $("#tbresult tr").eq(1).find('td:eq(2)').find('input').attr("value",r2);
-                $("#tbresult tr").eq(1).find('td:eq(2)').find('input').attr("disabled",true);
-                //input_result1.val(r1);
+                $("#tbresult tr").eq(1).find('td:eq(4)').find('input').attr("disabled",false);
+                $("#tbresult tr").eq(1).find('td:eq(4)').find('input').attr("value",r2);
+                $("#tbresult tr").eq(1).find('td:eq(4)').find('input').attr("disabled",true);
+                
+                var date = $("date_"+it).attr("value");
+                
+                $("#tbresult tr").eq(1).find('td:eq(5)').find('button:eq(0)').attr("result",response);
+                
+                $("#tbresult tr").eq(0).attr("id","rstr2"+response);
+                $("#tbresult tr").eq(1).attr("id","rstr1"+response);                
                 
                 $('#tb_palpites_feitos').append($("#tbresult tbody").html());
-//                $('#tb_palpites_feitos').append('<tr pf_d='+n_palpites+'>' + $('[pf_d='+cant_pf+']').html() + "</tr>" + '<tr pf='+n_palpites+'>' + $('[pf='+cant_pf+']').html() + "</tr>");
-//                $('[pf=3] td[id=team11]').attr("id","team1"+n_palpites);
-//                $('[pf=3] td[id=team21]').attr("id","team1"+n_palpites);
+
+
+                $('#trp_'+it).html("");
+
 //              // alert($("#count_palpites_feitos").attr("value"));
 //                //$(".corpo_palpite_feito").html($(".corpo_palpite_feito").html() + $("#template_palpite_feito").html())
 //               $("#success").show();
+                excluir();
            });
         });
     })

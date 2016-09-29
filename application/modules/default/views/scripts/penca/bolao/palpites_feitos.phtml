@@ -131,7 +131,8 @@ if (!empty($palpites_feitos)) {
 
 
 <script type="text/javascript">
-    $(function() { 
+    
+    function excluir() {
         $(".excluir").bind('click', function() {
             var rs = $(this).attr("result");
  
@@ -148,8 +149,37 @@ if (!empty($palpites_feitos)) {
                 $("#count_palpites_feitos").attr("cant", n_palpites);
                 $("#count_palpites_feitos").attr("value", n_palpites);
                 console.log(response);
+                
+                $("#tbrodada tr").eq(1).attr("id","rstr"+n_palpites);
+                $("#tbrodada tr").eq(1).find('td:eq(1)').attr("id","team1"+n_palpites.toString());                
+                $("#tbrodada tr").eq(1).find('td:eq(3)').attr("id","team2"+n_palpites);
+                $("#tbrodada tr").eq(1).find('td:eq(1)').html("A");
+                $("#tbrodada tr").eq(1).find('td:eq(3)').html("B");
+                
+//                $("#tb_palpites tr").eq(1).find('td:eq(0)').find('input').attr("disabled",false);
+//                $("#tb_palpites tr").eq(1).find('td:eq(0)').find('input').attr("value",r1);
+//                $("#tb_palpites tr").eq(1).find('td:eq(0)').find('input').attr("disabled",true);
+//                
+//                $("#tb_palpites tr").eq(1).find('td:eq(4)').find('input').attr("disabled",false);
+//                $("#tb_palpites tr").eq(1).find('td:eq(4)').find('input').attr("value",r2);
+//                $("#tb_palpites tr").eq(1).find('td:eq(4)').find('input').attr("disabled",true);
+                
+                var date = $("date_").attr("value");
+                
+                $("#tbrodada tr").eq(1).find('td:eq(5)').find('button:eq(0)').attr("result",response);
+                
+                $("#tbrodada tr").eq(0).attr("id","rstr2"+response);
+                $("#tbrodada tr").eq(1).attr("id","rstr1"+response);      
+                
+                $('#tb_palpites').append($("#tbrodada tbody").html());
+                
+                
             }); 
         });
+    }
+    
+    $(function() { 
+        excluir();
     });
     
     </script>

@@ -106,7 +106,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         );
         
         $db->insert("result", $dados);
-        
+        return $db->lastInsertId();
     }
     
     public function load_resultados_palpitados($match) {
@@ -124,5 +124,19 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         
         $db->delete("result", "rs_id = ".$result);
+    }
+    
+    public function result($id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("result")
+                ->joinInner('match','result.rs_idmatch = match.mt_id')
+                ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('t1nome' => 't1.tm_name'))
+                ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('t2nome' => 't2.tm_name'))
+                ->where('result.rs_id = ?', $id)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
     }
 }

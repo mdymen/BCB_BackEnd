@@ -277,7 +277,7 @@ class PencaController extends Zend_Controller_Action {
         $round = $params['round'];
         
         $matchs_obj = new Application_Model_Matchs();     
-        $matchs_obj->submeter_result($user_id, $result1, $result2, $match_id, $round);
+        $id = $matchs_obj->submeter_result($user_id, $result1, $result2, $match_id, $round);
         
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
@@ -285,7 +285,7 @@ class PencaController extends Zend_Controller_Action {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json($params);
+        $this->_helper->json($id);
     }
     
     public function excluirpalpiteAction() {
@@ -293,6 +293,7 @@ class PencaController extends Zend_Controller_Action {
         
         $result = $params['result'];
         $matchs_obj = new Application_Model_Matchs();   
+        $r = $matchs_obj->result($result);
         $matchs_obj->delete_palpite($result);   
         
         $this->getResponse()
@@ -301,7 +302,7 @@ class PencaController extends Zend_Controller_Action {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json($params);
+        $this->_helper->json($r);
                 
     }
 }
