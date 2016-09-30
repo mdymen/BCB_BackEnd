@@ -42,16 +42,20 @@ if (!empty($palpites)) {
                                           <tbody>
                                               
                                               <?php
-                                              echo '<input type="hidden" value="'.count($palpites).'" name="count_palpites">';
-                                                for ($i = 0; $i < count($palpites); $i = $i + 1) {
-                                                    echo '<input type="hidden" name="rs_'.$i.'" id="rs_'.$i.'" value="'.$palpites[$i]['mt_id'].'" />';
+                                              echo '<input type="hidden" value="'.count($palpites).'" name="count_palpites" id="count_palpites">';
+                                              for ($i = 0; $i < count($palpites); $i = $i + 1) {
+                                                $st = 'style=""';
+                                                if (!empty($palpites[$i]['rs_id'])) {
+                                                    $st = 'style="display:none"';
+                                                }   
+                                                    echo '<input '.$st.' type="hidden" name="rs_'.$i.'" id="rs_'.$i.'" value="'.$palpites[$i]['mt_id'].'" />';
                                                     $date = date("H:i",strtotime($palpites[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($palpites[$i]['mt_date']) );
                                                     $palpites[$i]['mt_date'] = $date;
                                                    
                                                     //echo '<input type="hidden" id="date_'.$i.'" value="'.$date.'" >';
                                                     if (($i == 0) || ($i > 0 && strcmp($palpites[$i]['mt_date'],$palpites[$i-1]['mt_date']) != 0)) { 
                                                         echo '
-                                                            <tr>
+                                                            <tr '.$st.'>
                                                                 <td></td>';
                                                                 
                                                                 echo '<td id="date'.$i.'">
@@ -62,7 +66,7 @@ if (!empty($palpites)) {
                                                                 echo '</td></tr>';                                      
                                                             }
                                                         echo '
-                                                            <tr id="trp_'.$i.'">
+                                                            <tr '.$st.' id="trp_'.$i.'">
                                                             <td width="15%">
                                                                 <div class="input-group col-sm-7">
                                                                     <input class="form-control"name="result1_'.$i.'" id="result1p_'.$i.'"  type="text" placeholder="0">
@@ -84,7 +88,8 @@ if (!empty($palpites)) {
                                                                 
                                                             echo '</td>                                      
                                                         </tr>';
-                                                }
+                                                    }
+                                               
                                               
                                               ?>
                                               
@@ -138,8 +143,8 @@ echo '<div id="template_palpite" style="display:none"><input type="hidden" name=
 
 <script type="text/javascript">
 
-    $(function() {
-        $(".palpite").bind('click', function() {
+    function submeter() {
+         $(".palpite").bind('click', function() {
            var it = $(this).attr("it_p");
            var match = $(this).attr("match");
          //  alert("#result1p_" + it);
@@ -153,43 +158,51 @@ echo '<div id="template_palpite" style="display:none"><input type="hidden" name=
         //   alert(r1);
            
            $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round  }, function(response) {
-               console.log(response);
-               $("#sucesso_msg").html(team1+" "+r1+" "+team2+" "+r2+" adicionado com sucesso.");
-               var cant_pal_feitos = $("#count_palpites_feitos").attr("cant");
+               
+//                var count_palpites = $("#count_palpites").attr("value");
+//                var c_palpites = parseInt(count_palpites) - 1;
+//                $("#count_palpites").attr("value", c_palpites);
+//        
+//                console.log(response);
+//               $("#sucesso_msg").html(team1+" "+r1+" "+team2+" "+r2+" adicionado com sucesso.");
+//               var cant_pal_feitos = $("#count_palpites_feitos").attr("cant");
+//
+//                var cant_pf = $("#count_palpites_feitos").attr("value");
+//                var n_palpites = parseInt(cant_pf);
+//
+//                n_palpites = n_palpites + 1;
+//                alert(n_palpites);
+//                $("#count_palpites_feitos").attr("cant", n_palpites);
+//                $("#count_palpites_feitos").attr("value", n_palpites);
+//        
+//                $("#tbresult tr").eq(1).attr("id","rstr"+n_palpites);
+//                $("#tbresult tr").eq(1).find('td:eq(1)').attr("id","team1"+n_palpites.toString());                
+//                $("#tbresult tr").eq(1).find('td:eq(3)').attr("id","team2"+n_palpites);
+//                $("#tbresult tr").eq(1).find('td:eq(1)').html(team1);
+//                $("#tbresult tr").eq(1).find('td:eq(3)').html(team2);
+//                
+//                $("#tbresult tr").eq(1).find('td:eq(0)').find('input').attr("disabled",false);
+//                $("#tbresult tr").eq(1).find('td:eq(0)').find('input').attr("value",r1);
+//                $("#tbresult tr").eq(1).find('td:eq(0)').find('input').attr("disabled",true);
+//                
+//                $("#tbresult tr").eq(1).find('td:eq(4)').find('input').attr("disabled",false);
+//                $("#tbresult tr").eq(1).find('td:eq(4)').find('input').attr("value",r2);
+//                $("#tbresult tr").eq(1).find('td:eq(4)').find('input').attr("disabled",true);
+//                
+//                var date = $("date_"+it).attr("value");
+//                
+//                $("#tbresult tr").eq(1).find('td:eq(5)').find('button:eq(0)').attr("result",response);
+//                
+//                $("#tbresult tr").eq(0).attr("id","rstr2"+response);
+//                $("#tbresult tr").eq(1).attr("id","rstr1"+response);                
+                
+//                $('#tb_palpites_feitos').append($("#tbresult tbody").html());
 
-                var cant_pf = $("#count_palpites_feitos").attr("value");
-                var n_palpites = parseInt(cant_pf);
+                $('#rs_'+it+'_dados').attr("style","display:block");
+                $('#rs_'+it+'_input').attr("style","display:block");
+                $('#rs_'+it+'_data').attr("style","display:block");
 
-                n_palpites = n_palpites + 1;
-                alert(n_palpites);
-                $("#count_palpites_feitos").attr("cant", n_palpites);
-                $("#count_palpites_feitos").attr("value", n_palpites);
-        
-                $("#tbresult tr").eq(1).attr("id","rstr"+n_palpites);
-                $("#tbresult tr").eq(1).find('td:eq(1)').attr("id","team1"+n_palpites.toString());                
-                $("#tbresult tr").eq(1).find('td:eq(3)').attr("id","team2"+n_palpites);
-                $("#tbresult tr").eq(1).find('td:eq(1)').html(team1);
-                $("#tbresult tr").eq(1).find('td:eq(3)').html(team2);
-                
-                $("#tbresult tr").eq(1).find('td:eq(0)').find('input').attr("disabled",false);
-                $("#tbresult tr").eq(1).find('td:eq(0)').find('input').attr("value",r1);
-                $("#tbresult tr").eq(1).find('td:eq(0)').find('input').attr("disabled",true);
-                
-                $("#tbresult tr").eq(1).find('td:eq(4)').find('input').attr("disabled",false);
-                $("#tbresult tr").eq(1).find('td:eq(4)').find('input').attr("value",r2);
-                $("#tbresult tr").eq(1).find('td:eq(4)').find('input').attr("disabled",true);
-                
-                var date = $("date_"+it).attr("value");
-                
-                $("#tbresult tr").eq(1).find('td:eq(5)').find('button:eq(0)').attr("result",response);
-                
-                $("#tbresult tr").eq(0).attr("id","rstr2"+response);
-                $("#tbresult tr").eq(1).attr("id","rstr1"+response);                
-                
-                $('#tb_palpites_feitos').append($("#tbresult tbody").html());
-
-
-                $('#trp_'+it).html("");
+                $('#trp_'+it).attr("style", "display:none");
 
 //              // alert($("#count_palpites_feitos").attr("value"));
 //                //$(".corpo_palpite_feito").html($(".corpo_palpite_feito").html() + $("#template_palpite_feito").html())
@@ -197,6 +210,10 @@ echo '<div id="template_palpite" style="display:none"><input type="hidden" name=
                 excluir();
            });
         });
-    })
+    }
+
+    $(function() {
+       submeter();
+    });
 
 </script>

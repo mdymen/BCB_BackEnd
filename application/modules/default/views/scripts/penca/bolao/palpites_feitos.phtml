@@ -41,9 +41,13 @@ if (!empty($palpites_feitos)) {
                                               <?php
                                               echo '<input cant="'.count($palpites_feitos).'" type="hidden" value="'.count($palpites_feitos).'" id="count_palpites_feitos" name="count_palpites_feitos">';
                                                 for ($i = 0; $i < count($palpites_feitos); $i = $i + 1) {
-                                                    echo '<input type="hidden" name="rs_'.$i.'" id="rs_'.$i.'" value="'.$palpites_feitos[$i]['mt_id'].'" />';
+                                                    $st = "";
+                                                    if ($palpites_feitos[$i]['rs_id'] == -1) {
+                                                        $st='style="display:none"';
+                                                    }
+                                                    echo '<input '.$st.' type="hidden" name="rs_'.$i.'_input" id="rs_'.$i.'" value="'.$palpites_feitos[$i]['mt_id'].'" />';
                                                     echo '
-                                                        <tr pf_d="'.($i+1).'" id="rstr1'.$palpites_feitos[$i]['rs_id'].'">
+                                                        <tr name="rs_'.$i.'_data" '.$st.' pf_d="'.($i+1).'" id="rstr1'.$palpites_feitos[$i]['rs_id'].'">
                                                             <td></td>
                                                             <td id="date'.$i.'">
                                                                 <b>
@@ -53,7 +57,7 @@ if (!empty($palpites_feitos)) {
                                                                 
                                                             echo '</td>                                      
                                                         </tr>
-                                                            <tr pf="'.($i+1).'" id="rstr2'.$palpites_feitos[$i]['rs_id'].'">
+                                                            <tr name="rs_'.$i.'_dados" '.$st.' pf="'.($i+1).'" id="rstr2'.$palpites_feitos[$i]['rs_id'].'">
                                                             <td width="15%">
                                                                 <div class="input-group col-sm-7">
                                                                     <input class="form-control" disabled="true" name="p_result1_'.$i.'" value="'.$palpites_feitos[$i]['rs_res1'].'" id="p_result1_'.$i.'"  type="text" placeholder="0">
@@ -138,6 +142,10 @@ if (!empty($palpites_feitos)) {
  
           //  alert(rs);
             $.post("excluirpalpite",{ result : rs }, function(response) {
+                var count_palpites = $("#count_palpites").attr("value");
+                var c_palpites = parseInt(count_palpites);// + 1;
+                $("#count_palpites").attr("value", c_palpites);
+                
                 $("#rstr1"+rs).html("");
                 $("#rstr2"+rs).html("");
                 var palpites = $("#count_palpites_feitos").attr("cant");
@@ -153,27 +161,19 @@ if (!empty($palpites_feitos)) {
                 $("#tbrodada tr").eq(1).attr("id","rstr"+n_palpites);
                 $("#tbrodada tr").eq(1).find('td:eq(1)').attr("id","team1"+n_palpites.toString());                
                 $("#tbrodada tr").eq(1).find('td:eq(3)').attr("id","team2"+n_palpites);
-                $("#tbrodada tr").eq(1).find('td:eq(1)').html("A");
-                $("#tbrodada tr").eq(1).find('td:eq(3)').html("B");
-                
-//                $("#tb_palpites tr").eq(1).find('td:eq(0)').find('input').attr("disabled",false);
-//                $("#tb_palpites tr").eq(1).find('td:eq(0)').find('input').attr("value",r1);
-//                $("#tb_palpites tr").eq(1).find('td:eq(0)').find('input').attr("disabled",true);
-//                
-//                $("#tb_palpites tr").eq(1).find('td:eq(4)').find('input').attr("disabled",false);
-//                $("#tb_palpites tr").eq(1).find('td:eq(4)').find('input').attr("value",r2);
-//                $("#tb_palpites tr").eq(1).find('td:eq(4)').find('input').attr("disabled",true);
+                $("#tbrodada tr").eq(1).find('td:eq(1)').html(response[0].t1nome);
+                $("#tbrodada tr").eq(1).find('td:eq(3)').html(response[0].t2nome);
                 
                 var date = $("date_").attr("value");
                 
                 $("#tbrodada tr").eq(1).find('td:eq(5)').find('button:eq(0)').attr("result",response);
                 
-                $("#tbrodada tr").eq(0).attr("id","rstr2"+response);
-                $("#tbrodada tr").eq(1).attr("id","rstr1"+response);      
+                $("#tbrodada tr").eq(1).attr("id","trp_"+c_palpites);
+                //$("#tbrodada tr").eq(1).attr("id","rstr1"+response);      
                 
                 $('#tb_palpites').append($("#tbrodada tbody").html());
                 
-                
+                submeter();
             }); 
         });
     }
