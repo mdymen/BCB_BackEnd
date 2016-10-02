@@ -94,37 +94,7 @@ if (!empty($palpites_feitos)) {
                             </div>
                         </div>
                 </div>
-            
-            
-<?php    
-    echo '<div id="template_palpite_feito" style="display:none"><input type="hidden" name="rs_" id="rs_" value="" />';
-    echo '<table id="tbresult">
-        <tr id="rstr1">
-            <td></td>
-            <td id="date">
-                <b></b>';
-            echo '</td>                                      
-        </tr>
-            <tr id="rstr2">
-            <td width="15%">
-                <div class="input-group col-sm-7">
-                    <input class="form-control" disabled="true" name="p_result1_" value="" id="p_result1_"  type="text" placeholder="0">
-                </div>
-            </td>
-            <td id="team1"></td>
-            <td></td>
-            <td id="team2"></td>
-            <td width="15%">     
-                <div class="input-group col-sm-7">		
-                    <input class="form-control" disabled="true" name="p_result2_" value="" id="p_result2_" type="text" placeholder="0">
-                </div>
-            </td>  
-            <td>';
-            echo '<button it="" result=""  class="btn btn-danger excluir"><i class="fa fa-trash-o "></i></button>';
-            echo '<button it="" result="" class="btn btn-info editar"><i class="fa fa-edit"></i></button>';
-            echo '</td>
-        </tr></table></div>';
- ?>   
+          
         </div>
 <?php
 }
@@ -139,39 +109,52 @@ if (!empty($palpites_feitos)) {
     function excluir() {
         $(".excluir").bind('click', function() {
             var rs = $(this).attr("result");
- 
+            var it = $(this).attr("it");
           //  alert(rs);
             $.post("excluirpalpite",{ result : rs }, function(response) {
+               $("#info_msg").html("Palpite excluido!");
+               $("#append_info").html($("#info").html());
+               $(".alert-info").show();
+                fechar_info();
+                
                 var count_palpites = $("#count_palpites").attr("value");
                 var c_palpites = parseInt(count_palpites);// + 1;
-                $("#count_palpites").attr("value", c_palpites);
+//                $("#count_palpites").attr("value", c_palpites);
+//                
+//                $("#rstr1"+rs).html("");
+//                $("#rstr2"+rs).html("");
+//                var palpites = $("#count_palpites_feitos").attr("cant");
+//                var n_palpites = parseInt(palpites);
+//                if (palpites === '1') {
+//                    $("#palpites_feitos").html("");
+//                }
+//                n_palpites = n_palpites - 1;
+//                $("#count_palpites_feitos").attr("cant", n_palpites);
+//                $("#count_palpites_feitos").attr("value", n_palpites);
+//                console.log(response);
+//                
+//                $("#tbrodada tr").eq(1).attr("id","rstr"+n_palpites);
+//                $("#tbrodada tr").eq(1).find('td:eq(1)').attr("id","team1"+n_palpites.toString());                
+//                $("#tbrodada tr").eq(1).find('td:eq(3)').attr("id","team2"+n_palpites);
+//                $("#tbrodada tr").eq(1).find('td:eq(1)').html(response[0].t1nome);
+//                $("#tbrodada tr").eq(1).find('td:eq(3)').html(response[0].t2nome);
+//                
+//                var date = $("date_").attr("value");
+//                
+//                $("#tbrodada tr").eq(1).find('td:eq(5)').find('button:eq(0)').attr("result",response);
+//                
+//                $("#tbrodada tr").eq(1).attr("id","trp_"+c_palpites);
+//                //$("#tbrodada tr").eq(1).attr("id","rstr1"+response);      
+//                
+//                $('#tb_palpites').append($("#tbrodada tbody").html());
                 
-                $("#rstr1"+rs).html("");
-                $("#rstr2"+rs).html("");
-                var palpites = $("#count_palpites_feitos").attr("cant");
-                var n_palpites = parseInt(palpites);
-                if (palpites === '1') {
-                    $("#palpites_feitos").html("");
-                }
-                n_palpites = n_palpites - 1;
-                $("#count_palpites_feitos").attr("cant", n_palpites);
-                $("#count_palpites_feitos").attr("value", n_palpites);
                 console.log(response);
                 
-                $("#tbrodada tr").eq(1).attr("id","rstr"+n_palpites);
-                $("#tbrodada tr").eq(1).find('td:eq(1)').attr("id","team1"+n_palpites.toString());                
-                $("#tbrodada tr").eq(1).find('td:eq(3)').attr("id","team2"+n_palpites);
-                $("#tbrodada tr").eq(1).find('td:eq(1)').html(response[0].t1nome);
-                $("#tbrodada tr").eq(1).find('td:eq(3)').html(response[0].t2nome);
+                $('[name=rs_'+it+'_dados]').attr("style","display:none");
+                $('[name=rs_'+it+'_input]').attr("style","display:none");
+                $('[name=rs_'+it+'_data]').attr("style","display:none");  
                 
-                var date = $("date_").attr("value");
-                
-                $("#tbrodada tr").eq(1).find('td:eq(5)').find('button:eq(0)').attr("result",response);
-                
-                $("#tbrodada tr").eq(1).attr("id","trp_"+c_palpites);
-                //$("#tbrodada tr").eq(1).attr("id","rstr1"+response);      
-                
-                $('#tb_palpites').append($("#tbrodada tbody").html());
+                $('#trp_'+it).attr("style", "display:yes");
                 
                 submeter();
             }); 

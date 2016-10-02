@@ -1,17 +1,29 @@
 <div class="row">	
     <div class="col-lg-12">
 
-                <div id="alert" class="alert alert-danger" style="display:none">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                <div id="append_danger">
+                    <div id="alert">
+                        <div class="alert alert-danger" style="display:none">
+                                <button type="button" class="close close-danger">×</button>
+                                <strong>Erro!</strong><p id="alert_msg">Change a few things up and try submitting again.</p>
+                        </div>
+                    </div>
                 </div>
-                <div id="success" class="alert alert-success" style="display:none">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Sucesso!</strong><p id="sucesso_msg">You successfully read this important alert message.</p>
-                </div>
-                <div id="info" class="alert alert-info" style="display:none">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+                <div id="append_success">
+                    <div id="success">
+                        <div class="alert alert-success" style="display:none">
+                                <button type="button" class="close close-success" >×</button>
+                                <strong>Sucesso!</strong><p id="sucesso_msg">You successfully read this important alert message.</p>
+                        </div>
+                    </div>
+                </div>   
+                <div id="append_info">
+                    <div id="info">
+                        <div class="alert alert-info" style="display:none">
+                                <button type="button" class="close close-info" >×</button>
+                                <strong>Info!</strong><p id="info_msg"> This alert needs your attention, but it's not super important.</p>
+                        </div>
+                    </div>
                 </div>
                 <div id="warning" class="alert alert-warning" style="display:none">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -20,3 +32,33 @@
                 </div>
     </div><!--/col-->
 </div>
+
+
+<script type="text/javascript">
+
+    function fechar_sucesso() {
+        $(".close-success").bind("click", function() {
+            $(".alert-success").hide();
+        });
+    }
+    
+    function fechar_info() {
+        $(".close-info").bind("click", function() {
+            $(".alert-info").hide();
+        });
+    }
+    
+    function fechar_alert() {
+        $(".close-danger").bind("click", function() {
+            $(".alert-danger").hide();
+        });
+    }
+
+    $(function() {
+        fechar_sucesso();
+        fechar_info();
+        fechar_alert();
+        
+    });
+ 
+</script>

@@ -106,39 +106,6 @@ if (!empty($palpites)) {
 <?php
 }
 
-echo '<div id="template_palpite" style="display:none"><input type="hidden" name="rs_" id="rs_" value="" />';
-    echo '<table id="tbrodada">
-        <tr>
-            <td></td>';
-
-            echo '<td id="date">
-                <b>
-                </b>';
-
-            echo '</td></tr>';
-    echo '
-        <tr id="trp">
-        <td width="15%">
-            <div class="input-group col-sm-7">
-                <input class="form-control"name="result1_" id="result1p_"  type="text" placeholder="0">
-            </div>
-        </td>
-        <td id="team1p"></td>
-        <td></td>
-        <td id="team2p"></td>
-        <td width="15%">     
-            <div class="input-group col-sm-7">		
-                <input class="form-control" name="result2_" id="result2p_" type="text" placeholder="0">
-            </div>
-        </td>
-        <td>';
-   
-                echo '<button it_p="" match="" class="btn btn-success palpite">'
-                        . '<i class="fa fa-check"></i></button>';
-
-        echo '</td>                                      
-    </tr></table></div>';
-
 ?>
 
 <script type="text/javascript">
@@ -154,61 +121,29 @@ echo '<div id="template_palpite" style="display:none"><input type="hidden" name=
            var team1 = $("#team1p"+it).html();
            var team2 = $("#team2p"+it).html();
            
-           
-        //   alert(r1);
-           
-           $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round  }, function(response) {
-               
-//                var count_palpites = $("#count_palpites").attr("value");
-//                var c_palpites = parseInt(count_palpites) - 1;
-//                $("#count_palpites").attr("value", c_palpites);
-//        
-//                console.log(response);
-//               $("#sucesso_msg").html(team1+" "+r1+" "+team2+" "+r2+" adicionado com sucesso.");
-//               var cant_pal_feitos = $("#count_palpites_feitos").attr("cant");
-//
-//                var cant_pf = $("#count_palpites_feitos").attr("value");
-//                var n_palpites = parseInt(cant_pf);
-//
-//                n_palpites = n_palpites + 1;
-//                alert(n_palpites);
-//                $("#count_palpites_feitos").attr("cant", n_palpites);
-//                $("#count_palpites_feitos").attr("value", n_palpites);
-//        
-//                $("#tbresult tr").eq(1).attr("id","rstr"+n_palpites);
-//                $("#tbresult tr").eq(1).find('td:eq(1)').attr("id","team1"+n_palpites.toString());                
-//                $("#tbresult tr").eq(1).find('td:eq(3)').attr("id","team2"+n_palpites);
-//                $("#tbresult tr").eq(1).find('td:eq(1)').html(team1);
-//                $("#tbresult tr").eq(1).find('td:eq(3)').html(team2);
-//                
-//                $("#tbresult tr").eq(1).find('td:eq(0)').find('input').attr("disabled",false);
-//                $("#tbresult tr").eq(1).find('td:eq(0)').find('input').attr("value",r1);
-//                $("#tbresult tr").eq(1).find('td:eq(0)').find('input').attr("disabled",true);
-//                
-//                $("#tbresult tr").eq(1).find('td:eq(4)').find('input').attr("disabled",false);
-//                $("#tbresult tr").eq(1).find('td:eq(4)').find('input').attr("value",r2);
-//                $("#tbresult tr").eq(1).find('td:eq(4)').find('input').attr("disabled",true);
-//                
-//                var date = $("date_"+it).attr("value");
-//                
-//                $("#tbresult tr").eq(1).find('td:eq(5)').find('button:eq(0)').attr("result",response);
-//                
-//                $("#tbresult tr").eq(0).attr("id","rstr2"+response);
-//                $("#tbresult tr").eq(1).attr("id","rstr1"+response);                
-                
-//                $('#tb_palpites_feitos').append($("#tbresult tbody").html());
+           if (parseInt(r1) > 0 && parseInt(r2) > 0 ) {
+                $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round  }, function(response) {
+                    $('[name=rs_'+it+'_dados]').attr("style","display:yes");
+                    $('[name=rs_'+it+'_input]').attr("style","display:yes");
+                    $('[name=rs_'+it+'_data]').attr("style","display:yes");
 
-                $('#rs_'+it+'_dados').attr("style","display:block");
-                $('#rs_'+it+'_input').attr("style","display:block");
-                $('#rs_'+it+'_data').attr("style","display:block");
+                    $('[name="p_result2_'+it+'"]').val(response.rs_res2);
+                    $('[name="p_result1_'+it+'"]').val(response.rs_res1);
 
-                $('#trp_'+it).attr("style", "display:none");
+                    $('#trp_'+it).attr("style", "display:none");
 
-//              // alert($("#count_palpites_feitos").attr("value"));
-//                //$(".corpo_palpite_feito").html($(".corpo_palpite_feito").html() + $("#template_palpite_feito").html())
-//               $("#success").show();
-                excluir();
-           });
+                    $("#sucesso_msg").html("Palpite adicionado: " + team1 + " " + response.rs_res1 + " - " + team2 + " " + response.rs_res2);
+                    $("#append_success").html($("#success").html());
+                    $(".alert-success").show();
+                    fechar_sucesso();
+                    excluir();
+               });
+           } else {
+               $("#alert_msg").html("Ao inserir o palpite do jogo.");
+               $("#append_danger").html($("#alert").html());
+               $(".alert-danger").show();
+               fechar_alert();
+           }
         });
     }
 

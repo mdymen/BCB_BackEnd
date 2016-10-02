@@ -48,5 +48,13 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
         $db->update('match', $dados,'mt_id = '.$id_match);
     }
     
+    public function getResult($id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        return $db->select()->from("result")
+                ->where("rs_id = ?", $id)
+                ->query()
+                ->fetch();  
+    }
     
 }

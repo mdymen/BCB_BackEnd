@@ -315,13 +315,16 @@ class PencaController extends Zend_Controller_Action {
         $matchs_obj = new Application_Model_Matchs();     
         $id = $matchs_obj->submeter_result($user_id, $result1, $result2, $match_id, $round);
         
+        $result_obj = new Application_Model_Result();    
+        $result = $result_obj->getResult($id);
+        
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
         
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json($id);
+        $this->_helper->json($result);
     }
     
     public function excluirpalpiteAction() {
