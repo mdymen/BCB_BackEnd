@@ -1,7 +1,64 @@
+<?php
+
+ $championship = $this->championships;
+
+?>
+
 <div class="row">
-
-<?php echo $this->render('penca/bolao/palpites_feitos.phtml'); ?>
-<?php echo $this->render('penca/bolao/posicoes.phtml'); ?>
-<?php echo $this->render('penca/bolao/palpites.phtml'); ?>
-
+    <div class="col-lg-12">
+            <div class="box">
+                    <div class="box-content">
+                            <form id="frChamp" action="../penca/bolao" method="post">	
+                                    <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                    <select id="championship" name="champ" class="form-control">
+                                                    <?php   
+                                                        if (empty($pencas)) {
+                                                            echo '<option value="Vazio"></option>';    
+                                                        }
+                                                        
+                                                        for ($i = 0; $i < count($championship); $i = $i + 1) {
+                                                            echo '<option value="'.$championship[$i]['ch_id'].'">'.$championship[$i]['ch_nome'].'</option>';
+                                                        }                                                        
+                                                    ?>
+                                                    </select></div>
+                                            </div>	
+                                      </div>
+                                    </div>    
+                            </form>   
+                    </div>
+            </div>
+        </div>
     </div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <?php echo $this->render('penca/bolao/paginacao.phtml'); ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <?php echo $this->render('penca/bolao/palpites_feitos.phtml'); ?>  
+        
+        <?php echo $this->render('penca/bolao/palpites.phtml'); ?>
+    </div>
+    
+    <div class="col-lg-4">
+        <?php echo $this->render('penca/bolao/posicoes.phtml'); ?>
+    </div>
+    
+</div>
+
+    <script type="text/javascript">
+       $(function() {
+           $("#championship").change(function() {
+               $('#frChamp').submit();
+             //  alert("TROCOU");
+           })
+       }); 
+         
+    </script>

@@ -251,6 +251,11 @@ class PencaController extends Zend_Controller_Action {
         $rodadas = $matchs_obj->load_rodada($champ_id, $rodada_id, $data['us_id']);
         $palpites_da_rodada = $matchs_obj->load_palpites_simples($champ_id, $rodada_id, $data['us_id']);
         
+        $champ = new Application_Model_Championships();
+        
+        $this->view->championships = $champ->load();
+        
+        
         $teams_obj = new Application_Model_Teams();
         $teams = $teams_obj->load_teams_championship($champ_id); 
         
