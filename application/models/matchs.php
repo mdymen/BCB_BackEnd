@@ -49,7 +49,6 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
                 ->where("match.mt_idchampionship = ?", $championship)
                 ->where("match.mt_round = ?", $rodada)
                 //->where("result.rs_id <> '' " )
-                ->orWhere("result.rs_iduser = ?", $usuario)
                 ->query()
                 ->fetchAll();
         
@@ -138,5 +137,16 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
                 ->fetchAll();
         
         return $result;
+    }
+    
+    public function rondas($champ) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $result = $db->select()->from('match', array('count(distinct mt_round) as rounds'))
+                ->where("mt_idchampionship", $champ)
+                ->query()
+                ->fetch();
+
+        return $result;
+        
     }
 }
