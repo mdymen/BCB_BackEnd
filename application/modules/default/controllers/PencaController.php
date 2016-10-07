@@ -239,78 +239,70 @@ class PencaController extends Zend_Controller_Action {
     
     public function bolaoAction() {
         $params = $this->_request->getParams();
-        
-        $rodada_id = $params['rodada'];
-        $champ_id = $params['champ'];
-        
-        $storage = new Zend_Auth_Storage_Session();
-        $data = (get_object_vars($storage->read()));
-        
-        $matchs_obj = new Application_Model_Matchs();
-        $rondas = $matchs_obj->rondas($champ_id);
-        $rondas = $rondas['rounds'];
-        //Array ( [rounds] => 2 ) .
-        //print_r($matchs_obj->rondas($champ_id));
-        //die(".");
-        
-        $rodadas = $matchs_obj->load_rodada($champ_id, $rodada_id, $data['us_id']);
-        $palpites_da_rodada = $matchs_obj->load_palpites_simples($champ_id, $rodada_id, $data['us_id']);
-        
-        
+                    
         $champ = new Application_Model_Championships();
-        
         $this->view->championships = $champ->load();
         
+        if (!empty($params['rodada'])) {  
         
-        $teams_obj = new Application_Model_Teams();
-        $teams = $teams_obj->load_teams_championship($champ_id); 
-        
-        for ($i = 0; $i < count($rodadas); $i = $i + 1) {
-            $e = false;
-            $c = 0;
-            for ($j = 0; $j < count($palpites_da_rodada); $j = $j + 1) {
-                if ($palpites_da_rodada[$j]['rs_idmatch'] == $rodadas[$i]['mt_id']) {
-                  $e = true;  
-                }
-                $c = $c + 1;
-            }
-            
-            if (!$e) {
-                $palpites_da_rodada[$j]['rs_id'] = -1;
-                $palpites_da_rodada[$j]['rs_idmatch'] = $rodadas[$c]['mt_id'];
-                $palpites_da_rodada[$j]['rs_res1'] = "";
-                $palpites_da_rodada[$j]['rs_res2'] = "";
-                $palpites_da_rodada[$j]['rs_date'] = "";
-                $palpites_da_rodada[$j]['rs_idpenca'] = "";
-                $palpites_da_rodada[$j]['rs_iduser'] = "";
-                $palpites_da_rodada[$j]['rs_round'] = "";
-                $palpites_da_rodada[$j]['rs_result'] = "";
-                $palpites_da_rodada[$j]['rs_points'] = "";
-                $palpites_da_rodada[$j]['mt_id'] = $rodadas[$c]['mt_id'];
-                $palpites_da_rodada[$j]['mt_idteam1'] = $rodadas[$c]['mt_idteam1'];
-                $palpites_da_rodada[$j]['mt_date'] = $rodadas[$c]['mt_idteam1'];
-                $palpites_da_rodada[$j]['mt_goal1'] = $rodadas[$c]['mt_goal1'];
-                $palpites_da_rodada[$j]['mt_goal2'] = $rodadas[$c]['mt_goal2'];
-                $palpites_da_rodada[$j]['mt_idchampionship'] = $rodadas[$c]['mt_idchampionship'];
-                $palpites_da_rodada[$j]['mt_round'] = $rodadas[$c]['mt_round'];
-                $palpites_da_rodada[$j]['mt_played'] = $rodadas[$c]['mt_played'];
-                $palpites_da_rodada[$j]['t1nome'] = $rodadas[$c]['t1nome'];
-                $palpites_da_rodada[$j]['t2nome'] = $rodadas[$c]['t2nome'];
+            $rodada_id = $params['rodada'];
+            $champ_id = $params['champ'];
 
-                               
+            $storage = new Zend_Auth_Storage_Session();
+            $data = (get_object_vars($storage->read()));
+
+            $matchs_obj = new Application_Model_Matchs();
+            $rondas = $matchs_obj->rondas($champ_id);
+            $rondas = $rondas['rounds'];
+
+            $rodadas = $matchs_obj->load_rodada($champ_id, $rodada_id, $data['us_id']);
+            $palpites_da_rodada = $matchs_obj->load_palpites_simples($champ_id, $rodada_id, $data['us_id']);
+
+            $teams_obj = new Application_Model_Teams();
+            $teams = $teams_obj->load_teams_championship($champ_id); 
+
+            for ($i = 0; $i < count($rodadas); $i = $i + 1) {
+                $e = false;
+                $c = 0;
+                for ($j = 0; $j < count($palpites_da_rodada); $j = $j + 1) {
+                    if ($palpites_da_rodada[$j]['rs_idmatch'] == $rodadas[$i]['mt_id']) {
+                      $e = true;  
+                    }
+                    $c = $c + 1;
+                }
+
+                if (!$e) {
+                    $palpites_da_rodada[$j]['rs_id'] = -1;
+                    $palpites_da_rodada[$j]['rs_idmatch'] = $rodadas[$c]['mt_id'];
+                    $palpites_da_rodada[$j]['rs_res1'] = "";
+                    $palpites_da_rodada[$j]['rs_res2'] = "";
+                    $palpites_da_rodada[$j]['rs_date'] = "";
+                    $palpites_da_rodada[$j]['rs_idpenca'] = "";
+                    $palpites_da_rodada[$j]['rs_iduser'] = "";
+                    $palpites_da_rodada[$j]['rs_round'] = "";
+                    $palpites_da_rodada[$j]['rs_result'] = "";
+                    $palpites_da_rodada[$j]['rs_points'] = "";
+                    $palpites_da_rodada[$j]['mt_id'] = $rodadas[$c]['mt_id'];
+                    $palpites_da_rodada[$j]['mt_idteam1'] = $rodadas[$c]['mt_idteam1'];
+                    $palpites_da_rodada[$j]['mt_date'] = $rodadas[$c]['mt_idteam1'];
+                    $palpites_da_rodada[$j]['mt_goal1'] = $rodadas[$c]['mt_goal1'];
+                    $palpites_da_rodada[$j]['mt_goal2'] = $rodadas[$c]['mt_goal2'];
+                    $palpites_da_rodada[$j]['mt_idchampionship'] = $rodadas[$c]['mt_idchampionship'];
+                    $palpites_da_rodada[$j]['mt_round'] = $rodadas[$c]['mt_round'];
+                    $palpites_da_rodada[$j]['mt_played'] = $rodadas[$c]['mt_played'];
+                    $palpites_da_rodada[$j]['t1nome'] = $rodadas[$c]['t1nome'];
+                    $palpites_da_rodada[$j]['t2nome'] = $rodadas[$c]['t2nome'];
+                }
             }
+
+            $this->view->teams = $teams;
+            $this->view->rodadas = $rodadas;
+
+            $this->view->palpites = $palpites_da_rodada;
+            $this->view->rondas = $rondas;   
         }
         
-        $this->view->teams = $teams;
-        $this->view->rodadas = $rodadas;
         
-        
-        $this->view->palpites = $palpites_da_rodada;
-        $this->view->rondas = $rondas;
-//        print_r($palpites_da_rodada);
-////        print_r($teams);
-//        
-//        die(".");
         
     }
     

@@ -18,7 +18,12 @@
                   
                   <?php
                         for ($i = 0; $i < $rondas; $i = $i + 1) {
-                            echo '<li><a href="'.$this->baseUrl('/penca/bolao?rodada='.($i+1).'&champ='.$champ).'">'.($i+1).'</a></li>';
+                            $r = $i + 1;
+                            $active = "";
+                            if ($r == $rodada ) { 
+                                $active = 'class="active"';                                
+                            } 
+                            echo '<li '.$active.'><a href="'.$this->baseUrl('/penca/bolao?rodada='.($i+1).'&champ='.$champ).'">'.($i+1).'</a></li>';
                         }
 //                    echo '<li class="active">
 //                      <a href="table.html#">1</a>
