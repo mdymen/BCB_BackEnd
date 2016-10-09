@@ -25,7 +25,11 @@
                                                         }
                                                         
                                                         for ($i = 0; $i < count($champs); $i = $i + 1) {
-                                                            echo '<option value="'.$champs[$i]['ch_id'].'">'.$champs[$i]['ch_nome'].'</option>';
+                                                            $selected = "selected";
+                                                            if (!empty($champ) && $champs[$i]['ch_id'] == $champ) {
+                                                                
+                                                            }
+                                                            echo '<option '.$selected.' value="'.$champs[$i]['ch_id'].'">'.$champs[$i]['ch_nome'].'</option>';
                                                         }                                                        
                                                     ?>
                                                     </select></div>
@@ -112,16 +116,12 @@
                             button_excluir = '<button class="btn btn-danger excluir"><i class="fa fa-trash-o "></i></button>';
                         } else {
                             if (response[i].rs_result == 1) {
-                                icone_resultado = '<button class="btn btn-danger excluir"><i class="fa fa-trash-o "></i></button>';
+                                icone_resultado = '<button class="btn btn-danger excluir"><i class="fa fa-times "></i></button>';
                             } else {
-                                icone_resultado = '<button class="btn btn-danger excluir"><i class="fa fa-check"></i></button>';
+                                icone_resultado = '<button class="btn btn-success excluir"><i class="fa fa-check"></i></button>';
                             }
                         }   
-                        
-                        
-                        
-                        console.log(button_excluir);
-   // 
+
                         $("#tb_"+ronda).append('<tr>\n\
                                     <td width="15%">\n\
                                         <div class="input-group col-sm-7">\n\
@@ -136,7 +136,7 @@
                                         <input class="form-control" disabled="true" value="'+response[i].rs_res2+'" type="text">\n\
                                         </div>\n\
                                     </td>  \n\
-                                    <td>'+button_excluir+'\n\
+                                    <td>'+button_excluir+icone_resultado+'   '+response[i].mt_date+'\n\
                                     </td>\n\
                                 </tr>');
                     }
