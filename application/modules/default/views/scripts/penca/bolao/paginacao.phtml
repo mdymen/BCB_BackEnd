@@ -6,7 +6,7 @@
     $rodada = $rodadas[0]['mt_round'];
     $champ = $rodadas[0]['mt_idchampionship']; 
             
-            
+      if (!empty($champ)) {      
 ?>
 
 
@@ -14,8 +14,14 @@
     <div class="box-content">
         <div class="pagination pagination-centered" style="margin: 0px !important">
             <ul class="pagination">
-                  <li><a href="table.html#">Prev</a></li>
+                    
+                    <?php
+                    
+                        if ($rodada > 1) {
+                            echo '<li><a href="'.$this->baseUrl('/penca/bolao?rodada='.($rodada-1).'&champ='.$champ).'">Prev</a></li>';
+                        }
                   
+                     ?>       
                   <?php
                         for ($i = 0; $i < $rondas; $i = $i + 1) {
                             $r = $i + 1;
@@ -32,9 +38,20 @@
 //                    <li><a href="table.html#">3</a></li>
 //                    <li><a href="table.html#">4</a></li>';
 
-                  ?>        
-                  <li><a href="table.html#">Next</a></li>
+                  ?>    
+                
+                  <?php
+                    
+                    echo '<li><a href="'.$this->baseUrl('/penca/bolao?rodada='.($rodada+1).'&champ='.$champ).'">Next</a></li>';
+                          
+                   ?>
             </ul>
         </div>
     </div>
 </div>
+
+<?php
+
+      }
+      
+      ?>

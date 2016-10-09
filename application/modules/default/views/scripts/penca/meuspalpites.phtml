@@ -1,0 +1,151 @@
+<?php
+
+    $champs = $this->championships;
+    $rondas = $this->rondas;
+    $rondas = $rondas['rounds'];
+    $champ = $this->champ;
+?>
+
+
+<div class="row">
+    <div class="col-lg-12">
+            <div class="box">
+                    <div class="box-content">
+                            <form id="frChamp_palpites" action="../penca/meuspalpites" method="post">	
+                                    <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                    <input type="hidden" value="1" name="rodada" />
+                                                    <select id="championship" name="champ" class="form-control">
+                                                    <?php   
+                                                        if (empty($pencas)) {
+                                                            echo '<option value="Vazio"></option>';    
+                                                        }
+                                                        
+                                                        for ($i = 0; $i < count($champs); $i = $i + 1) {
+                                                            echo '<option value="'.$champs[$i]['ch_id'].'">'.$champs[$i]['ch_nome'].'</option>';
+                                                        }                                                        
+                                                    ?>
+                                                    </select></div>
+                                            </div>	
+                                      </div>
+                                    </div>    
+                            </form>   
+                    </div>
+            </div>
+        </div>
+    </div>
+
+<?php
+
+//    if () {
+
+?>
+
+<div class="col-md-12">
+    <div class="box">
+            <div class="box-header">
+                    <h2><i class="fa fa-th"></i><span class="break"></span>Palpites</h2>
+            </div>
+            <div class="box-content">
+                    <div class="panel-group" id="accordion">
+                        <?php
+
+                            for ($i = 0; $i < $rondas; $i = $i + 1) {
+                                $round = ($i+1);
+                                echo '<input type="hidden" id="hd_ronda_'.$round.'" carregado="no">';                                
+                                echo '<div class="panel panel-default champ" ronda="'.($i+1).'" champ="'.$champ.'">
+                                    <div class="panel-heading">
+                                      <h4 class="panel-title">
+                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="ui-elements.html#champ_'.$i.'">
+                                          Round '.$round.'
+                                        </a>
+                                      </h4>
+                                    </div>
+                                    <div id="champ_'.$i.'" class="panel-collapse collapse" style="height: 0px;">
+                                      <div class="panel-body">
+                                          <table id="tb_'.$round.'">
+                                          
+                                          </table>
+                                      </div>
+                                    </div>
+                                  </div>';
+                            }
+                        ?>
+
+
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+<?php
+
+//    }
+    
+    ?>
+
+<script type="text/javascript">
+    
+    $(function() {
+        $("#championship").change(function() {
+            $('#frChamp_palpites').submit();
+         });
+    }); 
+    
+    $(function()  {
+        $(".champ").bind("click",function() {
+            var champ = $(this).attr("champ");
+            var ronda = $(this).attr("ronda");
+            if ($("#hd_ronda_"+ronda).attr("carregado") === 'no') {
+                $("#hd_ronda_"+ronda).attr("carregado","yes");
+                $.post("getpalpites", {champ : champ, ronda : ronda}, function(response) {
+                    for (var i = 0; i < response.length; i = i + 1) {
+
+                        var button_excluir = "";
+                        var icone_resultado = "";
+                        
+                        if (response[i].rs_result == null) {
+                            button_excluir = '<button class="btn btn-danger excluir"><i class="fa fa-trash-o "></i></button>';
+                        } else {
+                            if (response[i].rs_result == 1) {
+                                icone_resultado = '<button class="btn btn-danger excluir"><i class="fa fa-trash-o "></i></button>';
+                            } else {
+                                icone_resultado = '<button class="btn btn-danger excluir"><i class="fa fa-check"></i></button>';
+                            }
+                        }   
+                        
+                        
+                        
+                        console.log(button_excluir);
+   // 
+                        $("#tb_"+ronda).append('<tr>\n\
+                                    <td width="15%">\n\
+                                        <div class="input-group col-sm-7">\n\
+                                            <input class="form-control" disabled="true" value="'+response[i].rs_res1+'" type="text" >\n\
+                                        </div>\n\
+                                    </td>\n\
+                                    <td>'+response[i].t1nome+'</td>\n\
+                                    <td></td>\n\
+                                    <td>'+response[i].t2nome+'</td>\n\
+                                    <td width="15%">     \n\
+                                        <div class="input-group col-sm-7">		\n\
+                                        <input class="form-control" disabled="true" value="'+response[i].rs_res2+'" type="text">\n\
+                                        </div>\n\
+                                    </td>  \n\
+                                    <td>'+button_excluir+'\n\
+                                    </td>\n\
+                                </tr>');
+                    }
+               
+                    console.log(response);
+                });
+            }
+
+        });
+    });
+    
+</script>

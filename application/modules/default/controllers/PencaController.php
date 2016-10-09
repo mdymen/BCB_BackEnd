@@ -209,8 +209,7 @@ class PencaController extends Zend_Controller_Action {
         $this->_helper->json($rodada);
         
     }
-    
-    
+
     public function proximopalpiteAction() {
         $params = $this->_request->getParams();
         
@@ -243,10 +242,17 @@ class PencaController extends Zend_Controller_Action {
         $champ = new Application_Model_Championships();
         $this->view->championships = $champ->load();
         
+        $p_obj = new Application_Model_Penca();
+        
         if (!empty($params['rodada'])) {  
         
-            $rodada_id = $params['rodada'];
             $champ_id = $params['champ'];
+
+            if ($params['rodada'] == -1) {
+                $rodada_id = $p_obj->getIdPrimeraRodadaDisponivel($champ_id);
+            } else {            
+                $rodada_id = $params['rodada'];
+            }
 
             $storage = new Zend_Auth_Storage_Session();
             $data = (get_object_vars($storage->read()));
@@ -301,9 +307,6 @@ class PencaController extends Zend_Controller_Action {
             $this->view->palpites = $palpites_da_rodada;
             $this->view->rondas = $rondas;   
         }
-        
-        
-        
     }
     
     public function submeterpalpiteAction() {
@@ -348,5 +351,62 @@ class PencaController extends Zend_Controller_Action {
         
         $this->_helper->json($r);
                 
+    }
+    
+    public function meuspalpitesAction() { 
+        $params = $this->_request->getParams();
+        
+        $penca = new Application_Model_Penca();
+        
+        $id_user = $this->getIdUser();
+        $champs = $penca->load_championship_with_results($id_user);
+        
+        if (!empty($params['champ'])) {
+            $matchs_obj = new Application_Model_Matchs();
+            $rondas = $matchs_obj->rondas($params['champ']);
+            $this->view->rondas = $rondas;
+            $this->view->champ = $params['champ'];
+        }
+        
+        $this->view->championships = $champs;
+    }
+    
+    public function getpalpitesAction() {
+        $params = $this->_request->getParams();
+//        
+        $champ_id = $params['champ'];
+        $rodada_id = $params['ronda'];
+//        
+//        $penca = new Application_Model_Penca();
+//        $results = $penca->getpalpites($this->getIdUser());
+        
+        $matchs_obj = new Application_Model_Matchs();
+        $palpites_da_rodada = $matchs_obj->load_palpites_simples($champ_id, $rodada_id, $this->getIdUser());
+//        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($palpites_da_rodada);
+    }
+    
+    
+    public function getIdUser() { 
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
+        return $data['us_id'];
+    }
+    
+    public function testAction() {
+        
+        $penca = new Application_Model_Penca();
+        $results = $penca->primera_rodada_disponible($this->getIdUser());
+        
+        print_r($results);
+        die(".");
+        
     }
 }

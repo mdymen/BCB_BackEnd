@@ -107,6 +107,20 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
 
     }
     
+    public function load_championship_with_results($id_user) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->distinct()->from("result", array('championship.ch_nome', 'championship.ch_id'))
+                ->joinInner('match','match.mt_id = result.rs_idmatch',"")
+                ->joinInner('championship', 'match.mt_idchampionship = championship.ch_id',"")
+                ->where('result.rs_iduser = ?',$id_user)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+        
+    }
+    
     public function load_usuarios($id_penca) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
@@ -191,6 +205,46 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
                 ->query()
                 ->fetch();
         return !empty($result);
+    }
+    
+    public function getpalpites($user) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("result")
+                ->joinInner('match','result.rs_idmatch = match.mt_id')
+                ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('t1nome' => 't1.tm_name'))
+                ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('t2nome' => 't2.tm_name'))
+                ->where('result.rs_iduser = ?', $user)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+    }
+    
+    public function primera_rodada_disponible($champ) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $sql = "select * from penca.match where mt_played is false and mt_round in (select min(mt_round) "
+                . "as mt_round from "
+                . "penca.match  where mt_played is false) and mt_idchampionship = ".$champ;
+ 
+        $stmt = $db->query($sql);
+         
+        return $stmt;
+    }
+    
+    public function getIdPrimeraRodadaDisponivel($champ) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $sql = "select distinct mt_round from penca.match where mt_played is false and mt_round in "
+                . "(select min(mt_round) as mt_round from penca.match  where mt_played is false) "
+                . "and mt_idchampionship = ".$champ;
+        
+        $stmt = $db->query($sql)->fetchAll();
+        
+        $stmt = $stmt[0]['mt_round'];
+ 
+        return $stmt;
     }
 
 }
