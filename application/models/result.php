@@ -57,4 +57,27 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
                 ->fetch();  
     }
     
+    public function palpites_em_acao($us_id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("result", array("count(rs_id) as cantidad"))
+                ->where("rs_result is null")
+                ->where("rs_iduser = ?", $us_id)
+                ->query()
+                ->fetchAll();
+
+        return $result;        
+    }
+    
+    public function points($us_id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("result", array("sum(rs_points) as pontos"))
+                ->where("rs_iduser = ?", $us_id)
+                ->query()
+                ->fetchAll();
+
+        return $result;         
+    }
+    
 }

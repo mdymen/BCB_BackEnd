@@ -34,21 +34,21 @@ class IndexController extends Zend_Controller_Action
 //        die(".");
 //        
         if (!empty($data)) {
-            $penca = new Application_Model_Penca();
-              
-        
+            $result = new Application_Model_Result();
+            $em_acao = $result->palpites_em_acao($data['us_id']);
+            $points = $result->points($data['us_id']);
+            
+            $this->view->em_acao = $em_acao;
+            $this->view->points = $points;
         //$pencas = $penca->load_penca__puntagem_usuario($data['us_id']);
         
-            $pencas = $penca->load_pencas();
-            $pencas_usuario = $penca->load_pencas_usuario($data['us_id']);
-
-            $this->view->pencas = $pencas;
-            $this->view->pencas_usuario = $pencas_usuario;
+//            $pencas = $penca->load_pencas();
+//            $pencas_usuario = $penca->load_pencas_usuario($data['us_id']);
+//
+//            $this->view->pencas = $pencas;
+//            $this->view->pencas_usuario = $pencas_usuario;
 //        
         }
-        
-//        print_r($data);
-//        die(".");
     }
     
     public function registerAction() {

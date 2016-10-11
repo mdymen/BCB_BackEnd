@@ -1,51 +1,70 @@
+<?php
+
+    $em_acao = $this->em_acao;
+    $points = $this->points;
+?>
+
 <div class="row">
 				
-				<div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
-					<div class="smallstat box">
-						<i class="fa fa-bell blue"></i>
-						<span class="title">Income</span>
-						<span class="value">$1 999,99</span>
-						<a href="" class="more">
-							<span>View More</span>
-							<i class="fa fa-chevron-right"></i>
-						</a>
-					</div>
-				</div><!--/col-->
+    <div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
+            <div class="smallstat box">
+                    <i class="fa fa-globe blue"></i>
+                    <span class="title">Palpites em acao</span>
+                    <span class="value"><?php echo $em_acao[0]['cantidad']; ?></span>
+                    <a href="" class="more">
+                        <span>Mais informacao</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+            </div>
+    </div><!--/col-->
 				
-				<div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
-					<div class="smallstat box">
-						<i class="fa fa-cogs lightOrange"></i>
-						<span class="title">Income</span>
-						<span class="value">$1 999,99</span>
-						<a href="" class="more">
-							<span>View More</span>
-							<i class="fa fa-chevron-right"></i>
-						</a>
-					</div>
-				</div><!--/col-->
+    <div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
+            <div class="smallstat box">
+                    <i class="fa fa-beer lightOrange"></i>
+                    <span class="title">Puntuacao</span>
+                    <span class="value"><?php echo $points[0]['pontos']; ?></span>
+                    <a href="" class="more">
+                        <span>Mais informacao...</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+            </div>
+    </div><!--/col-->
 				
-				<div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
-					<div class="smallstat box">
-						<i class="fa fa-laptop darkGreen"></i>
-						<span class="title">Income</span>
-						<span class="value">$1 999,99</span>
-						<a href="" class="more">
-							<span>View More</span>
-							<i class="fa fa-chevron-right"></i>
-						</a>
-					</div>
-				</div><!--/col-->
+    <div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
+            <div class="smallstat box">
+                    <i class="fa fa-dollar darkGreen"></i>
+                    <span class="title">Caixa</span>
+                    <span class="value">$1 999,99</span>
+                    <a href="" class="more">
+                        <span>Mais informacao...</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+            </div>
+    </div><!--/col-->
 				
-				<div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
-					<div class="smallstat box">
-						<i class="fa fa-moon-o lightBlue"></i>
-						<span class="title">Income</span>
-						<span class="value">$1 999,99</span>
-						<a href="" class="more">
-							<span>View More</span>
-							<i class="fa fa-chevron-right"></i>
-						</a>
-					</div>
-				</div><!--/col-->
+    <div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
+            <div class="smallstat box">
+                    <i class="fa fa-moon-o lightBlue"></i>
+                    <span class="title">Income</span>
+                    <span class="value">$1 999,99</span>
+                    <a href="" class="more">
+                        <span>View More</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+            </div>
+    </div><!--/col-->
 			
-			</div>
+</div>
+
+
+
+<div class="col-md-13">
+    <div class="box">
+            <div class="box-header">
+                    <h2><i class="fa fa-th"></i><span class="break"></span>Palpites</h2>
+            </div>
+            <div class="box-content">
+                   
+            </div>
+    </div>
+</div>
