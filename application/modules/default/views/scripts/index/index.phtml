@@ -1,7 +1,9 @@
 <?php
 
     $em_acao = $this->em_acao;
-    $points = $this->points;
+    $points = $this->points;    
+    $em_acao_group = $this->em_acao_group;
+
 ?>
 
 <div class="row">
@@ -61,10 +63,32 @@
 <div class="col-md-13">
     <div class="box">
             <div class="box-header">
-                    <h2><i class="fa fa-th"></i><span class="break"></span>Palpites</h2>
+                <h2><i class="fa fa-th"></i><span class="break"></span>Palpites em acao...</h2>
             </div>
             <div class="box-content">
-                   
+                   <?php echo $this->render('index/index/emacao.phtml'); ?>
+            </div>
+    </div>
+</div>
+
+<div class="col-md-13">
+    <div class="box">
+            <div class="box-header">
+                <h2><i class="fa fa-th"></i><span class="break"></span>Puntuacao</h2>
+            </div>
+            <div class="box-content">
+                   <?php echo $this->render('index/index/puntuacao.phtml'); ?>
+            </div>
+    </div>
+</div>
+
+<div class="col-md-13">
+    <div class="box">
+            <div class="box-header">
+                <h2><i class="fa fa-th"></i><span class="break"></span>Caixa</h2>
+            </div>
+            <div class="box-content">
+                   <?php echo $this->render('index/index/caixa.phtml'); ?>
             </div>
     </div>
 </div>

@@ -80,4 +80,23 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
         return $result;         
     }
     
+    public function palpites_em_acao_group($us_id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("result")
+                ->joinInner("match", "match.mt_id = result.rs_idmatch")
+                ->joinInner("championship", "championship.ch_id = match.mt_idchampionship")
+                ->where("rs_result is null")
+                ->where("rs_iduser = ?", $us_id)
+                ->order("match.mt_idchampionship")
+                ->query()
+                ->fetchAll();
+                
+//                 print_r($result->__toString());
+//        die(".");
+             
+        return $result;
+        
+    }
+    
 }

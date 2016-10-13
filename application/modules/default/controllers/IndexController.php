@@ -37,9 +37,11 @@ class IndexController extends Zend_Controller_Action
             $result = new Application_Model_Result();
             $em_acao = $result->palpites_em_acao($data['us_id']);
             $points = $result->points($data['us_id']);
+            $em_acao_group = $result->palpites_em_acao_group($data['us_id']);
             
             $this->view->em_acao = $em_acao;
             $this->view->points = $points;
+            $this->view->em_acao_group = $em_acao_group;
         //$pencas = $penca->load_penca__puntagem_usuario($data['us_id']);
         
 //            $pencas = $penca->load_pencas();
