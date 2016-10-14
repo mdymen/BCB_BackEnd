@@ -165,6 +165,11 @@
             $("#box_puntuacao").attr("style","display:yes");
             $("#box_box_puntuacao").attr("style","display:yes");
             $.post("index/puntuacao", function(response) {
+                
+                $("#td_acertados").html(response[0].ganados);
+                $("#td_errados").html(response[1].perdidos);
+                $("#td_puntuacao").html(response[2].pontos);
+        
                 console.log(response);
            
             });
