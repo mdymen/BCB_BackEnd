@@ -86,6 +86,8 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
         $result = $db->select()->from("result")
                 ->joinInner("match", "match.mt_id = result.rs_idmatch")
                 ->joinInner("championship", "championship.ch_id = match.mt_idchampionship")
+                ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('t1nome' => 't1.tm_name'))
+                ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('t2nome' => 't2.tm_name'))
                 ->where("rs_result is null")
                 ->where("rs_iduser = ?", $us_id)
                 ->order("match.mt_idchampionship")
@@ -97,6 +99,41 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
              
         return $result;
         
+    }
+    
+    public function puntuacao($id_user) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("result", array("sum(rs_points) as pontos"))
+                ->where("rs_iduser = ?", $id_user)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+    }
+    
+    public function ganados($id_user) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("result", array("count(rs_points) as ganados"))
+                ->where("rs_iduser = ?", $id_user)
+                ->where("rs_result = 0")
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+    }    
+    
+    public function perdidos($id_user) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("result", array("count(rs_points) as perdidos"))
+                ->where("rs_iduser = ?", $id_user)
+                ->where("rs_result = 0")
+                ->query()
+                ->fetchAll();
+        
+        return $result;        
     }
     
 }

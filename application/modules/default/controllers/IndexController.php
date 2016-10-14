@@ -53,6 +53,43 @@ class IndexController extends Zend_Controller_Action
         }
     }
     
+    public function emacaoAction() {
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
+        $result = new Application_Model_Result();
+        $em_acao_group = $result->palpites_em_acao_group($data['us_id']);
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($em_acao_group);
+    }
+    
+    public function puntuacaoAction() {
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
+        $result = new Application_Model_Result();
+        $ganados = $result->ganados($data['us_id']);
+        $perdidos = $result->perdidos($data['us_id']);
+        $puntuacao = $result->puntuacao($data['us_id']);
+        
+        $resultados = array($ganados[0], $perdidos[0], $puntuacao[0]);
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($resultados);
+        
+    }
+    
     public function registerAction() {
        $params = $this->_request->getParams();
           
