@@ -1,3 +1,186 @@
 <?php
 
-echo "HOLA";
+$champs = $this->championships;
+$champ = $this->champ;
+$teams = $this->teams;
+//print_r($teams);
+//die(".");
+?>
+
+<div id="append_danger">
+    <div id="alert">
+        <div class="alert alert-danger" id="danger_ad_match" style="display:none">
+                <button type="button" class="close close-danger">×</button>
+                <strong>Erro!</strong><p id="alert_msg">Change a few things up and try submitting again.</p>
+        </div>
+    </div>
+</div>
+<div id="append_success">
+    <div id="success">
+        <div class="alert alert-success" id="success_ad_match" style="display:none">
+                <strong>Sucesso!</strong><p id="success_ad_match_msg">You successfully read this important alert message.</p>
+        </div>
+    </div>
+</div> 
+ 
+<div class="row">
+    <div class="col-lg-12">
+            <div class="box">
+                    <div class="box-content">
+                            <form id="frChamp_palpites" action="../index/index" method="post">	
+                                    <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                    <input type="hidden" value="1" name="rodada" />
+                                                    <select id="championship" name="champ" class="form-control">
+                                                    <?php   
+                                                        if (empty($pencas)) {
+                                                            echo '<option value="Vazio"></option>';    
+                                                        }
+                                                        
+                                                        for ($i = 0; $i < count($champs); $i = $i + 1) {
+                                                            $selected = "";
+                                                            if (!empty($champ) && $champs[$i]['ch_id'] == $champ) {
+                                                                $selected = "selected";    
+                                                            }
+                                                            echo '<option '.$selected.' value="'.$champs[$i]['ch_id'].'">'.$champs[$i]['ch_nome'].'</option>';
+                                                        }                                                        
+                                                    ?>
+                                                    </select></div>
+                                            </div>	
+                                      </div>
+                                    </div>    
+                            </form>   
+                    </div>
+            </div>
+        </div>
+    </div>
+
+<?php
+
+ if (!empty($champ)) {
+     
+     
+?>
+
+<div class="row">
+    <div class="col-lg-12">
+            <div class="box">
+                    <div class="box-header">
+                            <h2><i class="fa fa-edit"></i>Adicionar jogo</h2>
+                            <div class="box-icon">
+                                    <a href="form-elements.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
+                                    <a href="form-elements.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                                    <a href="form-elements.html#" class="btn-close"><i class="fa fa-times"></i></a>
+                            </div>
+                    </div>
+                    <div class="box-content">
+                            <form class="form-horizontal">
+                                 <div class="form-group">
+                                      <div class="controls">
+                                            <div class="input-group col-sm-4">
+                                              <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i></span>
+                                              <input type="text" id="ronda" name="ronda" class="form-control" placeholder="Nº Ronda">
+                                            </div>
+                                      </div>
+                                    </div>                                
+                                    <div class="form-group">
+                                      <div class="controls">
+                                            <div class="input-group col-sm-4">
+                                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                              <input type="text" id="date" name="date" class="form-control" placeholder="Data dd/mm/yy">
+                                            </div>
+                                      </div>
+                                    </div>
+                                 <div class="form-group">
+                                      <div class="controls">
+                                            <div class="input-group col-sm-4">
+                                              <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                              <input type="text" id="hora" name="hora" class="form-control" placeholder="Hora hh:mm">
+                                            </div>
+                                      </div>
+                                    </div>
+
+                                <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                        <select id="team1" name="team1" class="form-control">
+                                                        <?php   
+                                                            for ($i = 0; $i < count($teams); $i = $i + 1) {
+                                                                echo '<option value="'.$teams[$i]['tm_id'].'">'.$teams[$i]['tm_name'].'</option>';
+                                                            }                                                        
+                                                        ?>
+                                                        </select>
+                                                    </div>
+                                            </div>	
+                                      </div>
+                                    </div>  
+                                
+                                    <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                        <select id="team2" name="team2" class="form-control">                                                    
+                                                        <?php                                                           
+                                                            for ($i = 0; $i < count($teams); $i = $i + 1) {
+                                                                echo '<option value="'.$teams[$i]['tm_id'].'">'.$teams[$i]['tm_name'].'</option>';
+                                                            }                                                        
+                                                        ?>
+                                                        </select>
+                                                    </div>
+                                            </div>	
+                                      </div>
+                                    </div>  
+                                
+
+
+
+
+                                    <div class="form-actions">
+                                      <button type="button" id="salvar_jogo" class="btn btn-primary">Salvar</button>
+                                    </div>
+                            </form>   
+
+                    </div>
+            </div>
+    </div><!--/col-->
+</div>
+
+
+<?php
+
+ }
+
+ ?>
+
+<script type="text/javascript">
+    
+    $(function() {
+        $("#championship").change(function() {
+            $('#frChamp_palpites').submit();
+         });
+         
+         $("#salvar_jogo").bind("click", function() {
+            var ronda = $("#ronda").val();
+            var date = $("#date").val();
+            var hora = $("#hora").val();
+            var champ = $("#championship").val();
+            var team1 = $("#team1").val();
+            var team2 = $("#team2").val();
+            
+            var n_team1 = $("#team1").html();
+            var n_team2 = $("#team2").html();
+            
+            $.post("salvarjogo", {team1 : team1, team2: team2, ronda : ronda, date : date, hora : hora, champ : champ}, function(response) {
+                $("#success_ad_match").attr("style","display:yes");
+                $("#success_ad_match_msg").html("Ronda: " + ronda + " => " + n_team1 + " - " + n_team2 + " - " + date + " " + hora);
+            }); 
+         });
+    }); 
+    
+</script>

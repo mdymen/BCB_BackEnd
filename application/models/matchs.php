@@ -11,6 +11,7 @@
  *
  * @author Martin Dymenstein
  */
+include APPLICATION_PATH."/helpers/data.php";
 class Application_Model_Matchs extends Zend_Db_Table_Abstract
 {
 
@@ -150,4 +151,41 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         return $result;
         
     }
+    
+    public function getrondas($champ) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("match", 'mt_round')
+                ->distinct()
+                ->where("mt_idchampionship", $champ)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+                        
+    }
+    
+    public function load_matchs_byrodada($champ, $rodada) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("match")
+            ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('t1nome' => 't1.tm_name'))
+            ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('t2nome' => 't2.tm_name'))
+            ->where('mt_idchampionship = ?', $champ)
+            ->where("mt_round = ?",$rodada)
+            ->query()
+            ->fetchAll();
+        
+        return $result;
+        
+    }
+    
+    public function setDatas($matchs) {
+        $data = new Helpers_Data();
+        for ($i = 0; $i < count($matchs); $i = $i + 1) {
+            $matchs[$i]['mt_date'] = $data->format($matchs[$i]['mt_date']);
+        }
+        return $matchs;
+    }
+    
 }

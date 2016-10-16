@@ -15,6 +15,7 @@ include APPLICATION_PATH.'/models/teams.php';
 include APPLICATION_PATH.'/models/pencas.php';
 include APPLICATION_PATH.'/models/matchs.php';
 include APPLICATION_PATH.'/models/result.php';
+include APPLICATION_PATH.'/helpers/data.php';
 class PencaController extends Zend_Controller_Action {
     
     public function indexAction() {
@@ -258,8 +259,7 @@ class PencaController extends Zend_Controller_Action {
             $data = (get_object_vars($storage->read()));
 
             $matchs_obj = new Application_Model_Matchs();
-            $rondas = $matchs_obj->rondas($champ_id);
-            $rondas = $rondas['rounds'];
+            $rondas = $matchs_obj->getrondas($champ_id);
 
             $rodadas = $matchs_obj->load_rodada($champ_id, $rodada_id, $data['us_id']);
             $palpites_da_rodada = $matchs_obj->load_palpites_simples($champ_id, $rodada_id, $data['us_id']);
@@ -363,7 +363,7 @@ class PencaController extends Zend_Controller_Action {
         
         if (!empty($params['champ'])) {
             $matchs_obj = new Application_Model_Matchs();
-            $rondas = $matchs_obj->rondas($params['champ']);
+            $rondas = $matchs_obj->getrondas($params['champ']);
             $this->view->rondas = $rondas;
             $this->view->champ = $params['champ'];
         }
@@ -380,9 +380,15 @@ class PencaController extends Zend_Controller_Action {
 //        $penca = new Application_Model_Penca();
 //        $results = $penca->getpalpites($this->getIdUser());
         
+        $d_helper = new Helpers_Data();
+        
         $matchs_obj = new Application_Model_Matchs();
         $palpites_da_rodada = $matchs_obj->load_palpites_simples($champ_id, $rodada_id, $this->getIdUser());
 //        
+        for ($i = 0; $i < count($palpites_da_rodada); $i = $i + 1) {
+            $palpites_da_rodada[$i]['mt_date'] = $d_helper->format($palpites_da_rodada[$i]['mt_date']);
+        }
+        
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
         

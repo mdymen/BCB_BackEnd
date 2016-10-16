@@ -21,14 +21,18 @@ if ($uri == "/penca/public/?register") {
     
 } else {
  
+//        $storage = new Zend_Auth_Storage_Session();
+//        $data = $storage->read();
+        
         $storage = new Zend_Auth_Storage_Session();
-        $data = $storage->read();
-
+        $data = (get_object_vars($storage->read()));
 //        print_r($data);
 //        die(".");
         
-        if (!empty($data)) {
+        if (!empty($data) && $data['us_admin'] == 0) {
             echo $this->render('_head.php');      
+        } else if (!empty($data) && $data['us_admin'] == 1) {
+            echo $this->render('_adminhead.php');      
         } else {
             echo $this->render('login.phtml');            
         }

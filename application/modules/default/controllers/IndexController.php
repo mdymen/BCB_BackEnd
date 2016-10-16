@@ -2,6 +2,7 @@
 
 include APPLICATION_PATH.'/models/users.php';
 include APPLICATION_PATH.'/models/pencas.php';
+include APPLICATION_PATH."/helpers/data.php";
 class IndexController extends Zend_Controller_Action
 {
 
@@ -34,6 +35,7 @@ class IndexController extends Zend_Controller_Action
 //        die(".");
 //        
         if (!empty($data)) {
+            
             $result = new Application_Model_Result();
             $em_acao = $result->palpites_em_acao($data['us_id']);
             $points = $result->points($data['us_id']);
@@ -51,6 +53,7 @@ class IndexController extends Zend_Controller_Action
 //            $this->view->pencas_usuario = $pencas_usuario;
 //        
         }
+        
     }
     
     public function emacaoAction() {
@@ -59,6 +62,12 @@ class IndexController extends Zend_Controller_Action
         
         $result = new Application_Model_Result();
         $em_acao_group = $result->palpites_em_acao_group($data['us_id']);
+        
+        $h_date = new Helpers_Data();
+        for ($i = 0; $i < count($em_acao_group); $i = $i + 1) {
+            $em_acao_group[$i]['mt_date'] = $h_date->format($em_acao_group[$i]['mt_date']);
+           
+        }
         
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
@@ -118,7 +127,7 @@ class IndexController extends Zend_Controller_Action
                     ->setCredential($password);
 
         $result = $auth->authenticate($authAdapter);
-
+        
         if ($result->isValid()) {         
             $storage = new Zend_Auth_Storage_Session();
             $storage->write($authAdapter->getResultRowObject());

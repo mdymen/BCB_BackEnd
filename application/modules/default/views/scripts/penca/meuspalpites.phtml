@@ -2,7 +2,6 @@
 
     $champs = $this->championships;
     $rondas = $this->rondas;
-    $rondas = $rondas['rounds'];
     $champ = $this->champ;
 ?>
 
@@ -57,10 +56,10 @@
                     <div class="panel-group" id="accordion">
                         <?php
 
-                            for ($i = 0; $i < $rondas; $i = $i + 1) {
-                                $round = ($i+1);
+                            for ($i = 0; $i < count($rondas); $i = $i + 1) {
+                                $round = $rondas[$i]['mt_round'];
                                 echo '<input type="hidden" id="hd_ronda_'.$round.'" carregado="no">';                                
-                                echo '<div class="panel panel-default champ" ronda="'.($i+1).'" champ="'.$champ.'">
+                                echo '<div class="panel panel-default champ" ronda="'.$round.'" champ="'.$champ.'">
                                     <div class="panel-heading">
                                       <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="ui-elements.html#champ_'.$i.'">

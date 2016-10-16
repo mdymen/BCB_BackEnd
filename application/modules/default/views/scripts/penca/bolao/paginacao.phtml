@@ -3,6 +3,7 @@
     $rondas = $this->rondas;
     
     $rodadas = $this->rodadas;
+    
     $rodada = $rodadas[0]['mt_round'];
     $champ = $rodadas[0]['mt_idchampionship']; 
             
@@ -16,20 +17,21 @@
             <ul class="pagination">
                     
                     <?php
-                    
-                        if ($rodada > 1) {
-                            echo '<li><a href="'.$this->baseUrl('/penca/bolao?rodada='.($rodada-1).'&champ='.$champ).'">Prev</a></li>';
-                        }
+//                    
+//                        print_r($rodada);
+//                        if ($rodada > 1) {
+//                            echo '<li><a href="'.$this->baseUrl('/penca/bolao?rodada='.$rondas[$i-1]['mt_round'].'&champ='.$champ).'">Prev</a></li>';
+//                        }
                   
                      ?>       
                   <?php
-                        for ($i = 0; $i < $rondas; $i = $i + 1) {
+                        for ($i = 0; $i < count($rondas); $i = $i + 1) {
                             $r = $i + 1;
                             $active = "";
-                            if ($r == $rodada ) { 
+                            if ($r == count($rodada) ) { 
                                 $active = 'class="active"';                                
                             } 
-                            echo '<li '.$active.'><a href="'.$this->baseUrl('/penca/bolao?rodada='.($i+1).'&champ='.$champ).'">'.($i+1).'</a></li>';
+                            echo '<li '.$active.'><a href="'.$this->baseUrl('/penca/bolao?rodada='.$rondas[$i]['mt_round'].'&champ='.$champ).'">'.$rondas[$i]['mt_round'].'</a></li>';
                         }
 //                    echo '<li class="active">
 //                      <a href="table.html#">1</a>
@@ -41,8 +43,9 @@
                   ?>    
                 
                   <?php
-                    
-                    echo '<li><a href="'.$this->baseUrl('/penca/bolao?rodada='.($rodada+1).'&champ='.$champ).'">Next</a></li>';
+//                    if (!empty($rondas[$i+1]['mt_round'])) {
+//                        echo '<li><a href="'.$this->baseUrl('/penca/bolao?rodada='.$rondas[$i+1]['mt_round'].'&champ='.$champ).'">Next</a></li>';
+//                    }
                           
                    ?>
             </ul>

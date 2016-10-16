@@ -1,0 +1,112 @@
+<?php
+
+$champs = $this->championships;
+
+$matchs = $this->matchs;
+
+?>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box">
+            <div class="box-content">
+                <form id="frChamp_palpites" action="<?php echo $this->baseUrl('/admin/resultados'); ?>" method="post">	
+                    <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-4">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                    <input type="hidden" value="1" name="rodada" />
+                                                    <select id="championship" name="champ" class="form-control">
+                                                    <?php   
+                                                        if (empty($pencas)) {
+                                                            echo '<option value="Vazio"></option>';    
+                                                        }
+                                                        
+                                                        for ($i = 0; $i < count($champs); $i = $i + 1) {
+                                                            $selected = "";
+                                                            if (!empty($champ) && $champs[$i]['ch_id'] == $champ) {
+                                                                $selected = "selected";    
+                                                            }
+                                                            echo '<option '.$selected.' value="'.$champs[$i]['ch_id'].'">'.$champs[$i]['ch_nome'].'</option>';
+                                                        }                                                        
+                                                    ?>
+                                                    </select></div>
+                                            </div>	
+                                      </div>
+                                    </div>    
+                    <div class="form-group">                                        
+                        <div class="controls">
+                              <div class="input-group col-sm-4">
+                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
+                                <input type="text" id="ronda" name="ronda" class="form-control" placeholder="N° Ronda">
+                              </div>                                              
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Cargar Partidos</button>
+                      </div>
+                </form>   
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<?php
+
+    if (!empty($matchs)) {
+        
+?>        
+    <div class="row">
+        <div class="col-lg-12">
+                <div class="box">
+                        <div class="box-header">
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Simple Table</h2>
+                                <div class="box-icon">
+                                        <a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
+                                        <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                                        <a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>
+                                </div>
+                        </div>
+                        <div class="box-content">
+                                <table class="table">
+                                          <thead>
+                                                  <tr>
+                                                          <th>Fecha</th>
+                                                          <th></th>
+                                                          <th></th>
+                                                          <th>Opciones</th>                                          
+                                                  </tr>
+                                          </thead>   
+                                          <tbody>
+
+                                            <?php        
+                                                for ($i = 0; $i < count($matchs); $i = $i + 1) {
+                                                    echo '<tr>
+                                                            <td>'.$matchs[$i]['mt_date'].'</td>
+                                                            <td>'.$matchs[$i]['t1nome'].'</td>
+                                                            <td>'.$matchs[$i]['t2nome'].'</td>
+                                                            <td>
+                                                                    <span class="label label-success">Active</span>
+                                                            </td>                                        
+                                                    </tr>';
+                                                }        
+                                                        
+                                            ?>            
+                                          </tbody>
+                                 </table>  
+
+                        </div>
+                </div>
+        </div><!--/col-->
+
+        <!--/col-->
+</div>
+
+<?php
+
+    }
+
+?>
