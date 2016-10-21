@@ -115,9 +115,9 @@
                             button_excluir = '<button class="btn btn-danger excluir"><i class="fa fa-trash-o "></i></button>';
                         } else {
                             if (response[i].rs_result == 1) {
-                                icone_resultado = '<button class="btn btn-danger excluir"><i class="fa fa-times "></i></button>';
+                                icone_resultado = '<i class="fa fa-times "></i>';
                             } else {
-                                icone_resultado = '<button class="btn btn-success excluir"><i class="fa fa-check"></i></button>';
+                                icone_resultado = '<i class="fa fa-check"></i>';
                             }
                         }   
 
@@ -134,8 +134,9 @@
                                         <div class="input-group col-sm-7">		\n\
                                         <input class="form-control" disabled="true" value="'+response[i].rs_res2+'" type="text">\n\
                                         </div>\n\
-                                    </td>  \n\
-                                    <td>'+button_excluir+icone_resultado+'   '+response[i].mt_date+'\n\
+                                    </td>  \n\\n\
+                                    <td>'+button_excluir+icone_resultado+'</td>\n\
+                                    <td>'+response[i].mt_date+'\n\
                                     </td>\n\
                                 </tr>');
                     }

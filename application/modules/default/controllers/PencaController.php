@@ -15,7 +15,6 @@ include APPLICATION_PATH.'/models/teams.php';
 include APPLICATION_PATH.'/models/pencas.php';
 include APPLICATION_PATH.'/models/matchs.php';
 include APPLICATION_PATH.'/models/result.php';
-include APPLICATION_PATH.'/helpers/data.php';
 class PencaController extends Zend_Controller_Action {
     
     public function indexAction() {

@@ -77,20 +77,37 @@ $matchs = $this->matchs;
                                                           <th>Fecha</th>
                                                           <th></th>
                                                           <th></th>
+                                                          <th></th>
+                                                          <th></th>
                                                           <th>Opciones</th>                                          
+                                                          <th></th>
                                                   </tr>
                                           </thead>   
                                           <tbody>
-
-                                            <?php        
-                                                for ($i = 0; $i < count($matchs); $i = $i + 1) {
+                                          
+                                            <?php      
+                                                for ($i = 0; $i < count($matchs); $i = $i + 1) {                                                    
+                                                    $jogado = false;
+                                                    $disabled = "";
+                                                    if ($matchs[$i]['mt_played']) {
+                                                        $jogado = true;
+                                                        $disabled="disabled";
+                                                    }
                                                     echo '<tr>
                                                             <td>'.$matchs[$i]['mt_date'].'</td>
+                                                            <td><input id="res1_'.$matchs[$i]['mt_id'].'" value="'.$matchs[$i]['mt_goal1'].'" '.$disabled.' size="3" type="text"></td>
                                                             <td>'.$matchs[$i]['t1nome'].'</td>
+                                                            <td><input id="res2_'.$matchs[$i]['mt_id'].'" value="'.$matchs[$i]['mt_goal2'].'" '.$disabled.' size="3" type="text"></td>        
                                                             <td>'.$matchs[$i]['t2nome'].'</td>
-                                                            <td>
-                                                                    <span class="label label-success">Active</span>
-                                                            </td>                                        
+                                                            <td>';
+                                                                if (!$jogado) {
+                                                                    
+                                                                    echo '<a class="btn btn-success btnslvr" href="javascript:void(0)" match="'.$matchs[$i]['mt_id'].'" id="btnSalvarRes">
+                                                                        <i class="fa fa-check "></i>                                            
+                                                                    </a>';                                                                    
+                                                                }
+                                                            echo '</td> 
+                                                            <td><span id="rs_success_'.$matchs[$i]['mt_id'].'">&nbsp&nbsp</span></td>
                                                     </tr>';
                                                 }        
                                                         
@@ -110,3 +127,21 @@ $matchs = $this->matchs;
     }
 
 ?>
+
+<script type="text/javascript">
+    $(function() { 
+        $(".btnslvr").bind('click', function() {
+           var match = $(this).attr("match"); 
+           var res1 = $("#res1_"+match).val();
+           var res2 = $("#res2_"+match).val();
+           
+           $.post("resultados/setresultado", {match : match, res1 : res1, res2 : res2}, function(response) {
+                console.log(response);
+                if (response == 200) {
+                    $("#rs_success_"+match).html('<span class="label label-success">Complete</span>');
+                }
+                //<span class="label label-success">Complete</span>
+           });
+        });
+    })
+</script>

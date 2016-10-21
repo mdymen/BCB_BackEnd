@@ -30,7 +30,12 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     public function update_puntagem($puntagem, $id_match) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        $info = array('rs_points' => $puntagem);
+        $res = 0;
+        if ($puntagem != 0) {
+            $res = 1;
+        }
+        
+        $info = array('rs_points' => $puntagem, 'rs_result' => $res);
         
         //$db->update('user_penca', $info, 'up_idpenca = '.$penca.' and up_iduser ='.$usuario);
         $db->update('result', $info, 'rs_idmatch = '.$id_match);

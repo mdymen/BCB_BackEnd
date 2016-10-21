@@ -72,11 +72,11 @@ if (!empty($palpites_feitos)) {
                                                                 </div>
                                                             </td>  
                                                             <td>';
-                                                            if (empty($palpites_feitos['rs_id'])) {
+                                                            if (empty($palpites_feitos['rs_id']) && !$palpites_feitos[$i]['mt_played']) {
                                                                     echo '<button it="'.$i.'" result="'.$palpites_feitos[$i]['rs_id'].'"  class="btn btn-danger excluir">'
                                                                             . '<i class="fa fa-trash-o "></i></button>';
-                                                                    echo '<a it="'.$i.'" result="'.$palpites_feitos[$i]['rs_id'].'" class="btn btn-info editar">'
-                                                                            . '<i class="fa fa-edit"></i></button>';
+//                                                                    echo '<a it="'.$i.'" result="'.$palpites_feitos[$i]['rs_id'].'" class="btn btn-info editar">'
+//                                                                            . '<i class="fa fa-edit"></i></button>';
 //                                                                    echo '<button it="'.$i.'" match="'.$palpites_feitos[$i]['mt_id'].'" class="btn btn-xs btn-success palpite">Palpitar</button>';
                                                              }
                                                             echo '</td>
