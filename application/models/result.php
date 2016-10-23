@@ -85,8 +85,21 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
         return $result;         
     }
     
-    public function palpites_em_acao_group($us_id) {
+    public function palpites_em_acao_group($us_id, $ordem) {
         $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $o = "";
+        if (!empty($ordem)) {
+            if ($ordem == 1) {
+                $o = "match.mt_idchampionship";
+            } else if ($ordem == 2) {
+                $o = "match.mt_date";
+            } else if ($ordem == 3) {
+                $o = "match.mt_round";
+            } else {
+                $o = "match.mt_idchampionship";
+            }
+        }
         
         $result = $db->select()->from("result")
                 ->joinInner("match", "match.mt_id = result.rs_idmatch")
@@ -95,7 +108,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
                 ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('t2nome' => 't2.tm_name'))
                 ->where("rs_result is null")
                 ->where("rs_iduser = ?", $us_id)
-                ->order("match.mt_idchampionship")
+                ->order($o)
                 ->query()
                 ->fetchAll();
                 

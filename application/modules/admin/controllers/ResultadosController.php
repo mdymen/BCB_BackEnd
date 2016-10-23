@@ -48,9 +48,27 @@ class Admin_ResultadosController extends Zend_Controller_Action
         $matchid = $params['match'];
         $res1 = $params['res1'];
         $res2 = $params['res2'];
+        $team1 = $params['team1'];
+        $team2 = $params['team2'];
         
         $result = new Application_Model_Result();        
         $result->update_resultado($matchid, $res1, $res2);
+        
+        $teams = new Application_Model_Teams();
+        
+        if ($res1 > $res2) {
+            $teams->sum_points($team1, 3);
+            $teams->sum_match($team2);
+        }
+        if ($res1 < $res2) {            
+            $teams->sum_match($team1);
+            $teams->sum_points($team2, 3);
+        }
+
+        if ($res1 == $res2) {
+            $teams->sum_points($team1, 1);
+            $teams->sum_points($team2, 1);
+        }
         
         /* Retorna los RESULT con ID MATCH 
          *  [rs_id] => 11 [rs_idmatch] => 41 [rs_res1] => 9 [rs_res2] => 2 
@@ -60,7 +78,7 @@ class Admin_ResultadosController extends Zend_Controller_Action
         $matchs = new Application_Model_Matchs();
         $match = $matchs->load_resultados_palpitados($matchid);
 
-        $x = "";
+        $x = "";                
         
         for ($j = 0; $j < count($match); $j = $j + 1) {
             $puntagem = $this->puntuacao($match[$j], $res1, $res2);

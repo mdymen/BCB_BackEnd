@@ -1,6 +1,8 @@
 <?php
 
  $championship = $this->championships;
+ $rodada = $this->rodada;
+ $champ = $this->champ;
 
 ?>
 
@@ -14,7 +16,7 @@
                                             <div class="input-group date col-sm-12">
                                                     <span class="input-group-addon"><i class="fa  fa-search"></i></span>
                                                     <div class="controls">
-                                                    <input type="hidden" value="-1" name="rodada" />
+                                                        <input type="hidden" value="<?php echo $champ; ?>" name="rodada" />
                                                     <select id="championship" name="champ" class="form-control">
                                                     <?php   
                                                         if (empty($pencas)) {
@@ -22,7 +24,11 @@
                                                         }
                                                         
                                                         for ($i = 0; $i < count($championship); $i = $i + 1) {
-                                                            echo '<option value="'.$championship[$i]['ch_id'].'">'.$championship[$i]['ch_nome'].'</option>';
+                                                            $selected="";
+                                                            if ($champ == $championship[$i]['ch_id']) {
+                                                                $selected = "selected";
+                                                            }
+                                                            echo '<option '.$selected.' value="'.$championship[$i]['ch_id'].'">'.$championship[$i]['ch_nome'].'</option>';
                                                         }                                                        
                                                     ?>
                                                     </select></div>

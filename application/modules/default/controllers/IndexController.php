@@ -39,7 +39,7 @@ class IndexController extends Zend_Controller_Action
             $result = new Application_Model_Result();
             $em_acao = $result->palpites_em_acao($data['us_id']);
             $points = $result->points($data['us_id']);
-            $em_acao_group = $result->palpites_em_acao_group($data['us_id']);
+            $em_acao_group = $result->palpites_em_acao_group($data['us_id'], "");
             
             $this->view->em_acao = $em_acao;
             $this->view->points = $points;
@@ -57,11 +57,18 @@ class IndexController extends Zend_Controller_Action
     }
     
     public function emacaoAction() {
+        $params = $this->_request->getParams();
+        
+        $ordem = "";
+        if (!empty($params['ordem'])) {
+            $ordem = $params['ordem'];
+        }
+       
         $storage = new Zend_Auth_Storage_Session();
         $data = (get_object_vars($storage->read()));
         
         $result = new Application_Model_Result();
-        $em_acao_group = $result->palpites_em_acao_group($data['us_id']);
+        $em_acao_group = $result->palpites_em_acao_group($data['us_id'], $ordem);
         
         $h_date = new Helpers_Data();
         for ($i = 0; $i < count($em_acao_group); $i = $i + 1) {

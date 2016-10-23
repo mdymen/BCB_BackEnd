@@ -243,16 +243,23 @@ class PencaController extends Zend_Controller_Action {
         $this->view->championships = $champ->load();
         
         $p_obj = new Application_Model_Penca();
+
+        if (!empty($params['champ'])) {  
         
-        if (!empty($params['rodada'])) {  
-        
+            $this->view->teamuserid = $this->getTimeUserId();
+            $this->view->teamusername = $this->getTimeUserName();
+            
             $champ_id = $params['champ'];
 
-            if ($params['rodada'] == -1) {
+            $this->view->champ = $champ_id;
+            
+            if (empty($params['rodada'])) {
                 $rodada_id = $p_obj->getIdPrimeraRodadaDisponivel($champ_id);
             } else {            
                 $rodada_id = $params['rodada'];
             }
+            
+            $this->view->rodada = $rodada_id;
 
             $storage = new Zend_Auth_Storage_Session();
             $data = (get_object_vars($storage->read()));
@@ -403,6 +410,20 @@ class PencaController extends Zend_Controller_Action {
         $data = (get_object_vars($storage->read()));
         
         return $data['us_id'];
+    }
+    
+    public function getTimeUserId() {
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read())); 
+        
+        return $data['us_team'];
+    }
+    
+    public function getTimeUserName() {
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read())); 
+        
+        return $data['us_teamname'];
     }
     
     public function testAction() {

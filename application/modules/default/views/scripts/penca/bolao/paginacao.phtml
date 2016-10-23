@@ -7,7 +7,14 @@
     $rodada = $rodadas[0]['mt_round'];
     $champ = $rodadas[0]['mt_idchampionship']; 
             
-      if (!empty($champ)) {      
+      if (!empty($champ)) { 
+          
+          $teamuserid = $this->teamuserid;
+          $teamusername = $this->teamusername;
+          
+          if ($teamusername == "") {
+              $teamusername = "Time do coracao";
+          }
 ?>
 
 
@@ -25,10 +32,11 @@
                   
                      ?>       
                   <?php
+                        echo '<li><a id="teamusername" href="javascript:void(0)"><i class="fa fa-edit"></i></a></li><li><a href="javascript:void(0)" data-type="text" data-pk="1" data-original-title="Enter username" class="editable editable-click">'.$teamusername.'</a></li>';
                         for ($i = 0; $i < count($rondas); $i = $i + 1) {
                             $r = $i + 1;
                             $active = "";
-                            if ($r == count($rodada) ) { 
+                            if ($rondas[$i]['mt_round'] == $this->rodada ) { 
                                 $active = 'class="active"';                                
                             } 
                             echo '<li '.$active.'><a href="'.$this->baseUrl('/penca/bolao?rodada='.$rondas[$i]['mt_round'].'&champ='.$champ).'">'.$rondas[$i]['mt_round'].'</a></li>';
@@ -53,8 +61,64 @@
     </div>
 </div>
 
+<div id="teamusername_popup" class="popover editable-container editable-popup fade top in" style="display: none; top: 15px; left: 281px;">
+        <div class="arrow"></div>
+        <h3 class="popover-title">Time do coracao</h3>
+        <div class="popover-content"> 
+            <div>
+                <div class="editableform-loading" style="display: none;"></div>
+                <form class="form-inline editableform" style="">
+                    <div class="control-group form-group"><div>
+                            <div class="editable-input" style="position: relative;">
+                                <input type="text" class="form-control input-sm" style="padding-right: 24px;" value='<?php echo $teamusername; ?>'>
+                                <span class="editable-clear-x"></span>
+                            </div>
+                            <div class="editable-buttons">
+                                <button id="aceitar_teamusername" type="button" class="btn btn-primary btn-sm editable-submit">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                </button>
+                                <button id="fechar_teamusername" type="button" class="btn btn-default btn-sm editable-cancel">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="editable-error-block help-block" style="display: none;"></div>     
+                    </div>
+                </form>  
+            </div>  
+        </div>
+</div>
+
 <?php
 
       }
       
       ?>
+
+<script type="text/javascript">
+    
+    function fechar_teamusername() {
+        $("#fechar_teamusername").bind("click", function() {
+            $("#teamusername_popup").css("display","none");       
+        });
+    }
+    
+    function aceitar_teamusername() {
+        $("#aceitar_teamusername").bind("click", function() {
+           
+        });
+    }
+    
+    $(function() {
+        $("#teamusername").bind("click", function() {
+            $("#teamusername_popup").css("display","block");
+            fechar_teamusername();
+        });  
+        
+        
+            
+        
+        
+ 
+    });
+</script>

@@ -90,9 +90,11 @@ $matchs = $this->matchs;
                                                     $jogado = false;
                                                     $disabled = "";
                                                     if ($matchs[$i]['mt_played']) {
-                                                        $jogado = true;
+                                                        //$jogado = true;
                                                         $disabled="disabled";
                                                     }
+                                                    echo '<input type="hidden" id="idteam1_'.$matchs[$i]['mt_id'].'" value="'.$matchs[$i]['mt_idteam1'].'">';
+                                                    echo '<input type="hidden" id="idteam2_'.$matchs[$i]['mt_id'].'" value="'.$matchs[$i]['mt_idteam2'].'">';
                                                     echo '<tr>
                                                             <td>'.$matchs[$i]['mt_date'].'</td>
                                                             <td><input id="res1_'.$matchs[$i]['mt_id'].'" value="'.$matchs[$i]['mt_goal1'].'" '.$disabled.' size="3" type="text"></td>
@@ -134,8 +136,10 @@ $matchs = $this->matchs;
            var match = $(this).attr("match"); 
            var res1 = $("#res1_"+match).val();
            var res2 = $("#res2_"+match).val();
+           var team1 = $("#idteam1_"+match).val();
+           var team2 = $("#idteam2_"+match).val();
            
-           $.post("resultados/setresultado", {match : match, res1 : res1, res2 : res2}, function(response) {
+           $.post("resultados/setresultado", {team1: team1, team2: team2, match : match, res1 : res1, res2 : res2}, function(response) {
                 console.log(response);
                 if (response == 200) {
                     $("#rs_success_"+match).html('<span class="label label-success">Complete</span>');

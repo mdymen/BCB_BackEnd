@@ -108,9 +108,10 @@
         $("#emacao").bind("click", function() {
             $("#box_emacao").attr("style","display:yes");
             $("#box_box_emacao").attr("style","display:yes");
+            var ordenar = $("#ordenar").val();
             if ($("#box_box_emacao").attr("carregado") === 'no') {
                 $("#box_box_emacao").attr("carregado","y");
-                $.post("index/emacao", function(response) {
+                $.post("index/emacao", {ordem : ordenar}, function(response) {
                     for (var i = 0; i < response.length; i = i + 1) {
                         $("#tb_emacao").append('<tr>\n\
                         <td>'+response[i].ch_nome+'</td> \n\
@@ -183,7 +184,15 @@
         });
     }
     
+    function trocar_ordem_emacao() {
+        $("#ordenar").change(function() {
+            $("#box_box_emacao").attr("carregado","no");
+            $("#emacao").click();            
+        });
+    }
+    
     $(function() { 
+        trocar_ordem_emacao();
         abrir_emacao();
         fechar_emacao();
 

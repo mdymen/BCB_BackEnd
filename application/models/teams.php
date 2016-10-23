@@ -60,4 +60,23 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
 
         return $result;  
     }
+    
+    public function sum_points($team, $points) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("team", array('tm_points','tm_played'))
+                ->where("tm_id = ?", $team)->query()->fetch();
+        
+        $db->update("team", array('tm_points' => $result['tm_points'] + $points, 'tm_played' => $result['tm_played'] + 1), "tm_id = ".$team);
+        
+    }
+    
+    public function sum_match($team) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("team", array('tm_played'))
+                ->where("team.tm_id = ?", $team)->query()->fetch();
+        
+        $db->update("team", array('tm_played' => $result['tm_played'] + 1), "tm_id = ".$team);
+    }
 }
