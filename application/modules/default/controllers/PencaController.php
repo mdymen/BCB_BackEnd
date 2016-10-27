@@ -267,8 +267,20 @@ class PencaController extends Zend_Controller_Action {
             $matchs_obj = new Application_Model_Matchs();
             $rondas = $matchs_obj->getrondas($champ_id);
 
-            $rodadas = $matchs_obj->load_rodada($champ_id, $rodada_id, $data['us_id']);
-            $palpites_da_rodada = $matchs_obj->load_palpites_simples($champ_id, $rodada_id, $data['us_id']);
+            
+            
+            if (empty($params['team'])) {
+                $rodadas = $matchs_obj->load_rodada($champ_id, $rodada_id, $data['us_id']);
+            } else {
+                $team_id = $params['team'];
+                $rodadas = $matchs_obj->load_rodada_porteam($champ_id, $team_id, $data['us_id']);
+            }
+            
+            if (empty($params['team'])) {
+                $palpites_da_rodada = $matchs_obj->load_palpites_simples($champ_id, $rodada_id, $data['us_id']);
+            } else {
+                $palpites_da_rodada = $matchs_obj->load_porteam($champ_id, $team_id, $data['us_id']);
+            }
 
             $teams_obj = new Application_Model_Teams();
             $teams = $teams_obj->load_teams_championship($champ_id); 
@@ -434,5 +446,73 @@ class PencaController extends Zend_Controller_Action {
         print_r($results);
         die(".");
         
+    }
+    
+    public function login() {
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read())); 
+        
+        $user = $data["us_username"];
+        $password = $data["us_password"];
+        
+        $users = new Application_Model_Users();
+        $auth = Zend_Auth::getInstance();
+        $authAdapter = new Zend_Auth_Adapter_DbTable($users->getAdapter(),'user');
+        $authAdapter->setIdentityColumn('us_username')
+                    ->setCredentialColumn('us_password');
+        $authAdapter->setIdentity($user)
+                    ->setCredential($password);
+
+        $result = $auth->authenticate($authAdapter);
+        
+        if ($result->isValid()) {         
+            $storage = new Zend_Auth_Storage_Session();
+            $storage->write($authAdapter->getResultRowObject());
+            
+        }
+
+    }
+    
+    private function setTimeCoracaoStorage($id, $name) {
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read())); 
+        $data['us_team'] = $id;
+        $data['us_teamname'] = $name;
+//      
+       // $storage->write(array('us_team' => $id, 'us_teamname' => $name));
+//        Zend_Auth::getInstance()->getStorage()->write(
+//        Zend_Auth::getInstance()->getStorage()->read(),
+//        array('us_team' => $id, 'us_teamname' => $name));
+//        
+        $auth = Zend_Auth::getInstance();
+        $auth->setStorage($data);
+        
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read())); 
+        print_r($data);
+        die(".");
+        
+    }
+    
+    public function edittimecoracaoAction() {
+        $params = $this->_request->getParams();
+        
+        $id = $params['idteam'];
+        $name = $params['nameteam'];
+        
+        $user = new Application_Model_Users();
+        $user->setTeamCoracao($id, $name, $this->getIdUser());
+        
+        $this->login();
+        
+       // $this->setTimeCoracaoStorage($id, $name);
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json(200);
     }
 }

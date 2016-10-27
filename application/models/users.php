@@ -39,5 +39,10 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         return $result;
     }
         
+    public function setTeamCoracao($id, $name, $us_id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $db->update("user", array("us_team" => $id, "us_teamname" => $name), "us_id = ".$us_id);
+    }
     
 }

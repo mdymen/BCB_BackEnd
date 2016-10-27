@@ -57,6 +57,22 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         return $result;       
     }
     
+//    public function load_palpites_simples($championship, $rodada, $usuario) {
+//         $db = Zend_Db_Table::getDefaultAdapter();
+//        
+//        $result = $db->select()->from("match")
+//                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
+//                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
+//                ->joinRight("result", "match.mt_id = result.rs_idmatch")
+//                ->where("match.mt_idchampionship = ?", $championship)
+//                ->where("match.mt_round = ?", $rodada)
+//                //->where("result.rs_id <> '' " )
+//                ->query()
+//                ->fetchAll();
+//        
+//        
+//        return $result;       
+//    }    
     public function load_rodada($championship, $rodada, $usuario) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
@@ -66,6 +82,44 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
                 ->joinLeft("result", "match.mt_id = result.rs_idmatch")
                 ->where("match.mt_idchampionship = ?", $championship)
                 ->where("match.mt_round = ?", $rodada)
+                //->where("result.rs_id is null " )
+                //->where("result.rs_iduser = ?", $usuario)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+        
+    }
+    
+    public function load_rodada_porteam($championship, $team, $usuario) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("match")
+                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
+                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
+                ->joinLeft("result", "match.mt_id = result.rs_idmatch")
+                ->where("match.mt_idchampionship = ?", $championship)
+                ->where("match.mt_idteam1 = ?", $team)
+                ->orWhere("match.mt_idteam2 = ?",$team)
+                //->where("result.rs_id is null " )
+                //->where("result.rs_iduser = ?", $usuario)
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+        
+    }    
+    
+    public function load_porteam($championship, $team, $usuario) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("match")
+                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
+                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
+                ->joinLeft("result", "match.mt_id = result.rs_idmatch")
+                ->where("match.mt_idchampionship = ?", $championship)
+                ->where("match.mt_idteam1 = ?", $team)
+                ->orWhere("match.mt_idteam2 = ?", $team)
                 //->where("result.rs_id is null " )
                 //->where("result.rs_iduser = ?", $usuario)
                 ->query()

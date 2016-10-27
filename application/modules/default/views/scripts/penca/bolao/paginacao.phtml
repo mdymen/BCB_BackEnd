@@ -32,7 +32,7 @@
                   
                      ?>       
                   <?php
-                        echo '<li><a id="teamusername" href="javascript:void(0)"><i class="fa fa-edit"></i></a></li><li><a href="javascript:void(0)" data-type="text" data-pk="1" data-original-title="Enter username" class="editable editable-click">'.$teamusername.'</a></li>';
+                        echo '<li><a id="teamusername" href="javascript:void(0)"><i class="fa fa-edit"></i></a></li><li><a href="'.$this->baseUrl('/penca/bolao?team='.$teamuserid.'&champ='.$champ).'" data-type="text" data-pk="1" data-original-title="Enter username" id="teamcoracao_nome" class="editable editable-click">'.$teamusername.'</a></li>';
                         for ($i = 0; $i < count($rondas); $i = $i + 1) {
                             $r = $i + 1;
                             $active = "";
@@ -61,7 +61,13 @@
     </div>
 </div>
 
-<div id="teamusername_popup" class="popover editable-container editable-popup fade top in" style="display: none; top: 15px; left: 281px;">
+<?php
+
+    $teams_coracao = $this->teams;
+
+?>
+
+<div id="teamusername_popup" class="popover editable-container editable-popup fade top in" style="width:auto !important;display: none; top: 15px; left: 281px;">
         <div class="arrow"></div>
         <h3 class="popover-title">Time do coracao</h3>
         <div class="popover-content"> 
@@ -70,7 +76,28 @@
                 <form class="form-inline editableform" style="">
                     <div class="control-group form-group"><div>
                             <div class="editable-input" style="position: relative;">
-                                <input type="text" class="form-control input-sm" style="padding-right: 24px;" value='<?php echo $teamusername; ?>'>
+                                <div class="controls">
+                                            <div class="input-group date col-sm-4">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                        <input type="hidden" value="<?php echo $champ; ?>" name="rodada" />
+                                                    <select id="team_coracao" name="team_coracao" class="form-control">
+                                                    <?php   
+//                                                        if (empty($pencas)) {
+//                                                            echo '<option value="Vazio"></option>';    
+//                                                        }
+                                                        
+                                                        for ($i = 0; $i < count($teams_coracao); $i = $i + 1) {
+                                                            $selected="";
+//                                                            if ($champ == $championship[$i]['ch_id']) {
+//                                                                $selected = "selected";
+//                                                            }
+                                                            echo '<option '.$selected.' value="'.$teams_coracao[$i]['tm_id'].'">'.$teams_coracao[$i]['tm_name'].'</option>';
+                                                        }                                                        
+                                                    ?>
+                                                    </select></div>
+                                            </div>	
+                                      </div>
                                 <span class="editable-clear-x"></span>
                             </div>
                             <div class="editable-buttons">
@@ -105,14 +132,25 @@
     
     function aceitar_teamusername() {
         $("#aceitar_teamusername").bind("click", function() {
-           
+            var name = $('#team_coracao').find(":selected").text();
+            var id = $('#team_coracao').find(":selected").val();   
+            $("#teamusername_popup").css("display","none");
+            
+            $.post("edittimecoracao",{idteam : id, nameteam : name}, function(response) {
+                if (response == 200) {
+                    $("#teamcoracao_nome").html(name);
+                }
+                console.log(response);
+            });
         });
     }
     
     $(function() {
+        aceitar_teamusername();
+        fechar_teamusername();
         $("#teamusername").bind("click", function() {
             $("#teamusername_popup").css("display","block");
-            fechar_teamusername();
+            
         });  
         
         
