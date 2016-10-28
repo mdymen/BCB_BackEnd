@@ -13,11 +13,17 @@ if (!empty($palpites_feitos)) {
 <input type="hidden" value="<?php echo $palpites_feitos[0]['mt_round']; ?>" name="rodada" id="round" />
 
 
-        
+                                    <?php
+                                if ($this->porteam) { 
+                                    $titulo = "Rodada: ".$palpites[0]['mt_round'];
+                                } else {
+                                    $titulo = "Time: ".$this->teamusername;
+                                }
+                            ?>
        
                 <div class="box">
                         <div class="box-header">
-                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Rodada: <?php echo $palpites_feitos[0]['mt_round']; ?></h2>
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo $titulo; ?></h2>
                                 <div class="box-icon">
 <!--                                        <a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
                                         <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
@@ -41,6 +47,7 @@ if (!empty($palpites_feitos)) {
                                               <?php
                                               echo '<input cant="'.count($palpites_feitos).'" type="hidden" value="'.count($palpites_feitos).'" id="count_palpites_feitos" name="count_palpites_feitos">';
                                                 for ($i = 0; $i < count($palpites_feitos); $i = $i + 1) {
+                                                    if (!empty($palpites_feitos[$i]['mt_id'])) {
                                                     $st = "";
                                                     if ($palpites_feitos[$i]['rs_id'] == -1) {
                                                         $st='style="display:none"';
@@ -54,7 +61,7 @@ if (!empty($palpites_feitos)) {
                                                                '.date("H:i",strtotime($palpites_feitos[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($palpites_feitos[$i]['mt_date']) ).'
                                                                 </b>';
                                                                 
-                                                                
+                                                                 
                                                             echo '</td>                                      
                                                         </tr>
                                                             <tr name="rs_'.$i.'_dados" '.$st.' pf="'.($i+1).'" id="rstr2'.$palpites_feitos[$i]['rs_id'].'">
@@ -81,6 +88,7 @@ if (!empty($palpites_feitos)) {
                                                              }
                                                             echo '</td>
                                                         </tr>';
+                                                    }
                                                 }
                                               
                                               ?>

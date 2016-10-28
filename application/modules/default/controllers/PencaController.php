@@ -271,7 +271,11 @@ class PencaController extends Zend_Controller_Action {
             
             if (empty($params['team'])) {
                 $rodadas = $matchs_obj->load_rodada($champ_id, $rodada_id, $data['us_id']);
+                $this->view->porteam = true;
+                $this->view->porrodada = false;
             } else {
+                $this->view->porteam = false;
+                $this->view->porrodada = true;
                 $team_id = $params['team'];
                 $rodadas = $matchs_obj->load_rodada_porteam($champ_id, $team_id, $data['us_id']);
             }
@@ -297,7 +301,20 @@ class PencaController extends Zend_Controller_Action {
 
                 if (!$e) {
                     $palpites_da_rodada[$j]['rs_id'] = -1;
-                    $palpites_da_rodada[$j]['rs_idmatch'] = $rodadas[$c]['mt_id'];
+                    if (!empty($rodadas[$c]['mt_id'])) {
+                        $palpites_da_rodada[$j]['rs_idmatch'] = $rodadas[$c]['mt_id']; 
+                        $palpites_da_rodada[$j]['mt_id'] = $rodadas[$c]['mt_id'];
+                        $palpites_da_rodada[$j]['mt_idteam1'] = $rodadas[$c]['mt_idteam1'];
+                        $palpites_da_rodada[$j]['mt_date'] = $rodadas[$c]['mt_idteam1'];
+                        $palpites_da_rodada[$j]['mt_goal1'] = $rodadas[$c]['mt_goal1'];
+                        $palpites_da_rodada[$j]['mt_goal2'] = $rodadas[$c]['mt_goal2'];
+                        $palpites_da_rodada[$j]['mt_idchampionship'] = $rodadas[$c]['mt_idchampionship'];
+                        $palpites_da_rodada[$j]['mt_round'] = $rodadas[$c]['mt_round'];
+                        $palpites_da_rodada[$j]['mt_played'] = $rodadas[$c]['mt_played'];
+                        $palpites_da_rodada[$j]['t1nome'] = $rodadas[$c]['t1nome'];
+                        $palpites_da_rodada[$j]['t2nome'] = $rodadas[$c]['t2nome'];
+                    }
+                    
                     $palpites_da_rodada[$j]['rs_res1'] = "";
                     $palpites_da_rodada[$j]['rs_res2'] = "";
                     $palpites_da_rodada[$j]['rs_date'] = "";
@@ -306,16 +323,8 @@ class PencaController extends Zend_Controller_Action {
                     $palpites_da_rodada[$j]['rs_round'] = "";
                     $palpites_da_rodada[$j]['rs_result'] = "";
                     $palpites_da_rodada[$j]['rs_points'] = "";
-                    $palpites_da_rodada[$j]['mt_id'] = $rodadas[$c]['mt_id'];
-                    $palpites_da_rodada[$j]['mt_idteam1'] = $rodadas[$c]['mt_idteam1'];
-                    $palpites_da_rodada[$j]['mt_date'] = $rodadas[$c]['mt_idteam1'];
-                    $palpites_da_rodada[$j]['mt_goal1'] = $rodadas[$c]['mt_goal1'];
-                    $palpites_da_rodada[$j]['mt_goal2'] = $rodadas[$c]['mt_goal2'];
-                    $palpites_da_rodada[$j]['mt_idchampionship'] = $rodadas[$c]['mt_idchampionship'];
-                    $palpites_da_rodada[$j]['mt_round'] = $rodadas[$c]['mt_round'];
-                    $palpites_da_rodada[$j]['mt_played'] = $rodadas[$c]['mt_played'];
-                    $palpites_da_rodada[$j]['t1nome'] = $rodadas[$c]['t1nome'];
-                    $palpites_da_rodada[$j]['t2nome'] = $rodadas[$c]['t2nome'];
+                    
+                   
                 }
             }
 

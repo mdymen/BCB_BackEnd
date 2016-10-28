@@ -17,7 +17,7 @@
           }
 ?>
 
-
+<input type="hidden" value="<?php echo $champ ?>" id="champ">
 <div class="box">
     <div class="box-content">
         <div class="pagination pagination-centered" style="margin: 0px !important">
@@ -67,18 +67,22 @@
 
 ?>
 
-<div id="teamusername_popup" class="popover editable-container editable-popup fade top in" style="width:auto !important;display: none; top: 15px; left: 281px;">
+<div id="teamusername_popup" class="popover editable-container fade top in col-lg-4" style="display: none; top: 15px; left: 281px;">
         <div class="arrow"></div>
         <h3 class="popover-title">Time do coracao</h3>
         <div class="popover-content"> 
+
             <div>
                 <div class="editableform-loading" style="display: none;"></div>
+
                 <form class="form-inline editableform" style="">
                     <div class="control-group form-group"><div>
                             <div class="editable-input" style="position: relative;">
                                 <div class="controls">
-                                            <div class="input-group date col-sm-4">
-                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                            <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa  fa-search"></i>
+                                                    </span>
                                                     <div class="controls">
                                                         <input type="hidden" value="<?php echo $champ; ?>" name="rodada" />
                                                     <select id="team_coracao" name="team_coracao" class="form-control">
@@ -95,11 +99,11 @@
                                                             echo '<option '.$selected.' value="'.$teams_coracao[$i]['tm_id'].'">'.$teams_coracao[$i]['tm_name'].'</option>';
                                                         }                                                        
                                                     ?>
-                                                    </select></div>
+                                                    </select>
+                                                </div>
                                             </div>	
                                       </div>
-                                <span class="editable-clear-x"></span>
-                            </div>
+                                
                             <div class="editable-buttons">
                                 <button id="aceitar_teamusername" type="button" class="btn btn-primary btn-sm editable-submit">
                                     <i class="glyphicon glyphicon-ok"></i>
@@ -108,6 +112,8 @@
                                     <i class="glyphicon glyphicon-remove"></i>
                                 </button>
                             </div>
+                            </div>
+
                         </div>
                         <div class="editable-error-block help-block" style="display: none;"></div>     
                     </div>
@@ -134,11 +140,15 @@
         $("#aceitar_teamusername").bind("click", function() {
             var name = $('#team_coracao').find(":selected").text();
             var id = $('#team_coracao').find(":selected").val();   
+            var champ = $('#champ').val();
             $("#teamusername_popup").css("display","none");
             
             $.post("edittimecoracao",{idteam : id, nameteam : name}, function(response) {
                 if (response == 200) {
                     $("#teamcoracao_nome").html(name);
+                    $("#teamcoracao_nome").attr("href","http://localhost/penca/public/penca/bolao?team="+id+"&champ="+champ);
+                    
+                    
                 }
                 console.log(response);
             });
