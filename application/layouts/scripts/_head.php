@@ -5,7 +5,7 @@
 //        print_r($data->us_username);
 //        die(".");
 
-?>
+?>  
 
 
 <!DOCTYPE html>
@@ -14,7 +14,7 @@
 	
 	<!-- start: Meta -->
 	<meta charset="utf-8">
-	<title>Bolao Pipo</title>
+	<title>Bolao Craque de Bolsa</title>
 	<meta name="description" content="Genius Dashboard - Bootstrap Admin Template.">
 	<meta name="author" content="Łukasz Holeczek">
 	<meta name="keyword" content="Genius, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
@@ -34,7 +34,7 @@
    <?php echo $this->headScript()->appendFile($this->baseUrl('jquery/jquery-1.8.3.js')); ?>
    <?php echo $this->headScript()->appendFile($this->baseUrl('jquery/jquery-ui-1.9.2.custom.js')); ?>
    <?php echo $this->headScript()->appendFile($this->baseUrl('jquery/jquery-ui-1.9.2.custom.min.js')); ?> 
-        
+   <?php echo $this->headScript()->appendFile($this->baseUrl('assets/js/own.js')) ?>        
         
 	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
@@ -64,17 +64,36 @@
 			      <span class="icon-bar"></span>
 			</button>
 			<a id="main-menu-toggle" class="hidden-xs open"><i class="fa fa-bars"></i></a>		
-			<a class="navbar-brand col-md-2 col-sm-1 col-xs-2" href="<?php echo $this->baseUrl(); ?>"><span>Bolao Dym</span></a>
+			<a class="navbar-brand col-md-2 col-sm-1 col-xs-2" href="<?php echo $this->baseUrl(); ?>"><span>Craque de Bola</span></a>
 			
 			<!-- start: Header Menu -->
 			<div class="nav-no-collapse header-nav">
 				<ul class="nav navbar-nav pull-right">
+                                    <li>
+                                    <a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">							
+							<div class="user">
+								<span class="hello">Time</span>
+								<span class="name"><?php echo $data->us_teamname; ?></span>
+							</div>
+                                                    
+						</a>
+                                    </li>                                    
+                                    <li>
+                                    <a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">							
+							<div class="user">
+								<span class="hello">R$</span>
+								<span class="name"><?php echo $data->us_cash; ?></span>
+							</div>
+                                                    
+						</a>
+                                    </li>
 					<li class="dropdown" >
 						<a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="2nd-level.html#">							
 							<div class="user">
-								<span class="hello">Bem-vindo!</span>
+								<span class="hello">Bem-vindo! </span>
 								<span class="name"><?php echo $data->us_username; ?></span>
 							</div>
+                                                    
 						</a>
 						<ul class="dropdown-menu">
 							<li><a href="2nd-level.html#"><i class="fa fa-user"></i> Profile</a></li>
@@ -111,7 +130,8 @@
                                                 <!--<li><a href="<?php echo $this->baseUrl("/penca/meusbaloes"); ?>" ><i class="fa fa-globe"></i><span class="hidden-sm text"> Meus Baloes </span></a></li>-->	
                                                 <li><a href="<?php echo $this->baseUrl("/penca/meuspalpites"); ?>" ><i class="fa fa-globe"></i><span class="hidden-sm text"> Meus Palpites </span></a></li>	
                                                 <li><a href="<?php echo $this->baseUrl("/penca/bolao"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Palpites </span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/"); ?>"><i class="fa fa-user"></i><span class="hidden-sm text">Meu Perfil</span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/usuario"); ?>"><i class="fa fa-user"></i><span class="hidden-sm text">Meu Perfil</span></a></li>
+                                                 <li><a href="<?php echo $this->baseUrl("/penca/ranking"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Ranking</span></a></li>
                                                 <!--<li><a href="<?php echo $this->baseUrl("/register/penca"); ?>"><i class="fa fa-legal"></i><span class="hidden-sm text"> Criar Balão </span></a></li>-->                                                
                                                 
 					</ul>
@@ -214,7 +234,7 @@
 
 	<!-- page scripts -->
         <?php echo $this->headScript()->appendFile($this->baseUrl('assets/js/jquery-ui-1.10.3.custom.min.js')) ?>
-	
+        
 	<!-- theme scripts -->
         <?php echo $this->headScript()->appendFile($this->baseUrl('assets/js/custom.min.js')) ?>
         <?php echo $this->headScript()->appendFile($this->baseUrl('assets/js/core.min.js')) ?>

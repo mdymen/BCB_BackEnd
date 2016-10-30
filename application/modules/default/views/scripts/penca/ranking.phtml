@@ -1,0 +1,54 @@
+<?php
+
+    $championship = $this->championships;
+    $posicoes = $this->posicoes;
+    
+?>
+
+<div class="row">
+    <div class="col-lg-12">
+            <div class="box">
+                    <div class="box-content">
+                            <form id="frChamp" action="../penca/ranking" method="post">	
+                                    <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                    <select id="championship" name="championship" class="form-control">
+                                                    <?php   
+                                                        if (empty($pencas)) {
+                                                            echo '<option value="Vazio"></option>';    
+                                                        }
+                                                        
+                                                        for ($i = 0; $i < count($championship); $i = $i + 1) {
+                                                            echo '<option value="'.$championship[$i]['ch_id'].'">'.$championship[$i]['ch_nome'].'</option>';
+                                                        }                                                        
+                                                    ?>
+                                                    </select></div>
+                                            </div>	
+                                      </div>
+                                    </div>    
+                            </form>   
+                    </div>
+            </div>
+        </div>
+    </div>
+
+<?php
+
+    if (!empty($posicoes)) {
+        echo $this->render('penca/ranking/posicoes.phtml');
+    }
+
+?>
+    
+    <script type="text/javascript">
+       $(function() {
+           $("#championship").change(function() {
+               $('#frChamp').submit();
+             //  alert("TROCOU");
+           })
+       }); 
+         
+    </script>

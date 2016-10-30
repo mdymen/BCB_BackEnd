@@ -165,12 +165,14 @@
        $("#puntuacao").bind("click", function() {
             $("#box_puntuacao").attr("style","display:yes");
             $("#box_box_puntuacao").attr("style","display:yes");
+            
             $.post("index/puntuacao", function(response) {
                 
-                $("#td_acertados").html(response[0].ganados);
-                $("#td_errados").html(response[1].perdidos);
-                $("#td_puntuacao").html(response[2].pontos);
-        
+                $("#td_acertados").html(response['ganados']);
+                $("#td_errados").html(response['perdidos']);
+                $("#td_puntuacao").html(response['pontos']);
+                $("#td_position").html(response['pontos']);
+                $('#td_global').html(response['position']);
                 console.log(response);
            
             });
@@ -187,6 +189,7 @@
     function trocar_ordem_emacao() {
         $("#ordenar").change(function() {
             $("#box_box_emacao").attr("carregado","no");
+            $("#tb_emacao").html("");
             $("#emacao").click();            
         });
     }

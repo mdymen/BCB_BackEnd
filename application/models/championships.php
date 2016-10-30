@@ -41,4 +41,16 @@ class Application_Model_Championships extends Zend_Db_Table_Abstract
         return $championships;
     }
 
+    public function ranking($champ) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("ranking")
+                ->where("rk_champ = ?", $champ)
+                ->query()
+                ->fetchAll();
+                
+        
+        return $result;
+    }
+    
 }

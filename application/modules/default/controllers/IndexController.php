@@ -89,13 +89,24 @@ class IndexController extends Zend_Controller_Action
         $storage = new Zend_Auth_Storage_Session();
         $data = (get_object_vars($storage->read()));
         
-        $result = new Application_Model_Result();
-        $ganados = $result->ganados($data['us_id']);
-        $perdidos = $result->perdidos($data['us_id']);
-        $puntuacao = $result->puntuacao($data['us_id']);
+//        $result = new Application_Model_Result();
+        $results = new Application_Model_Users();
         
-        $resultados = array($ganados[0], $perdidos[0], $puntuacao[0]);
+        $resultados = array();
         
+        $id_user = $data['us_id'];
+        
+        $resultados['perdidos'] = $results->getLostMatches($id_user);
+        $resultados['ganados'] = $results->getWonMatches($id_user);
+        $resultados['jogados'] = $results->getPlayedMatches($id_user);
+        $resultados['pontos'] = $results->getPoints($id_user);
+        $resultados['position'] = $results->getPoisition($id_user);
+//        $ganados = $result->ganados($data['us_id']);
+//        $perdidos = $result->perdidos($data['us_id']);
+//        $puntuacao = $result->puntuacao($data['us_id']);
+//        
+//        $resultados = array($ganados[0], $perdidos[0], $puntuacao[0]);
+//        
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
         

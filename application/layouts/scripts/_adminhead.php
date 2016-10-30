@@ -111,7 +111,7 @@
                                                 <!--<li><a href="<?php echo $this->baseUrl("/penca/meusbaloes"); ?>" ><i class="fa fa-globe"></i><span class="hidden-sm text"> Meus Baloes </span></a></li>-->	
                                                 <li><a href="<?php echo $this->baseUrl("/penca/meuspalpites"); ?>" ><i class="fa fa-globe"></i><span class="hidden-sm text"> Meus Palpites </span></a></li>	
                                                 <li><a href="<?php echo $this->baseUrl("/penca/bolao"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Palpites </span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/"); ?>"><i class="fa fa-user"></i><span class="hidden-sm text">Meu Perfil</span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/usuario"); ?>"><i class="fa fa-user"></i><span class="hidden-sm text">Meu Perfil</span></a></li>
                                                 <!--<li><a href="<?php echo $this->baseUrl("/register/penca"); ?>"><i class="fa fa-legal"></i><span class="hidden-sm text"> Criar Balão </span></a></li>-->                                                
                                                 <li><a href="<?php echo $this->baseUrl("/admin"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Admin Home </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/team"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Admin Teams </span></a></li>

@@ -1,0 +1,227 @@
+<?php
+
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read())); 
+
+        $lostMaches = $this->lostMatches;
+        $winMatches = $this->winMatches;
+        $playedMatches = $this->playedMatches;
+        $totalPoints = $this->totalPoints;
+        
+?>
+
+<div class="row profile">
+				
+    <div class="col-sm-3">
+
+            <div class="row">
+                    <div class="col-xs-7 col-sm-12">
+                            <img class="profile-image" src="assets/img/gallery/photo9.jpg">
+                    </div>
+
+            </div><!--/row-->	
+
+    </div><!--/col-->
+
+    <div class="col-sm-9">
+
+
+
+            <div class="tab-content">
+                    <div class="tab-pane active" id="skills">
+
+                            <div class="row">
+
+<div class="col-lg-12">
+					<div class="box">
+						<div class="box-header">
+							<h2><i class="fa fa-edit"></i>Informacao de Usuario</h2>
+							<div class="box-icon">
+								
+								<a href="form-elements.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+								
+							</div>
+						</div>
+						<div class="box-content">
+							<form class="form-horizontal">
+								<div class="form-group">
+								  
+								  <div class="controls">
+									<div class="input-group col-sm-4">
+									  <span class="input-group-addon"><i class="fa fa-user"></i></span>
+									  <input type="text" id="date" value="<?php echo $data['us_username']; ?>" disabled class="form-control">
+									</div>
+									
+								  </div>
+								</div>
+								
+								<div class="form-group">
+								  
+								  <div class="controls">
+									<div class="input-group col-sm-4">
+									  <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                                                          <input type="text" id="phone" value="<?php echo $data['us_cash']; ?>" disabled class="form-control">
+									</div>
+									
+								  </div>
+								</div>
+								<div class="form-group">
+<!--                                                                    <select id="championship" name="champ" class="form-control">
+                                                                    <?php   
+                                                                        if (empty($pencas)) {
+                                                                            echo '<option value="Vazio"></option>';    
+                                                                        }
+
+                                                                        for ($i = 0; $i < count($championship); $i = $i + 1) {
+                                                                            $selected="";
+                                                                            if ($champ == $championship[$i]['ch_id']) {
+                                                                                $selected = "selected";
+                                                                            }
+                                                                            echo '<option '.$selected.' value="'.$championship[$i]['ch_id'].'">'.$championship[$i]['ch_nome'].'</option>';
+                                                                        }                                                        
+                                                                    ?>
+                                                                    </select>-->
+								</div>
+								<div class="form-group">
+								  
+								  <div class="controls">
+									<div class="input-group col-sm-4">
+									  <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+									  <input type="password" id="senha" class="form-control" placeholder="Senha">
+									</div>
+									
+								  </div>
+								</div>
+								<div class="form-group">
+								  
+								  <div class="controls">
+									<div class="input-group col-sm-4">
+									  <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+									  <input type="password" id="novasenha" class="form-control" placeholder="Nova senha">
+									</div>
+									
+								  </div>
+								</div>
+								<div class="form-group">
+								  
+								  <div class="controls">
+									<div class="input-group col-sm-4">
+									  <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+									  <input type="password" id="confirmacao" class="form-control" placeholder="Confirmacao">
+									</div>
+									
+								  </div>
+								</div>                                                            
+								
+								
+								<div class="form-actions">
+								  <button type="button" id="salvar_senha" class="btn btn-primary">Salvar</button>
+								</div>
+							</form>   
+
+						</div>
+					</div>
+				</div>
+                                
+                                
+                                <div class="col-lg-12">
+					<div class="box">
+						<div class="box-header">
+							<h2><i class="fa fa-edit"></i>Puntuacao</h2>
+							<div class="box-icon">
+								
+								<a href="form-elements.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+								
+							</div>
+						</div>
+						<div class="box-content">
+
+                                                   <table class="table" id="tb_palpites_feitos">
+                                          <thead>
+                                                      
+                                                  <tr>
+                                                          <th width="15%"></th>
+                                                          <th></th>
+                                                  </tr>
+                                          </thead>   
+                                          <tbody>
+                                            <tr>    
+                                                <td>Puntuacao</td> 
+                                                <td width="15%" id="td_puntuacao"></td>  
+                                            </tr>   
+                                            <tr>    
+                                                <td>Posicao global</td> 
+                                                <td width="15%" id="td_global">x</td>  
+                                            </tr>                                                                                                       
+                                            <tr>
+                                                <td>Palpites acertados...</td> 
+                                                <td width="15%" id="td_acertados"><?php echo $winMatches; ?></td>                                           
+                                            </tr>
+                                            <tr>
+                                                <td>Palpites errados...</td> 
+                                                <td width="15%" id="td_errados"><?php echo $lostMaches; ?></td>                                           
+                                            </tr>
+                                            <tr>
+                                                <td>Palpitados...</td> 
+                                                <td width="15%" id="td_errados"><?php echo $playedMatches; ?></td>                                           
+                                            </tr>
+                                            <tr>
+                                                <td>Pontos totais...</td> 
+                                                <td width="15%" id="td_errados"><?php echo $totalPoints; ?></td>                                           
+                                            </tr>                                               
+                                                                                        
+                                          </tbody>
+                                 </table> 
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+						</div>
+					</div>
+				</div>
+                            </div><!--/row-->		
+
+                    </div>
+
+
+            </div>
+
+    </div><!--/col-->	
+
+</div>
+
+<script type="text/javascript">
+
+    $(function() {
+       $("#salvar_senha").bind("click", function() {
+           var senha = $("#senha").val();
+           
+           var confirmacao = $("#confirmacao").val();
+           
+           var novasenha = $("#novasenha").val();
+           if (novasenha === confirmacao && novasenha !== "" && confirmacao !== "") {
+               $.post("usuario/salvarsenha", {senha : senha, novasenha : novasenha}, function(response) {
+                    console.log(response);
+                    if (response == 200) {                       
+                        success_msg("Senha trocada com exito.");
+                   } else {
+                       info_msg("Nao successo");
+                   }
+               });
+           } else {
+               info_msg("Senha e confirmacao devem ser iguais e nao vazio.");
+           }
+       }); 
+    });
+
+</script>

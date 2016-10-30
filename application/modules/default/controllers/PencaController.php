@@ -524,4 +524,21 @@ class PencaController extends Zend_Controller_Action {
         
         $this->_helper->json(200);
     }
+    
+    public function rankingAction() {
+        $params = $this->_request->getParams();
+        
+        $champ = new Application_Model_Championships();
+        $this->view->championships = $champ->load();
+        
+        print_r($params['champ']);
+        
+        if (!empty($params['champ'])) {
+            
+            $ranking = $champ->ranking($params['champ']);
+            $this->view->ranking = $ranking;
+            
+        }
+
+    }
 }
