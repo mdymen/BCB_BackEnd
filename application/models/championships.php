@@ -45,7 +45,7 @@ class Application_Model_Championships extends Zend_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         
         $result = $db->select()->from("ranking")
-                ->where("rk_champ = ?", $champ)
+                ->where("rk_idchamp = ?", $champ)
                 ->query()
                 ->fetchAll();
                 

@@ -1,18 +1,12 @@
 <?php
 
-    include APPLICATION_PATH."/helpers/html.php";
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read())); 
 
-    $storage = new Zend_Auth_Storage_Session();
-    $data = (get_object_vars($storage->read())); 
-
-    $lostMaches = $this->lostMatches;
-    $winMatches = $this->winMatches;
-    $playedMatches = $this->playedMatches;
-    $totalPoints = $this->totalPoints;
-
-    $usuario = $this->usuario;
-    
-    $html = new Helpers_Html();
+        $lostMaches = $this->lostMatches;
+        $winMatches = $this->winMatches;
+        $playedMatches = $this->playedMatches;
+        $totalPoints = $this->totalPoints;
         
 ?>
 
@@ -39,12 +33,6 @@
                             <div class="row">
 
 <div class="col-lg-12">
-    
-    <?php
-
-    if ($data['us_id'] == $usuario) {
-    
-?>
 					<div class="box">
 						<div class="box-header">
 							<h2><i class="fa fa-edit"></i>Informacao de Usuario</h2>
@@ -133,15 +121,8 @@
 
 						</div>
 					</div>
-    
-     <?php
-                                
-    }
-                                
-                                ?>
 				</div>
-                               
-                               
+                                
                                 
                                 <div class="col-lg-12">
 					<div class="box">
@@ -154,8 +135,57 @@
 							</div>
 						</div>
 						<div class="box-content">
-                                                    <?php echo $html->puntuacoes($totalPoints,0,$winMatches,$lostMaches,$playedMatches, $data['us_id'],$this->baseUrl()); ?>
- 
+
+                                                   <table class="table" id="tb_palpites_feitos">
+                                          <thead>
+                                                      
+                                                  <tr>
+                                                          <th width="15%"></th>
+                                                          <th></th>
+                                                  </tr>
+                                          </thead>   
+                                          <tbody>
+                                            <tr>    
+                                                <td>Puntuacao</td> 
+                                                <td width="15%" id="td_puntuacao"></td>  
+                                            </tr>   
+                                            <tr>    
+                                                <td>Posicao global</td> 
+                                                <td width="15%" id="td_global">x</td>  
+                                            </tr>                                                                                                       
+                                            <tr>
+                                                <td>Palpites acertados...</td> 
+                                                <td width="15%" id="td_acertados"><?php echo $winMatches; ?></td>                                           
+                                            </tr>
+                                            <tr>
+                                                <td>Palpites errados...</td> 
+                                                <td width="15%" id="td_errados"><?php echo $lostMaches; ?></td>                                           
+                                            </tr>
+                                            <tr>
+                                                <td>Palpitados...</td> 
+                                                <td width="15%" id="td_errados"><?php echo $playedMatches; ?></td>                                           
+                                            </tr>
+                                            <tr>
+                                                <td>Pontos totais...</td> 
+                                                <td width="15%" id="td_errados"><?php echo $totalPoints; ?></td>                                           
+                                            </tr>                                               
+                                                                                        
+                                          </tbody>
+                                 </table> 
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
 						</div>
 					</div>
 				</div>

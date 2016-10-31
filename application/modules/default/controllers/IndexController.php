@@ -44,6 +44,7 @@ class IndexController extends Zend_Controller_Action
             $this->view->em_acao = $em_acao;
             $this->view->points = $points;
             $this->view->em_acao_group = $em_acao_group;
+            $this->view->user_id = $data['us_id'];
         //$pencas = $penca->load_penca__puntagem_usuario($data['us_id']);
         
 //            $pencas = $penca->load_pencas();

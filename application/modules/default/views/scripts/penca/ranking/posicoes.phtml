@@ -1,25 +1,24 @@
 <?php
 
-    $posicoes = $this->$ranking;
-
+    $posicoes = $this->ranking;
+//
+//    print_r($posicoes);
+//    die(".");
+//    
     if (!empty($posicoes)) {
     
 ?>
 
-
+<div class="col-lg-4">
 					<div class="box">
 						<div class="box-header">
-							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Tabela de posicoes</h2>
+							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Ranking</h2>
 							
 						</div>
 						<div class="box-content">
 							<table class="table">
 								  <thead>
-									  <tr>
-                                                                            <th>Pos</th>
-                                                                            <th>Time</th>
-                                                                            <th>P</th>
-										                                  
+									  <tr>                               
 									  </tr>
 								  </thead>   
 								  <tbody>
@@ -29,9 +28,9 @@
                                                                         for ($i = 0; $i < count($posicoes); $i = $i + 1) {
                                                                    
                                                                             echo '<tr>
-                                                                                    <td id="tm_id'.$i.'">'.($i+1).'</td>
-                                                                                    <td id="tm_name'.$i.'">'.$posicoes[$i]['points'].'</td>
-                                                                                    <td id="tm_points'.$i.'">'.$posicoes[$i]['rk_username'].'</td>
+                                                                                    <td>'.($i+1).'</td>
+                                                                                    <td>'.$posicoes[$i]['points'].'</td>
+                                                                                    <td><a href="'.$this->baseUrl().'/usuario/index?usuario='.$posicoes[$i]['rk_iduser'].'">'.$posicoes[$i]['rk_username'].'</a></td>
                                                                                                                          
                                                                             </tr>';
                                                                         
@@ -50,6 +49,8 @@
 							</div>     
 						</div>
 					</div>
+    
+    </div>
 <?php
 
     };

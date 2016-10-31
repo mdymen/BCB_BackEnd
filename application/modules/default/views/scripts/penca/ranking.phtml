@@ -1,8 +1,8 @@
 <?php
 
     $championship = $this->championships;
-    $posicoes = $this->posicoes;
-    
+    $posicoes = $this->ranking;
+    $champ = $this->champ;
 ?>
 
 <div class="row">
@@ -22,7 +22,11 @@
                                                         }
                                                         
                                                         for ($i = 0; $i < count($championship); $i = $i + 1) {
-                                                            echo '<option value="'.$championship[$i]['ch_id'].'">'.$championship[$i]['ch_nome'].'</option>';
+                                                            $selected = "";
+                                                            if (!empty($championship) && $championship[$i]['ch_id'] == $champ) {
+                                                                $selected = "selected";    
+                                                            }
+                                                            echo '<option '.$selected.' value="'.$championship[$i]['ch_id'].'">'.$championship[$i]['ch_nome'].'</option>';
                                                         }                                                        
                                                     ?>
                                                     </select></div>

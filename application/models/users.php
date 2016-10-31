@@ -49,32 +49,64 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->update("user", array("us_password" => $senha), "us_id = ".$us_id);
     }
-
     
     public function getWonMatches($id_user) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
         $result = $db->select()->from("result", array("count(*) as wonmatches"))
                ->where("rs_iduser = ?",$id_user)
+               ->where("rs_date < " + date("m-d-Y"))
                ->where("rs_points = 1")
                 ->orWhere("rs_points = 5")
                 ->query()
                 ->fetch();
         
         return $result['wonmatches'];
-    }
+    }    
     
-    public function getLostMatches($id_user) {
+    public function getLostMatches($us_id) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        $result = $db->select()->from("result", array("count(*) as lostmatches"))
-               ->where("rs_iduser = ?",$id_user)
+        $result = $db->select()->from("result", array("count(*) as losts"))
+               ->where("rs_iduser = ?",$us_id)
+                ->where("rs_date < " + date("m-d-Y"))
                ->where("rs_points = 0")
-                ->where("rs_result is null")
                 ->query()
                 ->fetch();
         
-            return $result['lostmatches'];
+        return $result['losts'];        
+    }
+    
+    public function getMatchesLostMatches($us_id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("match")
+                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
+                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
+                ->joinRight("result", "match.mt_id = result.rs_idmatch")
+                ->where("rs_iduser = ?",$us_id)
+                ->where("rs_points = 0")
+                ->query()
+                ->fetchAll();
+        
+        return $result;  
+
+    }
+    
+    public function getMatchesWonMatches($us_id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("match")
+                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
+                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
+                ->joinRight("result", "match.mt_id = result.rs_idmatch")
+                ->where("rs_iduser = ?",$us_id)
+                ->where("rs_points = 5")
+                ->orWhere("rs_points = 1")
+                ->query()
+                ->fetchAll();
+        
+        return $result;  
 
     }
     
@@ -83,7 +115,8 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         
         $result = $db->select()->from("result", array("count(*) as played"))
                ->where("rs_iduser = ?",$id_user)
-                ->where("rs_result = null")
+                ->where("rs_date < " + date("m-d-Y"))
+                ->where("rs_result is not null")
                 ->query()
                 ->fetch();
         
@@ -95,6 +128,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         
         $result = $db->select()->from("result", array("sum(rs_points) as points"))
                 ->where("rs_iduser = ?",$id_user)
+                ->where("rs_date < " + date("m-d-Y"))
                 ->query()
                 ->fetch();
         

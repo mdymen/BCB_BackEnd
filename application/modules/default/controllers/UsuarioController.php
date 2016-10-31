@@ -19,16 +19,17 @@ class UsuarioController extends Zend_Controller_Action
 
         $results = new Application_Model_Users();
         
-        if (empty($params['user'])) {
+        if (empty($params['usuario'])) {
             $id_user = $this->getIdUser();
         } else {
-            $id_user = $params['user'];
+            $id_user = $params['usuario'];
         }
         
-        $this->view->lostMaches = $results->getLostMatches($id_user);
+        $this->view->lostMatches = $results->getLostMatches($id_user);
         $this->view->winMatches = $results->getWonMatches($id_user);
         $this->view->playedMatches = $results->getPlayedMatches($id_user);
         $this->view->totalPoints = $results->getPoints($id_user);
+        $this->view->usuario = $id_user;
 //        $this->view->position = $results->getPoisition($id_user);
 //        
 //        print_r($this->view->position);
@@ -69,5 +70,42 @@ class UsuarioController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
         $this->_helper->json($resposta);
+    }
+    
+    public function puntuacaoAction() {
+        $params = $this->_request->getParams();
+        $us_id = $params['usuario'];
+        
+        $users = new Application_Model_Users();
+        
+        $matches = $users->getMatchesWonMatches($us_id);
+        
+        $this->view->matches = $matches;
+        
+    }
+    public function posicaoglobalAction() {
+        $params = $this->_request->getParams();
+        
+    }
+    public function acertadosAction() {
+        $params = $this->_request->getParams();
+        $us_id = $params['usuario'];
+        
+        $users = new Application_Model_Users();
+        
+        $matches = $users->getMatchesWonMatches($us_id);
+        
+        $this->view->matches = $matches;
+    }
+    public function erradosAction() {
+        $params = $this->_request->getParams();
+        $us_id = $params['usuario'];
+        
+        $users = new Application_Model_Users();
+        
+        $matches = $users->getLostMatches($us_id);
+        
+        $this->view->matches = $matches;
+        
     }
 }

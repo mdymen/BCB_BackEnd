@@ -282,6 +282,8 @@ class PencaController extends Zend_Controller_Action {
             
             if (empty($params['team'])) {
                 $palpites_da_rodada = $matchs_obj->load_palpites_simples($champ_id, $rodada_id, $data['us_id']);
+//                print_r($palpites_da_rodada);
+//                die(".");
             } else {
                 $palpites_da_rodada = $matchs_obj->load_porteam($champ_id, $team_id, $data['us_id']);
             }
@@ -531,13 +533,12 @@ class PencaController extends Zend_Controller_Action {
         $champ = new Application_Model_Championships();
         $this->view->championships = $champ->load();
         
-        print_r($params['champ']);
         
-        if (!empty($params['champ'])) {
+        if (!empty($params['championship'])) {
             
-            $ranking = $champ->ranking($params['champ']);
+            $ranking = $champ->ranking($params['championship']);
             $this->view->ranking = $ranking;
-            
+            $this->view->champ = $params['championship'];
         }
 
     }

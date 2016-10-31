@@ -46,7 +46,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         $result = $db->select()->from("match")
                 ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
                 ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
-                ->joinRight("result", "match.mt_id = result.rs_idmatch")
+                ->joinRight("result", "match.mt_id = result.rs_idmatch and result.rs_iduser = ".$usuario)
                 ->where("match.mt_idchampionship = ?", $championship)
                 ->where("match.mt_round = ?", $rodada)
                 //->where("result.rs_id <> '' " )
@@ -79,14 +79,20 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         $result = $db->select()->from("match")
                 ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
                 ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
-                ->joinLeft("result", "match.mt_id = result.rs_idmatch")
+                ->joinLeft("result", "match.mt_id = result.rs_idmatch and result.rs_iduser = ".$usuario)
                 ->where("match.mt_idchampionship = ?", $championship)
                 ->where("match.mt_round = ?", $rodada)
-                //->where("result.rs_id is null " )
-                //->where("result.rs_iduser = ?", $usuario)
                 ->query()
                 ->fetchAll();
         
+        
+        //print_r($result->__toString());
+        //die(".");
+                //->where("result.rs_id is null " )
+                //->where("result.rs_iduser = ?", $usuario)
+//                ->query()
+//                ->fetchAll();
+//        
         return $result;
         
     }
@@ -97,7 +103,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         $result = $db->select()->from("match")
                 ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
                 ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
-                ->joinLeft("result", "match.mt_id = result.rs_idmatch")
+                ->joinLeft("result", "match.mt_id = result.rs_idmatch and result.rs_iduser = ".$usuario)
                 ->where("match.mt_idchampionship = ?", $championship)
                 ->where("match.mt_idteam1 = ?", $team)
                 ->orWhere("match.mt_idteam2 = ?",$team)
@@ -116,14 +122,16 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         $result = $db->select()->from("match")
                 ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
                 ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
-                ->joinLeft("result", "match.mt_id = result.rs_idmatch")
+                ->joinLeft("result", "match.mt_id = result.rs_idmatch and result.rs_iduser =".$usuario)
                 ->where("match.mt_idchampionship = ?", $championship)
                 ->where("match.mt_idteam1 = ?", $team)
                 ->orWhere("match.mt_idteam2 = ?", $team)
-                //->where("result.rs_id is null " )
-                //->where("result.rs_iduser = ?", $usuario)
-                ->query()
+                 ->query()
                 ->fetchAll();
+        
+//        print_r($result->__toString());
+//        die(".");
+               
         
         return $result;
         

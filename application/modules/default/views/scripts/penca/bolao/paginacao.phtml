@@ -61,7 +61,7 @@
 
 ?>
 
-<div id="teamusername_popup" class="popover editable-container fade top in col-lg-4" style="display: none; top: 15px; left: 281px;">
+<div id="teamusername_popup" class="popover editable-container fade top in col-lg-4" style="display: none; top: -90px; left: -50px;">
         <div class="arrow"></div>
         <h3 class="popover-title">Time do coracao</h3>
         <div class="popover-content"> 
@@ -87,9 +87,9 @@
                                                         
                                                         for ($i = 0; $i < count($teams_coracao); $i = $i + 1) {
                                                             $selected="";
-//                                                            if ($champ == $championship[$i]['ch_id']) {
-//                                                                $selected = "selected";
-//                                                            }
+                                                            if ($teamuserid == $teams_coracao[$i]['tm_id']) {
+                                                                $selected = "selected";
+                                                            }
                                                             echo '<option '.$selected.' value="'.$teams_coracao[$i]['tm_id'].'">'.$teams_coracao[$i]['tm_name'].'</option>';
                                                         }                                                        
                                                     ?>
@@ -141,7 +141,7 @@
                 if (response == 200) {
                     $("#teamcoracao_nome").html(name);
                     $("#teamcoracao_nome").attr("href","http://localhost/penca/public/penca/bolao?team="+id+"&champ="+champ);
-                    
+                    $("#head_timecoracao").html(name);
                     
                 }
                 console.log(response);
