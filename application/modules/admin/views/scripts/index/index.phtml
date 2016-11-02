@@ -176,9 +176,11 @@ $teams = $this->teams;
             var n_team1 = $("#team1").html();
             var n_team2 = $("#team2").html();
             
+            
             $.post("salvarjogo", {team1 : team1, team2: team2, ronda : ronda, date : date, hora : hora, champ : champ}, function(response) {
-                $("#success_ad_match").attr("style","display:yes");
-                $("#success_ad_match_msg").html("Ronda: " + ronda + " => " + n_team1 + " - " + n_team2 + " - " + date + " " + hora);
+                alert(response);
+//                $("#success_ad_match").attr("style","display:yes");
+//                $("#success_ad_match_msg").html("Ronda: " + ronda + " => " + n_team1 + " - " + n_team2 + " - " + date + " " + hora);
             }); 
          });
     }); 

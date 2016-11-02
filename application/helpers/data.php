@@ -22,4 +22,9 @@ class Helpers_Data {
         return new Date('d/m/Y H:i');
     }
     
+    public function for_save($date) {
+        $res = explode("/",$date);
+        return "20".$res[2]."-".$res[1]."-".$res[0];
+    }
+    
 }

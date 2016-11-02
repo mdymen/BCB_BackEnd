@@ -49,6 +49,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
                 ->joinRight("result", "match.mt_id = result.rs_idmatch and result.rs_iduser = ".$usuario)
                 ->where("match.mt_idchampionship = ?", $championship)
                 ->where("match.mt_round = ?", $rodada)
+                ->order(array('match.mt_date ASC'))
                 //->where("result.rs_id <> '' " )
                 ->query()
                 ->fetchAll();
@@ -82,6 +83,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
                 ->joinLeft("result", "match.mt_id = result.rs_idmatch and result.rs_iduser = ".$usuario)
                 ->where("match.mt_idchampionship = ?", $championship)
                 ->where("match.mt_round = ?", $rodada)
+                ->order(array('match.mt_date ASC'))
                 ->query()
                 ->fetchAll();
         
@@ -248,6 +250,20 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
             $matchs[$i]['mt_date'] = $data->format($matchs[$i]['mt_date']);
         }
         return $matchs;
+    }
+    
+    public function load_all_matchs($champ) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("match")  
+            ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
+            ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('tm2_logo' => 't2.tm_logo', 't2nome' => 't2.tm_name'))
+            ->where('mt_idchampionship = ?', $champ)
+            ->order('mt_round','mt_date')
+            ->query()
+            ->fetchAll();
+        
+        return $result;
     }
     
 }

@@ -3,8 +3,7 @@
 include APPLICATION_PATH.'/models/pencas.php';
 include APPLICATION_PATH.'/models/teams.php';
 include APPLICATION_PATH.'/models/matchs.php';
-//include APPLICATION_PATH.'/helpers/data.php';
-class Admin_IndexController extends Zend_Controller_Action
+class Admin_JogosController extends Zend_Controller_Action
 {
 
     public function init()
@@ -14,22 +13,41 @@ class Admin_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-       $params = $this->_request->getParams();
+        $params = $this->_request->getParams();        
         
-        $penca = new Application_Model_Penca();
-        
-        $id_user = $this->getIdUser();
-        $champs = $penca->load_championship_with_results($id_user);
+        $champ = new Application_Model_Championships();
+        $this->view->championships = $champ->load();
         
         if (!empty($params['champ'])) {            
-            $t_obj = new Application_Model_Teams();
-            $teams = $t_obj->load_teams_championship($params['champ']);
-            $this->view->teams = $teams;
+            $t_obj = new Application_Model_Matchs();
+            $teams = $t_obj->load_all_matchs($params['champ']);
+            $this->view->matches = $teams;
             $this->view->champ = $params['champ'];
+            
+            
         }
-        
-        $this->view->championships = $champs;
+       
     }
+    
+    public function excluirjogoAction() {
+        $params = $this->_request->getParams();
+        
+        $match = $params['match'];
+        
+        $t_obj = new Application_Model_Matchs();
+        $t_obj->delete("mt_id = ".$match);
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json(200);
+        
+        
+    }
+    
     
     public function registerAction() {}
 
@@ -47,10 +65,7 @@ class Admin_IndexController extends Zend_Controller_Action
         $hora = $params['hora'];
         $team1 = $params['team1'];
         $team2 = $params['team2'];
-        $champ = $params['champ'];  
-        
-        $helper = new Helpers_Data();
-        $date = $helper->for_save($date);
+        $champ = $params['champ'];
         
         $info = array(
             'round' => $ronda, 

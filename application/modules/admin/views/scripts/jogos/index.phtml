@@ -1,0 +1,163 @@
+<?php
+
+    $champs = $this->championships;
+    $champ = $this->champ;
+    
+    $matchs = $this->matches;
+
+    $config = new Zend_Config_Ini("config.ini");
+    
+//    print_r($matchs);
+//    die(".");
+    
+?>
+
+<div class="row">
+    <div class="col-lg-12">
+            <div class="box">
+                    <div class="box-content">
+                            <form id="frChamp_palpites" action="<?php echo $this->baseUrl('admin/jogos/index'); ?>" method="post">	
+                                    <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                    <input type="hidden" value="1" name="rodada" />
+                                                    <select id="championship" name="champ" class="form-control">
+                                                    <?php   
+                                                        if (empty($pencas)) {
+                                                            echo '<option value="Vazio"></option>';    
+                                                        }
+                                                        
+                                                        for ($i = 0; $i < count($champs); $i = $i + 1) {
+                                                            $selected = "";
+                                                            if (!empty($champ) && $champs[$i]['ch_id'] == $champ) {
+                                                                $selected = "selected";    
+                                                            }
+                                                            echo '<option '.$selected.' value="'.$champs[$i]['ch_id'].'">'.$champs[$i]['ch_nome'].'</option>';
+                                                        }                                                        
+                                                    ?>
+                                                    </select></div>
+                                            </div>	
+                                      </div>
+                                    </div>    
+                            </form>   
+                    </div>
+            </div>
+        </div>
+    </div>
+
+<?php
+
+ if (!empty($matchs)) {
+
+?>
+
+
+        
+                <div class="box">
+                        <div class="box-header">
+                           
+                            
+                            
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Jogos</h2>
+                                <div class="box-icon">
+
+                                </div>
+                        </div>
+                        <div class="box-content">
+                                <table class="table" id="tb_palpites" >
+                                          <thead>
+                                                  <tr>
+                                                    <th></th>
+                                                    <th width="15%"></th>
+                                                    <th></th>
+                                                    <th width="15%"></th>
+                                                    <th></th> 
+                                                    <th width="15%"></th> 
+                                                    <th></th> 
+                                                  </tr>
+                                          </thead>   
+                                          <tbody>
+                                              
+                                              <?php
+                                              echo '<input type="hidden" value="'.count($matchs).'" name="count_palpites" id="count_palpites">';
+                                              for ($i = 0; $i < count($matchs); $i = $i + 1) {  
+                                                    $date = date("H:i",strtotime($matchs[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($matchs[$i]['mt_date']) );
+                                                    $matchs[$i]['mt_date'] = $date;
+                                                    if (($i == 0) || ($i > 0 && strcmp($matchs[$i]['mt_date'],$matchs[$i-1]['mt_date']) != 0)) { 
+                                                        echo '
+                                                            <tr>
+                                                                <td></td>
+                                                                <td><b>Rodada '.$matchs[$i]['mt_round'].'</b></td>
+                                                                <td><b>'.$date.'</b></td>
+                                                                
+                                                            </tr>';                                      
+                                                    }
+                                                        echo '
+                                                            <tr id="tr_'.$i.'">
+                                                                <td>'.$matchs[$i]['mt_id'].'</td>
+                                                            <td width="15%">
+                                                                <div class="input-group col-sm-7">
+                                                                    <input disabled class="form-control" value="'.$matchs[$i]['mt_goal1'].'" type="text" placeholder="0">
+                                                                </div>
+                                                            </td>
+                                                            <td><img width="28px;" height="21px;" src="'.$config->host.$matchs[$i]['tm1_logo'].'" />'.$matchs[$i]['t1nome'].'</td>
+                                                            <td></td>
+                                                            <td><img width="28px;" height="21px;" src="'.$config->host.$matchs[$i]['tm2_logo'].'" />'.$matchs[$i]['t2nome'].'</td>
+                                                            <td width="15%">     
+                                                                <div class="input-group col-sm-7">		
+                                                                    <input disabled class="form-control" value="'.$matchs[$i]['mt_goal1'].'" type="text" placeholder="0">
+                                                                </div>
+                                                            </td>
+                                                            <td>';
+                                                                if ($matchs[$i]['mt_played'] == 0) {
+                                                                    echo '<button match="'.$matchs[$i]['mt_id'].'" tr="tr_'.$i.'" class="btn btn-danger palpite"><i class="fa fa-times"></i></button>';
+                                                                }
+                                                                
+                                                            echo '</td>                                      
+                                                        </tr>';
+                                                    }
+                                               
+                                              
+                                              ?>
+                                              
+                                                                           
+                                          </tbody>
+                                 </table>  
+                               
+                            <div class="form-action">
+                                <!--<a href="javascript:void(0)" id="btnAceitarPalpites" class="btn btn-success">Aceitar Palpites</a>--> 
+                            </div>
+                        </div>
+                </div>
+
+
+
+<?php
+ }
+?>
+
+
+
+<script type="text/javascript">
+
+    $(function() {
+        $("#championship").change(function() {
+            $('#frChamp_palpites').submit();
+         });
+         
+         
+         $(".palpite").bind("click", function() {
+             var tr = $(this).attr("tr");
+             var match = $(this).attr("match");
+             $.post("excluirjogo", {match : match }, function(response) {
+                 if (response === 200) {
+                     $("#"+tr).attr("style","display:none");
+                 }
+                 console.log(response);
+             });
+         });
+     });
+    
+ </script>
