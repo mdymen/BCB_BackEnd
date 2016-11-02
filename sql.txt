@@ -1,0 +1,2 @@
+ALTER TABLE `penca`.`team` 
+CHANGE COLUMN `tm_logo` `tm_logo` VARCHAR(255) NULL DEFAULT NULL ;

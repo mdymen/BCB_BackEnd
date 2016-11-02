@@ -1,5 +1,7 @@
 <?php
 
+    $config = new Zend_Config_Ini('config.ini');
+
     $teams = $this->teams;
 
     if (!empty($teams)) {
@@ -31,7 +33,7 @@
                                                                    
                                                                             echo '<tr>
                                                                                     <td id="tm_id'.$i.'">'.($i+1).'</td>
-                                                                                    <td id="tm_name'.$i.'">'.$teams[$i]['tm_name'].'</td>
+                                                                                    <td id="tm_name'.$i.'"><img width="28px;" height="21px;" src="'.$config->host.$teams[$i]['tm_logo'].'" />'.$teams[$i]['tm_name'].'</td>
                                                                                     <td id="tm_points'.$i.'">'.$teams[$i]['tm_points'].'</td>
                                                                                     <td id="tm_played'.$i.'">'.$teams[$i]['tm_played'].'</td>
                                                                                                                          

@@ -14,7 +14,7 @@
                     <span class="value"><?php echo $em_acao[0]['cantidad']; ?></span>
                     <a href="javascript:void(0)" id="emacao" class="more">
                         <span>Mais informacao</span>
-                        <i class="fa fa-chevron-down"></i>
+                        <i id="icone_emacao" class="fa fa-chevron-down"></i>
                     </a>
             </div>
     </div><!--/col-->
@@ -33,7 +33,7 @@
                      ?></span>
                     <a href="javascript:void(0)" id="puntuacao" class="more">
                         <span>Mais informacao...</span>
-                        <i class="fa fa-chevron-down"></i>
+                        <i id="icone_puntuacao" class="fa fa-chevron-down"></i>
                     </a>
             </div>
     </div><!--/col-->
@@ -118,25 +118,27 @@
             var ordenar = $("#ordenar").val();
             if ($("#box_box_emacao").attr("carregado") === 'no') {
                 $("#box_box_emacao").attr("carregado","y");
+                $("#icone_emacao").removeClass("fa fa-chevron-down");
+                $("#icone_emacao").addClass("fa fa-chevron-right");
                 $.post("index/emacao", {ordem : ordenar}, function(response) {
                     for (var i = 0; i < response.length; i = i + 1) {
                         $("#tb_emacao").append('<tr>\n\
-                        <td>'+response[i].ch_nome+'</td> \n\
+                        <td>'+response[i].ch_nome+'</td> \n\\n\
                         <td width="15%">\n\
                             <div class="input-group col-sm-7">\n\
                                 <input class="form-control" disabled="true" value="'+response[i].rs_res1+'" type="text" placeholder="0">\n\
                             </div>\n\
                         </td>\n\
-                        <td>'+response[i].t1nome+'</td>\n\
+                        <td><img width="28px;" height="21px;" src="'+response[i].tm1_logo+'" />'+response[i].t1nome+'</td>\n\\n\
                         <td></td>\n\
-                        <td>'+response[i].t2nome+'</td>\n\
+                        <td style="text-align:right">'+response[i].t2nome+'<img width="28px;" height="21px;" src="'+response[i].tm2_logo+'" /></td>\n\
                         <td width="15%">\n\
                             <div class="input-group col-sm-7">\n\
                                 <input class="form-control" disabled="true" value="'+response[i].rs_res2+'" type="text" placeholder="0"> \n\
                             </div>\n\
                         </td>  \n\
                         <td>\n\
-                            Round '+response[i].mt_round+'\n\
+                            <a href="'+response[i].host+'/penca/bolao?rodada='+response[i].mt_round+'&champ='+response[i].ch_id+'">Round '+response[i].mt_round+'</a>\n\
                         </td>\n\\n\
                         <td>'+ response[i].mt_date +'</td>\n\
                     </tr>');
@@ -150,6 +152,8 @@
     function fechar_emacao() {
         $("#fechar_emacao").bind("click", function() {
             $("#box_emacao").attr("style","display:none");
+            $("#icone_emacao").removeClass("fa fa-chevron-right");
+            $("#icone_emacao").addClass("fa fa-chevron-down");
             abrir_emacao();           
         });
     }
