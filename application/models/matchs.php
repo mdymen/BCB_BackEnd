@@ -122,7 +122,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         $result = $db->select()->from("match")
                 ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
                 ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
-                ->joinLeft("result", "match.mt_id = result.rs_idmatch and result.rs_iduser =".$usuario)
+                ->joinInner("result", "match.mt_id = result.rs_idmatch and result.rs_iduser =".$usuario)
                 ->where("match.mt_idchampionship = ?", $championship)
                 ->where("match.mt_idteam1 = ?", $team)
                 ->orWhere("match.mt_idteam2 = ?", $team)

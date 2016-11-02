@@ -15,7 +15,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
 {
     protected $_name = 'result';
     
-    public function update($params) {
+    public function update(array $params, $where) {
         
         $db = Zend_Db_Table::getDefaultAdapter(); 
 

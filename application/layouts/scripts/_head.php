@@ -69,14 +69,28 @@
 			<!-- start: Header Menu -->
 			<div class="nav-no-collapse header-nav">
 				<ul class="nav navbar-nav pull-right">
-                                    <li>
-                                    <a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">							
+                                    
+                                    
+                                    <li id="li_timecoracao" class="dropdown hidden-xs">
+                                    <a id="link_timecoracao" style="padding-right: 30px !important" class="btn dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">							
 							<div class="user">
 								<span class="hello">Time</span>
-								<span class="name" id="head_timecoracao"><?php echo $data->us_teamname; ?></span>
+								<span class="name" id_time="<?php echo $data->us_team; ?>" id="head_timecoracao"><?php echo $data->us_teamname; ?></span>
 							</div>
                                                     
 						</a>
+                                        <ul class="dropdown-menu notifications">
+                                            <li class="dropdown-menu-title">
+                                                <span>Time do coracao</span>
+                                            </li>	
+                                            <li>
+                                                <a href="index.html#">
+                                                    <span class="icon blue"><i class="fa fa-user"></i></span>
+                                                    <span id="escolher_timecoracao" class="message">New user registration</span>
+                                                    <span class="time">1 min</span> 
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>                                    
                                     <li>
                                     <a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">							
@@ -245,3 +259,31 @@
 	
 </body>
 </html>
+
+
+<script type="text/javascript">
+    $(function() {
+       $("#link_timecoracao").bind("click", function() {
+           if ($("#li_timecoracao").hasClass("open")) {
+             $("#li_timecoracao").removeClass("open");
+           } else {
+             $("#li_timecoracao").addClass("open");
+             $.post("/penca/public/index/teams", function(response) {
+                
+                var s_option = '<select id="" name="" class="form-control">';
+                var id_time = $("#head_timecoracao").attr("id_time");
+                for (var i = 0; i < response.length; i = i + 1) {
+                    var selected = "";
+                    if (id_time == response[i].tm_id) {
+                        selected = "selected";
+                    }
+                    s_option = s_option + '<option '+selected+' value="'+response[i].tm_id+'">'+response[i].tm_name+'</option>';
+                }     
+                s_option = s_option + "</option>";
+                $("#escolher_timecoracao").html(s_option);
+                 console.log(s_option);
+             })
+           }
+       }) 
+    });
+</script>    

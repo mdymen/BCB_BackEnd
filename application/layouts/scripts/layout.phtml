@@ -3,19 +3,16 @@
 //    $storage = new Zend_Auth_Storage_Session();
 //        $storage->clear();
 
-//        print_r("sdasdasd");
-//        die(".");
-
 $uri = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
 //
 //    print_r($uri);
 //        die(".");
 
-if ($uri == "/penca/public/?register") {
+if (strpos($uri, 'public/?register') !== false) {
    
     echo $this->render('register.phtml');    
 
-} else if ($uri == "/penca/public/?login") {
+} else if (strpos($uri, 'public/?login') !== false) {
     
     echo $this->render('login.phtml');    
     
@@ -25,6 +22,8 @@ if ($uri == "/penca/public/?register") {
 //        $data = $storage->read();
         
         $storage = new Zend_Auth_Storage_Session();
+//                print_r($data);
+//        die(".");
         $data = (get_object_vars($storage->read()));
 //        print_r($data);
 //        die(".");
