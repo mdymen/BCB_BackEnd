@@ -20,6 +20,9 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
         $info = array(
             'tm_name'=>$params['tm_name'],
             'tm_idchampionship' =>$params['tm_idchampionship'],
+            'tm_logo' => $params['tm_logo'],
+            'tm_points' => 0,
+            'tm_played' => 0
         );       
         $this->insert($info);
     }

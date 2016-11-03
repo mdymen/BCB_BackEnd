@@ -115,7 +115,8 @@
                                                 <!--<li><a href="<?php echo $this->baseUrl("/register/penca"); ?>"><i class="fa fa-legal"></i><span class="hidden-sm text"> Criar Balão </span></a></li>-->                                                
                                                 <li><a href="<?php echo $this->baseUrl("/admin"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Adicionar Jogo </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/jogos"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Jogos </span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/registrar/campeonato"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Adicionar Campeonato </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/admin/campeonato"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Adicionar Camp. </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/admin/time"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Adicionar Time </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/team"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Admin Teams </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/resultados"); ?>"><i class="fa fa-question-circle"></i><span class="hidden-sm text"> Resultados </span></a></li>
                                                 

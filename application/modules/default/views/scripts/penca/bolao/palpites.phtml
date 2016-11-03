@@ -1,5 +1,6 @@
  <?php   
 
+    $config = new Zend_Config_Ini("config.ini");
  
     $palpites = $this->rodadas;
     
@@ -7,7 +8,9 @@
         $rodada = $palpites[0]['mt_round'];   
     }
 
-
+//print_r($palpites);
+//die(".");
+    
 if (!empty($palpites)) {
 
    ?>
@@ -23,9 +26,9 @@ if (!empty($palpites)) {
                             
                             <?php
                                 if ($this->porteam) { 
-                                    $titulo = "Rodada: ".$palpites[0]['mt_round'];
+                                    $titulo = "Palpites da Rodada: ".$palpites[0]['mt_round'];
                                 } else {
-                                    $titulo = "Time: ".$this->teamusername;
+                                    $titulo = "Palpites do Time: ".$this->teamusername;
                                 }
                             ?>
                             
@@ -82,9 +85,9 @@ if (!empty($palpites)) {
                                                                     <input class="form-control"name="result1_'.$i.'" id="result1p_'.$i.'"  type="text" placeholder="0">
                                                                 </div>
                                                             </td>
-                                                            <td id="team1p'.$i.'">'.$palpites[$i]['t1nome'].'</td>
+                                                            <td id="team1p'.$i.'"><img width="28px;" height="21px;" src="'.$config->host.$palpites[$i]['tm1_logo'].'" />'.$palpites[$i]['t1nome'].'</td>
                                                             <td></td>
-                                                            <td id="team2p'.$i.'">'.$palpites[$i]['t2nome'].'</td>
+                                                            <td style="text-align:right;" id="team2p'.$i.'">'.$palpites[$i]['t2nome'].'<img width="28px;" height="21px;" src="'.$config->host.$palpites[$i]['tm2_logo'].'" /></td>
                                                             <td width="15%">     
                                                                 <div class="input-group col-sm-7">		
                                                                     <input class="form-control" name="result2_'.$i.'" id="result2p_'.$i.'" type="text" placeholder="0">

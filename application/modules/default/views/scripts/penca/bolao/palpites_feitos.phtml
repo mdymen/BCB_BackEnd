@@ -1,5 +1,7 @@
 <?php
 
+$config = new Zend_Config_Ini("config.ini");
+
 $palpites_feitos = $this->palpites;
  
 //print_r($palpites_feitos);
@@ -70,9 +72,9 @@ if (!empty($palpites_feitos)) {
                                                                     <input class="form-control" disabled="true" name="p_result1_'.$i.'" value="'.$palpites_feitos[$i]['rs_res1'].'" id="p_result1_'.$i.'"  type="text" placeholder="0">
                                                                 </div>
                                                             </td>
-                                                            <td id="team1'.$i.'">'.$palpites_feitos[$i]['t1nome'].'</td>
+                                                            <td id="team1'.$i.'"><img width="28px;" height="21px;" src="'.$config->host.$palpites_feitos[$i]['tm1_logo'].'" />'.$palpites_feitos[$i]['t1nome'].'</td>
                                                             <td></td>
-                                                            <td id="team2'.$i.'">'.$palpites_feitos[$i]['t2nome'].'</td>
+                                                            <td syle="text-align:right;" id="team2'.$i.'">'.$palpites_feitos[$i]['t2nome'].'<img width="28px;" height="21px;" src="'.$config->host.$palpites_feitos[$i]['tm2_logo'].'" /></td>
                                                             <td width="15%">     
                                                                 <div class="input-group col-sm-7">		
                                                                     <input class="form-control" disabled="true" name="p_result2_'.$i.'" value="'.$palpites_feitos[$i]['rs_res2'].'" id="p_result2_'.$i.'" type="text" placeholder="0">
