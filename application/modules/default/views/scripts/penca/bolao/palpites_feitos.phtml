@@ -3,7 +3,7 @@
 $config = new Zend_Config_Ini("config.ini");
 
 $palpites_feitos = $this->palpites;
- 
+ $champ = $this->champ;
 //print_r($palpites_feitos);
 
 
@@ -36,11 +36,11 @@ if (!empty($palpites_feitos)) {
                                 <table class="table" id="tb_palpites_feitos">
                                           <thead>
                                                   <tr>
-                                                          <th width="15%"></th>
                                                           <th></th>
-                                                          <th width="15%"></th>
+                                                          <th width="2%"></th>
+                                                          <th></th>
+                                                          <th width="2%"></th> 
                                                           <th></th> 
-                                                          <th width="15%"></th> 
                                                           <th></th> 
                                                   </tr>
                                           </thead>   
@@ -55,31 +55,33 @@ if (!empty($palpites_feitos)) {
                                                         $st='style="display:none"';
                                                     }
                                                     echo '<input '.$st.' type="hidden" name="rs_'.$i.'_input" id="rs_'.$i.'" value="'.$palpites_feitos[$i]['mt_id'].'" />';
-                                                    echo '
-                                                        <tr name="rs_'.$i.'_data" '.$st.' pf_d="'.($i+1).'" id="rstr1'.$palpites_feitos[$i]['rs_id'].'">
-                                                            <td></td>
-                                                            <td id="date'.$i.'">
-                                                                <b>
-                                                               '.date("H:i",strtotime($palpites_feitos[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($palpites_feitos[$i]['mt_date']) ).'
-                                                                </b>';
+                                                    if (($i == 0) || ($i > 0 && strcmp($palpites_feitos[$i]['mt_date'],$palpites_feitos[$i-1]['mt_date']) != 0)) { 
+                                                        echo '
+                                                            <tr '.$st.' style="text-align:center" name="rs_'.$i.'_data" '.$st.' pf_d="'.($i+1).'" id="rstr1'.$palpites_feitos[$i]['rs_id'].'">
+                                                                <td></td><td></td>
+                                                                <td id="date'.$i.'">
+                                                                    <b>
+                                                                   '.  Helpers_Data::day($palpites_feitos[$i]['mt_date']).'
+                                                                    </b>';
                                                                 
-                                                                 
+                                                    }             
                                                             echo '</td>                                      
                                                         </tr>
-                                                            <tr name="rs_'.$i.'_dados" '.$st.' pf="'.($i+1).'" id="rstr2'.$palpites_feitos[$i]['rs_id'].'">
-                                                            <td width="15%">
-                                                                <div class="input-group col-sm-7">
-                                                                    <input class="form-control" disabled="true" name="p_result1_'.$i.'" value="'.$palpites_feitos[$i]['rs_res1'].'" id="p_result1_'.$i.'"  type="text" placeholder="0">
+                                                        <tr name="rs_'.$i.'_dados" '.$st.' pf="'.($i+1).'" id="rstr2'.$palpites_feitos[$i]['rs_id'].'">
+                                                            <td style="text-align:right" id="team1'.$i.'">'.Helpers_Html::getTeamLinkRight($this->baseUrl(), $palpites_feitos[$i]['tm1_id'], $palpites_feitos[$i]['t1nome'], $config->host.$palpites_feitos[$i]['tm1_logo'], $champ).'</td>
+                                                            <td></td>
+                                                            <td class="col-sm-3 col-xs-3">
+                                                                <div class="row">
+                                                                    <div class="col-xs-6 col-sm-6 col-lg-6">
+                                                                        <input style="text-align:center" class="form-control" disabled="true" name="p_result1_'.$i.'" value="'.$palpites_feitos[$i]['rs_res1'].'" id="p_result1_'.$i.'"  type="text" placeholder="0">
+                                                                    </div>                                                            
+                                                                    <div class="col-xs-6 col-sm-6 col-lg-6">		
+                                                                        <input style="text-align:center" class="form-control" disabled="true" name="p_result2_'.$i.'" value="'.$palpites_feitos[$i]['rs_res2'].'" id="p_result2_'.$i.'" type="text" placeholder="0">
+                                                                    </div>
                                                                 </div>
                                                             </td>
-                                                            <td id="team1'.$i.'"><img width="28px;" height="21px;" src="'.$config->host.$palpites_feitos[$i]['tm1_logo'].'" />'.$palpites_feitos[$i]['t1nome'].'</td>
                                                             <td></td>
-                                                            <td syle="text-align:right;" id="team2'.$i.'">'.$palpites_feitos[$i]['t2nome'].'<img width="28px;" height="21px;" src="'.$config->host.$palpites_feitos[$i]['tm2_logo'].'" /></td>
-                                                            <td width="15%">     
-                                                                <div class="input-group col-sm-7">		
-                                                                    <input class="form-control" disabled="true" name="p_result2_'.$i.'" value="'.$palpites_feitos[$i]['rs_res2'].'" id="p_result2_'.$i.'" type="text" placeholder="0">
-                                                                </div>
-                                                            </td>  
+                                                            <td syle="text-align:left;" id="team2'.$i.'">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(), $palpites_feitos[$i]['tm2_id'], $palpites_feitos[$i]['t2nome'], $config->host.$palpites_feitos[$i]['tm2_logo'], $champ).'</td>
                                                             <td>';
                                                             if (empty($palpites_feitos['rs_id']) && !$palpites_feitos[$i]['mt_played']) {
                                                                     echo '<button it="'.$i.'" result="'.$palpites_feitos[$i]['rs_id'].'"  class="btn btn-danger excluir">'

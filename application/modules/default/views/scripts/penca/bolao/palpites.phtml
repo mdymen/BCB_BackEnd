@@ -44,11 +44,11 @@ if (!empty($palpites)) {
                                 <table class="table" id="tb_palpites" >
                                           <thead>
                                                   <tr>
-                                                          <th width="15%"></th>
                                                           <th></th>
-                                                          <th width="15%"></th>
+                                                          <th></th>
+                                                          <th></th>
                                                           <th></th> 
-                                                          <th width="15%"></th> 
+                                                          <th></th> 
                                                           <th></th> 
                                                   </tr>
                                           </thead>   
@@ -62,16 +62,17 @@ if (!empty($palpites)) {
                                                     $st = 'style="display:none"';
                                                 }   
                                                     echo '<input '.$st.' type="hidden" name="rs_'.$i.'" id="rs_'.$i.'" value="'.$palpites[$i]['mt_id'].'" />';
-                                                    $date = date("H:i",strtotime($palpites[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($palpites[$i]['mt_date']) );
-                                                    $palpites[$i]['mt_date'] = $date;
-                                                   
+                                                    //$date = date("H:i",strtotime($palpites[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($palpites[$i]['mt_date']) );
+                                                    $palpites[$i]['mt_date'] = Helpers_Data::day($palpites[$i]['mt_date']);
+                                                    $date = $palpites[$i]['mt_date'];
+                                                    
                                                     //echo '<input type="hidden" id="date_'.$i.'" value="'.$date.'" >';
                                                     if (($i == 0) || ($i > 0 && strcmp($palpites[$i]['mt_date'],$palpites[$i-1]['mt_date']) != 0)) { 
                                                         echo '
                                                             <tr '.$st.'>
-                                                                <td></td>';
+                                                                <td></td><td></td>';
                                                                 
-                                                                echo '<td id="date'.$i.'">
+                                                                echo '<td style="text-align:center" id="date'.$i.'">
                                                                     <b>
                                                                    '.$date.'
                                                                     </b>';
@@ -80,19 +81,20 @@ if (!empty($palpites)) {
                                                             }
                                                         echo '
                                                             <tr '.$st.' id="trp_'.$i.'">
-                                                            <td width="15%">
-                                                                <div class="input-group col-sm-7">
-                                                                    <input class="form-control"name="result1_'.$i.'" id="result1p_'.$i.'"  type="text" placeholder="0">
-                                                                </div>
-                                                            </td>
-                                                            <td id="team1p'.$i.'"><img width="28px;" height="21px;" src="'.$config->host.$palpites[$i]['tm1_logo'].'" />'.$palpites[$i]['t1nome'].'</td>
+                                                            <td style="text-align:right" id="team1p'.$i.'">'.Helpers_Html::getTeamLinkRight($this->baseUrl(), $palpites[$i]['tm1_id'], $palpites[$i]['t1nome'], $config->host.$palpites[$i]['tm1_logo'], $palpites[$i]['mt_idchampionship']).'</td>
                                                             <td></td>
-                                                            <td style="text-align:right;" id="team2p'.$i.'">'.$palpites[$i]['t2nome'].'<img width="28px;" height="21px;" src="'.$config->host.$palpites[$i]['tm2_logo'].'" /></td>
-                                                            <td width="15%">     
-                                                                <div class="input-group col-sm-7">		
-                                                                    <input class="form-control" name="result2_'.$i.'" id="result2p_'.$i.'" type="text" placeholder="0">
+                                                            <td class="col-sm-3 col-xs-3">
+                                                                <div class="row">
+                                                                    <div class="col-xs-6 col-sm-6 col-lg-6">
+                                                                        <input style="text-align:center" class="form-control" name="result1_'.$i.'" id="result1p_'.$i.'"  type="text" placeholder="0"> 
+                                                                    </div>
+                                                                   <div class="col-xs-6 col-sm-6 col-lg-6">		
+                                                                        <input style="text-align:center" class="form-control" name="result2_'.$i.'" id="result2p_'.$i.'" type="text" placeholder="0">
+                                                                    </div>   
                                                                 </div>
-                                                            </td>
+                                                            </td>   
+                                                            <td></td>
+                                                            <td style="text-align:left;" id="team2p'.$i.'">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(),$palpites[$i]['tm2_id'], $palpites[$i]['t2nome'], $config->host.$palpites[$i]['tm2_logo'], $palpites[$i]['mt_idchampionship']).'</td>
                                                             <td>';
                                                                 if (empty($palpites['rs_id'])) {
                                                                     echo '<button it_p="'.$i.'" match="'.$palpites[$i]['mt_id'].'" class="btn btn-success palpite">'

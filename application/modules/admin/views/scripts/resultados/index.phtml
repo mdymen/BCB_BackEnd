@@ -4,6 +4,10 @@ $champs = $this->championships;
 
 $matchs = $this->matchs;
 
+if (!empty($matchs)) {
+    $champ = $matchs[0]['mt_idchampionship'];
+}
+
 ?>
 
 
@@ -40,7 +44,7 @@ $matchs = $this->matchs;
                         <div class="controls">
                               <div class="input-group col-sm-4">
                                 <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-                                <input type="text" id="ronda" name="ronda" class="form-control" placeholder="N° Ronda">
+                                <input type="text" value="<?php echo $matchs[0]['mt_round']; ?>" id="ronda" name="ronda" class="form-control" placeholder="N° Ronda">
                               </div>                                              
                         </div>
                     </div>
@@ -117,6 +121,10 @@ $matchs = $this->matchs;
                                           </tbody>
                                  </table>  
 
+                            <div class="form-actions">
+                                <button id="btnFecharRodada" type="button" class="btn btn-primary">Fechar Rodada</button>
+                            </div>
+
                         </div>
                 </div>
         </div><!--/col-->
@@ -147,5 +155,16 @@ $matchs = $this->matchs;
                 //<span class="label label-success">Complete</span>
            });
         });
-    })
+        
+       $("#btnFecharRodada").bind("click", function() {
+            var rodada = $("#ronda").val();     
+            var champ = $("#championship").val();     
+            $.post("resultados/fecharrodada", {champ : champ, rodada: rodada}, function(response) {
+                   if (response === 200) {
+                       alert("ok");
+                   }
+              });
+          });
+       
+    });
 </script>

@@ -3,8 +3,13 @@
     $champs = $this->championships;
     $rondas = $this->rondas;
     $champ = $this->champ;
+    
+    $config = new Zend_Config_Ini("config.ini");
+    
+    
 ?>
 
+<input type="hidden" config="<?php echo $config->host; ?>" id="config_logo" />
 
 <div class="row">
     <div class="col-lg-12">
@@ -103,6 +108,7 @@
         $(".champ").bind("click",function() {
             var champ = $(this).attr("champ");
             var ronda = $(this).attr("ronda");
+            var logo = $("#config_logo").attr("config");
             if ($("#hd_ronda_"+ronda).attr("carregado") === 'no') {
                 $("#hd_ronda_"+ronda).attr("carregado","yes");
                 $.post("getpalpites", {champ : champ, ronda : ronda}, function(response) {
@@ -122,22 +128,21 @@
                         }   
 
                         $("#tb_"+ronda).append('<tr>\n\
-                                    <td width="15%">\n\
-                                        <div class="input-group col-sm-7">\n\
-                                            <input class="form-control" disabled="true" value="'+response[i].rs_res1+'" type="text" >\n\
+                                    <td width="15%" style="text-align:right">'+response[i].t1nome+'<img width="28px;" height="21px;" src="'+logo+response[i].tm1_logo+'" /></td>\n\
+                                    <td width="2%">\n\
+                                    <td width="12%">\n\
+                                        <div class="row">\n\
+                                            <div class="col-xs-6 col-sm-6 col-lg-6">\n\
+                                                <input type="text" disabled="true" value="'+response[i].rs_res1+'" class="form-control" />\n\
+                                            </div>\n\
+                                            <div class="col-xs-6 col-sm-6 col-lg-6">\n\
+                                                <input type="text" disabled="true" value="'+response[i].rs_res2+'" class="form-control" />\n\
                                         </div>\n\
-                                    </td>\n\
-                                    <td>'+response[i].t1nome+'</td>\n\
-                                    <td></td>\n\
-                                    <td>'+response[i].t2nome+'</td>\n\
-                                    <td width="15%">     \n\
-                                        <div class="input-group col-sm-7">		\n\
-                                        <input class="form-control" disabled="true" value="'+response[i].rs_res2+'" type="text">\n\
-                                        </div>\n\
-                                    </td>  \n\\n\
+                                    </div></td>\n\
+                                    <td width="2%">\n\
+                                    <td width="15%"><img width="28px;" height="21px;" src="'+logo+response[i].tm2_logo+'" />'+response[i].t2nome+'</td>\n\
                                     <td>'+button_excluir+icone_resultado+'</td>\n\
-                                    <td>'+response[i].mt_date+'\n\
-                                    </td>\n\
+                                    <td>'+response[i].mt_date+'</td>\n\
                                 </tr>');
                     }
                

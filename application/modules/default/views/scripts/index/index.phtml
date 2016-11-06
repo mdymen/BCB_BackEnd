@@ -120,23 +120,25 @@
                 $("#box_box_emacao").attr("carregado","y");
                 $("#icone_emacao").removeClass("fa fa-chevron-down");
                 $("#icone_emacao").addClass("fa fa-chevron-right");
+               
+                
                 $.post("index/emacao", {ordem : ordenar}, function(response) {
                     for (var i = 0; i < response.length; i = i + 1) {
                         $("#tb_emacao").append('<tr>\n\
-                        <td>'+response[i].ch_nome+'</td> \n\\n\
+                        <td>'+response[i].ch_nome+'</td>\n\
+                        <td style="text-align:right">'+response[i].t1nome+'<img width="28px;" height="21px;" src="'+response[i].tm1_logo+'" /></td>\n\
+                        <td></td>\n\
                         <td width="15%">\n\
-                            <div class="input-group col-sm-7">\n\
-                                <input class="form-control" disabled="true" value="'+response[i].rs_res1+'" type="text" placeholder="0">\n\
+                            <div class="row">\n\
+                                            <div class="col-xs-6 col-sm-6 col-lg-6">\n\
+                                                <input type="text" disabled="true" value="'+response[i].rs_res1+'" class="form-control" />\n\
+                                            </div>\n\
+                                            <div class="col-xs-6 col-sm-6 col-lg-6">\n\
+                                                <input type="text" disabled="true" value="'+response[i].rs_res2+'" class="form-control" />\n\
                             </div>\n\
                         </td>\n\
-                        <td><img width="28px;" height="21px;" src="'+response[i].tm1_logo+'" />'+response[i].t1nome+'</td>\n\\n\
                         <td></td>\n\
-                        <td style="text-align:right">'+response[i].t2nome+'<img width="28px;" height="21px;" src="'+response[i].tm2_logo+'" /></td>\n\
-                        <td width="15%">\n\
-                            <div class="input-group col-sm-7">\n\
-                                <input class="form-control" disabled="true" value="'+response[i].rs_res2+'" type="text" placeholder="0"> \n\
-                            </div>\n\
-                        </td>  \n\
+                        <td style="text-align:left"><img width="28px;" height="21px;" src="'+response[i].tm2_logo+'" />'+response[i].t2nome+'</td>\n\
                         <td>\n\
                             <a href="'+response[i].host+'/penca/bolao?rodada='+response[i].mt_round+'&champ='+response[i].ch_id+'">Round '+response[i].mt_round+'</a>\n\
                         </td>\n\\n\
