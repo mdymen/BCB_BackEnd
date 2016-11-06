@@ -195,7 +195,7 @@
                                               <?php
                                               echo '<input type="hidden" value="'.count($matchs).'" name="count_palpites" id="count_palpites">';
                                               for ($i = 0; $i < count($matchs); $i = $i + 1) {  
-                                                    $date = date("H:i",strtotime($matchs[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($matchs[$i]['mt_date']) );
+                                                    $date = Helpers_Data::day($matchs[$i]['mt_date']);
                                                     $matchs[$i]['mt_date'] = $date;
                                                     if (($i == 0) || ($i > 0 && strcmp($matchs[$i]['mt_date'],$matchs[$i-1]['mt_date']) != 0)) { 
                                                         echo '

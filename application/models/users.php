@@ -97,8 +97,8 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         
         $result = $db->select()->from("match")
-                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
-                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
+                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name', 'tm1_logo' => 't1.tm_logo', 'tm1_id' => 't1.tm_id'))
+                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name', 'tm2_logo' => 't2.tm_logo', 'tm2_id' => 't2.tm_id'))
                 ->joinRight("result", "match.mt_id = result.rs_idmatch")
                 ->where("rs_iduser = ?",$us_id)
                 ->where("rs_points = 5")

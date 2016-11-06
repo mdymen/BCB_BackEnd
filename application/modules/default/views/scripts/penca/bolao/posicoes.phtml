@@ -32,8 +32,20 @@
                                                                    
                                                                         for ($i = 0; $i < count($teams); $i = $i + 1) {
                                                                    
+                                                                            $torneo = "";
+                                                                            if ($i <= 2) {
+                                                                                $torneo = "badge badge-success";
+                                                                            }
+                                                                            if ($i > 2 && $i <= 5) {
+                                                                                $torneo = "badge badge-info";
+                                                                            }
+                                                                            
+                                                                            if ($i > 15) {
+                                                                                $torneo = "badge badge-important";
+                                                                            }
+                                                                            
                                                                             echo '<tr>
-                                                                                    <td id="tm_id'.$i.'">'.($i+1).'</td>
+                                                                                    <td id="tm_id'.$i.'"><span class="'.$torneo.'">'.($i+1).'</td>
                                                                                     <td id="tm_name'.$i.'">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(), $teams[$i]['tm_id'], $teams[$i]['tm_name'], $config->host.$teams[$i]['tm_logo'], $champ).'</td>
                                                                                     <td id="tm_points'.$i.'">'.$teams[$i]['tm_points'].'</td>
                                                                                     <td id="tm_played'.$i.'">'.$teams[$i]['tm_played'].'</td>

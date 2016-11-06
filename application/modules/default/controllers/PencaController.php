@@ -259,7 +259,7 @@ class PencaController extends Zend_Controller_Action {
             } else {            
                 $rodada_id = $params['rodada'];
             }
-            
+
             $this->view->rodada = $rodada_id;
 
             $storage = new Zend_Auth_Storage_Session();
@@ -319,6 +319,8 @@ class PencaController extends Zend_Controller_Action {
                         $palpites_da_rodada[$j]['t2nome'] = $rodadas[$c]['t2nome'];
                         $palpites_da_rodada[$j]['tm1_logo'] = $rodadas[$c]['tm1_logo'];
                         $palpites_da_rodada[$j]['tm2_logo'] = $rodadas[$c]['tm2_logo'];
+                        $palpites_da_rodada[$j]['tm1_id'] = $rodadas[$c]['tm1_id'];
+                        $palpites_da_rodada[$j]['tm2_id'] = $rodadas[$c]['tm2_id'];
                     }
                     
                     $palpites_da_rodada[$j]['rs_res1'] = "";
@@ -352,6 +354,9 @@ class PencaController extends Zend_Controller_Action {
         $user_id = $data['us_id'];
         $match_id = $params['match'];
         $round = $params['round'];
+        
+//        print_r($params);
+//        die(".");
         
         $matchs_obj = new Application_Model_Matchs();     
         $id = $matchs_obj->submeter_result($user_id, $result1, $result2, $match_id, $round);
@@ -419,9 +424,11 @@ class PencaController extends Zend_Controller_Action {
         $palpites_da_rodada = $matchs_obj->load_palpites_simples($champ_id, $rodada_id, $this->getIdUser());
 //        
         for ($i = 0; $i < count($palpites_da_rodada); $i = $i + 1) {
-            $palpites_da_rodada[$i]['mt_date'] = $d_helper->format($palpites_da_rodada[$i]['mt_date']);
+            $palpites_da_rodada[$i]['mt_date'] = $d_helper->day($palpites_da_rodada[$i]['mt_date']);
         }
-        
+//        
+//        print_r($palpites_da_rodada);
+//        die(".");
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
         

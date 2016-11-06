@@ -27,7 +27,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
         $db->update('result',$info, 'rs_id = '.$params['rs_id']);
     }
     
-    public function update_puntagem($puntagem, $id_match) {
+    public function update_puntagem($puntagem, $rs_id) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
         $res = 0;
@@ -35,10 +35,13 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
             $res = 1;
         }
         
+//        print_r("res ".$puntagem);
+//        die(".");
+        
         $info = array('rs_points' => $puntagem, 'rs_result' => $res);
         
         //$db->update('user_penca', $info, 'up_idpenca = '.$penca.' and up_iduser ='.$usuario);
-        $db->update('result', $info, 'rs_idmatch = '.$id_match);
+        $db->update('result', $info, 'rs_id = '.$rs_id);
     }
     
     public function update_resultado($id_match, $res1, $res2) {

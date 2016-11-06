@@ -83,7 +83,7 @@ class Admin_ResultadosController extends Zend_Controller_Action
         for ($j = 0; $j < count($match); $j = $j + 1) {
             $puntagem = $this->puntuacao($match[$j], $res1, $res2);
             $x = $puntagem;
-            $result->update_puntagem($puntagem, $match[$j]['rs_idmatch']);
+            $result->update_puntagem($puntagem, $match[$j]['rs_id']);
         }
 //        
         $this->getResponse()
@@ -99,7 +99,10 @@ class Admin_ResultadosController extends Zend_Controller_Action
         $v1 = $match['rs_res1'];
         $v2 = $match['rs_res2'];
         
+           print_r("afuera ".$v1);
+        
         if ($v1 == $res1 && $v2 == $res2) {
+                    print_r("adentro ".$v1);
             return 5;
         }
         
@@ -122,6 +125,9 @@ class Admin_ResultadosController extends Zend_Controller_Action
         if ($perdedor_visitante && $perdedor_visitante_palpite) {
             return 1;
         }
+        
+        print_r("retorna 0");
+//        die(".");
         
         return 0;
     }

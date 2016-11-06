@@ -49,8 +49,13 @@ class Helpers_Html {
     
     }
     
-    public function acertados($matches) {
-         $r = '<div class="box">
+    public function acertados($matches, $baseUrl) {
+        $config = new Zend_Config_Ini("config.ini");
+        
+         $r = '
+             <div class="row">
+             <div class="col-md-8">
+                    <div class="box">
                         <div class="box-header">
                                 <h2><i class="fa fa-align-justify"></i><span class="break"></span>Acertados</h2>
                                 <div class="box-icon">
@@ -64,11 +69,10 @@ class Helpers_Html {
                                           <thead>
                                                   <tr>
                                                           <th></th>
-                                                          <th width="15%"></th>
+                                                          <th style="width:2%"></th>
                                                           <th></th>
-                                                          <th width="15%"></th>
-                                                          <th></th> 
-                                                          <th width="15%"></th> 
+                                                          <th style="width:2%"></th>                                                           
+                                                          <th></th>                                                          
                                                           <th></th> 
                                                           <th></th> 
                                                   </tr>
@@ -88,27 +92,23 @@ class Helpers_Html {
                                                     if ($matches[$i]['rs_id'] == -1) {
                                                         $st='style="display:none"';
                                                     }
-                                                    $r = $r.'<input '.$st.' type="hidden" name="rs_'.$i.'_input" id="rs_'.$i.'" value="'.$matches[$i]['mt_id'].'" />
-                                                            <tr name="rs_'.$i.'_dados" '.$st.' pf="'.($i+1).'" id="rstr2'.$matches[$i]['rs_id'].'">
-                                                            <td><b>
-                                                               '.date("H:i",strtotime($matches[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($matches[$i]['mt_date']) ).'
-                                                                </b></td>
-                                                            <td width="15%">
-                                                                <div class="input-group col-sm-7">
-                                                                    <input class="form-control" disabled="true" name="p_result1_'.$i.'" value="'.$matches[$i]['rs_res1'].'" id="p_result1_'.$i.'"  type="text" placeholder="0">
-                                                                </div>
-                                                            </td>
-                                                            <td id="team1'.$i.'">'.$matches[$i]['t1nome'].'</td>
+                                                    $r = $r.'<tr>                                                            
+                                                            <td style="text-align:right">'.Helpers_Html::getTeamLinkRight($baseUrl, $matches[$i]['tm1_id'], $matches[$i]['t1nome'], $config->host.$matches[$i]['tm1_logo'], $matches[$i]['mt_idchampionship']).'</td>
                                                             <td></td>
-                                                            <td id="team2'.$i.'">'.$matches[$i]['t2nome'].'</td>
-                                                            <td width="15%">     
-                                                                <div class="input-group col-sm-7">		
-                                                                    <input class="form-control" disabled="true" name="p_result2_'.$i.'" value="'.$matches[$i]['rs_res2'].'" id="p_result2_'.$i.'" type="text" placeholder="0">
+                                                            <td class="col-sm-3 col-xs-3">
+                                                                <div class="row">
+                                                                    <div class="col-xs-6 col-sm-6 col-lg-6">
+                                                                        <input style="text-align:center" class="form-control" disabled="true" value="'.$matches[$i]['rs_res1'].'" type="text">
+                                                                    </div>                                                            
+                                                                    <div class="col-xs-6 col-sm-6 col-lg-6">		
+                                                                        <input style="text-align:center" class="form-control" disabled="true" value="'.$matches[$i]['rs_res2'].'" type="text">
+                                                                    </div>
                                                                 </div>
-                                                            </td>  
-                                                            <td>
                                                             </td>
-                                                                <td><span class="label label-success">'.$matches[$i]['rs_points'].'</span></td>
+                                                            <td></td>
+                                                            <td style="text-align:left">'.Helpers_Html::getTeamLinkLeft($baseUrl, $matches[$i]['tm2_id'], $matches[$i]['t2nome'], $config->host.$matches[$i]['tm2_logo'], $matches[$i]['mt_idchampionship']).'</td>
+                                                            <td><b>'.Helpers_Data::day($matches[$i]['mt_date']).'</b></td>
+                                                            <td><span class="label label-success">'.$matches[$i]['rs_points'].'</span></td>
                                                         </tr>';
                                                     }
                                                 }
@@ -123,7 +123,7 @@ class Helpers_Html {
                                 <!--<a href="javascript:void(0)" id="btnAceitarPalpites" class="btn btn-success">Aceitar Palpites</a>--> 
                             </div>
                         </div>
-                </div>';
+                </div></div></div>';
                 
                 return $r;
     }

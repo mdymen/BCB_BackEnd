@@ -12,6 +12,7 @@
  * @author Martin Dymenstein
  */
 include APPLICATION_PATH.'/models/users.php';
+include APPLICATION_PATH."/helpers/data.php";
 class UsuarioController extends Zend_Controller_Action
 {
     public function indexAction() {

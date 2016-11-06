@@ -136,7 +136,10 @@ if (!empty($palpites)) {
            var team1 = $("#team1p"+it).html();
            var team2 = $("#team2p"+it).html();
            
-           if (parseInt(r1) > 0 && parseInt(r2) > 0 ) {
+//           alert(r1);
+//           alert(r2);
+           
+           if (parseInt(r1) >= 0 && parseInt(r2) >= 0 ) {
                 $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round  }, function(response) {
                     $('[name=rs_'+it+'_dados]').attr("style","display:yes");
                     $('[name=rs_'+it+'_input]').attr("style","display:yes");
