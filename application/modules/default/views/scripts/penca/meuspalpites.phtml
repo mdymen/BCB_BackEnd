@@ -117,19 +117,26 @@
                         var button_excluir = "";
                         var icone_resultado = "";
                         
+                        var resultado1 = "";
+                        var resultado2 = "";
+                        
                         if (response[i].rs_result == null) {
                             button_excluir = '<button class="btn btn-danger excluir"><i class="fa fa-trash-o "></i></button>';
                         } else {
-                            if (response[i].rs_result == 1) {
-                                icone_resultado = '<i class="fa fa-times "></i>';
+                            if (response[i].rs_result === "0") {
+                                icone_resultado = '';
+                                resultado1 = '<span class="label label-danger">'+response[i].mt_goal1+'</span>';
+                                resultado2 = '<span class="label label-danger">'+response[i].mt_goal2+'</span>';
                             } else {
-                                icone_resultado = '<i class="fa fa-check"></i>';
+                                resultado1 = '<span class="label label-success">'+response[i].mt_goal1+'</span>';
+                                resultado2 = '<span class="label label-success">'+response[i].mt_goal2+'</span>';
+                                icone_resultado = '<span  class="label label-success"><i class="fa fa-check"></i></span>';
                             }
                         }   
 
                         $("#tb_"+ronda).append('<tr>\n\
                                     <td width="15%" style="text-align:right">'+response[i].t1nome+'<img width="28px;" height="21px;" src="'+logo+response[i].tm1_logo+'" /></td>\n\
-                                    <td width="2%">\n\
+                                    <td width="2%" style="text-align:right">'+resultado1+'</td>\n\
                                     <td width="12%">\n\
                                         <div class="row">\n\
                                             <div class="col-xs-6 col-sm-6 col-lg-6">\n\
@@ -139,9 +146,9 @@
                                                 <input type="text" disabled="true" value="'+response[i].rs_res2+'" class="form-control" />\n\
                                         </div>\n\
                                     </div></td>\n\
-                                    <td width="2%">\n\
+                                    <td width="2%">'+resultado2+'</td>\n\
                                     <td width="15%"><img width="28px;" height="21px;" src="'+logo+response[i].tm2_logo+'" />'+response[i].t2nome+'</td>\n\
-                                    <td>'+button_excluir+icone_resultado+'</td>\n\
+                                    <td>'+button_excluir+'</td>\n\
                                     <td>'+response[i].mt_date+'</td>\n\
                                 </tr>');
                     }
