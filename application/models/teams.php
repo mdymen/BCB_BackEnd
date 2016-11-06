@@ -82,4 +82,19 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
         
         $db->update("team", array('tm_played' => $result['tm_played'] + 1), "tm_id = ".$team);
     }
+    
+    public function getJogosTeam($team, $champ) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("match")
+            ->joinInner("championship", "championship.ch_id = match.mt_idchampionship and championship.ch_id = ".$champ)
+            ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('t1nome' => 't1.tm_name', 'tm1_logo' => 't1.tm_logo'))
+            ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('t2nome' => 't2.tm_name', 'tm2_logo' => 't2.tm_logo'))
+            ->where("t1.tm_id = ?", $team)
+            ->orWhere("t2.tm_id = ?", $team)
+            ->query()
+            ->fetchAll();
+        
+        return $result;
+    }
 }

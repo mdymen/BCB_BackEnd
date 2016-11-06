@@ -236,9 +236,20 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     public function getIdPrimeraRodadaDisponivel($champ) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        $sql = "select distinct mt_round from penca.match where mt_played is false and mt_round in "
-                . "(select min(mt_round) as mt_round from penca.match  where mt_played is false) "
-                . "and mt_idchampionship = ".$champ;
+        $sql_before = $db->select()->from("match",array("min(mt_round) as mt_round"))
+                ->where("mt_played is false")
+                ->where("mt_idchampionship = ?",$champ)
+                ->query()
+                ->fetchAll();
+        
+        $sql = $db->select()->from("match", array("match.mt_round"))
+                ->distinct()
+                ->where("mt_played is false")
+                ->where("mt_round IN(?)", $sql_before);
+        
+//        $sql = "select distinct mt_round from penca.match where mt_played is false and mt_round in "
+//                . "(select min(mt_round) as mt_round from penca.match  where mt_played is false) "
+//                . "and mt_idchampionship = ".$champ;
         
         $stmt = $db->query($sql)->fetchAll();
         

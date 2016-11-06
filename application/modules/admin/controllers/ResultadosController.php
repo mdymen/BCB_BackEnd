@@ -126,5 +126,25 @@ class Admin_ResultadosController extends Zend_Controller_Action
         return 0;
     }
     
+    function fecharrodadaAction() {
+        $params = $this->_request->getParams();
+        
+        $ch = new Application_Model_Championships();
+        
+        $rodada = $params['rodada'] + 1;
+        $champ = $params['champ'];
+        
+        $ch->setAtualRound($champ, $rodada);
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json(200);
+        
+    }
+    
 }
 

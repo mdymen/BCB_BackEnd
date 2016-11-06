@@ -49,4 +49,10 @@ class Application_Model_Championships extends Zend_Db_Table_Abstract
         return $result;
     }
     
+    public function setAtualRound($champ, $round) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $db->update("championship", array('ch_atualround' => $round), "ch_id = ".$champ);
+    }
+    
 }

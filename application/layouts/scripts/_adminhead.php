@@ -14,10 +14,10 @@
 	
 	<!-- start: Meta -->
 	<meta charset="utf-8">
-	<title>Bolao Pipo</title>
-	<meta name="description" content="Genius Dashboard - Bootstrap Admin Template.">
-	<meta name="author" content="Łukasz Holeczek">
-	<meta name="keyword" content="Genius, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<title>Bolão Craque de Bola</title>
+	<meta name="description" content="Bolão Craque de Bola.">
+	<meta name="author" content="Martin Dymenstein">
+	<meta name="keyword" content="Bolão, Futebol, Brasileirão, Campeonato">
 	<!-- end: Meta -->
 	
 	<!-- start: Mobile Specific -->
@@ -64,7 +64,7 @@
 			      <span class="icon-bar"></span>
 			</button>
 			<a id="main-menu-toggle" class="hidden-xs open"><i class="fa fa-bars"></i></a>		
-			<a class="navbar-brand col-md-2 col-sm-1 col-xs-2" href="<?php echo $this->baseUrl(); ?>"><span>Bolao Dym</span></a>
+			<a class="navbar-brand col-md-2 col-sm-1 col-xs-2" href="<?php echo $this->baseUrl(); ?>"><span>Craque de Bola</span></a>
 			
 			<!-- start: Header Menu -->
 			<div class="nav-no-collapse header-nav">
@@ -84,7 +84,7 @@
 						</ul>
 					</li>
                                         <li>
-                                            <a class="btn" href="index/logout">
+                                            <a class="btn" href="<?php echo $this->baseUrl("index/logout"); ?>">
 							<i class="fa fa-power-off"></i>
 						</a>
                                             
@@ -112,6 +112,8 @@
                                                 <li><a href="<?php echo $this->baseUrl("/penca/meuspalpites"); ?>" ><i class="fa fa-globe"></i><span class="hidden-sm text"> Meus Palpites </span></a></li>	
                                                 <li><a href="<?php echo $this->baseUrl("/penca/bolao"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Palpites </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/usuario"); ?>"><i class="fa fa-user"></i><span class="hidden-sm text">Meu Perfil</span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/campeonatos"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Campeonatos</span></a></li> 
+                                                <li><a href="<?php echo $this->baseUrl("/penca/ranking"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Ranking</span></a></li>
                                                 <!--<li><a href="<?php echo $this->baseUrl("/register/penca"); ?>"><i class="fa fa-legal"></i><span class="hidden-sm text"> Criar Balão </span></a></li>-->                                                
                                                 <li><a href="<?php echo $this->baseUrl("/admin"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Adicionar Jogo </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/jogos"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Jogos </span></a></li>

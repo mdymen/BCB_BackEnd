@@ -16,10 +16,9 @@ class Admin_IndexController extends Zend_Controller_Action
     {
        $params = $this->_request->getParams();
         
-        $penca = new Application_Model_Penca();
+        $penca = new Application_Model_Championships();
         
-        $id_user = $this->getIdUser();
-        $champs = $penca->load_championship_with_results($id_user);
+        $champs = $penca->load();
         
         if (!empty($params['champ'])) {            
             $t_obj = new Application_Model_Teams();

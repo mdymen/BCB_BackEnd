@@ -14,10 +14,10 @@
 	
 	<!-- start: Meta -->
 	<meta charset="utf-8">
-	<title>Bolao Craque de Bolsa</title>
-	<meta name="description" content="Genius Dashboard - Bootstrap Admin Template.">
-	<meta name="author" content="Łukasz Holeczek">
-	<meta name="keyword" content="Genius, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<title>Bolão Craque de Bola</title>
+	<meta name="description" content="Bolão Craque de Bola.">
+	<meta name="author" content="Martin Dymenstein">
+	<meta name="keyword" content="Bolão, Futebol, Brasileirão, Campeonato">
 	<!-- end: Meta -->
 	
 	<!-- start: Mobile Specific -->
@@ -113,7 +113,7 @@
 						</ul>
 					</li>
                                         <li>
-                                            <a class="btn" href="index/logout">
+                                            <a class="btn" href="<?php echo $this->baseUrl("index/logout"); ?>">
 							<i class="fa fa-power-off"></i>
 						</a>
                                             
@@ -141,6 +141,7 @@
                                                 <li><a href="<?php echo $this->baseUrl("/penca/meuspalpites"); ?>" ><i class="fa fa-globe"></i><span class="hidden-sm text"> Meus Palpites </span></a></li>	
                                                 <li><a href="<?php echo $this->baseUrl("/penca/bolao"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Palpites </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/usuario"); ?>"><i class="fa fa-user"></i><span class="hidden-sm text">Meu Perfil</span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/campeonatos"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Campeonatos</span></a></li> 
                                                  <li><a href="<?php echo $this->baseUrl("/penca/ranking"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Ranking</span></a></li>
                                                 <!--<li><a href="<?php echo $this->baseUrl("/register/penca"); ?>"><i class="fa fa-legal"></i><span class="hidden-sm text"> Criar Balão </span></a></li>-->                                                
                                                 

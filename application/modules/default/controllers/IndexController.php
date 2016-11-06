@@ -57,6 +57,12 @@ class IndexController extends Zend_Controller_Action
         
     }
     
+    public function testAction() {
+        
+        print_r($config->host);
+        die(".");
+    }
+    
     public function emacaoAction() {
         $params = $this->_request->getParams();
         
@@ -71,10 +77,14 @@ class IndexController extends Zend_Controller_Action
         $result = new Application_Model_Result();
         $em_acao_group = $result->palpites_em_acao_group($data['us_id'], $ordem);
         
+        $config = new Zend_Config_Ini('config.ini');
+        
         $h_date = new Helpers_Data();
         for ($i = 0; $i < count($em_acao_group); $i = $i + 1) {
             $em_acao_group[$i]['mt_date'] = $h_date->format($em_acao_group[$i]['mt_date']);
-           
+            $em_acao_group[$i]['tm1_logo'] = $config->host.$em_acao_group[$i]['tm1_logo'];
+            $em_acao_group[$i]['host'] = $config->hostpublic;
+            $em_acao_group[$i]['tm2_logo'] = $config->host.$em_acao_group[$i]['tm2_logo'];
         }
         
         $this->getResponse()
@@ -169,6 +179,20 @@ class IndexController extends Zend_Controller_Action
         $teams = explode(' ', $params["teams"]);
         print_r($teams);
         die(".");
+    }
+    
+    public function teamsAction() {
+        
+        $teams = new Application_Model_Teams();
+        $ts = $teams->load_teams_championship(1);
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($ts);
     }
     
    
