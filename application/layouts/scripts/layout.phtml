@@ -26,7 +26,10 @@ if (strpos($uri, 'public/?register') !== false) {
 //        die(".");
         $data = "";
         if (!empty($storage)) {
-            $data = (get_object_vars($storage->read()));
+            $x = $storage->read();
+            if (!empty($x)) {
+                $data = (get_object_vars($x));
+            }
         }
 //        print_r($data);
 //        die(".");
@@ -36,6 +39,8 @@ if (strpos($uri, 'public/?register') !== false) {
         } else if (!empty($data) && $data['us_admin'] == 1) {
             echo $this->render('_adminhead.php');      
         } else {
+//            $config = new Zend_Config_Ini("config.ini");
+            //$this->redirect()->toUrl($config->hostpublic);
             echo $this->render('login.phtml');            
         }
             

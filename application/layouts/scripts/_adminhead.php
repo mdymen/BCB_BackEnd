@@ -49,7 +49,8 @@
 	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/ico/apple-touch-icon-57-precomposed.png">
-	<link rel="shortcut icon" href="assets/ico/favicon.png">
+	<link rel="shortcut icon" href="<?php echo $this->baseUrl().'/assets/ico/icone.gif'; ?>">
+        <link rel="icon" href="assets/ico/icone.gif">
 	<!-- end: Favicon and Touch Icons -->	
 		
 </head>

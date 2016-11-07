@@ -208,7 +208,7 @@
                                                     }
                                                     echo '
                                                         <tr id="tr_'.$i.'">
-                                                            <td style="text-align:right">'.$matchs[$i]['t1nome'].'<img width="28px;" height="21px;" src="'.$config->host.$matchs[$i]['tm1_logo'].'" /></td>
+                                                            <td style="text-align:right">'.Helpers_Html::getTeamLinkRight($this->baseUrl(), $matchs[$i]['tm1_id'], $matchs[$i]['t1nome'], $config->host.$matchs[$i]['tm1_logo'], $matchs[$i]['mt_idchampionship']).'</td>
                                                             <td></td>
                                                             <td class="col-sm-3 col-xs-3">
                                                                 <div class="row">
@@ -216,11 +216,11 @@
                                                                         <input disabled class="form-control" value="'.$matchs[$i]['mt_goal1'].'" type="text" placeholder="0">
                                                                     </div>
                                                                     <div class="col-xs-6 col-sm-6 col-lg-6">
-                                                                        <input disabled class="form-control" value="'.$matchs[$i]['mt_goal1'].'" type="text" placeholder="0">
+                                                                        <input disabled class="form-control" value="'.$matchs[$i]['mt_goal2'].'" type="text" placeholder="0">
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                            <td style="text-align:left"><img width="28px;" height="21px;" src="'.$config->host.$matchs[$i]['tm2_logo'].'" />'.$matchs[$i]['t2nome'].'</td>
+                                                            <td style="text-align:left">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(), $matchs[$i]['tm2_id'], $matchs[$i]['t2nome'], $config->host.$matchs[$i]['tm2_logo'], $matchs[$i]['mt_idchampionship']).'</td>
                                                             <td></td>                                      
                                                         </tr>';
                                                     }

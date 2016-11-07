@@ -290,6 +290,8 @@ class PencaController extends Zend_Controller_Action {
                       
             }
 
+//            print_r("champ id".$champ_id);
+            
             $teams_obj = new Application_Model_Teams();
             $teams = $teams_obj->load_teams_championship($champ_id); 
 
@@ -392,21 +394,27 @@ class PencaController extends Zend_Controller_Action {
     }
     
     public function meuspalpitesAction() { 
-        $params = $this->_request->getParams();
-        
-        $penca = new Application_Model_Penca();
-        
-        $id_user = $this->getIdUser();
-        $champs = $penca->load_championship_with_results($id_user);
-        
-        if (!empty($params['champ'])) {
-            $matchs_obj = new Application_Model_Matchs();
-            $rondas = $matchs_obj->getrondas($params['champ']);
-            $this->view->rondas = $rondas;
-            $this->view->champ = $params['champ'];
+        try {
+            $params = $this->_request->getParams();
+
+            $penca = new Application_Model_Penca();
+
+            $id_user = $this->getIdUser();
+            $champs = $penca->load_championship_with_results($id_user);
+
+            if (!empty($params['champ'])) {
+                $matchs_obj = new Application_Model_Matchs();
+                $rondas = $matchs_obj->getrondas($params['champ']);
+                $this->view->rondas = $rondas;
+                $this->view->champ = $params['champ'];
+            }
+
+            $this->view->championships = $champs;
         }
-        
-        $this->view->championships = $champs;
+        catch (Zend_Exception $e) {
+            $config = new Zend_Config_Ini("config.ini");
+            $this->redirect($config->hostpublic);
+        }
     }
     
     public function getpalpitesAction() {

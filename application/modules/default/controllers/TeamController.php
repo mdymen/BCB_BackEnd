@@ -12,6 +12,7 @@
  * @author Martin Dymenstein
  */
 include APPLICATION_PATH.'/models/teams.php';
+include APPLICATION_PATH.'/helpers/data.php';
 class TeamController extends Zend_Controller_Action
 {
     public function indexAction() {

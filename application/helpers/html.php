@@ -83,8 +83,9 @@ class Helpers_Html {
                                             
                                               $anterior = "";
                                               $r = $r.'<input cant="'.count($matches).'" type="hidden" value="'.count($matches).'" id="count_palpites_feitos" name="count_palpites_feitos">';
-                                               
+                                               $total = 0;
                                               for ($i = 0; $i < count($matches); $i = $i + 1) {
+                                                  $total = $total + $matches[$i]['rs_points'];
                                                   if ($anterior != $matches[$i]['rs_round']) {
                                                       $anterior = $matches[$i]['rs_round'];
                                                   }  
@@ -110,14 +111,15 @@ class Helpers_Html {
                                                             <td style="text-align:left">'.Helpers_Html::getTeamLinkLeft($baseUrl, $matches[$i]['tm2_id'], $matches[$i]['t2nome'], $config->host.$matches[$i]['tm2_logo'], $matches[$i]['mt_idchampionship']).'</td>
                                                             <td><b>'.Helpers_Data::day($matches[$i]['mt_date']).'</b></td>
                                                             <td><span class="label label-success">'.$matches[$i]['rs_points'].'</span></td>
-                                                        </tr>';
+                                                        </tr>
+                                                        ';
                                                     }
                                                 }
                                               
                                               
                                               
                                                                            
-                                          $r = $r.'</tbody>
+                                          $r = $r.'<tr><td><span class="label label-info">Total: '.$total.' puntos</span></td></tr></tbody>
                                  </table>  
                                
                             <div class="form-action">

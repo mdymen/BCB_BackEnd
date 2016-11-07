@@ -77,13 +77,17 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     public function load_rodada($championship, $rodada, $usuario) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        $result = $db->select()->from("match")
+        $query = $db->select()->from("match")
                 ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array( 'tm1_id' => 't1.tm_id' ,'tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
                 ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array( 'tm2_id' => 't2.tm_id', 'tm2_logo' => 't2.tm_logo','t2nome' => 't2.tm_name'))
                 ->joinLeft("result", "match.mt_id = result.rs_idmatch and result.rs_iduser = ".$usuario)
                 ->where("match.mt_idchampionship = ?", $championship)
                 ->where("match.mt_round = ?", $rodada)
-                ->order(array('match.mt_date ASC'))
+                ->order(array('match.mt_date ASC'));
+        
+//        print_r($query->__toString());
+        
+        $result = $query
                 ->query()
                 ->fetchAll();
         

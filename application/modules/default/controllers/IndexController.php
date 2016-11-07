@@ -85,6 +85,7 @@ class IndexController extends Zend_Controller_Action
             $em_acao_group[$i]['tm1_logo'] = $config->host.$em_acao_group[$i]['tm1_logo'];
             $em_acao_group[$i]['host'] = $config->hostpublic;
             $em_acao_group[$i]['tm2_logo'] = $config->host.$em_acao_group[$i]['tm2_logo'];
+            //$em_acao_group[$i]['base'] = Zend_Controller_Front::getInstance()->getBaseUrl();
         }
         
         $this->getResponse()
