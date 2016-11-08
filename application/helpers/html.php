@@ -28,19 +28,19 @@ class Helpers_Html {
                           <td width="15%" id="td_puntuacao">'.$puntuacoes.'</td>  
                       </tr>   
                       <tr>    
-                          <td><a href='.$url.'/usuario/posicaoglobal?usuario='.$user_id.' >Posicao global</a></td> 
+                          <td><a href='.$url.'/usuario/posicaoglobal?usuario='.$user_id.' >Posicao</a></td> 
                           <td width="15%" id="td_global">'.$posicao.'</td>  
                       </tr>                                                                                                       
                       <tr>
-                          <td><a href='.$url.'/usuario/acertados?usuario='.$user_id.' >Palpites acertados...</a></td> 
+                          <td><a href='.$url.'/usuario/acertados?usuario='.$user_id.' >Acertos</a></td> 
                           <td width="15%" id="td_acertados">'.$acertados.'</td>                                           
                       </tr>
                       <tr>
-                          <td><a href='.$url.'/usuario/errados?usuario='.$user_id.' >Palpites errados...</a></td> 
+                          <td><a href='.$url.'/usuario/errados?usuario='.$user_id.' >Erros</a></td> 
                           <td width="15%" id="td_errados">'.$errados.'</td>                                           
                       </tr>
                       <tr>
-                          <td><a href='.$url.'/usuario/palpitados?usuario='.$user_id.' >Palpitados...</a></td> 
+                          <td><a href='.$url.'/usuario/palpitados?usuario='.$user_id.' >Palpitados</a></td> 
                           <td width="15%" id="td_errados">'.$palpitados.'</td>                                           
                       </tr>                                          
 

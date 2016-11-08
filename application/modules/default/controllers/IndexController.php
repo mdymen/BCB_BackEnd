@@ -3,6 +3,7 @@
 include APPLICATION_PATH.'/models/users.php';
 include APPLICATION_PATH.'/models/pencas.php';
 include APPLICATION_PATH."/helpers/data.php";
+include APPLICATION_PATH."/helpers/html.php";
 class IndexController extends Zend_Controller_Action
 {
 
@@ -11,51 +12,51 @@ class IndexController extends Zend_Controller_Action
         /* Initialize action controller here */
     }
 
-    public function indexAction()
-    {
-        
-//        print_r("HOLA");
-//        die(".");
-        
-        //Retorna las posiciones de todas las pencas 
-        //en la cual el usuario participa.
-        //en verde al ganador con el puntaje
-        //en amarillo los siguientes
-        // en rojo los que no ganan nada
-        
-        //listado de pencas aonde o usuario pode
-        //participar porque são livres
-       
-        //utimos resultados de alguna penca o de todas?
-        
-        $storage = new Zend_Auth_Storage_Session();
-        $data = (get_object_vars($storage->read()));
-   
-//        print_r($data);
-//        die(".");
+//    public function indexAction()
+//    {
 //        
-        if (!empty($data)) {
-            
-            $result = new Application_Model_Result();
-            $em_acao = $result->palpites_em_acao($data['us_id']);
-            $points = $result->points($data['us_id']);
-            $em_acao_group = $result->palpites_em_acao_group($data['us_id'], "");
-            
-            $this->view->em_acao = $em_acao;
-            $this->view->points = $points;
-            $this->view->em_acao_group = $em_acao_group;
-            $this->view->user_id = $data['us_id'];
-        //$pencas = $penca->load_penca__puntagem_usuario($data['us_id']);
-        
-//            $pencas = $penca->load_pencas();
-//            $pencas_usuario = $penca->load_pencas_usuario($data['us_id']);
-//
-//            $this->view->pencas = $pencas;
-//            $this->view->pencas_usuario = $pencas_usuario;
+////        print_r("HOLA");
+////        die(".");
 //        
-        }
-        
-    }
+//        //Retorna las posiciones de todas las pencas 
+//        //en la cual el usuario participa.
+//        //en verde al ganador con el puntaje
+//        //en amarillo los siguientes
+//        // en rojo los que no ganan nada
+//        
+//        //listado de pencas aonde o usuario pode
+//        //participar porque são livres
+//       
+//        //utimos resultados de alguna penca o de todas?
+//        
+//        $storage = new Zend_Auth_Storage_Session();
+//        $data = (get_object_vars($storage->read()));
+//   
+////        print_r($data);
+////        die(".");
+////        
+//        if (!empty($data)) {
+//            
+//            $result = new Application_Model_Result();
+//            $em_acao = $result->palpites_em_acao($data['us_id']);
+//            $points = $result->points($data['us_id']);
+//            $em_acao_group = $result->palpites_em_acao_group($data['us_id'], "");
+//            
+//            $this->view->em_acao = $em_acao;
+//            $this->view->points = $points;
+//            $this->view->em_acao_group = $em_acao_group;
+//            $this->view->user_id = $data['us_id'];
+//        //$pencas = $penca->load_penca__puntagem_usuario($data['us_id']);
+//        
+////            $pencas = $penca->load_pencas();
+////            $pencas_usuario = $penca->load_pencas_usuario($data['us_id']);
+////
+////            $this->view->pencas = $pencas;
+////            $this->view->pencas_usuario = $pencas_usuario;
+////        
+//        }
+//        
+//    }
     
     public function testAction() {
         
@@ -63,7 +64,7 @@ class IndexController extends Zend_Controller_Action
         die(".");
     }
     
-    public function emacaoAction() {
+    public function indexAction() {
         $params = $this->_request->getParams();
         
         $ordem = "";
@@ -88,13 +89,15 @@ class IndexController extends Zend_Controller_Action
             //$em_acao_group[$i]['base'] = Zend_Controller_Front::getInstance()->getBaseUrl();
         }
         
-        $this->getResponse()
-         ->setHeader('Content-Type', 'application/json');
+        $this->view->palpites = $em_acao_group;
         
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(TRUE);
-        
-        $this->_helper->json($em_acao_group);
+//        $this->getResponse()
+//         ->setHeader('Content-Type', 'application/json');
+//        
+//        $this->_helper->layout->disableLayout();
+//        $this->_helper->viewRenderer->setNoRender(TRUE);
+//        
+//        $this->_helper->json($em_acao_group);
     }
     
     public function puntuacaoAction() {

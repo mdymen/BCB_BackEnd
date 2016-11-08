@@ -1,73 +1,14 @@
-<?php
-//include APPLICATION_PATH.'/decorators/Form.php';
-    $em_acao = $this->em_acao;
-    $points = $this->points;    
-    $em_acao_group = $this->em_acao_group;
+<?php 
+    $palpites = $this->palpites;
 
+    
+//    print_r($palpites);
+//    die(".");
 ?>
-<div class="row">
-				
-    <div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
-            <div class="smallstat box">
-                    <i class="fa fa-globe blue"></i>
-                    <span class="title">Palpites em acao</span>
-                    <span class="value"><?php echo $em_acao[0]['cantidad']; ?></span>
-                    <a href="javascript:void(0)" id="emacao" class="more">
-                        <span>Mais informacao</span>
-                        <i id="icone_emacao" class="fa fa-chevron-down"></i>
-                    </a>
-            </div>
-    </div><!--/col-->
-				
-    <div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
-            <div class="smallstat box">
-                    <i class="fa fa-beer lightOrange"></i>
-                    <span class="title">Puntuacao</span>
-                    <span class="value"><?php
-                        if (empty($points[0]['pontos'])) {
-                            echo 0;
-                        } else {
-                            echo $points[0]['pontos'];
-                        }
-                    
-                     ?></span>
-                    <a href="javascript:void(0)" id="puntuacao" class="more">
-                        <span>Mais informacao...</span>
-                        <i id="icone_puntuacao" class="fa fa-chevron-down"></i>
-                    </a>
-            </div>
-    </div><!--/col-->
-				
-<!--    <div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
-            <div class="smallstat box">
-                    <i class="fa fa-dollar darkGreen"></i>
-                    <span class="title">Caixa</span>
-                    <span class="value">$1 999,99</span>
-                    <a href="javascript:void(0)" id="caixa" class="more">
-                        <span>Mais informacao...</span>
-                        <i class="fa fa-chevron-down"></i>
-                    </a>
-            </div>
-    </div>/col
-				
-    <div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
-            <div class="smallstat box">
-                    <i class="fa fa-moon-o lightBlue"></i>
-                    <span class="title">Income</span>
-                    <span class="value">$1 999,99</span>
-                    <a href="" class="more">
-                        <span>View More</span>
-                        <i class="fa fa-chevron-down"></i>
-                    </a>
-            </div>
-    </div>/col-->
-			
-</div>
 
 
-
-<div class="col-md-13" id="box_emacao" style="display:none">
-    <div class="box" id="box_box_emacao" carregado="no">
+<div class="col-md-13" id="box_emacao" style="display:yes">
+    <div class="box" id="box_box_emacao" carregado="y" style="display:yes">
             <div class="box-header">
                 <h2><i class="fa fa-th"></i><span class="break"></span>Palpites em acao...</h2>
                 <div class="box-icon">
@@ -75,150 +16,73 @@
                 </div>
             </div>
             <div class="box-content">
-                   <?php echo $this->render('index/index/emacao.phtml'); ?>
-            </div>
-    </div>
+                   <div class="row">
+    <div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
+<form id="frChamp_palpites" action="../penca/meuspalpites" method="post">	
+                                    <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                    <select id="ordenar" name="ordenar" class="form-control">
+                                                    <option value="Vazio">Ordenar por:</option>
+                                                    <option value="1">Campeonato</option>
+                                                    <option value="2">Data</option>
+                                                    <option value="3">Ronda</option>
+                                                    </select></div>
+                                            </div>	
+                                      </div>
+                                    </div>    
+                            </form>
 </div>
-
-<div class="col-md-13" id="box_puntuacao" style="display:none">
-    <div class="box" id="box_box_puntuacao">
-            <div class="box-header">
-                <h2><i class="fa fa-th"></i><span class="break"></span>Puntuacao</h2>
-                <div class="box-icon">
-                        <a href="javascript:void(0)" id="fechar_puntuacao" class="btn-close"><i class="fa fa-times"></i></a>
-                </div>
-            </div>
-            <div class="box-content">
-                   <?php echo $this->render('index/index/puntuacao.phtml'); ?>
-            </div>
-    </div>
+    
 </div>
+<table class="table" id="tb_palpites_feitos">
+    <thead>
 
-<div class="col-md-13" id="box_caixa" style="display:none">
-    <div class="box" id="box_box_caixa">
-            <div class="box-header">
-                <h2><i class="fa fa-th"></i><span class="break"></span>Caixa</h2>
-                <div class="box-icon">
-                        <a href="javascript:void(0)" id="fechar_caixa" class="btn-close"><i class="fa fa-times"></i></a>
-                </div>
-            </div>
-            <div class="box-content">
-                   <?php echo $this->render('index/index/caixa.phtml'); ?>
-            </div>
-    </div>
-</div>
-
-
-<script type="text/javascript">
-    
-    function abrir_emacao() {
-        $("#emacao").bind("click", function() {
-            $("#box_emacao").attr("style","display:yes");
-            $("#box_box_emacao").attr("style","display:yes");
-            var ordenar = $("#ordenar").val();
-            if ($("#box_box_emacao").attr("carregado") === 'no') {
-                $("#box_box_emacao").attr("carregado","y");
-                $("#icone_emacao").removeClass("fa fa-chevron-down");
-                $("#icone_emacao").addClass("fa fa-chevron-right");
-               
-                
-                $.post("index/emacao", {ordem : ordenar}, function(response) {
-                    for (var i = 0; i < response.length; i = i + 1) {
-                        $("#tb_emacao").append('<tr>\n\
-                        <td>'+response[i].ch_nome+'</td>\n\\n\
-                        <td style="text-align:right"><a href="'+response[i].host+"/team/team?team="+response[i].mt_idteam1+"&champ="+response[i].mt_idchampionship+'">'+response[i].t1nome+'</a><img width="28px;" height="21px;" src="'+response[i].tm1_logo+'" /></td>\n\
-                        <td></td>\n\
-                        <td width="15%">\n\
-                            <div class="row">\n\
-                                            <div class="col-xs-6 col-sm-6 col-lg-6">\n\
-                                                <input type="text" disabled="true" value="'+response[i].rs_res1+'" class="form-control" />\n\
-                                            </div>\n\
-                                            <div class="col-xs-6 col-sm-6 col-lg-6">\n\
-                                                <input type="text" disabled="true" value="'+response[i].rs_res2+'" class="form-control" />\n\
-                            </div>\n\
-                        </td>\n\
-                        <td></td>\n\
-                        <td style="text-align:left"><img width="28px;" height="21px;" src="'+response[i].tm2_logo+'" /><a href="'+response[i].host+"/team/team?team="+response[i].mt_idteam2+"&champ="+response[i].mt_idchampionship+'">'+response[i].t2nome+'</a></td>\n\
-                        <td>\n\
-                            <a href="'+response[i].host+'/penca/bolao?rodada='+response[i].mt_round+'&champ='+response[i].ch_id+'">'+response[i].mt_round+'</a>\n\
-                        </td>\n\\n\
-                        <td>'+ response[i].mt_date +'</td>\n\
-                    </tr>');
-                    }
-                    console.log(response);
-                });
-            }
-        });
-    }
-    
-    function fechar_emacao() {
-        $("#fechar_emacao").bind("click", function() {
-            $("#box_emacao").attr("style","display:none");
-            $("#icone_emacao").removeClass("fa fa-chevron-right");
-            $("#icone_emacao").addClass("fa fa-chevron-down");
-            abrir_emacao();           
-        });
-    }
-    
-    function abrir_caixa() {
-        $("#caixa").bind("click", function() {
-            $("#box_caixa").attr("style","display:yes");
-            $("#box_box_caixa").attr("style","display:yes");
-        });
-    }
-    
-    function fechar_caixa() {
-        $("#fechar_caixa").bind("click", function() {
-            $("#box_caixa").attr("style","display:none");
-            abrir_caixa();
-        });
-    }
-    
-    function abrir_puntuacao() {
-       $("#puntuacao").bind("click", function() {
-            $("#box_puntuacao").attr("style","display:yes");
-            $("#box_box_puntuacao").attr("style","display:yes");
+            <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th> 
+                    <th></th> 
+                    <th></th> 
+                    <th></th> 
+                    <th></th> 
+            </tr>
+    </thead>   
+    <tbody id="tb_emacao">
             
-            $.post("index/puntuacao", function(response) {
-                
-                $("#td_acertados").html(response['ganados']);
-                $("#td_errados").html(response['perdidos']);
-                $("#td_puntuacao").html(response['pontos']);
-                $("#td_position").html(response['pontos']);
-                $('#td_global').html(response['position']);
-                console.log(response);
-           
-            });
-        });
-    }
-    
-    function fechar_puntuacao() {
-        $("#fechar_puntuacao").bind("click", function() {
-            $("#box_emacao").attr("style","display:none");
-            abrir_puntuacao();
-        });
-    }
-    
-    function trocar_ordem_emacao() {
-        $("#ordenar").change(function() {
-            $("#box_box_emacao").attr("carregado","no");
-            $("#tb_emacao").html("");
-            $("#emacao").click();            
-        });
-    }
-    
-    $(function() { 
-        trocar_ordem_emacao();
-        abrir_emacao();
-        fechar_emacao();
 
-        abrir_caixa();
-        fechar_caixa();
+        <?php 
         
-        abrir_puntuacao();    
-        fechar_puntuacao();
-    });
-    
-    
-    
-</script>
+            for ($i = 0; $i < count($palpites); $i = $i + 1) {
+        
+                echo' <tr>
+                        <td>'.$palpites[$i]['ch_nome'].'</td><td style="text-align:right">'.Helpers_Html::getTeamLinkRight($palpites[$i]['host'], $palpites[$i]['mt_idteam1'], $palpites[$i]['t1nome'], $palpites[$i]['tm1_logo'], $palpites[$i]['mt_idchampionship']).'</td>
+                        <td></td>
+                        <td width="15%">
+                            <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-lg-6">
+                                                <input type="text" disabled="true" value="3" class="form-control">
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-lg-6">
+                                                <input type="text" disabled="true" value="2" class="form-control">
+                            </div>
+                        </div></td>
+                        <td></td>
+                        <td style="text-align:left">'.Helpers_Html::getTeamLinkLeft($palpites[$i]['host'], $palpites[$i]['mt_idteam2'], $palpites[$i]['t2nome'], $palpites[$i]['tm2_logo'], $palpites[$i]['mt_idchampionship']).'</td>
+                        <td>
+                            <a href="http://localhost/penca/public/penca/bolao?rodada=34&amp;champ=1">34</a>
+                        </td><td>Sabado 05 Nov. 17:00hs</td>
+                    </tr>';
+                
+            }
+            
+         ?>    
+       
+                </tbody>
+</table>
+                </div>
+    </div>
+</div>
