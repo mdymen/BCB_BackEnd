@@ -65,39 +65,45 @@ class IndexController extends Zend_Controller_Action
     }
     
     public function indexAction() {
-        $params = $this->_request->getParams();
-        
-        $ordem = "";
-        if (!empty($params['ordem'])) {
-            $ordem = $params['ordem'];
+        try {
+            $params = $this->_request->getParams();
+
+            $ordem = "";
+            if (!empty($params['ordem'])) {
+                $ordem = $params['ordem'];
+            }
+
+            $storage = new Zend_Auth_Storage_Session();
+            $data = (get_object_vars($storage->read()));
+
+            $result = new Application_Model_Result();
+            $em_acao_group = $result->palpites_em_acao_group($data['us_id'], $ordem);
+
+            $config = new Zend_Config_Ini('config.ini');
+
+            $h_date = new Helpers_Data();
+            for ($i = 0; $i < count($em_acao_group); $i = $i + 1) {
+                $em_acao_group[$i]['mt_date'] = $h_date->day($em_acao_group[$i]['mt_date']);
+                $em_acao_group[$i]['tm1_logo'] = $config->host.$em_acao_group[$i]['tm1_logo'];
+                $em_acao_group[$i]['host'] = $config->hostpublic;
+                $em_acao_group[$i]['tm2_logo'] = $config->host.$em_acao_group[$i]['tm2_logo'];
+                //$em_acao_group[$i]['base'] = Zend_Controller_Front::getInstance()->getBaseUrl();
+            }
+
+            $this->view->palpites = $em_acao_group;
+
+    //        $this->getResponse()
+    //         ->setHeader('Content-Type', 'application/json');
+    //        
+    //        $this->_helper->layout->disableLayout();
+    //        $this->_helper->viewRenderer->setNoRender(TRUE);
+    //        
+    //        $this->_helper->json($em_acao_group);
         }
-       
-        $storage = new Zend_Auth_Storage_Session();
-        $data = (get_object_vars($storage->read()));
-        
-        $result = new Application_Model_Result();
-        $em_acao_group = $result->palpites_em_acao_group($data['us_id'], $ordem);
-        
-        $config = new Zend_Config_Ini('config.ini');
-        
-        $h_date = new Helpers_Data();
-        for ($i = 0; $i < count($em_acao_group); $i = $i + 1) {
-            $em_acao_group[$i]['mt_date'] = $h_date->day($em_acao_group[$i]['mt_date']);
-            $em_acao_group[$i]['tm1_logo'] = $config->host.$em_acao_group[$i]['tm1_logo'];
-            $em_acao_group[$i]['host'] = $config->hostpublic;
-            $em_acao_group[$i]['tm2_logo'] = $config->host.$em_acao_group[$i]['tm2_logo'];
-            //$em_acao_group[$i]['base'] = Zend_Controller_Front::getInstance()->getBaseUrl();
+        catch (Exception $e) {
+//             $config = new Zend_Config_Ini("config.ini");
+//            $this->redirect("/index/logout");
         }
-        
-        $this->view->palpites = $em_acao_group;
-        
-//        $this->getResponse()
-//         ->setHeader('Content-Type', 'application/json');
-//        
-//        $this->_helper->layout->disableLayout();
-//        $this->_helper->viewRenderer->setNoRender(TRUE);
-//        
-//        $this->_helper->json($em_acao_group);
     }
     
     public function puntuacaoAction() {

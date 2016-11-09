@@ -1,7 +1,7 @@
 <?php 
     $palpites = $this->palpites;
 
-    
+    if (!empty($palpites)) { 
 //    print_r($palpites);
 //    die(".");
 ?>
@@ -56,10 +56,16 @@
 
         <?php 
         
+            $campeonato = "";
             for ($i = 0; $i < count($palpites); $i = $i + 1) {
-        
+                if (strcmp($campeonato, $palpites[$i]['ch_id']) != 0) {
+                    echo' <tr>
+                        <td><b>'.$palpites[$i]['ch_nome'].'<b></td>
+                            </tr>';
+                    $campeonato = $palpites[$i]['ch_id'];
+                }
                 echo' <tr>
-                        <td>'.$palpites[$i]['ch_nome'].'</td><td style="text-align:right">'.Helpers_Html::getTeamLinkRight($palpites[$i]['host'], $palpites[$i]['mt_idteam1'], $palpites[$i]['t1nome'], $palpites[$i]['tm1_logo'], $palpites[$i]['mt_idchampionship']).'</td>
+                        <td style="text-align:right">'.Helpers_Html::getTeamLinkRight($palpites[$i]['host'], $palpites[$i]['mt_idteam1'], $palpites[$i]['t1nome'], $palpites[$i]['tm1_logo'], $palpites[$i]['mt_idchampionship']).'</td>
                         <td></td>
                         <td width="15%">
                             <div class="row">
@@ -86,3 +92,13 @@
                 </div>
     </div>
 </div>
+
+
+<?php
+
+    } else {
+        
+         echo $this->render('index/resenha1.phtml');
+    }
+
+?>

@@ -15,8 +15,21 @@ function breadcrumb() {
             $breadcrumb = "Penca / ";
         }
         
+        if (strcmp($url[3], "team") == 0) {
+            $breadcrumb = "Times / ";
+        }
+        
+        if (strcmp($url[3], "campeonatos") == 0) {
+            $breadcrumb = "Campeonatos / ";
+        }
+        
+        
+
         if (!empty($url[4])) {
-            if (strcmp($url[4], "meusbaloes") == 0) {
+            
+            $url_final  =   explode("?", $url[4]);
+            
+            if (strcmp($url_final[0], "meusbaloes") == 0) {
                 $breadcrumb = $breadcrumb." Meus Baloes ";
             }
 
@@ -26,6 +39,10 @@ function breadcrumb() {
 
             if (strcmp($url[4], "pencas") == 0) {
                 $breadcrumb = $breadcrumb." Buscar Pencas ";
+            }
+            
+            if (strcmp($url_final[0], "team") == 0) {
+                $breadcrumb = $breadcrumb." Nome do time ";
             }
         }
     }

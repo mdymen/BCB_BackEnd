@@ -135,6 +135,12 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         return $result['points'];
     }
     
+    public function posicao_por_campeonato($id_user) {
+//        $db = Zend_Db_Table::getDefaultAdapter();
+//        
+//        $db->select()->
+    }
+    
     public function getPoisition($id_user) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
