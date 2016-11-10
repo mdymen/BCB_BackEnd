@@ -19,7 +19,7 @@ if (!empty($palpites)) {
 <input type="hidden" value="<?php echo $palpites[0]['mt_round']; ?>" name="rodada" id="round" />
 
 
-        
+        <?php echo $this->render('penca/bolao/alerts.phtml'); ?>  
         
                 <div class="box">
                         <div class="box-header">
@@ -150,7 +150,7 @@ if (!empty($palpites)) {
 
                     $('#trp_'+it).attr("style", "display:none");
 
-                    $("#sucesso_msg").html("Palpite adicionado: " + team1 + " " + response.rs_res1 + " - " + team2 + " " + response.rs_res2);
+                    $("#sucesso_msg").html("Palpite adicionado: " + team1 + " " + response.rs_res1 + " - " + response.rs_res2 + " " + team2);
                     $("#append_success").html($("#success").html());
                     $(".alert-success").show();
                     fechar_sucesso();

@@ -225,7 +225,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         
         $result = $db->select()->from("match", 'mt_round')
                 ->distinct()
-                ->where("mt_idchampionship", $champ)
+                ->where("mt_idchampionship = ?", $champ)
                 ->query()
                 ->fetchAll();
         

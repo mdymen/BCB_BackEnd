@@ -18,6 +18,10 @@
     $f = new Forms_FotoPerfil();
 
     $config = new Zend_Config_Ini("config.ini");
+    
+//    $browserLocale = new Zend_Locale(Zend_Locale::BROWSER);
+//    print_r($browserLocale);
+//    die(",");
 ?>
 
 
@@ -115,6 +119,8 @@
                                                                     ?>
                                                                     </select>-->
 								</div>
+                                                            <div id="gif" style="display:none"><img class="col-sm-offset-5" width="100px" hight="100px" src="<?php echo $config->host."/assets/img/pendente.gif"; ?>" /></div>
+                                                            <div id="panel_senhas">
 								<div class="form-group">
 								  
 								  <div class="controls">
@@ -146,34 +152,52 @@
 								  </div>
 								</div>   
                                                             
-                                                            <div class="controls">
-                                                            <div class="input-group col-sm-4">
-										    <label class="switch switch-success">
-										      <input type="checkbox" class="switch-input" checked="">
-										      <span class="switch-label" data-on="On" data-off="Off"></span>
-										      <span class="switch-handle"></span>
-										    </label>
-                                                                <span> Palpites públicos </span>
-										</div></div>
-                                                            
-                                                             <div class="controls">
-                                                            <div class="input-group col-sm-4">
-										    <label class="switch switch-success">
-										      <input type="checkbox" class="switch-input" >
-										      <span class="switch-label" data-on="On" data-off="Off"></span>
-										      <span class="switch-handle"></span>
-										    </label>
-                                                                <span> Puntuacao pública </span>
-										</div></div>
-								
-								
-								<div class="form-actions">
+                                                           <div class="form-actions">
 								  <button type="button" id="salvar_senha" class="btn btn-primary">Salvar</button>
 								</div>
 							</form>   
 
 						</div>
 					</div>
+    <div class="box">
+						<div class="box-header">
+							<h2><i class="fa fa-edit"></i>Opcoes de informacao</h2>
+							<div class="box-icon">
+								
+								<a href="form-elements.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+								
+							</div>
+						</div>
+						<div class="box-content">
+							<form class="form-horizontal">
+                                                            <div class="controls">
+                                                                <div class="input-group col-sm-4">
+                                                                    <label class="switch switch-success">
+                                                                        <input id="palpites_publicos" type="checkbox" class="switch-input" checked="">
+                                                                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                                                                        <span class="switch-handle"></span>
+                                                                     </label>
+                                                                    <span> Palpites públicos </span>
+								</div>
+                                                            </div>
+                                                            
+                                                             <div class="controls">
+                                                                <div class="input-group col-sm-4">
+                                                                    <label class="switch switch-success">
+                                                                        <input id="puntuacao_publica" type="checkbox" class="switch-input" >
+									<span class="switch-label" data-on="On" data-off="Off"></span>
+                                                                        <span class="switch-handle"></span>
+                                                                    </label>
+                                                                    <span> Puntuacao pública </span>
+								</div>
+                                                             </div>
+								
+                                                            <div class="form-actions">
+								  <button type="button" id="salvar_opcoes" class="btn btn-primary">Salvar</button>
+                                                            </div>
+                                                        </form>
+                                                </div>
+    </div>
     
      <?php
                                 
@@ -199,13 +223,31 @@
 <script type="text/javascript">
 
     $(function() {
+       $("#salvar_opcoes").bind("click", function() {
+           var palpites_publicos = $("#palpites_publicos").prop("checked");
+           var puntuacao_publica = $("#puntuacao_publica").prop("checked");
+           
+           $.post("usuario/salvaropcoes", {palpitespublicos : palpites_publicos, puntuacaopublica : puntuacao_publica}, function(response) {
+               console.log(response);
+                if (200 == 200) {
+                   success_msg("Opcoes alteradas com exito.");
+               } else {
+                   info_msg("Erro ao atualizar as opcoes.");
+               }
+           });
+       }); 
+        
+        
        $("#salvar_senha").bind("click", function() {
            var senha = $("#senha").val();
            
            var confirmacao = $("#confirmacao").val();
            
            var novasenha = $("#novasenha").val();
+           
            if (novasenha === confirmacao && novasenha !== "" && confirmacao !== "") {
+               $("#panel_senhas").attr("style", "display:none");
+               $("#gif").attr("style", "display:block");
                $.post("usuario/salvarsenha", {senha : senha, novasenha : novasenha}, function(response) {
                     console.log(response);
                     if (response == 200) {                       
@@ -213,9 +255,13 @@
                    } else {
                        info_msg("Nao successo");
                    }
+                   $("#panel_senhas").attr("style", "display:block");
+                   $("#gif").attr("style", "display:none");
                });
            } else {
-               info_msg("Senha e confirmacao devem ser iguais e nao vazio.");
+               if (senha !== "") {
+                    info_msg("Senha e confirmacao devem ser iguais e nao vazio.");
+                }
            }
        }); 
     });

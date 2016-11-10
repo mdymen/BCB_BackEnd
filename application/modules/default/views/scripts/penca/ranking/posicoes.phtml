@@ -27,8 +27,13 @@
                                                                    
                                                                         for ($i = 0; $i < count($posicoes); $i = $i + 1) {
                                                                    
+                                                                            $star = "";
+                                                                            if ($i == 0) {
+                                                                                $star = '<i class="fa fa-star yellow"></i>';
+                                                                            }
+                                                                            
                                                                             echo '<tr>
-                                                                                    <td>'.($i+1).'</td>
+                                                                                    <td>'.($i+1).$star.'</td>
                                                                                     <td>'.$posicoes[$i]['points'].'</td>
                                                                                     <td><a href="'.$this->baseUrl().'/usuario/index?usuario='.$posicoes[$i]['rk_iduser'].'">'.$posicoes[$i]['rk_username'].'</a></td>
                                                                                                                          

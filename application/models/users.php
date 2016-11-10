@@ -165,4 +165,13 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         return $result['position'];
     }
     
+    public function save_opcoes($id_user, $array_opcoes) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        print_r($array_opcoes);
+        die(",");
+        
+        $db->update("user", $array_opcoes, "us_id = ".$id_user);
+    }
+    
 }

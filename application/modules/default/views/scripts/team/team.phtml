@@ -40,6 +40,9 @@
                                               for ($i = 0; $i < count($matchs); $i = $i + 1) {  
                                                     $date = date("H:i",strtotime($matchs[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($matchs[$i]['mt_date']) );
                                                     $matchs[$i]['mt_date'] = $date;
+                                                    if (!$matchs[$i]['mt_played']) {
+                                                        
+                                                    }
                                                     if (($i == 0) || ($i > 0 && strcmp($matchs[$i]['mt_date'],$matchs[$i-1]['mt_date']) != 0)) { 
                                                         echo '
                                                             <tr>
@@ -62,10 +65,10 @@
                                                             <td class="col-sm-3 col-xs-3">
                                                                 <div class="row">
                                                                     <div class="col-xs-6 col-sm-6 col-lg-6">
-                                                                        <input disabled class="form-control" value="'.$matchs[$i]['mt_goal1'].'" type="text" placeholder="0">
+                                                                        <input disabled class="form-control" value="'.$matchs[$i]['mt_goal1'].'" type="text">
                                                                     </div>
                                                                     <div class="col-xs-6 col-sm-6 col-lg-6">
-                                                                        <input disabled class="form-control" value="'.$matchs[$i]['mt_goal2'].'" type="text" placeholder="0">
+                                                                        <input disabled class="form-control" value="'.$matchs[$i]['mt_goal2'].'" type="text">
                                                                     </div>
                                                                 </div>
                                                             </td>

@@ -131,4 +131,26 @@ class UsuarioController extends Zend_Controller_Action
             }
         }
     }
+    
+    public function salvaropcoesAction() {
+        $params = $this->_request->getParams();
+        
+        $palpites_publicos = (int)$params['palpitespublicos'];
+        $puntuacao_publica = (int)$params['puntuacaopublica'];
+        
+        $id_user = $this->getIdUser();
+        
+        $user = new Application_Model_Users();
+        
+        $user->save_opcoes($id_user, array('us_palppublicos' => $palpites_publicos, 'us_puntpublica' => $puntuacao_publica));
+        
+         $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($id_user);
+        
+    }
 }

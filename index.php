@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="SHIELD - Free Bootstrap 3 Theme">
-    <meta name="author" content="Carlos Alvarez - Alvarez.is - blacktie.co">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
+    <meta name="author" content="Martin Dymenstein">
+    <link rel="shortcut icon" href="assets/ico/icone.gif">
+        <link rel="icon" href="assets/ico/icone.gif">
 
     <title> Bolão Craque de Bola </title>
 
@@ -67,7 +68,12 @@
 			<header class="clearfix">
 <!--	  		 		<h1><span class="icon icon-shield"></span></h1>-->
 	  		 		<p>Bolão Craque de Bola.</p>
-	  		 		<!--<p>Exclusive for BlackTie.co.</p>-->
+	  		 		<p>Uma nova forma de vivir o futebol!</p>
+                                        <div style="text-align: center">
+                            <a href="http://www.bolaocraquedebola.com.br/public" class="btn btn-lg btn-primary btn-round">Palpitar</a>
+                            <br><br>
+                            
+                        </div>
 	  		</header>	    
 	    </div><!-- /headerwrap -->
 
@@ -76,20 +82,20 @@
 			<div class="row">
 				<div class="col-lg-4 callout">
 					<span class="icon icon-stack"></span>
-					<h2>Bootstrap 3</h2>
-					<p>Shield Theme is powered by Bootstrap 3. The incredible Mobile First Framework is the best option to run your website. </p>
+					<h2>Bolao com os Amigos!</h2>
+					<p>Crie seu proprio bolao personalizado para curtir com a rapaziada, compartilhar com os amigos e se divertir. </p>
 				</div><!-- col-lg-4 -->
 					
 				<div class="col-lg-4 callout">
 					<span class="icon icon-eye"></span>
-					<h2>Retina Ready</h2>
-					<p>You can use this theme with your iPhone, iPad or MacBook Pro. This theme is retina ready and that is awesome. </p>
+					<h2>Ranking e Histórico</h2>
+					<p>Tenha acesso ao Ranking do Bolao em que esta participando; veja todos os históricos de palpites e de quem está palpitando. </p>
 				</div><!-- col-lg-4 -->	
 				
 				<div class="col-lg-4 callout">
 					<span class="icon icon-heart"></span>
-					<h2>Crafted with Love</h2>
-					<p>We don't make sites, we craft themes with love & passion. That is our most valued secret. We only do thing that we love.   </p>
+					<h2>Time do coracao</h2>
+					<p>Faca palpites no seu time do coracao, com uma pagina exclusiva para seu time. </p>
 				</div><!-- col-lg-4 -->	
 			</div><!-- row -->
 		</div><!-- greywrap -->
@@ -481,7 +487,7 @@
 
 		<div id="footerwrap">
 			<div class="container">
-				<h4>Created by <a href="http://blacktie.co">BlackTie.co</a> - Copyright 2014</h4>
+				<h4>Created by Me - Copyright 2016</h4>
 			</div>
 		</div>
 
