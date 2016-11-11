@@ -105,7 +105,7 @@ class UsuarioController extends Zend_Controller_Action
         
         $users = new Application_Model_Users();
         
-        $matches = $users->getLostMatches($us_id);
+        $matches = $users->getMatchesLostMatches($us_id);
         
         $this->view->matches = $matches;
         

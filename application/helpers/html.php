@@ -58,7 +58,7 @@ class Helpers_Html {
              <div class="col-md-9">
                     <div class="box">
                         <div class="box-header">
-                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Acertados</h2>
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Erros</h2>
                                 <div class="box-icon">
 <!--                                        <a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
                                         <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
@@ -96,7 +96,7 @@ class Helpers_Html {
                                                     }
                                                     $r = $r.'<tr>                                                            
                                                             <td style="text-align:right">'.Helpers_Html::getTeamLinkRight($baseUrl, $matches[$i]['tm1_id'], $matches[$i]['t1nome'], $config->host.$matches[$i]['tm1_logo'], $matches[$i]['mt_idchampionship']).'</td>
-                                                            <td style="text-align:right"><span class="label label-success">'.$matches[$i]['mt_goal1'].'</span></td>
+                                                            <td style="text-align:right"><span class="label label-danger">'.$matches[$i]['mt_goal1'].'</span></td>
                                                             <td class="col-sm-3 col-xs-3">
                                                                 <div class="row">
                                                                     <div class="col-xs-6 col-sm-6 col-lg-6">
@@ -107,10 +107,10 @@ class Helpers_Html {
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                            <td style="text-align:left"><span class="label label-success">'.$matches[$i]['mt_goal2'].'</span></td>
+                                                            <td style="text-align:left"><span class="label label-danger">'.$matches[$i]['mt_goal2'].'</span></td>
                                                             <td style="text-align:left">'.Helpers_Html::getTeamLinkLeft($baseUrl, $matches[$i]['tm2_id'], $matches[$i]['t2nome'], $config->host.$matches[$i]['tm2_logo'], $matches[$i]['mt_idchampionship']).'</td>
                                                             <td><b>'.Helpers_Data::day($matches[$i]['mt_date']).'</b></td>
-                                                            <td><span class="label label-success">'.$matches[$i]['rs_points'].'</span></td>
+                                                            <td></td>
                                                         </tr>
                                                         ';
                                                     }

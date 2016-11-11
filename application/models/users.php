@@ -80,10 +80,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     public function getMatchesLostMatches($us_id) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        $result = $db->select()->from("match")
-                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
-                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
-                ->joinRight("result", "match.mt_id = result.rs_idmatch")
+        $result = $db->select()->from("vwmatchsresult")
                 ->where("rs_iduser = ?",$us_id)
                 ->where("rs_points = 0")
                 ->query()
@@ -96,14 +93,16 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     public function getMatchesWonMatches($us_id) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        $result = $db->select()->from("match")
+        $query = $db->select()->from("match")
                 ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name', 'tm1_logo' => 't1.tm_logo', 'tm1_id' => 't1.tm_id'))
                 ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name', 'tm2_logo' => 't2.tm_logo', 'tm2_id' => 't2.tm_id'))
-                ->joinRight("result", "match.mt_id = result.rs_idmatch")
-                ->where("rs_iduser = ?",$us_id)
-                ->where("rs_points = 5")
-                ->orWhere("rs_points = 1")
-                ->query()
+                ->joinInner("result", "match.mt_id = result.rs_idmatch")
+                ->where("result.rs_iduser = ?", + $us_id)
+                ->where("rs_points = 5 or rs_points = 1");
+        
+//        print_r($query->__toString());
+//                ->orWhere("rs_points = 1")
+          $result = $query->query()
                 ->fetchAll();
         
         return $result;  
