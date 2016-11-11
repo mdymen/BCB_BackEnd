@@ -70,17 +70,17 @@
                         <td width="15%">
                             <div class="row">
                                             <div class="col-xs-6 col-sm-6 col-lg-6">
-                                                <input type="text" disabled="true" value="3" class="form-control">
+                                                <input type="text" disabled="true" value="'.$palpites[$i]['rs_res1'].'" class="form-control">
                                             </div>
                                             <div class="col-xs-6 col-sm-6 col-lg-6">
-                                                <input type="text" disabled="true" value="2" class="form-control">
+                                                <input type="text" disabled="true" value="'.$palpites[$i]['rs_res2'].'" class="form-control">
                             </div>
                         </div></td>
                         <td></td>
                         <td style="text-align:left">'.Helpers_Html::getTeamLinkLeft($palpites[$i]['host'], $palpites[$i]['mt_idteam2'], $palpites[$i]['t2nome'], $palpites[$i]['tm2_logo'], $palpites[$i]['mt_idchampionship']).'</td>
                         <td>
-                            <a href="http://localhost/penca/public/penca/bolao?rodada=34&amp;champ=1">34</a>
-                        </td><td>Sabado 05 Nov. 17:00hs</td>
+                            <a href="http://localhost/penca/public/penca/bolao?rodada='.$palpites[$i]['rs_round'].'&amp;champ=1">'.$palpites[$i]['rs_round'].'</a>
+                        </td><td>'.Helpers_Data::day($palpites[$i]['mt_date']).'</td>
                     </tr>';
                 
             }

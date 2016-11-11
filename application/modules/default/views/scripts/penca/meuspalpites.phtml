@@ -78,7 +78,13 @@
                                     <div id="champ_'.$i.'" class="panel-collapse collapse" style="height: 0px;">
                                       <div class="panel-body">
                                           <table id="tb_'.$round.'">
-                                          
+                                              <tr>
+                                                 <td>
+                                                    <div id="gif_'.$round.'" style="display:none">
+                                                        <img class="col-sm-offset-5" width="100px" hight="100px" src="'.$config->host."/assets/img/pendente.gif".'" />
+                                                    </div>
+                                                 </td>
+                                              </tr>  
                                           </table>
                                       </div>
                                     </div>
@@ -115,6 +121,7 @@
             var logo = $("#config_logo").attr("config");
             if ($("#hd_ronda_"+ronda).attr("carregado") === 'no') {
                 $("#hd_ronda_"+ronda).attr("carregado","yes");
+                $("#gif_"+ronda).attr("style", "display:block");
                 $.post("getpalpites", {champ : champ, ronda : ronda}, function(response) {
                     for (var i = 0; i < response.length; i = i + 1) {
 
@@ -158,6 +165,7 @@
                     }
                
                     console.log(response);
+                    $("#gif_"+ronda).attr("style", "display:none");
                 });
             }
 

@@ -174,4 +174,19 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         $db->update("user", $array_opcoes, "us_id = ".$id_user);
     }
     
+    public function historico_palpites($us) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("match")  
+            ->joinInner("result", "result.rs_idmatch = match.mt_id")    
+            ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('tm1_id' => 't1.tm_id', 'tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
+            ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('tm2_id' => 't2.tm_id', 'tm2_logo' => 't2.tm_logo', 't2nome' => 't2.tm_name'))
+            ->where('result.rs_iduser = ?', $us)
+            ->order('mt_date')
+            ->query()
+            ->fetchAll();
+        
+        return $result;
+    }
+    
 }

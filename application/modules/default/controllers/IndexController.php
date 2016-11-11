@@ -83,7 +83,7 @@ class IndexController extends Zend_Controller_Action
 
             $h_date = new Helpers_Data();
             for ($i = 0; $i < count($em_acao_group); $i = $i + 1) {
-                $em_acao_group[$i]['mt_date'] = $h_date->day($em_acao_group[$i]['mt_date']);
+                //$em_acao_group[$i]['mt_date'] = $h_date->day($em_acao_group[$i]['mt_date']);
                 $em_acao_group[$i]['tm1_logo'] = $config->host.$em_acao_group[$i]['tm1_logo'];
                 $em_acao_group[$i]['host'] = $config->hostpublic;
                 $em_acao_group[$i]['tm2_logo'] = $config->host.$em_acao_group[$i]['tm2_logo'];

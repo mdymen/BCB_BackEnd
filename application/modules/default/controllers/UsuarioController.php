@@ -13,6 +13,7 @@
  */
 include APPLICATION_PATH.'/models/users.php';
 include APPLICATION_PATH."/helpers/data.php";
+//include APPLICATION_PATH."/helpers/html.php";
 class UsuarioController extends Zend_Controller_Action
 {
     public function indexAction() {
@@ -152,5 +153,15 @@ class UsuarioController extends Zend_Controller_Action
         
         $this->_helper->json($id_user);
         
+    }
+    
+    public function palpitadosAction() {
+        $params = $this->_request->getParams();
+        
+        $us = $params['usuario'];
+        
+        $user = new Application_Model_Users();
+        
+        $this->view->palpitados = $user->historico_palpites($us);
     }
 }
