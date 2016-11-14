@@ -55,4 +55,15 @@ class Application_Model_Championships extends Zend_Db_Table_Abstract
         $db->update("championship", array('ch_atualround' => $round), "ch_id = ".$champ);
     }
     
+    public function getChamp($id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $result = $db->select()->from("championship")
+                ->where("ch_id = ?", $id)
+                ->query()
+                ->fetch();
+        
+        return $result;
+        
+    }
+    
 }

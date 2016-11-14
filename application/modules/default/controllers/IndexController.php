@@ -157,6 +157,9 @@ class IndexController extends Zend_Controller_Action
         $user = $params["username"];
         $password = $params["password"];
         
+//        print_r($params);
+//        die(".");
+        
         $users = new Application_Model_Users();
         $auth = Zend_Auth::getInstance();
         $authAdapter = new Zend_Auth_Adapter_DbTable($users->getAdapter(),'user');
@@ -206,5 +209,35 @@ class IndexController extends Zend_Controller_Action
     }
     
    
+    public function loginfaceAction() {
+        $params = $this->_request->getParams();
+        
+        $us = new Application_Model_Users();
+        $result = $us->isUserRegistered($params['facebookid']);
+        
+        if (!$result) {
+            $us->facebookUserSave($params['facebookid']);
+        }
+            
+//        $this->_request->setParams(array("username" => $params['facebookid'], "password" => $params['facebookid']));
+        $this->forward("login", "index", "default",array("username" => $params['facebookid'], "password" => $params['facebookid']));
+//           $this->_helper->redirector("login", "index", "default", array("username" => $params['facebookid'], "password" => $params['facebookid']));
+       // $this->redirect("/index/login",array("username" => $params['facebookid'], "password" => $params['facebookid']));
+
+//        $this->getResponse()
+//         ->setHeader('Content-Type', 'application/json');
+//        
+//        $this->_helper->layout->disableLayout();
+//        $this->_helper->viewRenderer->setNoRender(TRUE);
+//        
+//        $this->_helper->json($result);
+        
+        
+    }
+    
+    public function addfacebookuserAction() {
+//        $this->render("addfacebookuser")
+    }
+    
 }
 

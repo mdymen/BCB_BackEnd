@@ -253,6 +253,7 @@ class PencaController extends Zend_Controller_Action {
             $champ_id = $params['champ'];
 
             $this->view->champ = $champ_id;
+            $this->view->championship = $champ->getChamp($champ_id);
             
             if (empty($params['rodada'])) {
                 $rodada_id = $p_obj->getIdPrimeraRodadaDisponivel($champ_id);

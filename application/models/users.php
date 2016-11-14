@@ -188,4 +188,38 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         return $result;
     }
     
+    public function isUserRegistered($facebookid) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("user")
+                 ->where("us_idfacebook = ?", $facebookid)
+                ->query()
+                ->fetch();
+        if (!empty($result)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function facebookUserSave($id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $datas = array("us_idfacebook" => $id, "us_userbyfaceseted" => false, "us_password" => $id, "us_username" => $id);
+        
+        $db->insert("user", $datas);
+        
+    }
+    
+    public function isUsersName($user) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("user")
+                ->where("us_username = ?",$user)
+            ->query()
+                ->fetchAll();
+        
+        return $result;
+    }
+    
 }

@@ -4,6 +4,11 @@
 
     $teams = $this->teams;
     $champ = $this->champ;
+
+    $champion = $this->championship;
+    
+//    print_r($champion);
+//    print_r($champion['ch_sec1_fim']);
     
     if (!empty($teams)) {
     
@@ -31,16 +36,19 @@
                                                                    <?php   
                                                                    
                                                                         for ($i = 0; $i < count($teams); $i = $i + 1) {
-                                                                   
+                                                                        
+//                                                                            print_r("xxxx ".$champion['ch_sec_ini']);
+                                                                            
                                                                             $torneo = "";
-                                                                            if ($i <= 2) {
+                                                                            $k = $i + 1;
+                                                                            if (!empty($champion['ch_sec1_ini']) && $k >= $champion['ch_sec1_ini'] && $k <= $champion['ch_sec1_fin']) {
                                                                                 $torneo = "badge badge-success";
                                                                             }
-                                                                            if ($i > 2 && $i <= 5) {
+                                                                            if (!empty($champion['ch_sec2_ini']) && $k >= $champion['ch_sec2_ini'] && $k <= $champion['ch_sec2_fin']) {
                                                                                 $torneo = "badge badge-info";
                                                                             }
                                                                             
-                                                                            if ($i > 15) {
+                                                                            if (!empty($champion['ch_sec3_ini']) && $k >= $champion['ch_sec3_ini'] && $k <= $champion['ch_sec3_fin']) {
                                                                                 $torneo = "badge badge-important";
                                                                             }
                                                                             
