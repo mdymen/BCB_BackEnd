@@ -13,6 +13,7 @@
  */
 include APPLICATION_PATH.'/models/pencas.php';
 include APPLICATION_PATH.'/helpers/html.php';
+include APPLICATION_PATH.'/helpers/translate.php';
 class CampeonatosController extends Zend_Controller_Action
 {
     public function indexAction() {

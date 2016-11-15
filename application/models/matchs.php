@@ -70,7 +70,22 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
 //        
 //        
 //        return $result;       
-//    }    
+//    }
+    
+    public function load_rodada($championship, $rodada) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("vwmatchsresult")
+                ->where("mt_idchampionship = ?", $championship)
+                ->where("mt_round = ?", $rodada)
+                ->order(array('mt_date ASC'))
+                ->query()
+                ->fetchAll();
+
+        return $result;
+        
+    }
+    
     public function load_rodada_com_palpites($championship, $rodada, $usuario) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
@@ -217,6 +232,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         $result = $db->select()->from("match", 'mt_round')
                 ->distinct()
                 ->where("mt_idchampionship = ?", $champ)
+                ->order("mt_round")
                 ->query()
                 ->fetchAll();
         

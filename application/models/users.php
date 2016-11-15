@@ -27,6 +27,15 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         $db->insert($this->_name, $info);
     }
     
+    public function load_user($user) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        return $db->select()->from("user")
+                ->where("us_username = ?", $user)
+                ->query()
+                ->fetch();
+    }
+    
     public function user_penca($penca) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
@@ -114,8 +123,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         
         $result = $db->select()->from("result", array("count(*) as played"))
                ->where("rs_iduser = ?",$id_user)
-                ->where("rs_date < " + date("m-d-Y"))
-                ->where("rs_result is not null")
+                ->where("rs_result = 1 or rs_result = 0")
                 ->query()
                 ->fetch();
         
@@ -167,10 +175,8 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     public function save_opcoes($id_user, $array_opcoes) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        print_r($array_opcoes);
-        die(",");
         
-        $db->update("user", $array_opcoes, "us_id = ".$id_user);
+        //$db->update("user", array('us_palppublicos' => 0, 'us_puntpublica' => 0), "us_id = ".$id_user);
     }
     
     public function historico_palpites($us) {
@@ -195,11 +201,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
                  ->where("us_idfacebook = ?", $facebookid)
                 ->query()
                 ->fetch();
-        if (!empty($result)) {
-            return true;
-        } else {
-            return false;
-        }
+        return $result;
     }
     
     public function facebookUserSave($id) {
@@ -229,5 +231,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         
         $db->update("user", $dados, "us_id = ".$id );
     }
+    
+//    public function 
     
 }

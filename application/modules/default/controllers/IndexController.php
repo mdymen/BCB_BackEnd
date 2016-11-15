@@ -68,7 +68,8 @@ class IndexController extends Zend_Controller_Action
     public function indexAction() {
         try {
             $params = $this->_request->getParams();
-
+            //$this->view->error = $params['error'];
+            
             $ordem = "";
             if (!empty($params['ordem'])) {
                 $ordem = $params['ordem'];
@@ -141,9 +142,18 @@ class IndexController extends Zend_Controller_Action
     
     public function registerAction() {
        $params = $this->_request->getParams();
-          
+       
        $user = new Application_Model_Users();
-       $user->save($params);
+       $usuario = $user->load_user($params['username']);
+       
+       if (empty($usuario)) {
+            $user->save($params);
+            $this->login1($params['username'], $params['password']);
+       } else {
+           $this->redirect("?register&error=yes");
+       }
+       
+       
     }
     
     function logoutAction() {
@@ -158,8 +168,7 @@ class IndexController extends Zend_Controller_Action
         $user = $params["username"];
         $password = $params["password"];
         
-//        print_r($params);
-//        die(".");
+        $error = false;
         
         $users = new Application_Model_Users();
         $auth = Zend_Auth::getInstance();
@@ -174,10 +183,12 @@ class IndexController extends Zend_Controller_Action
         if ($result->isValid()) {         
             $storage = new Zend_Auth_Storage_Session();
             $storage->write($authAdapter->getResultRowObject());
-            
+            $this->_redirect('/index');    
+        } else {
+            $error = true;
+            $this->_redirect('/index?error=yes');
         }
-        
-        $this->_redirect('/index');
+
     }
     
     public function registerteamsAction() {
@@ -216,12 +227,12 @@ class IndexController extends Zend_Controller_Action
         $us = new Application_Model_Users();
         $result = $us->isUserRegistered($params['facebookid']);
         
-        if (!$result) {
+        if (empty($result)) {
             $us->facebookUserSave($params['facebookid']);
         }
            
         if (!empty($params['facebookid'])) {        
-            $this->login1($params['facebookid'], $params['facebookid']);
+            $this->login1($result['us_username'], $result['us_password']);
         }
 //        $this->_request->setParams(array("username" => $params['facebookid'], "password" => $params['facebookid']));
         //$this->forward("login", "index", "default",array("username" => $params['facebookid'], "password" => $params['facebookid']));
@@ -264,7 +275,7 @@ class IndexController extends Zend_Controller_Action
             
         }
         
-        $this->_redirect('/index');
+//        $this->_redirect('/index');
     }
     
     public function addfacebookuserAction() {

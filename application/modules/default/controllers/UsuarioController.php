@@ -136,8 +136,8 @@ class UsuarioController extends Zend_Controller_Action
     public function salvaropcoesAction() {
         $params = $this->_request->getParams();
         
-        $palpites_publicos = (int)$params['palpitespublicos'];
-        $puntuacao_publica = (int)$params['puntuacaopublica'];
+        $palpites_publicos = $params['palpitespublicos'];
+        $puntuacao_publica = $params['puntuacaopublica'];
         
         $id_user = $this->getIdUser();
         
@@ -151,7 +151,7 @@ class UsuarioController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json($id_user);
+        $this->_helper->json($palpites_publicos);
         
     }
     

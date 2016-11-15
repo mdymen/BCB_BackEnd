@@ -1,3 +1,10 @@
+<?php
+
+    $e = Zend_Controller_Front::getInstance()->getRequest()->getParam('error');
+
+
+?>
+
 <html lang="en"><head>
 	
 	<!-- start: Meta -->
@@ -61,16 +68,27 @@
 						Login Bolão Craque de Bola
 					</div>
                                     <span id="status"></span>
-					<p>
-						<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div>
+					<p>      
+                                                <input type="hidden" id="idface">
+						<div class="fb-login-button" data-max-rows="1" data-size="icon" data-show-faces="true" data-auto-logout-link="false"></div>
 					</p>
-					
+                                        <?php
+                                        
+                                                if (strcmp($e, "yes") == 0) {
+                                                    echo '<div class="alert alert-danger">
+								
+								 Nome de usuario ou senha incorretos.
+							</div>  ';  
+              
+                                                }
+					?>
+                                                
 					<div class="text-with-hr">
 						<span>ou nome de usuario</span>
 					</div>
 					
 					<form class="form-horizontal login" action="<?php echo $this->baseUrl("/index/login"); ?>" method="post">
-						
+                                            
 						<fieldset class="col-sm-12">
 							<div class="form-group">
 							  	<div class="controls row">
@@ -169,30 +187,43 @@
 
 <script>
     
-    $(function() {
-        FB.login();
-    });
+    $(function() { 
+            FB.login(function(response) {
+        console.log(response);
+     if (response.authResponse) {
+//        window.top.location = "http://www.foo.com";
+     }});
+    })
+    
+    function entrar_com_facebook() {
+         $("#entrar_com_facebook").bind("click", function() {            
+            $.post("index/loginface", {facebookid : $("#idface").attr("value")}, function(response) {
+                console.log(response);
+                window.location="http://www.bolaocraquedebola.com.br/public";
+            });   
+        });       
+    }
     
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
     // Full docs on the response object can be found in the documentation
-    // for FB.getLoginStatus().
+    console.log(FB.getLoginStatus());
+    testAPI();
+    console.log(response);
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      testAPI();
+      
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
+//      document.getElementById('status').innerHTML = 'Please log ' +
+//        'into this app.';
     } else {
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
+//      document.getElementById('status').innerHTML = 'Please log ' +
+//        'into Facebook.';
     }
   }
 
@@ -201,7 +232,6 @@
   // code below.
   function checkLoginState() {
     FB.getLoginStatus(function(response) {
-        console.log(response);
       statusChangeCallback(response);
     });
   }
@@ -247,16 +277,18 @@
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-        console.log(response);
-        $.post("index/loginface", {facebookid : response.id}, function(response) {
-            console.log(response);
-        });      
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
-        
-    });
+      if (typeof response.name !== 'undefined') {  
+        console.log('Successful login for: ' + response.name);
+        $("#idface").attr("value",response.id);
+
+        document.getElementById('status').innerHTML =
+          '<a href="javascript:void(0)" id="entrar_com_facebook" class="btn btn-lg btn-primary col-xs-12">Entrar com Facebook</a>';
+          entrar_com_facebook();
+       }
+    });   
   }
+  
+
 </script>
 
 <!--

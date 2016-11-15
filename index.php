@@ -435,18 +435,16 @@
 		<div class="container" id="contact" name="contact">
 			<div class="row">
 			<br>
-				<h1 class="centered">THANKS FOR VISITING US</h1>
+				<h1 class="centered">OBRIGADO PELA VISITA</h1>
 				<hr>
 				<br>
 				<br>
 				<div class="col-lg-4">
-					<h3>Contact Information</h3>
-					<p><span class="icon icon-home"></span> Some Address 987, NY<br/>
-						<span class="icon icon-phone"></span> +34 9884 4893 <br/>
-						<span class="icon icon-mobile"></span> +34 59855 9853 <br/>
-						<span class="icon icon-envelop"></span> <a href="#"> agency@blacktie.co</a> <br/>
-						<span class="icon icon-twitter"></span> <a href="#"> @blacktie_co </a> <br/>
-						<span class="icon icon-facebook"></span> <a href="#"> BlackTie Agency </a> <br/>
+					<h3>Informação de Contato</h3>
+					<p><br/>
+						<span class="icon icon-envelop"></span> <a href="#"> info@bolaocraquedebola.com.br</a> <br/>
+						<span class="icon icon-twitter"></span> <a href="https://twitter.com/bolaocraque"> @bolaocraque </a> <br/>
+						<span class="icon icon-facebook"></span> <a href="https://www.facebook.com/Bol%C3%A3o-Craque-de-Bola-1762513990655809/"> Bolão Craque de Bola </a> <br/>
 					</p>
 				</div><!-- col -->
 				
