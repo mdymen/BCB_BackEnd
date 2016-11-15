@@ -222,4 +222,12 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         return $result;
     }
     
+    public function registerUsernameFacebook($username, $id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $dados = array("us_username" => $username, "us_userbyfaceseted" => 1);
+        
+        $db->update("user", $dados, "us_id = ".$id );
+    }
+    
 }

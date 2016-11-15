@@ -8,7 +8,7 @@
     $champ = $this->champ;
     
     $config = new Zend_Config_Ini("config.ini");
-    
+    $t = Zend_Registry::get('translate');    
     
 ?>
 
@@ -18,7 +18,7 @@
     <div class="col-lg-12">
             <div class="box">
                     <div class="box-content">
-                            <form id="frChamp_palpites" action="../penca/meuspalpites" method="post">	
+                            <form id="frChamp_palpites" action="<?php echo $this->baseUrl()."/penca/meuspalpites"; ?> method="post">	
                                     <div class="form-group">                                      
                                       <div class="controls">
                                             <div class="input-group date col-sm-12">
@@ -58,7 +58,7 @@
 <div class="col-md-12">
     <div class="box">
             <div class="box-header">
-                    <h2><i class="fa fa-th"></i><span class="break"></span>Palpites</h2>
+                    <h2><i class="fa fa-th"></i><span class="break"></span><?php echo $t->_("palpites"); ?></h2>
             </div>
             <div class="box-content">
                     <div class="panel-group" id="accordion">
@@ -71,7 +71,7 @@
                                     <div class="panel-heading">
                                       <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="ui-elements.html#champ_'.$i.'">
-                                          Round '.$round.'
+                                          '.$t->_("rodada").' '.$round.'
                                         </a>
                                       </h4>
                                     </div>

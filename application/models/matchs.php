@@ -43,14 +43,11 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     public function load_palpites_simples($championship, $rodada, $usuario) {
          $db = Zend_Db_Table::getDefaultAdapter();
         
-        $result = $db->select()->from("match")
-                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('tm1_id' => 't1.tm_id','tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
-                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('tm2_id' => 't2.tm_id','tm2_logo' => 't2.tm_logo', 't2nome' => 't2.tm_name'))
-                ->joinRight("result", "match.mt_id = result.rs_idmatch and result.rs_iduser = ".$usuario)
-                ->where("match.mt_idchampionship = ?", $championship)
-                ->where("match.mt_round = ?", $rodada)
-                ->order(array('match.mt_date ASC'))
-                //->where("result.rs_id <> '' " )
+        $result = $db->select()->from("vwmatchsresult")
+                ->where("rs_iduser= ?", $usuario)
+                ->where("mt_idchampionship = ?", $championship)
+                ->where("mt_round = ?", $rodada)
+                ->order(array('mt_date ASC'))
                 ->query()
                 ->fetchAll();
         
@@ -74,31 +71,17 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
 //        
 //        return $result;       
 //    }    
-    public function load_rodada($championship, $rodada, $usuario) {
+    public function load_rodada_com_palpites($championship, $rodada, $usuario) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        $query = $db->select()->from("match")
-                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array( 'tm1_id' => 't1.tm_id' ,'tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
-                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array( 'tm2_id' => 't2.tm_id', 'tm2_logo' => 't2.tm_logo','t2nome' => 't2.tm_name'))
-                ->joinLeft("result", "match.mt_id = result.rs_idmatch and result.rs_iduser = ".$usuario)
-                ->where("match.mt_idchampionship = ?", $championship)
-                ->where("match.mt_round = ?", $rodada)
-                ->order(array('match.mt_date ASC'));
-        
-//        print_r($query->__toString());
-        
-        $result = $query
+        $result = $db->select()->from("vwmatchsresult")
+                ->joinLeft("user", "user.us_id = vwmatchsresult.rs_iduser AND user.us_id = ".$usuario)
+                ->where("mt_idchampionship = ?", $championship)
+                ->where("mt_round = ?", $rodada)
+                ->order(array('mt_date ASC'))
                 ->query()
                 ->fetchAll();
-        
-        
-        //print_r($result->__toString());
-        //die(".");
-                //->where("result.rs_id is null " )
-                //->where("result.rs_iduser = ?", $usuario)
-//                ->query()
-//                ->fetchAll();
-//        
+
         return $result;
         
     }
@@ -106,13 +89,17 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     public function load_rodada_porteam($championship, $team, $usuario) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        $result = $db->select()->from("match")
-                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
-                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
-                ->joinLeft("result", "match.mt_id = result.rs_idmatch and result.rs_iduser = ".$usuario)
-                ->where("match.mt_idchampionship = ?", $championship)
-                ->where("match.mt_idteam1 = ?", $team)
-                ->orWhere("match.mt_idteam2 = ?",$team)
+        $result = $db->select()->from("vwmatchsresult")
+//                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
+//                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
+//                ->joinLeft("result", "match.mt_id = result.rs_idmatch and result.rs_iduser = ".$usuario)
+//                ->where("match.mt_idchampionship = ?", $championship)
+//                ->where("match.mt_idteam1 = ?", $team)
+//                ->orWhere("match.mt_idteam2 = ?",$team)
+                ->where("rs_iduser = ? ",$usuario)
+                ->where("mt_idchampionship = ?", $championship)
+                ->where("mt_idteam1 = ?", $team)
+                ->orWhere("mt_idteam2 = ?",$team)
                 //->where("result.rs_id is null " )
                 //->where("result.rs_iduser = ?", $usuario)
                 ->query()
@@ -125,13 +112,17 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     public function load_porteam($championship, $team, $usuario) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        $result = $db->select()->from("match")
-                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
-                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
-                ->joinInner("result", "match.mt_id = result.rs_idmatch and result.rs_iduser =".$usuario)
-                ->where("match.mt_idchampionship = ?", $championship)
-                ->where("match.mt_idteam1 = ?", $team)
-                ->orWhere("match.mt_idteam2 = ?", $team)
+        $result = $db->select()->from("vwmatchsresult")
+                ->where("rs_iduser = ?", $usuario)
+                ->where("mt_idchampionship = ?", $championship)
+                ->where("mt_idteam1 = ?", $team)
+                ->orWhere("mt_idteam2 = ?", $team)
+//                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
+//                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
+//                ->joinInner("result", "match.mt_id = result.rs_idmatch and result.rs_iduser =".$usuario)
+//                ->where("match.mt_idchampionship = ?", $championship)
+//                ->where("match.mt_idteam1 = ?", $team)
+//                ->orWhere("match.mt_idteam2 = ?", $team)
                  ->query()
                 ->fetchAll();
         

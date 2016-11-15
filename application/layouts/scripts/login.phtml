@@ -60,6 +60,7 @@
 					<div class="header">
 						Login Bolão Craque de Bola
 					</div>
+                                    <span id="status"></span>
 					<p>
 						<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div>
 					</p>
@@ -247,8 +248,6 @@
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
-        console.log("2XXX");
-        console.log(response.id);
         console.log(response);
         $.post("index/loginface", {facebookid : response.id}, function(response) {
             console.log(response);
@@ -266,5 +265,5 @@
   the FB.login() function when clicked.
 -->
 
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
+<!--<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>-->

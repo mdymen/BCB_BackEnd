@@ -94,13 +94,13 @@
 //                                                                        print_r($data);
                                                                         if (!empty($data['us_idfacebook']) && $data['us_userbyfaceseted'] == 0) {
                                                                             $disabled = "";
-                                                                            $button = '<button type="button" id="salvar_senha" class="btn btn-primary">Salvar</button>';
+                                                                            $button = '<button type="button" id="cadastrar_usuario" class="btn btn-success">Cadastrar Usuario</button>';
                                                                         }
                                                                     
                                                                         echo '<div class="controls">
 									<div class="input-group col-sm-4">
 									  <span class="input-group-addon"><i class="fa fa-user"></i></span>
-									  <input type="text" id="date" value="'.$data['us_username'].'" '.$disabled.' class="form-control">'.$button.'
+									  <input type="text" id="username" value="'.$data['us_username'].'" '.$disabled.' class="form-control">'.$button.'
 									</div>
 									
 								  </div>';
@@ -241,6 +241,16 @@
 <script type="text/javascript">
 
     $(function() {
+       $("#cadastrar_usuario").bind("click", function() {
+           var username = $("#username").val();
+          $.post("usuario/cadastrarusuario", {username : username }, function(response) {
+              if (response === 200) {
+                  $("#username").attr("disabled","true");
+                  $("#cadastrar_usuario").hide();
+              }
+          }); 
+       }); 
+        
        $("#salvar_opcoes").bind("click", function() {
            var palpites_publicos = $("#palpites_publicos").prop("checked");
            var puntuacao_publica = $("#puntuacao_publica").prop("checked");

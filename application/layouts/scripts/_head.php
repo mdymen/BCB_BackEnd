@@ -4,7 +4,6 @@
         $data = $storage->read();
 //        print_r($data->us_username);
 //        die(".");
-
 ?>  
 
 

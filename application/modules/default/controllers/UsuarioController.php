@@ -164,4 +164,21 @@ class UsuarioController extends Zend_Controller_Action
         
         $this->view->palpitados = $user->historico_palpites($us);
     }
+    
+    public function cadastrarusuarioAction() {
+        $params = $this->_request->getParams();
+        
+        $username = $params['username'];
+        
+        $user = new Application_Model_Users();
+        $user->registerUsernameFacebook($username, $this->getIdUser());
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json(200);
+    }
 }

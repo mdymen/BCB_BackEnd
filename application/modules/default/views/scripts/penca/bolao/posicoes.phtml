@@ -6,7 +6,8 @@
     $champ = $this->champ;
 
     $champion = $this->championship;
-    
+
+    $t = Zend_Registry::get('translate');
 //    print_r($champion);
 //    print_r($champion['ch_sec1_fim']);
     
@@ -17,7 +18,7 @@
 
 					<div class="box">
 						<div class="box-header">
-							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Tabela de posicoes</h2>
+							<h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo $t->_("tabela.de.posicoes"); ?></h2>
 							
 						</div>
 						<div class="box-content">

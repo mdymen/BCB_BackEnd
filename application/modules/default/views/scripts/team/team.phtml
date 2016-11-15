@@ -2,9 +2,12 @@
 
     $config = new Zend_Config_Ini("config.ini");
 
-        $matchs = $this->jogos;
-        $team = $this->team;
+    $matchs = $this->jogos;
+    $team = $this->nome_team;
+    
+//    print_r($team);
         
+    $translate = Zend_Registry::get('translate');
 ?>
 
 
@@ -17,7 +20,7 @@
                            
                             
                             
-                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Jogos</h2>
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo $translate->_("jogos.do.time").": ".$team; ?></h2>
                                 <div class="box-icon">
 
                                 </div>
@@ -38,8 +41,7 @@
                                               <?php
                                               echo '<input type="hidden" value="'.count($matchs).'" name="count_palpites" id="count_palpites">';
                                               for ($i = 0; $i < count($matchs); $i = $i + 1) {  
-                                                    $date = date("H:i",strtotime($matchs[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($matchs[$i]['mt_date']) );
-                                                    $matchs[$i]['mt_date'] = $date;
+                                                    $matchs[$i]['mt_date'] = Helpers_Data::day($matchs[$i]['mt_date']);
                                                     if (!$matchs[$i]['mt_played']) {
                                                         
                                                     }
@@ -48,19 +50,19 @@
                                                             <tr>
                                                                 <td></td>
                                                                 <td></td>
-                                                                <td style="text-align:center"><b>Rodada '.$matchs[$i]['mt_round'].'</b></td>
+                                                                <td style="text-align:center"><b>'.$translate->_("rodada").": ".$matchs[$i]['mt_round'].'</b></td>
                                                                 
                                                             </tr>                                                            
                                                             <tr>
                                                                 <td></td>
                                                                 <td></td>
-                                                                <td style="text-align:center"><b>'.Helpers_Data::day($date).'</b></td>
+                                                                <td style="text-align:center"><b>'.$matchs[$i]['mt_date'].'</b></td>
                                                                 
                                                             </tr>';                                      
                                                     }
                                                     echo '
                                                         <tr id="tr_'.$i.'">
-                                                            <td style="text-align:right">'.$matchs[$i]['t1nome'].'<img width="28px;" height="21px;" src="'.$config->host.$matchs[$i]['tm1_logo'].'" /></td>
+                                                            <td style="text-align:right">'.Helpers_Html::getTeamLinkRight($this->baseUrl(), $matchs[$i]['tm1_id'], $matchs[$i]['t1nome'], $config->host.$matchs[$i]['tm1_logo'], $matchs[$i]['mt_idchampionship']).'</td>
                                                             <td></td>
                                                             <td class="col-sm-3 col-xs-3">
                                                                 <div class="row">
@@ -72,7 +74,7 @@
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                            <td style="text-align:left"><img width="28px;" height="21px;" src="'.$config->host.$matchs[$i]['tm2_logo'].'" />'.$matchs[$i]['t2nome'].'</td>
+                                                            <td style="text-align:left">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(), $matchs[$i]['tm2_id'], $matchs[$i]['t2nome'], $config->host.$matchs[$i]['tm2_logo'], $matchs[$i]['mt_idchampionship']).'</td>
                                                             <td></td>                                      
                                                         </tr>';
                                                     }

@@ -2,13 +2,18 @@
 
 $config = new Zend_Config_Ini("config.ini");
 
-$palpites_feitos = $this->palpites;
+$palpites_feitos = $this->rodada;
  $champ = $this->champ;
 //print_r($palpites_feitos);
-
+ 
+// print_r(count($palpites_feitos));
+ 
+ $t = Zend_Registry::get('translate');
 
 if (!empty($palpites_feitos)) {
 
+    
+    
    ?>
 
 <input type="hidden" value="<?php echo $palpites_feitos[0]['mt_idchampionship']; ?>" name="champ" id="champ" />
@@ -51,44 +56,36 @@ if (!empty($palpites_feitos)) {
                                                 for ($i = 0; $i < count($palpites_feitos); $i = $i + 1) {
                                                     if (!empty($palpites_feitos[$i]['mt_id'])) {
                                                     $st = "";
-                                                    if ($palpites_feitos[$i]['rs_id'] == -1) {
+                                                    if (empty($palpites_feitos[$i]['rs_id'])) {
                                                         $st='style="display:none"';
                                                     }
-                                                    echo '<input '.$st.' type="hidden" name="rs_'.$i.'_input" id="rs_'.$i.'" value="'.$palpites_feitos[$i]['mt_id'].'" />';
                                                     if (($i == 0) || ($i > 0 && strcmp($palpites_feitos[$i]['mt_date'],$palpites_feitos[$i-1]['mt_date']) != 0)) { 
-                                                        echo '
-                                                            <tr '.$st.' style="text-align:center" name="rs_'.$i.'_data" '.$st.' pf_d="'.($i+1).'" id="rstr1'.$palpites_feitos[$i]['rs_id'].'">
-                                                                <td></td><td></td>
-                                                                <td id="date'.$i.'">
-                                                                    <b>
-                                                                   '.  Helpers_Data::day($palpites_feitos[$i]['mt_date']).'
-                                                                    </b>';
+                                                        echo '<tr '.$st.' style="text-align:center" name="'.$palpites_feitos[$i]['mt_date'].'">
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td id="date'.$palpites_feitos[$i]['mt_id'].'"><b>'.  Helpers_Data::day($palpites_feitos[$i]['mt_date']).'</b></td>                                      
+                                                        </tr>';
                                                                 
                                                     }             
-                                                            echo '</td>                                      
-                                                        </tr>
-                                                        <tr name="rs_'.$i.'_dados" '.$st.' pf="'.($i+1).'" id="rstr2'.$palpites_feitos[$i]['rs_id'].'">
-                                                            <td style="text-align:right" id="team1'.$i.'">'.Helpers_Html::getTeamLinkRight($this->baseUrl(), $palpites_feitos[$i]['tm1_id'], $palpites_feitos[$i]['t1nome'], $config->host.$palpites_feitos[$i]['tm1_logo'], $champ).'</td>
+                                                    echo '
+                                                        <tr name="rs_'.$palpites_feitos[$i]['mt_id'].'_dados" '.$st.'>
+                                                            <td style="text-align:right" id="team1'.$palpites_feitos[$i]['mt_id'].'">'.Helpers_Html::getTeamLinkRight($this->baseUrl(), $palpites_feitos[$i]['tm1_id'], $palpites_feitos[$i]['t1nome'], $config->host.$palpites_feitos[$i]['tm1_logo'], $champ).'</td>
                                                             <td></td>
                                                             <td class="col-sm-3 col-xs-3">
                                                                 <div class="row">
                                                                     <div class="col-xs-6 col-sm-6 col-lg-6">
-                                                                        <input style="text-align:center" class="form-control" disabled="true" name="p_result1_'.$i.'" value="'.$palpites_feitos[$i]['rs_res1'].'" id="p_result1_'.$i.'"  type="text" placeholder="0">
+                                                                        <input style="text-align:center" class="form-control" disabled="true" name="p_result1_'.$palpites_feitos[$i]['mt_id'].'" value="'.$palpites_feitos[$i]['rs_res1'].'" id="p_result1_'.$palpites_feitos[$i]['mt_id'].'"  type="text" placeholder="0">
                                                                     </div>                                                            
                                                                     <div class="col-xs-6 col-sm-6 col-lg-6">		
-                                                                        <input style="text-align:center" class="form-control" disabled="true" name="p_result2_'.$i.'" value="'.$palpites_feitos[$i]['rs_res2'].'" id="p_result2_'.$i.'" type="text" placeholder="0">
+                                                                        <input style="text-align:center" class="form-control" disabled="true" name="p_result2_'.$palpites_feitos[$i]['mt_id'].'" value="'.$palpites_feitos[$i]['rs_res2'].'" id="p_result2_'.$palpites_feitos[$i]['mt_id'].'" type="text" placeholder="0">
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                             <td></td>
-                                                            <td syle="text-align:left;" id="team2'.$i.'">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(), $palpites_feitos[$i]['tm2_id'], $palpites_feitos[$i]['t2nome'], $config->host.$palpites_feitos[$i]['tm2_logo'], $champ).'</td>
+                                                            <td syle="text-align:left;" id="team2'.$palpites_feitos[$i]['mt_id'].'">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(), $palpites_feitos[$i]['tm2_id'], $palpites_feitos[$i]['t2nome'], $config->host.$palpites_feitos[$i]['tm2_logo'], $champ).'</td>
                                                             <td>';
-                                                            if (empty($palpites_feitos['rs_id']) && !$palpites_feitos[$i]['mt_played']) {
-                                                                    echo '<button it="'.$i.'" result="'.$palpites_feitos[$i]['rs_id'].'"  class="btn btn-danger excluir">'
-                                                                            . '<i class="fa fa-trash-o "></i></button>';
-//                                                                    echo '<a it="'.$i.'" result="'.$palpites_feitos[$i]['rs_id'].'" class="btn btn-info editar">'
-//                                                                            . '<i class="fa fa-edit"></i></button>';
-//                                                                    echo '<button it="'.$i.'" match="'.$palpites_feitos[$i]['mt_id'].'" class="btn btn-xs btn-success palpite">Palpitar</button>';
+                                                            if (!$palpites_feitos[$i]['mt_played']) {
+                                                                    echo '<button data="'.$palpites_feitos[$i]['mt_date'].'" match="'.$palpites_feitos[$i]['mt_id'].'" result="'.$palpites_feitos[$i]['rs_id'].'"  class="btn btn-danger excluir"><i class="fa fa-trash-o "></i></button>';                                                                   
                                                              }
                                                             echo '</td>
                                                         </tr>';
@@ -120,7 +117,8 @@ if (!empty($palpites_feitos)) {
     function excluir() {
         $(".excluir").bind('click', function() {
             var rs = $(this).attr("result");
-            var it = $(this).attr("it");
+            var match = $(this).attr("match");
+            var data = $(this).attr("date");
           //  alert(rs);
             $.post("excluirpalpite",{ result : rs }, function(response) {
                $("#info_msg").html("Palpite excluido!");
@@ -128,46 +126,14 @@ if (!empty($palpites_feitos)) {
                $(".alert-info").show();
                 fechar_info();
                 
-                var count_palpites = $("#count_palpites").attr("value");
-                var c_palpites = parseInt(count_palpites);// + 1;
-//                $("#count_palpites").attr("value", c_palpites);
-//                
-//                $("#rstr1"+rs).html("");
-//                $("#rstr2"+rs).html("");
-//                var palpites = $("#count_palpites_feitos").attr("cant");
-//                var n_palpites = parseInt(palpites);
-//                if (palpites === '1') {
-//                    $("#palpites_feitos").html("");
-//                }
-//                n_palpites = n_palpites - 1;
-//                $("#count_palpites_feitos").attr("cant", n_palpites);
-//                $("#count_palpites_feitos").attr("value", n_palpites);
-//                console.log(response);
-//                
-//                $("#tbrodada tr").eq(1).attr("id","rstr"+n_palpites);
-//                $("#tbrodada tr").eq(1).find('td:eq(1)').attr("id","team1"+n_palpites.toString());                
-//                $("#tbrodada tr").eq(1).find('td:eq(3)').attr("id","team2"+n_palpites);
-//                $("#tbrodada tr").eq(1).find('td:eq(1)').html(response[0].t1nome);
-//                $("#tbrodada tr").eq(1).find('td:eq(3)').html(response[0].t2nome);
-//                
-//                var date = $("date_").attr("value");
-//                
-//                $("#tbrodada tr").eq(1).find('td:eq(5)').find('button:eq(0)').attr("result",response);
-//                
-//                $("#tbrodada tr").eq(1).attr("id","trp_"+c_palpites);
-//                //$("#tbrodada tr").eq(1).attr("id","rstr1"+response);      
-//                
-//                $('#tb_palpites').append($("#tbrodada tbody").html());
-                
                 console.log(response);
                 
-                $('[name=rs_'+it+'_dados]').attr("style","display:none");
-                $('[name=rs_'+it+'_input]').attr("style","display:none");
-                $('[name=rs_'+it+'_data]').attr("style","display:none");  
+                $('[name=rs_'+match+'_dados]').attr("style","display:none"); 
+                $('[name="'+data+'"]').show();
                 
-                $('#trp_'+it).attr("style", "display:yes");
+                $('#fila_'+match).attr("style","display:yes");
                 
-                submeter();
+                //submeter();
             }); 
         });
     }

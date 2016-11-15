@@ -2,11 +2,13 @@
 
     $config = new Zend_Config_Ini("config.ini");
  
-    $palpites = $this->rodadas;
+    $palpites = $this->rodada;
     
     if (!empty($palpites)) {
         $rodada = $palpites[0]['mt_round'];   
     }
+    
+//    print_r(count($palpites));
 
 //print_r($palpites);
 //die(".");
@@ -62,42 +64,35 @@ if (!empty($palpites)) {
                                                     $st = 'style="display:none"';
                                                 }   
                                                     echo '<input '.$st.' type="hidden" name="rs_'.$i.'" id="rs_'.$i.'" value="'.$palpites[$i]['mt_id'].'" />';
-                                                    //$date = date("H:i",strtotime($palpites[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($palpites[$i]['mt_date']) );
-                                                    $palpites[$i]['mt_date'] = Helpers_Data::day($palpites[$i]['mt_date']);
-                                                    $date = $palpites[$i]['mt_date'];
-                                                    
-                                                    //echo '<input type="hidden" id="date_'.$i.'" value="'.$date.'" >';
-                                                    if (($i == 0) || ($i > 0 && strcmp($palpites[$i]['mt_date'],$palpites[$i-1]['mt_date']) != 0)) { 
-                                                        echo '
-                                                            <tr '.$st.'>
-                                                                <td></td><td></td>';
-                                                                
-                                                                echo '<td style="text-align:center" id="date'.$i.'">
-                                                                    <b>
-                                                                   '.$date.'
-                                                                    </b>';
 
-                                                                echo '</td></tr>';                                      
-                                                            }
+                                                    if (($i == 0) || ($i > 0 && strcmp($palpites[$i]['mt_date'],$palpites[$i-1]['mt_date']) != 0)) { 
+                                                        echo '<tr '.$st.' style="text-align:center" name="'.$palpites[$i]['mt_date'].'">
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td id="date'.$palpites[$i]['mt_id'].'"><b>'.  Helpers_Data::day($palpites[$i]['mt_date']).'</b></td>                                      
+                                                        </tr>';
+                                                                
+                                                    } 
+                                                            
                                                         echo '
-                                                            <tr '.$st.' id="trp_'.$i.'">
-                                                            <td style="text-align:right" id="team1p'.$i.'">'.Helpers_Html::getTeamLinkRight($this->baseUrl(), $palpites[$i]['tm1_id'], $palpites[$i]['t1nome'], $config->host.$palpites[$i]['tm1_logo'], $palpites[$i]['mt_idchampionship']).'</td>
+                                                            <tr '.$st.' id="fila_'.$palpites[$i]['mt_id'].'">
+                                                            <td style="text-align:right" id="team1p'.$palpites[$i]['mt_id'].'">'.Helpers_Html::getTeamLinkRight($this->baseUrl(), $palpites[$i]['tm1_id'], $palpites[$i]['t1nome'], $config->host.$palpites[$i]['tm1_logo'], $palpites[$i]['mt_idchampionship']).'</td>
                                                             <td></td>
                                                             <td class="col-sm-3 col-xs-3">
                                                                 <div class="row">
                                                                     <div class="col-xs-6 col-sm-6 col-lg-6">
-                                                                        <input style="text-align:center" class="form-control" name="result1_'.$i.'" id="result1p_'.$i.'"  type="text" placeholder="0"> 
+                                                                        <input style="text-align:center" class="form-control" name="result1_'.$palpites[$i]['mt_id'].'" id="result1p_'.$palpites[$i]['mt_id'].'"  type="text" placeholder="0"> 
                                                                     </div>
                                                                    <div class="col-xs-6 col-sm-6 col-lg-6">		
-                                                                        <input style="text-align:center" class="form-control" name="result2_'.$i.'" id="result2p_'.$i.'" type="text" placeholder="0">
+                                                                        <input style="text-align:center" class="form-control" name="result2_'.$palpites[$i]['mt_id'].'" id="result2p_'.$palpites[$i]['mt_id'].'" type="text" placeholder="0">
                                                                     </div>   
                                                                 </div>
                                                             </td>   
                                                             <td></td>
-                                                            <td style="text-align:left;" id="team2p'.$i.'">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(),$palpites[$i]['tm2_id'], $palpites[$i]['t2nome'], $config->host.$palpites[$i]['tm2_logo'], $palpites[$i]['mt_idchampionship']).'</td>
+                                                            <td style="text-align:left;" id="team2p'.$palpites[$i]['mt_id'].'">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(),$palpites[$i]['tm2_id'], $palpites[$i]['t2nome'], $config->host.$palpites[$i]['tm2_logo'], $palpites[$i]['mt_idchampionship']).'</td>
                                                             <td>';
                                                                 if (empty($palpites['rs_id'])) {
-                                                                    echo '<button it_p="'.$i.'" match="'.$palpites[$i]['mt_id'].'" class="btn btn-success palpite">'
+                                                                    echo '<button data="'.$palpites[$i]['mt_date'].'" match="'.$palpites[$i]['mt_id'].'" class="btn btn-success palpite">'
                                                                             . '<i class="fa fa-check"></i></button>';
                                                                 }
                                                                 
@@ -127,34 +122,31 @@ if (!empty($palpites)) {
 
     function submeter() {
          $(".palpite").bind('click', function() {
-           var it = $(this).attr("it_p");
            var match = $(this).attr("match");
+           var data = $(this).attr("data");
+
          //  alert("#result1p_" + it);
-           var r1 = $("#result1p_" + it).attr("value");
-           var r2 = $("#result2p_" + it).attr("value");
+           var r1 = $("#result1p_" + match).attr("value");
+           var r2 = $("#result2p_" + match).attr("value");
            var round = $("#round").val();
-           var team1 = $("#team1p"+it).html();
-           var team2 = $("#team2p"+it).html();
-           
-//           alert(r1);
-//           alert(r2);
-           
+           var team1 = $("#team1p"+match).html();
+           var team2 = $("#team2p"+match).html();
+
            if (parseInt(r1) >= 0 && parseInt(r2) >= 0 ) {
                 $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round  }, function(response) {
-                    $('[name=rs_'+it+'_dados]').attr("style","display:yes");
-                    $('[name=rs_'+it+'_input]').attr("style","display:yes");
-                    $('[name=rs_'+it+'_data]').attr("style","display:yes");
-
-                    $('[name="p_result2_'+it+'"]').val(response.rs_res2);
-                    $('[name="p_result1_'+it+'"]').val(response.rs_res1);
-
-                    $('#trp_'+it).attr("style", "display:none");
+                    $('[name=rs_'+match+'_dados]').attr("style","display:yes");
+                    $('#fila_'+match).attr("style","display:none");
+                    $('[name="'+data+'"]').show();
+//                    $('[name=rs_'+match+'_data]').attr("style","display:yes");
+//
+                    $('[name="p_result2_'+match+'"]').val(r2);
+                    $('[name="p_result1_'+match+'"]').val(r1);
 
                     $("#sucesso_msg").html("Palpite adicionado: " + team1 + " " + response.rs_res1 + " - " + response.rs_res2 + " " + team2);
                     $("#append_success").html($("#success").html());
                     $(".alert-success").show();
                     fechar_sucesso();
-                    excluir();
+//                    excluir();
                });
            } else {
                $("#alert_msg").html("Ao inserir o palpite do jogo.");

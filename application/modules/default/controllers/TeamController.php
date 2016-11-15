@@ -13,6 +13,8 @@
  */
 include APPLICATION_PATH.'/models/teams.php';
 include APPLICATION_PATH.'/helpers/data.php';
+include APPLICATION_PATH.'/helpers/html.php';
+include APPLICATION_PATH.'/helpers/translate.php';
 class TeamController extends Zend_Controller_Action
 {
     public function indexAction() {
@@ -22,13 +24,23 @@ class TeamController extends Zend_Controller_Action
     public function teamAction() {
         $params = $this->_request->getParams();
         
-        $team = $params['team'];
+        $team_id = $params['team'];
         $champ = $params['champ'];
         
         $ob_team = new Application_Model_Teams();
         
-        $jogos = $ob_team->getJogosTeam($team, $champ);
+        $jogos = $ob_team->getJogosTeam($team_id, $champ);
         
+        for ($i = 0; $i < count($jogos); $i = $i + 1) {
+            if ($jogos[$i]['tm1_id'] == $team_id) {
+                $team = $jogos[$i]['t1nome'];
+            }
+            if ($jogos[$i]['tm2_id'] == $team_id) {
+                $team = $jogos[$i]['t2nome'];
+            }
+        }
+        
+        $this->view->nome_team = $team;
         $this->view->jogos = $jogos;
     }
     

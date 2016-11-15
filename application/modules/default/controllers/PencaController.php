@@ -16,6 +16,7 @@ include APPLICATION_PATH.'/models/pencas.php';
 include APPLICATION_PATH.'/models/matchs.php';
 include APPLICATION_PATH.'/models/result.php';
 include APPLICATION_PATH.'/helpers/html.php';
+include APPLICATION_PATH.'/helpers/translate.php';
 class PencaController extends Zend_Controller_Action {
     
     public function indexAction() {
@@ -261,8 +262,6 @@ class PencaController extends Zend_Controller_Action {
                 $rodada_id = $params['rodada'];
             }
 
-            $this->view->rodada = $rodada_id;
-
             $storage = new Zend_Auth_Storage_Session();
             $data = (get_object_vars($storage->read()));
 
@@ -272,77 +271,22 @@ class PencaController extends Zend_Controller_Action {
             
             
             if (empty($params['team'])) {
-                $rodadas = $matchs_obj->load_rodada($champ_id, $rodada_id, $data['us_id']);
+                $rodada = $matchs_obj->load_rodada_com_palpites($champ_id, $rodada_id, $data['us_id']);
                 $this->view->porteam = true;
                 $this->view->porrodada = false;
             } else {
                 $this->view->porteam = false;
                 $this->view->porrodada = true;
                 $team_id = $params['team'];
-                $rodadas = $matchs_obj->load_rodada_porteam($champ_id, $team_id, $data['us_id']);
-//                 print_r($rodadas);
-//                die(".");
-            }
-            
-            if (empty($params['team'])) {
-                $palpites_da_rodada = $matchs_obj->load_palpites_simples($champ_id, $rodada_id, $data['us_id']);
-            } else {                         
-                $palpites_da_rodada = $matchs_obj->load_porteam($champ_id, $team_id, $data['us_id']);
-                      
+                $rodada = $matchs_obj->load_rodada_porteam($champ_id, $team_id, $data['us_id']);
             }
 
-//            print_r("champ id".$champ_id);
-            
             $teams_obj = new Application_Model_Teams();
             $teams = $teams_obj->load_teams_championship($champ_id); 
-
-            for ($i = 0; $i < count($rodadas); $i = $i + 1) {
-                $e = false;
-                $c = 0;
-                for ($j = 0; $j < count($palpites_da_rodada); $j = $j + 1) {
-                    if ($palpites_da_rodada[$j]['rs_idmatch'] == $rodadas[$i]['mt_id']) {
-                      $e = true;  
-                    }
-                    $c = $c + 1;
-                }
-
-                if (!$e) {
-                    $palpites_da_rodada[$j]['rs_id'] = -1;
-                    if (!empty($rodadas[$c]['mt_id'])) {
-                        $palpites_da_rodada[$j]['rs_idmatch'] = $rodadas[$c]['mt_id']; 
-                        $palpites_da_rodada[$j]['mt_id'] = $rodadas[$c]['mt_id'];
-                        $palpites_da_rodada[$j]['mt_idteam1'] = $rodadas[$c]['mt_idteam1'];
-                        $palpites_da_rodada[$j]['mt_date'] = $rodadas[$c]['mt_idteam1'];
-                        $palpites_da_rodada[$j]['mt_goal1'] = $rodadas[$c]['mt_goal1'];
-                        $palpites_da_rodada[$j]['mt_goal2'] = $rodadas[$c]['mt_goal2'];
-                        $palpites_da_rodada[$j]['mt_idchampionship'] = $rodadas[$c]['mt_idchampionship'];
-                        $palpites_da_rodada[$j]['mt_round'] = $rodadas[$c]['mt_round'];
-                        $palpites_da_rodada[$j]['mt_played'] = $rodadas[$c]['mt_played'];
-                        $palpites_da_rodada[$j]['t1nome'] = $rodadas[$c]['t1nome'];
-                        $palpites_da_rodada[$j]['t2nome'] = $rodadas[$c]['t2nome'];
-                        $palpites_da_rodada[$j]['tm1_logo'] = $rodadas[$c]['tm1_logo'];
-                        $palpites_da_rodada[$j]['tm2_logo'] = $rodadas[$c]['tm2_logo'];
-                        $palpites_da_rodada[$j]['tm1_id'] = $rodadas[$c]['tm1_id'];
-                        $palpites_da_rodada[$j]['tm2_id'] = $rodadas[$c]['tm2_id'];
-                    }
-                    
-                    $palpites_da_rodada[$j]['rs_res1'] = "";
-                    $palpites_da_rodada[$j]['rs_res2'] = "";
-                    $palpites_da_rodada[$j]['rs_date'] = "";
-                    $palpites_da_rodada[$j]['rs_idpenca'] = "";
-                    $palpites_da_rodada[$j]['rs_iduser'] = "";
-                    $palpites_da_rodada[$j]['rs_round'] = "";
-                    $palpites_da_rodada[$j]['rs_result'] = "";
-                    $palpites_da_rodada[$j]['rs_points'] = "";
-                    
-                   
-                }
-            }
-
+            
             $this->view->teams = $teams;
-            $this->view->rodadas = $rodadas;
-
-            $this->view->palpites = $palpites_da_rodada;
+            $this->view->rodada = $rodada;
+            $this->view->n_rodada = $rodada_id;
             $this->view->rondas = $rondas;   
         }
     }

@@ -1,16 +1,19 @@
 <?php 
     $palpites = $this->palpites;
 
+    $translate = Zend_Registry::get('translate');
+    
     if (!empty($palpites)) { 
-//    print_r($palpites);
-//    die(".");
+
+        
+       
 ?>
 
 
 <div class="col-md-13" id="box_emacao" style="display:yes">
     <div class="box" id="box_box_emacao" carregado="y" style="display:yes">
             <div class="box-header">
-                <h2><i class="fa fa-th"></i><span class="break"></span>Palpites em acao...</h2>
+                <h2><i class="fa fa-th"></i><span class="break"></span><?php echo $translate->_("palpites.em.acao"); ?></h2>
                 <div class="box-icon">
                         <a href="javascript:void(0)" id="fechar_emacao" class="btn-close"><i class="fa fa-times"></i></a>
                 </div>
@@ -25,10 +28,10 @@
                                                     <span class="input-group-addon"><i class="fa  fa-search"></i></span>
                                                     <div class="controls">
                                                     <select id="ordenar" name="ordenar" class="form-control">
-                                                    <option value="Vazio">Ordenar por:</option>
-                                                    <option value="1">Campeonato</option>
-                                                    <option value="2">Data</option>
-                                                    <option value="3">Ronda</option>
+                                                    <option value="Vazio"><?php echo $translate->_("ordenado.por"); ?></option>
+                                                    <option value="1"><?php echo $translate->_("campeonato"); ?></option>
+                                                    <option value="2"><?php echo $translate->_("data"); ?></option>
+                                                    <option value="3"><?php echo $translate->_("rodada"); ?></option>
                                                     </select></div>
                                             </div>	
                                       </div>
