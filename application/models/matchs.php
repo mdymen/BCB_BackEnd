@@ -89,14 +89,60 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     public function load_rodada_com_palpites($championship, $rodada, $usuario) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        $result = $db->select()->from("vwmatchsresult")
-                ->joinLeft("user", "user.us_id = vwmatchsresult.rs_iduser AND user.us_id = ".$usuario)
-                ->where("mt_idchampionship = ?", $championship)
-                ->where("mt_round = ?", $rodada)
-                ->order(array('mt_date ASC'))
-                ->query()
-                ->fetchAll();
+        $result = $db->query("SELECT vwpalpites.*, `match`.*, t1.tm_id as tm1_id, t1.tm_name as t1nome, t1.tm_logo as tm1_logo,  `t1`.*, t2.tm_id as tm2_id, 
+            t2.tm_name as t2nome, t2.tm_logo as tm2_logo,
+            `t2`.*, r.*  FROM `match` 
+  INNER JOIN `team` AS `t1` ON t1.tm_id = match.mt_idteam1 
+  INNER JOIN `team` AS `t2` ON t2.tm_id = match.mt_idteam2   
+  INNER JOIN vwpalpites ON vwpalpites.rs_idmatch = match.mt_id
+  LEFT JOIN (select * from result where rs_iduser = ".$usuario.") r ON r.rs_idmatch = match.mt_id 
+  WHERE (match.mt_idchampionship = '".$championship."') AND (mt_round = '".$rodada."') ORDER BY `mt_date` ASC")->fetchAll();
+//        
+//        print_r("SELECT `match`.*, t1.tm_id as tm1_id, t1.tm_nome as t1nome, t1.tm_logo as tm1_logo,  `t1`.*, `t2`.*, r.*  FROM `match` 
+//  INNER JOIN `team` AS `t1` ON t1.tm_id = match.mt_idteam1 
+//  INNER JOIN `team` AS `t2` ON t2.tm_id = match.mt_idteam2   
+//  LEFT JOIN (select * from result where rs_iduser = ".$usuario.") r ON r.rs_idmatch = match.mt_id 
+//  WHERE (match.mt_idchampionship = '".$championship."') AND (mt_round = '".$rodada."') ORDER BY `mt_date` ASC");
+        
+//        $result = $db->select()->from("result")
+//                ->where("rs_iduser = ?", $usuario)
+//                ->query();
+//        
+//        $result1 = $db->select()->from("match")
+//                ->joinInner(array('t1' => 'team'),"t1.tm_id = match.mt_idteam1")
+//                ->joinInner(array('t2' => 'team'),"t2.tm_id = match.mt_idteam2")
+//                ->
+//        
+//        $result = $db->select()->from("match")
+//                ->joinInner(array('t1' => 'team'),"t1.tm_id = match.mt_idteam1")
+//                ->joinInner(array('t2' => 'team'),"t2.tm_id = match.mt_idteam2")
+//                ->joinRight("result", "match.mt_id = result.rs_idmatch")
+//                ->where("match.mt_idchampionship = ?", $championship)
+//                ->where("mt_round = ?", $rodada)
+//                ->where("rs_iduser = ?",$usuario)
+//                ->orWhere("rs_iduser = null")
+//                ->order(array('mt_date ASC'))
+//                ->__toString();
+////                ->query()->fetchAll();
+        
+//        print_r($result);
+//        die(".");
+        
+        //        ->fetchAll();
+//        
+//                ->where("match.mt_round = ?", $rodada)
+//        
+//        $result = $db->select()->from("vwmatchsresult")
+//                ->joinLeft("user", "user.us_id = vwmatchsresult.rs_iduser AND user.us_id = ".$usuario)
+//                ->where("mt_idchampionship = ?", $championship)
+//                ->where("mt_round = ?", $rodada)
+//               // ->where("rs_iduser is null OR rs_iduser = ".$usuario)
+//                ->order(array('mt_date ASC'))
+//                ->query()
+//                ->fetchAll();
 
+//        print_r($result);
+        
         return $result;
         
     }

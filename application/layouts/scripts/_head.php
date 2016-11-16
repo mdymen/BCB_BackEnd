@@ -71,22 +71,22 @@
 				<ul class="nav navbar-nav pull-right">
                                     
                                     
-                                    <li id="li_timecoracao" style="padding-left: 100px !important" class="dropdown hidden-xs">
-                                    <a id="link_timecoracao" class="btn dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">							
+                                    <li id="li_timecoracao" class="dropdown hidden-xs">
+                                    <a id="link_timecoracao" style="padding-right: 75px !important" class="btn dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">							
 							<div class="user">
-								<span class="hello">Time</span>
+<!--								<span class="hello">Time</span>-->
 								<span class="name" id_time="<?php echo $data->us_team; ?>" id="head_timecoracao"><?php echo $data->us_teamname; ?></span>
 							</div>
                                                     
 						</a>
-                                        <ul style="padding-left: -50px;" class="dropdown-menu notifications">
+<!--                                        <ul style="padding-left: -50px;" class="dropdown-menu notifications">
                                             <li class="dropdown-menu-title">
                                                 <span>Time do coracao</span>
                                             </li>	
                                             <li>                                          
                                                     <span id="escolher_timecoracao" class="message">New user registration</span>                                            
                                             </li>
-                                        </ul>
+                                        </ul>-->
                                     </li>                                    
                                     <li>
                                     <a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">							
@@ -147,7 +147,7 @@
                                                 
 					</ul>
 				</div>
-									<a href="2nd-level.html#" id="main-menu-min" class="full visible-md visible-lg"><i class="fa fa-angle-double-left"></i></a>
+									<a href="javascript:void(0)" id="main-menu-min" class="full visible-md visible-lg"><i class="fa fa-angle-double-left"></i></a>
 							</div>
 			<!-- end: Main Menu -->
 						

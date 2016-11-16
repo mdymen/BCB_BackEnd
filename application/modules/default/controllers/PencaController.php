@@ -241,6 +241,8 @@ class PencaController extends Zend_Controller_Action {
     public function bolaoAction() {
         $params = $this->_request->getParams();
                     
+//        print_r($params);
+        
         $champ = new Application_Model_Championships();
         $this->view->championships = $champ->load();
         
@@ -261,6 +263,7 @@ class PencaController extends Zend_Controller_Action {
             } else {            
                 $rodada_id = $params['rodada'];
             }
+           
 
             $storage = new Zend_Auth_Storage_Session();
             $data = (get_object_vars($storage->read()));
@@ -287,7 +290,7 @@ class PencaController extends Zend_Controller_Action {
             $this->view->teams = $teams;
             $this->view->rodada = $rodada;
             $this->view->n_rodada = $rodada_id;
-            $this->view->rondas = $rondas;   
+            $this->view->rondas = $rondas;          
         }
     }
     
@@ -310,6 +313,7 @@ class PencaController extends Zend_Controller_Action {
         
         $result_obj = new Application_Model_Result();    
         $result = $result_obj->getResult($id);
+        $result['sucesso'] = 200;
         
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');

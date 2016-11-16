@@ -133,19 +133,25 @@ if (!empty($palpites)) {
            var team2 = $("#team2p"+match).html();
 
            if (parseInt(r1) >= 0 && parseInt(r2) >= 0 ) {
+               $('#fila_'+match).attr("style","display:none");
                 $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round  }, function(response) {
-                    $('[name=rs_'+match+'_dados]').attr("style","display:yes");
-                    $('#fila_'+match).attr("style","display:none");
-                    $('[name="'+data+'"]').show();
-//                    $('[name=rs_'+match+'_data]').attr("style","display:yes");
-//
-                    $('[name="p_result2_'+match+'"]').val(r2);
-                    $('[name="p_result1_'+match+'"]').val(r1);
+                    if (response.sucesso === 200) {
+//                        console.log(response);
+                        $('[name=rs_'+match+'_dados]').attr("style","display:yes");
 
-                    $("#sucesso_msg").html("Palpite adicionado: " + team1 + " " + response.rs_res1 + " - " + response.rs_res2 + " " + team2);
-                    $("#append_success").html($("#success").html());
-                    $(".alert-success").show();
-                    fechar_sucesso();
+                        $('[name="'+data+'"]').show();
+    //                    $('[name=rs_'+match+'_data]').attr("style","display:yes");
+    //
+                        $('[name="p_result2_'+match+'"]').val(r2);
+                        $('[name="p_result1_'+match+'"]').val(r1);
+
+                        $("#sucesso_msg").html("Palpite adicionado: " + team1 + " " + response.rs_res1 + " - " + response.rs_res2 + " " + team2);
+                        $("#append_success").html($("#success").html());
+                        $(".alert-success").show();
+                        fechar_sucesso();
+                    } else {
+                        $('#fila_'+match).attr("style","display:yes");
+                    }
 //                    excluir();
                });
            } else {

@@ -177,7 +177,7 @@
 
 						</div>
 					</div>
-    <div class="box">
+<!--    <div class="box">
 						<div class="box-header">
 							<h2><i class="fa fa-edit"></i>Opcoes de informacao</h2>
 							<div class="box-icon">
@@ -191,7 +191,16 @@
                                                             <div class="controls">
                                                                 <div class="input-group col-sm-4">
                                                                     <label class="switch switch-success">
-                                                                        <input id="palpites_publicos" type="checkbox" class="switch-input" checked="">
+                                                                        <?php
+                                                                        
+                                                                            $checked_palp = "";
+                                                                            if ($data['us_palppublicos']) {
+                                                                                $checked_palp = "checked";
+                                                                            }
+                                                                        
+                                                                            echo '<input id="palpites_publicos" type="checkbox" class="switch-input" '.$checked_palp.'>';
+                                                                                
+                                                                        ?>
                                                                         <span class="switch-label" data-on="On" data-off="Off"></span>
                                                                         <span class="switch-handle"></span>
                                                                      </label>
@@ -202,7 +211,17 @@
                                                              <div class="controls">
                                                                 <div class="input-group col-sm-4">
                                                                     <label class="switch switch-success">
-                                                                        <input id="puntuacao_publica" type="checkbox" class="switch-input" >
+                                                                        
+                                                                    <?php    
+                                                                    
+                                                                        $checked_punt="";
+                                                                        if ($data['us_puntpublica']) {
+                                                                            $checked_punt = "checked";
+                                                                        }
+                                                                        
+                                                                        echo '<input id="puntuacao_publica" type="checkbox" class="switch-input" '.$checked_punt.'>';
+                                                                                
+                                                                    ?>            
 									<span class="switch-label" data-on="On" data-off="Off"></span>
                                                                         <span class="switch-handle"></span>
                                                                     </label>
@@ -215,7 +234,7 @@
                                                             </div>
                                                         </form>
                                                 </div>
-    </div>
+    </div>-->
     
      <?php
                                 
