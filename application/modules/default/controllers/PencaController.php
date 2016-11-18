@@ -238,6 +238,27 @@ class PencaController extends Zend_Controller_Action {
         $this->_helper->json($palpites);
     }
     
+    public function palpitesAction() {
+        $params = $this->_request->getParams();
+        
+        $champ = new Application_Model_Championships();
+        $this->view->championships = $champ->load();
+        
+        $teams_obj = new Application_Model_Teams();
+        $teams = $teams_obj->load_teams_championship($params['champ']); 
+
+        $this->view->teams = $teams;
+        
+        $match = $params['match'];
+        
+        $m = new Application_Model_Matchs();
+        $results = $m->result_matchs($match);
+        
+        $this->view->results = $results;
+        $this->view->champ = $params['champ'];
+        
+    }
+    
     public function bolaoAction() {
         $params = $this->_request->getParams();
                     

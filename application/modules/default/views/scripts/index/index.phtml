@@ -6,6 +6,9 @@
     if (!empty($palpites)) { 
 
         
+       $html = new Helpers_Html();
+       
+       
        
 ?>
 
@@ -20,7 +23,22 @@
             </div>
             <div class="box-content">
                    <div class="row">
-    <div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
+                       
+                       <?php
+                       
+//                       print_r($palpites);
+                       
+                        echo $html->box($palpites, $this->baseUrl(), false, "col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6", false,true, false);
+                       
+                       ?>
+                         
+                       
+                       
+                       
+                       
+                       
+                       
+<!--    <div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
 <form id="frChamp_palpites" action="../penca/meuspalpites" method="post">	
                                     <div class="form-group">                                      
                                       <div class="controls">
@@ -37,10 +55,10 @@
                                       </div>
                                     </div>    
                             </form>
-</div>
+</div>-->
     
 </div>
-<table class="table" id="tb_palpites_feitos">
+<!--<table class="table" id="tb_palpites_feitos">
     <thead>
 
             <tr>
@@ -91,7 +109,7 @@
          ?>    
        
                 </tbody>
-</table>
+</table>-->
                 </div>
     </div>
 </div>
@@ -105,3 +123,21 @@
     }
 
 ?>
+
+
+<script type="text/javascript">
+
+    $(function() {
+       $(".box_palpite").bind("click", function() {
+           
+           var box_opcoes = $(this).attr("id_opcoes");
+           
+           if ($("#"+box_opcoes).is(":visible")) {
+                $("#"+box_opcoes).hide();    
+           } else {
+                $("#"+box_opcoes).show();
+            }
+       }) 
+    });
+
+</script>

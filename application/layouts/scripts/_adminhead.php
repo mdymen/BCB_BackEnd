@@ -122,6 +122,7 @@
                                                 <li><a href="<?php echo $this->baseUrl("/admin/time"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Adicionar Time </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/team"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Admin Teams </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/resultados"); ?>"><i class="fa fa-question-circle"></i><span class="hidden-sm text"> Resultados </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/index/logout"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Logout</span></a></li>
                                                 
 					</ul>
 				</div>

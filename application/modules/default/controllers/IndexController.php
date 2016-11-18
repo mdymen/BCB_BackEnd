@@ -84,14 +84,6 @@ class IndexController extends Zend_Controller_Action
             $config = new Zend_Config_Ini('config.ini');
 
             $h_date = new Helpers_Data();
-            for ($i = 0; $i < count($em_acao_group); $i = $i + 1) {
-                //$em_acao_group[$i]['mt_date'] = $h_date->day($em_acao_group[$i]['mt_date']);
-                $em_acao_group[$i]['tm1_logo'] = $config->host.$em_acao_group[$i]['tm1_logo'];
-                $em_acao_group[$i]['host'] = $config->hostpublic;
-                $em_acao_group[$i]['tm2_logo'] = $config->host.$em_acao_group[$i]['tm2_logo'];
-                //$em_acao_group[$i]['base'] = Zend_Controller_Front::getInstance()->getBaseUrl();
-            }
-
             $this->view->palpites = $em_acao_group;
 
     //        $this->getResponse()

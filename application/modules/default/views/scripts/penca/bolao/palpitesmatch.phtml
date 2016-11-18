@@ -2,7 +2,9 @@
 
     $config = new Zend_Config_Ini("config.ini");
  
-    $palpites = $this->rodada;
+    $palpites = $this->results;
+    
+//    print_r($palpites);
     
     if (!empty($palpites)) {
         $rodada = $palpites[0]['mt_round'];   
@@ -16,24 +18,13 @@
 if (!empty($palpites)) {
 
    ?>
-
-<input type="hidden" value="<?php echo $palpites[0]['mt_idchampionship']; ?>" name="champ" id="champ" />
-<input type="hidden" value="<?php echo $palpites[0]['mt_round']; ?>" name="rodada" id="round" />
-
-
-        <?php echo $this->render('penca/bolao/alerts.phtml'); ?>  
         
                 <div class="box">
                         <div class="box-header">
                             
-                            
-                            
                             <?php
-                                if ($this->porteam) { 
                                     $titulo = "Palpites da Rodada: ".$palpites[0]['mt_round'];
-                                } else {
-                                    $titulo = "Palpites do Time: ".$this->teamusername;
-                                }
+
                             ?>
                             
                             
@@ -45,16 +36,7 @@ if (!empty($palpites)) {
                                 </div>
                         </div>
                         <div class="box-content">
-                            
-                            <?php
-                                echo '<div class="row">';
-                            $html = new Helpers_Html();
-                            
-                            echo $html->box($palpites, $this->baseUrl(), false, "col-lg-5 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6", true, false, true,false);
-                                echo '</div>';
-                            ?>
-                            
-<!--                                <table class="table" id="tb_palpites" >
+                                <table class="table" id="tb_palpites" >
                                           <thead>
                                                   <tr>
                                                           <th></th>
@@ -68,12 +50,11 @@ if (!empty($palpites)) {
                                           <tbody>
                                               
                                               <?php
-                                              echo '<input type="hidden" value="'.count($palpites).'" name="count_palpites" id="count_palpites">';
+                                              
                                               for ($i = 0; $i < count($palpites); $i = $i + 1) {
+                                                  
                                                 $st = 'style=""';
-                                                if (!empty($palpites[$i]['rs_id'])) {
-                                                    $st = 'style="display:none"';
-                                                }   
+                                                
                                                     echo '<input '.$st.' type="hidden" name="rs_'.$i.'" id="rs_'.$i.'" value="'.$palpites[$i]['mt_id'].'" />';
 
                                                     if (($i == 0) || ($i > 0 && strcmp($palpites[$i]['mt_date'],$palpites[$i-1]['mt_date']) != 0)) { 
@@ -92,22 +73,16 @@ if (!empty($palpites)) {
                                                             <td class="col-sm-3 col-xs-3">
                                                                 <div class="row">
                                                                     <div class="col-xs-6 col-sm-6 col-lg-6">
-                                                                        <input style="text-align:center" class="form-control" name="result1_'.$palpites[$i]['mt_id'].'" id="result1p_'.$palpites[$i]['mt_id'].'"  type="text" placeholder="0"> 
+                                                                        <input style="text-align:center" class="form-control" value="'.$palpites[$i]['rs_res1'].'" disabled> 
                                                                     </div>
                                                                    <div class="col-xs-6 col-sm-6 col-lg-6">		
-                                                                        <input style="text-align:center" class="form-control" name="result2_'.$palpites[$i]['mt_id'].'" id="result2p_'.$palpites[$i]['mt_id'].'" type="text" placeholder="0">
+                                                                        <input style="text-align:center" class="form-control" value="'.$palpites[$i]['rs_res2'].'" disabled>
                                                                     </div>   
                                                                 </div>
                                                             </td>   
                                                             <td></td>
                                                             <td style="text-align:left;" id="team2p'.$palpites[$i]['mt_id'].'">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(),$palpites[$i]['tm2_id'], $palpites[$i]['t2nome'], $config->host.$palpites[$i]['tm2_logo'], $palpites[$i]['mt_idchampionship']).'</td>
-                                                            <td>';
-                                                                if (empty($palpites['rs_id'])) {
-                                                                    echo '<button data="'.$palpites[$i]['mt_date'].'" match="'.$palpites[$i]['mt_id'].'" class="btn btn-success palpite">'
-                                                                            . '<i class="fa fa-check"></i></button>';
-                                                                }
-                                                                
-                                                            echo '</td>                                      
+                                                            <td><a href="'.$this->baseUrl("/usuario/index?usuario=".$palpites[$i]['us_id']).'" >'.$palpites[$i]['us_username'].'</a></td>                                      
                                                         </tr>';
                                                     }
                                                
@@ -117,7 +92,7 @@ if (!empty($palpites)) {
                                                                            
                                           </tbody>
                                  </table>  
-                               -->
+                               
                             <div class="form-action">
                                 <!--<a href="javascript:void(0)" id="btnAceitarPalpites" class="btn btn-success">Aceitar Palpites</a>--> 
                             </div>
@@ -142,13 +117,6 @@ if (!empty($palpites)) {
            var round = $("#round").val();
            var team1 = $("#team1p"+match).html();
            var team2 = $("#team2p"+match).html();
-           
-           alert(match);
-           alert(r1);
-           alert(r2);
-           alert(round);
-           alert(team1);
-           alert(team2);
 
            if (parseInt(r1) >= 0 && parseInt(r2) >= 0 ) {
                $('#fila_'+match).attr("style","display:none");

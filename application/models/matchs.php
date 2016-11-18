@@ -323,4 +323,15 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         return $result;
     }
     
+    public function result_matchs($match) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("vwmatchsresult")
+                ->joinInner("user", "user.us_id = vwmatchsresult.rs_iduser")
+                ->where("rs_idmatch = ?", $match)
+                ->query()->fetchAll();
+        
+        return $result;
+    }
+    
 }

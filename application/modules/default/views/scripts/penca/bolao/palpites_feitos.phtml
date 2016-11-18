@@ -85,8 +85,9 @@ if (!empty($palpites_feitos)) {
                                                             <td syle="text-align:left;" id="team2'.$palpites_feitos[$i]['mt_id'].'">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(), $palpites_feitos[$i]['tm2_id'], $palpites_feitos[$i]['t2nome'], $config->host.$palpites_feitos[$i]['tm2_logo'], $champ).'</td>
                                                             <td>';
                                                             if (!$palpites_feitos[$i]['mt_played']) {
-                                                                    echo '<button title="Excluir palpite" data="'.$palpites_feitos[$i]['mt_date'].'" match="'.$palpites_feitos[$i]['mt_id'].'" result="'.$palpites_feitos[$i]['rs_id'].'"  class="btn btn-danger excluir"><i class="fa fa-trash-o "></i></button>';
-                                                                    echo '<a title="Palpites" data="'.$palpites_feitos[$i]['mt_date'].'" match="'.$palpites_feitos[$i]['mt_id'].'" result="'.$palpites_feitos[$i]['rs_id'].'"  class="btn btn-warning">'.$palpites_feitos[$i]['cantidad'].'</i></a>';
+                                                                    echo '<div><button title="Excluir palpite" data="'.$palpites_feitos[$i]['mt_date'].'" match="'.$palpites_feitos[$i]['mt_id'].'" result="'.$palpites_feitos[$i]['rs_id'].'"  class="btn btn-danger excluir"><i class="fa fa-trash-o "></i></button>'
+                                                                            . '<a title="'.$palpites_feitos[$i]['cantidad'].' Palpites" href="'.$this->baseUrl()."/penca/palpites?match=".$palpites_feitos[$i]['mt_id']."&champ=".$palpites_feitos[$i]['mt_idchampionship'].'" class="btn btn-warning"><i class="fa fa-globe"></i></i></a></div>';
+                                                                    
                                                              }
                                                             echo '</td>
                                                         </tr>';
