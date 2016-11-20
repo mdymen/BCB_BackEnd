@@ -54,6 +54,10 @@ class Helpers_Box {
     
     public $show_jugados = true;
     
+    public $link_campeonato = "/campeonatos/index";
+    
+    public $link_ronda = "/campeonatos/index";
+
     public function getrow($base, $tm_id, $tm_nome, $tm_logo, $mt_championship, $rs_res, $goal, $palpites_ou_result, $disabled_input, $result_input, $mt_id, $played, $ganou) {
         $result =  $goal;
 //        print_r("palpites ou result ".$palpites_ou_result);
@@ -96,8 +100,8 @@ class Helpers_Box {
         
     }
     
-    public function titulo($titulo){
-        return '<table width="100%"><tr><td style="text-align:center"><b>'.$titulo.'</b></td></tr></table>';
+    public function titulo($titulo, $link){
+        return '<table width="100%"><tr><td style="text-align:center"><b><a href="'.$link.'">'.$titulo.'</a></b></td></tr></table>';
     }
     
     public function big_box() {
@@ -159,11 +163,11 @@ class Helpers_Box {
                         <div class="smallstat box">';
           
                             if ($this->show_titulo_campeonato) {
-                                echo $this->titulo($matches[$i]['ch_nome']);
+                                echo $this->titulo($matches[$i]['ch_nome'], $this->base.$this->link_campeonato."?rodada=".$matches[$i]['mt_round']."&champ=".$matches[$i]['ch_id']);
                             }
                 
                             if ($this->show_titulo_rodada) {
-                                echo $this->titulo("Rodada ".$matches[$i]['mt_round']);
+                                echo $this->titulo("Rodada ".$matches[$i]['mt_round'], $this->base.$this->link_ronda."?rodada=".$matches[$i]['mt_round']."&champ=".$matches[$i]['ch_id']);
                             }
                             echo Helpers_Html::_titulo(Helpers_Data::day($matches[$i]['mt_date'])).'
                             '.$this->getrow($this->base, $matches[$i]['tm1_id'], $matches[$i]['t1nome'], $config->host.$matches[$i]['tm1_logo'], $matches[$i]['mt_idchampionship'], $matches[$i]['rs_res1'], $matches[$i]['mt_goal1'], $this->palpites_goal, $this->disabled_input, $this->id_result_input1.$matches[$i]['mt_id'], $matches[$i]['mt_id'], $matches[$i]['mt_played'], $matches[$i]['rs_result']).'
@@ -172,7 +176,7 @@ class Helpers_Box {
                             if ($this->mas_info) {    
                                 echo '<a href="javascript:void(0)" id_opcoes="'.$id.'" class="more box_palpite">
                                     <span>Mais opcoes...</span>
-                                    <i class="fa fa-chevron-right"></i>
+                                    <i id="icone_'.$id.'" class="fa fa-chevron-right"></i>
                                 </a>';
                             }
 
