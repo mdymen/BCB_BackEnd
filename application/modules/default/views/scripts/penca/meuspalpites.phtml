@@ -53,9 +53,54 @@
 
     if (!empty($rondas)) {
 
+          $teamuserid = $this->teamuserid;
+          $teamusername = $this->teamusername;
+          $palpites = $this->palpites;
+          
+//          print_r($palpites);
+          
+          
+          if ($teamusername == "") {
+              $teamusername = "Time do coracao";
+          }
 ?>
+<div class="box">
+    <div class="box-content">
+        <div class="pagination pagination-centered" style="margin: 0px !important">
+            <ul class="pagination">
+                    
+                    <?php
+//                    
+//                        print_r($rodada);
+//                        if ($rodada > 1) {
+//                            echo '<li><a href="'.$this->baseUrl('/penca/bolao?rodada='.$rondas[$i-1]['mt_round'].'&champ='.$champ).'">Prev</a></li>';
+//                        }
+                  
+                     ?>       
+                  <?php
+                        echo '<li><a id="teamusername" href="javascript:void(0)"><i class="fa fa-edit"></i></a></li><li><a href="'.$this->baseUrl('/penca/bolao?team='.$teamuserid.'&champ='.$champ).'" data-type="text" data-pk="1" data-original-title="Enter username" id="teamcoracao_nome" class="editable editable-click">'.$teamusername.'</a></li>';
+                        for ($i = 0; $i < count($rondas); $i = $i + 1) {
+                            $r = $i + 1;
+                            $active = "";
+                            if ($rondas[$i]['mt_round'] == $this->n_rodada ) { 
+                                $active = 'class="active"';                                
+                            } 
+                            echo '<li '.$active.'><a href="'.$this->baseUrl('/penca/meuspalpites?rodada='.$rondas[$i]['mt_round'].'&champ='.$champ).'">'.$rondas[$i]['mt_round'].'</a></li>';
+                        }
 
-<div class="col-md-12">
+                  ?>    
+                
+                  <?php
+//                    if (!empty($rondas[$i+1]['mt_round'])) {
+//                        echo '<li><a href="'.$this->baseUrl('/penca/bolao?rodada='.$rondas[$i+1]['mt_round'].'&champ='.$champ).'">Next</a></li>';
+//                    }
+                          
+                   ?>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--<div class="col-md-12">
     <div class="box">
             <div class="box-header">
                     <h2><i class="fa fa-th"></i><span class="break"></span><?php echo $t->_("palpites"); ?></h2>
@@ -97,7 +142,7 @@
 
             </div>
     </div>
-</div>
+</div>-->
 
 <?php
 
@@ -105,6 +150,48 @@
     
     }
     ?>
+
+
+
+                <div class="box">
+                    <div class="box-header">
+                            <h2><i class="fa fa-align-justify"></i><span class="break"></span></h2>
+                            <div class="box-icon">
+
+                            </div>
+                    </div>
+                    <div class="box-content">
+                        <div class="row">
+
+                        <?php
+                            $box = new Helpers_Box();
+                            $box->matches = $palpites;
+                            $box->base = $this->baseUrl();
+                            $box->disabled_input = true;
+                            $box->mas_info = false;
+                            $box->show_final_result = true;
+                            $box->palpites_goal = true;
+                            $box->show_solo_nopalpitados = false;
+                            $box->show_solo_palpitados = true;
+                            $box->show_titulo_rodada = false;
+                            $box->tamanho_box = "col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
+                            $box->btn_excluir = true;
+                            $box->btn_cantidad = false;
+                            $box->id_result_input1 = "result1pf_";
+                            $box->id_result_input2 = "result2pf_";
+                            $box->id_box = "rs_dados_";
+                            echo $box->box();
+
+                        ?>
+
+
+                        <div class="form-action">                              
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+
 
 <script type="text/javascript">
     

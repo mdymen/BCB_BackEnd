@@ -161,6 +161,10 @@ class Helpers_Html {
         return '<table width="100%"><tr><td style="text-align:center"><b>'.$titulo.'</b></td></tr></table>';
     }
     
+   public static function _titulo($titulo){
+        return '<table width="100%"><tr><td style="text-align:center"><b>'.$titulo.'</b></td></tr></table>';
+    }
+    
     /*
      * $matches -> array de los partidos
      * $baseUrl -> $this->baseUrl()
@@ -170,9 +174,11 @@ class Helpers_Html {
      *      true = palpite, false = goal
      * $disabled_input -> si el input text esta cerrado o no
      * $mas_info -> si el campo de mas informacion esta abierto o cerrado.
-     * $mostrar_rs_null -> mostrar rs_id null
+     * $mostras_solo_los_palpitados -> true si muestra solo los que fueron palpitados
+     * $mostras_solo_los__no_palpitados -> true si muestra solo los que no fueron palpitados
+     * $mostrar_rodada -> si muestra el numero de la rodada en el titulo, true -> si muestra.
      */
-    public function box($matches, $baseUrl, $show_final_result, $tamanho_box, $palpites_ou_goal, $disabled_input, $mas_info, $mostrar_rs_null) {
+    public function box($matches, $baseUrl, $show_final_result, $tamanho_box, $palpites_ou_goal, $disabled_input, $mas_info, $mostras_solo_los_palpitados, $mostras_solo_los__no_palpitados, $mostrar_rodada) {
         $config = new Zend_Config_Ini("config.ini");
         $anterior = "";
         
@@ -181,16 +187,32 @@ class Helpers_Html {
             $mas_info_display = "";
         }
         
+//        print_r($matches);
+        
         for($i = 0; $i < count($matches); $i = $i + 1) {     
             $st = 'style=""';
-            if (!empty($matches[$i]['rs_id'])) {
-                $st = 'style="display:none"';
-            }   
+            if ($mostras_solo_los_palpitados) {
+                if (empty($matches[$i]['rs_id'])) {
+                    $st = 'style="display:none"';
+                }   
+            }
+            
+            if ($mostras_solo_los__no_palpitados) {
+                $st = 'style=""';
+                if (!empty($matches[$i]['rs_id'])) {
+                    $st = 'style="display:none"';
+                }
+            }
+            
+            
                 $id = rand(0,1000);
                 echo '<div '.$st.' id="fila_'.$matches[$i]['mt_id'].'" class="'.$tamanho_box.'">
-                        <div class="smallstat box">
-                            '.$this->titulo("Rodada ".$matches[$i]['mt_round']).'
-                            '.$this->titulo(Helpers_Data::day($matches[$i]['mt_date'])).'
+                        <div class="smallstat box">';
+                            
+                            if ($mostrar_rodada) {
+                                echo $this->titulo("Rodada ".$matches[$i]['mt_round']);
+                            }
+                            echo $this->titulo(Helpers_Data::day($matches[$i]['mt_date'])).'
                             '.$this->getrow($baseUrl, $matches[$i]['tm1_id'], $matches[$i]['t1nome'], $config->host.$matches[$i]['tm1_logo'], $matches[$i]['mt_idchampionship'], $matches[$i]['rs_res1'], $matches[$i]['mt_goal1'], $show_final_result, $palpites_ou_goal, $disabled_input, "result1p_".$matches[$i]['mt_id']).'
                             '.$this->getrow($baseUrl, $matches[$i]['tm2_id'], $matches[$i]['t2nome'], $config->host.$matches[$i]['tm2_logo'], $matches[$i]['mt_idchampionship'], $matches[$i]['rs_res2'], $matches[$i]['mt_goal2'], $show_final_result, $palpites_ou_goal, $disabled_input, "result2p_".$matches[$i]['mt_id']);                        
 

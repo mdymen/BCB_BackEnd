@@ -25,11 +25,22 @@
                    <div class="row">
                        
                        <?php
-                       
-//                       print_r($palpites);
-                       
-                        echo $html->box($palpites, $this->baseUrl(), false, "col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6", false,true, false);
-                       
+                                $box = new Helpers_Box();
+                                $box->matches = $palpites;
+                                $box->base = $this->baseUrl();
+                                $box->disabled_input = true;
+                                $box->mas_info = true;
+                                $box->palpites_goal = true;
+                                $box->show_final_result = false;
+                                $box->show_solo_nopalpitados = false;
+                                $box->show_solo_palpitados = true;
+                                $box->show_titulo_rodada = false;
+                                $box->tamanho_box = "col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
+                                $box->btn_excluir = true;
+                                $box->id_result_input1 = "result1pf_";
+                                $box->id_result_input2 = "result2pf_";
+                                $box->id_box = "rs_dados_";
+                                echo $box->box();
                        ?>
                          
                        
@@ -58,58 +69,7 @@
 </div>-->
     
 </div>
-<!--<table class="table" id="tb_palpites_feitos">
-    <thead>
 
-            <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th> 
-                    <th></th> 
-                    <th></th> 
-                    <th></th> 
-                    <th></th> 
-            </tr>
-    </thead>   
-    <tbody id="tb_emacao">
-            
-
-        <?php 
-        
-            $campeonato = "";
-            for ($i = 0; $i < count($palpites); $i = $i + 1) {
-                if (strcmp($campeonato, $palpites[$i]['ch_id']) != 0) {
-                    echo' <tr>
-                        <td><b>'.$palpites[$i]['ch_nome'].'<b></td>
-                            </tr>';
-                    $campeonato = $palpites[$i]['ch_id'];
-                }
-                echo' <tr class="col-xs-* col-sm-* col-lg-*">
-                        <td style="text-align:right">'.Helpers_Html::getTeamLinkRight($palpites[$i]['host'], $palpites[$i]['mt_idteam1'], $palpites[$i]['t1nome'], $palpites[$i]['tm1_logo'], $palpites[$i]['mt_idchampionship']).'</td>
-                        <td></td>
-                        <td width="15%">
-                            <div class="row">
-                                            <div class="col-xs-6 col-sm-6 col-lg-6">
-                                                <input type="text" disabled="true" value="'.$palpites[$i]['rs_res1'].'" class="form-control">
-                                            </div>
-                                            <div class="col-xs-6 col-sm-6 col-lg-6">
-                                                <input type="text" disabled="true" value="'.$palpites[$i]['rs_res2'].'" class="form-control">
-                            </div>
-                        </div></td>
-                        <td></td>
-                        <td style="text-align:left">'.Helpers_Html::getTeamLinkLeft($palpites[$i]['host'], $palpites[$i]['mt_idteam2'], $palpites[$i]['t2nome'], $palpites[$i]['tm2_logo'], $palpites[$i]['mt_idchampionship']).'</td>
-                        <td>
-                            <a href="http://localhost/penca/public/penca/bolao?rodada='.$palpites[$i]['rs_round'].'&amp;champ=1">'.$palpites[$i]['rs_round'].'</a>
-                        </td><td>'.Helpers_Data::day($palpites[$i]['mt_date']).'</td>
-                    </tr>';
-                
-            }
-            
-         ?>    
-       
-                </tbody>
-</table>-->
                 </div>
     </div>
 </div>

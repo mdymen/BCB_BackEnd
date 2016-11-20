@@ -17,6 +17,7 @@ include APPLICATION_PATH.'/models/matchs.php';
 include APPLICATION_PATH.'/models/result.php';
 include APPLICATION_PATH.'/helpers/html.php';
 include APPLICATION_PATH.'/helpers/translate.php';
+include APPLICATION_PATH.'/helpers/box.php';
 class PencaController extends Zend_Controller_Action {
     
     public function indexAction() {
@@ -359,7 +360,7 @@ class PencaController extends Zend_Controller_Action {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json($r);
+        $this->_helper->json($params);
                 
     }
     
@@ -367,18 +368,36 @@ class PencaController extends Zend_Controller_Action {
         try {
             $params = $this->_request->getParams();
 
+//            print_r($params);
+            
             $penca = new Application_Model_Penca();
-
+            
             $id_user = $this->getIdUser();
             $champs = $penca->load_championship_with_results($id_user);
 
             if (!empty($params['champ'])) {
+                
+                $this->view->teamuserid = $this->getTimeUserId();
+                $this->view->teamusername = $this->getTimeUserName();            
+                
                 $matchs_obj = new Application_Model_Matchs();
                 $rondas = $matchs_obj->getrondas($params['champ']);
                 $this->view->rondas = $rondas;
-                $this->view->champ = $params['champ'];
+                $this->view->champ = $params['champ'];                                
+
+                if (empty($params['rodada'])) {
+                    $rodada_id = $penca->getIdPrimeraRodadaDisponivel($params['champ']);
+                } else {            
+                    $rodada_id = $params['rodada'];
+                }
+                
+                $palpites_da_rodada = $matchs_obj->load_palpites_simples($params['champ'], $rodada_id, $this->getIdUser());
+                $this->view->palpites = $palpites_da_rodada;
+                $this->view->n_rodada = $rodada_id;
+                
             }
 
+            
             $this->view->championships = $champs;
         }
         catch (Zend_Exception $e) {

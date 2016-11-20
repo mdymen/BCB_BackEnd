@@ -32,76 +32,36 @@ if (!empty($palpites_feitos)) {
                         <div class="box-header">
                                 <h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo $titulo; ?></h2>
                                 <div class="box-icon">
-<!--                                        <a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
-                                        <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                                        <a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>-->
+
                                 </div>
                         </div>
                         <div class="box-content">
-                                <table class="table" id="tb_palpites_feitos">
-                                          <thead>
-                                                  <tr>
-                                                          <th></th>
-                                                          <th width="2%"></th>
-                                                          <th></th>
-                                                          <th width="2%"></th> 
-                                                          <th></th> 
-                                                          <th></th> 
-                                                  </tr>
-                                          </thead>   
-                                          <tbody>
-                                              
-                                              <?php
-                                              echo '<input cant="'.count($palpites_feitos).'" type="hidden" value="'.count($palpites_feitos).'" id="count_palpites_feitos" name="count_palpites_feitos">';
-                                                for ($i = 0; $i < count($palpites_feitos); $i = $i + 1) {
-                                                    if (!empty($palpites_feitos[$i]['mt_id'])) {
-                                                    $st = "";
-                                                    if (empty($palpites_feitos[$i]['rs_id'])) {
-                                                        $st='style="display:none"';
-                                                    }
-                                                    if (($i == 0) || ($i > 0 && strcmp($palpites_feitos[$i]['mt_date'],$palpites_feitos[$i-1]['mt_date']) != 0)) { 
-                                                        echo '<tr '.$st.' style="text-align:center" name="'.$palpites_feitos[$i]['mt_date'].'">
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td id="date'.$palpites_feitos[$i]['mt_id'].'"><b>'.  Helpers_Data::day($palpites_feitos[$i]['mt_date']).'</b></td>                                      
-                                                        </tr>';
-                                                                
-                                                    }             
-                                                    echo '
-                                                        <tr name="rs_'.$palpites_feitos[$i]['mt_id'].'_dados" '.$st.'>
-                                                            <td style="text-align:right" id="team1'.$palpites_feitos[$i]['mt_id'].'">'.Helpers_Html::getTeamLinkRight($this->baseUrl(), $palpites_feitos[$i]['tm1_id'], $palpites_feitos[$i]['t1nome'], $config->host.$palpites_feitos[$i]['tm1_logo'], $champ).'</td>
-                                                            <td></td>
-                                                            <td class="col-sm-3 col-xs-3">
-                                                                <div class="row">
-                                                                    <div class="col-xs-6 col-sm-6 col-lg-6">
-                                                                        <input style="text-align:center" class="form-control" disabled="true" name="p_result1_'.$palpites_feitos[$i]['mt_id'].'" value="'.$palpites_feitos[$i]['rs_res1'].'" id="p_result1_'.$palpites_feitos[$i]['mt_id'].'"  type="text" placeholder="0">
-                                                                    </div>                                                            
-                                                                    <div class="col-xs-6 col-sm-6 col-lg-6">		
-                                                                        <input style="text-align:center" class="form-control" disabled="true" name="p_result2_'.$palpites_feitos[$i]['mt_id'].'" value="'.$palpites_feitos[$i]['rs_res2'].'" id="p_result2_'.$palpites_feitos[$i]['mt_id'].'" type="text" placeholder="0">
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td></td>
-                                                            <td syle="text-align:left;" id="team2'.$palpites_feitos[$i]['mt_id'].'">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(), $palpites_feitos[$i]['tm2_id'], $palpites_feitos[$i]['t2nome'], $config->host.$palpites_feitos[$i]['tm2_logo'], $champ).'</td>
-                                                            <td>';
-                                                            if (!$palpites_feitos[$i]['mt_played']) {
-                                                                    echo '<div><button title="Excluir palpite" data="'.$palpites_feitos[$i]['mt_date'].'" match="'.$palpites_feitos[$i]['mt_id'].'" result="'.$palpites_feitos[$i]['rs_id'].'"  class="btn btn-danger excluir"><i class="fa fa-trash-o "></i></button>'
-                                                                            . '<a title="'.$palpites_feitos[$i]['cantidad'].' Palpites" href="'.$this->baseUrl()."/penca/palpites?match=".$palpites_feitos[$i]['mt_id']."&champ=".$palpites_feitos[$i]['mt_idchampionship'].'" class="btn btn-warning"><i class="fa fa-globe"></i></i></a></div>';
-                                                                    
-                                                             }
-                                                            echo '</td>
-                                                        </tr>';
-                                                    }
-                                                }
-                                              
-                                              ?>
-                                              
-                                                                           
-                                          </tbody>
-                                 </table>  
+                            <div class="row">
+                            
+                            <?php
+                                $box = new Helpers_Box();
+                                $box->matches = $palpites_feitos;
+                                $box->base = $this->baseUrl();
+                                $box->disabled_input = true;
+                                $box->mas_info = false;
+                                $box->palpites_goal = true;
+                                $box->show_final_result = false;
+                                $box->show_solo_nopalpitados = false;
+                                $box->show_solo_palpitados = true;
+                                $box->show_titulo_rodada = false;
+                                $box->tamanho_box = "col-lg-5 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
+                                $box->btn_excluir = true;
+                                $box->btn_cantidad = true;
+                                $box->id_result_input1 = "result1pf_";
+                                $box->id_result_input2 = "result2pf_";
+                                $box->id_box = "rs_dados_";
+                                echo $box->box();
+
+                            ?>
+                            
                                
-                            <div class="form-action">
-                                <!--<a href="javascript:void(0)" id="btnAceitarPalpites" class="btn btn-success">Aceitar Palpites</a>--> 
+                            <div class="form-action">                              
+                            </div>
                             </div>
                         </div>
                 </div>
@@ -120,8 +80,7 @@ if (!empty($palpites_feitos)) {
         $(".excluir").bind('click', function() {
             var rs = $(this).attr("result");
             var match = $(this).attr("match");
-            var data = $(this).attr("date");
-          //  alert(rs);
+
             $.post("excluirpalpite",{ result : rs }, function(response) {
                $("#info_msg").html("Palpite excluido!");
                $("#append_info").html($("#info").html());
@@ -130,12 +89,11 @@ if (!empty($palpites_feitos)) {
                 
                 console.log(response);
                 
-                $('[name=rs_'+match+'_dados]').attr("style","display:none"); 
-                $('[name="'+data+'"]').show();
-                
+                $('#result1pf_'+match).val(0);
+                $('#result2pf_'+match).val(0);
+                        
+                $('#rs_dados_'+match).attr("style","display:none"); 
                 $('#fila_'+match).attr("style","display:yes");
-                
-                //submeter();
             }); 
         });
     }
