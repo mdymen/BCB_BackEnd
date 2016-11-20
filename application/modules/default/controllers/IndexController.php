@@ -41,13 +41,6 @@ class IndexController extends Zend_Controller_Action
             $h_date = new Helpers_Data();
             $this->view->palpites = $em_acao_group;
 
-    //        $this->getResponse()
-    //         ->setHeader('Content-Type', 'application/json');
-    //        
-    //        $this->_helper->layout->disableLayout();
-    //        $this->_helper->viewRenderer->setNoRender(TRUE);
-    //        
-    //        $this->_helper->json($em_acao_group);
         }
         catch (Exception $e) {
 //             $config = new Zend_Config_Ini("config.ini");

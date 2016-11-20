@@ -15,6 +15,7 @@ include APPLICATION_PATH.'/models/teams.php';
 include APPLICATION_PATH.'/helpers/data.php';
 include APPLICATION_PATH.'/helpers/html.php';
 include APPLICATION_PATH.'/helpers/translate.php';
+include APPLICATION_PATH.'/helpers/box.php';
 class TeamController extends Zend_Controller_Action
 {
     public function indexAction() {
@@ -38,6 +39,9 @@ class TeamController extends Zend_Controller_Action
             if ($jogos[$i]['tm2_id'] == $team_id) {
                 $team = $jogos[$i]['t2nome'];
             }
+            $jogos[$i]['rs_res1'] = "";
+            $jogos[$i]['rs_res2'] = "";
+            $jogos[$i]['rs_result'] = "";
         }
         
         $this->view->nome_team = $team;

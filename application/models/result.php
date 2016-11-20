@@ -112,6 +112,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
 //                ->where("rs_result is null")
 //                ->where("rs_iduser = ?", $us_id)
             $result = $db->select()->from("vwmatchsresult")
+                ->joinInner("vwpalpites","vwpalpites.rs_idmatch = vwmatchsresult.mt_id")
                 ->where("rs_result is null")
                 ->where("mt_played = 0")    
                 ->where("rs_iduser = ?", $us_id)
