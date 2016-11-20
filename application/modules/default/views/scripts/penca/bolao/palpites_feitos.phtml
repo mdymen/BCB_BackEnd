@@ -76,30 +76,8 @@ if (!empty($palpites_feitos)) {
 
 <script type="text/javascript">
     
-    function excluir() {
-        $(".excluir").bind('click', function() {
-            var rs = $(this).attr("result");
-            var match = $(this).attr("match");
-
-            $.post("excluirpalpite",{ result : rs }, function(response) {
-               $("#info_msg").html("Palpite excluido!");
-               $("#append_info").html($("#info").html());
-               $(".alert-info").show();
-                fechar_info();
-                
-                console.log(response);
-                
-                $('#result1pf_'+match).val(0);
-                $('#result2pf_'+match).val(0);
-                        
-                $('#rs_dados_'+match).attr("style","display:none"); 
-                $('#fila_'+match).attr("style","display:yes");
-            }); 
-        });
-    }
-    
     $(function() { 
-        excluir();
+        excluir("excluirpalpite");
     });
     
     </script>

@@ -1,86 +1,26 @@
 <?php
-include APPLICATION_PATH."/helpers/html.php";
+
 $matches = $this->matches;
 
-//print_r($matches);
-//die(".");
+$box = new Helpers_Box();
+$box->disabled_input = true;
+$box->mas_info = true;
+$box->matches = $matches;
+$box->palpites_goal = true;
+$box->show_final_result = true;
+$box->show_jugados = true;
+$box->show_titulo_campeonato = true;
+$box->show_titulo_rodada = true;
+$box->tamanho_box = "col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
 
-$h = new Helpers_Html();
-echo $h->erros($matches, $this->baseUrl());
+
+echo $box->big_box();
+
 
 ?>
-<!--
- <div class="box">
-                        <div class="box-header">
-                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Errados</h2>
-                                <div class="box-icon">
-                                        <a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
-                                        <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                                        <a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>
-                                </div>
-                        </div>
-                        <div class="box-content">
-                                <table class="table" id="tb_palpites_feitos">
-                                          <thead>
-                                                  <tr>
-                                                          <th></th>
-                                                          <th width="15%"></th>
-                                                          <th></th>
-                                                          <th width="15%"></th>
-                                                          <th></th> 
-                                                          <th width="15%"></th> 
-                                                          <th></th> 
-                                                          <th></th> 
-                                                  </tr>
-                                          </thead>   
-                                          <tbody>
-                                              
-                                              <?php
-                                              $anterior = "";
-                                              echo '<input cant="'.count($matches).'" type="hidden" value="'.count($matches).'" id="count_palpites_feitos" name="count_palpites_feitos">';
-                                               
-                                              for ($i = 0; $i < count($matches); $i = $i + 1) {
-                                                  if ($anterior != $matches[$i]['rs_round']) {
-                                                      $anterior = $matches[$i]['rs_round'];
-                                                  }  
-                                                  if (!empty($matches[$i]['mt_id'])) {
-                                                    $st = "";
-                                                    if ($matches[$i]['rs_id'] == -1) {
-                                                        $st='style="display:none"';
-                                                    }
-                                                    echo '<input '.$st.' type="hidden" name="rs_'.$i.'_input" id="rs_'.$i.'" value="'.$matches[$i]['mt_id'].'" />';
-                                                            echo '<tr name="rs_'.$i.'_dados" '.$st.' pf="'.($i+1).'" id="rstr2'.$matches[$i]['rs_id'].'">
-                                                            <td><b>
-                                                               '.date("H:i",strtotime($matches[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($matches[$i]['mt_date']) ).'
-                                                                </b></td>
-                                                            <td width="15%">
-                                                                <div class="input-group col-sm-7">
-                                                                    <input class="form-control" disabled="true" name="p_result1_'.$i.'" value="'.$matches[$i]['rs_res1'].'" id="p_result1_'.$i.'"  type="text" placeholder="0">
-                                                                </div>
-                                                            </td>
-                                                            <td id="team1'.$i.'">'.$matches[$i]['t1nome'].'</td>
-                                                            <td></td>
-                                                            <td id="team2'.$i.'">'.$matches[$i]['t2nome'].'</td>
-                                                            <td width="15%">     
-                                                                <div class="input-group col-sm-7">		
-                                                                    <input class="form-control" disabled="true" name="p_result2_'.$i.'" value="'.$matches[$i]['rs_res2'].'" id="p_result2_'.$i.'" type="text" placeholder="0">
-                                                                </div>
-                                                            </td>  
-                                                            <td>';
-                                                            echo '</td>
-                                                                <td><span class="label label-danger">'.$matches[$i]['rs_points'].'</span></td>
-                                                        </tr>';
-                                                    }
-                                                }
-                                              
-                                              ?>
-                                              
-                                                                           
-                                          </tbody>
-                                 </table>  
-                               
-                            <div class="form-action">
-                                <a href="javascript:void(0)" id="btnAceitarPalpites" class="btn btn-success">Aceitar Palpites</a> 
-                            </div>
-                        </div>
-                </div>-->
+
+<script>
+    $(function() {
+       box_mais_info(); 
+    });
+</script>

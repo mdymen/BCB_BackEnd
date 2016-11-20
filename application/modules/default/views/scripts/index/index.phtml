@@ -2,10 +2,11 @@
     $palpites = $this->palpites;
 
     $translate = Zend_Registry::get('translate');
+   
     
     if (!empty($palpites)) { 
 
-        
+//        print_r($palpites);
        $html = new Helpers_Html();
        
        
@@ -35,11 +36,14 @@
                                 $box->show_solo_nopalpitados = false;
                                 $box->show_solo_palpitados = true;
                                 $box->show_titulo_rodada = false;
+                                $box->show_jugados = false;
                                 $box->tamanho_box = "col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
                                 $box->btn_excluir = true;
                                 $box->id_result_input1 = "result1pf_";
                                 $box->id_result_input2 = "result2pf_";
                                 $box->id_box = "rs_dados_";
+                                $box->show_titulo_rodada = true;
+                                $box->show_titulo_campeonato = true;
                                 echo $box->box();
                        ?>
                          
@@ -88,16 +92,8 @@
 <script type="text/javascript">
 
     $(function() {
-       $(".box_palpite").bind("click", function() {
-           
-           var box_opcoes = $(this).attr("id_opcoes");
-           
-           if ($("#"+box_opcoes).is(":visible")) {
-                $("#"+box_opcoes).hide();    
-           } else {
-                $("#"+box_opcoes).show();
-            }
-       }) 
+        excluir("penca/excluirpalpite");
+        box_mais_info();
     });
 
 </script>

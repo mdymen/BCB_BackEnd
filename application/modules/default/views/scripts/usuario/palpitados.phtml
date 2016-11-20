@@ -1,10 +1,32 @@
 <?php
-include APPLICATION_PATH."/helpers/html.php";
+//include APPLICATION_PATH."/helpers/html.php";
 $palpitados = $this->palpitados;
+//
+////print_r($palpitados);
+//
+//$h = new Helpers_Html();
+//echo $h->tabelas($palpitados, $this->baseUrl());
 
-//print_r($palpitados);
+$box = new Helpers_Box();
+$box->disabled_input = true;
+$box->mas_info = true;
+$box->matches = $palpitados;
+$box->palpites_goal = true;
+$box->show_final_result = true;
+$box->show_jugados = true;
+$box->show_titulo_campeonato = true;
+$box->show_titulo_rodada = true;
+$box->tamanho_box = "col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
 
-$h = new Helpers_Html();
-echo $h->tabelas($palpitados, $this->baseUrl());
+
+echo $box->big_box();
+
 
 ?>
+
+
+<script>
+    $(function() {
+       box_mais_info(); 
+    });
+</script>

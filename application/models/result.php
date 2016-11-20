@@ -113,11 +113,15 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
 //                ->where("rs_iduser = ?", $us_id)
             $result = $db->select()->from("vwmatchsresult")
                 ->where("rs_result is null")
+                ->where("mt_played = 0")    
                 ->where("rs_iduser = ?", $us_id)
                 ->order($o)
                 ->query()
                 ->fetchAll();
                 
+//            print_r($result);
+            
+            
 //                 print_r($result->__toString());
 //        die(".");
              
