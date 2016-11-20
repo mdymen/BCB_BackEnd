@@ -64,7 +64,7 @@
 			      <span class="icon-bar"></span>
 			</button>
 			<a id="main-menu-toggle" class="hidden-xs open"><i class="fa fa-bars"></i></a>		
-			<a class="navbar-brand col-md-2 col-sm-1 col-xs-2" href="<?php echo $this->baseUrl(); ?>"><span>Craque de Bola</span></a>
+			<a class="navbar-brand col-md-6 col-sm-6 col-xs-6" href="<?php echo $this->baseUrl(); ?>"><span>Craque de Bola</span></a>
 			
 			<!-- start: Header Menu -->
 			<div class="nav-no-collapse header-nav">

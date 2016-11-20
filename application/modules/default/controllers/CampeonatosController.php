@@ -16,6 +16,8 @@ include APPLICATION_PATH.'/helpers/html.php';
 include APPLICATION_PATH.'/helpers/box.php';
 
 include APPLICATION_PATH.'/helpers/translate.php';
+include APPLICATION_PATH.'/helpers/paginacao.php';
+include APPLICATION_PATH.'/helpers/posicoes.php';
 class CampeonatosController extends Zend_Controller_Action
 {
     public function indexAction() {
@@ -34,6 +36,7 @@ class CampeonatosController extends Zend_Controller_Action
             $champ_id = $params['champ'];
 
             $this->view->champ = $champ_id;
+            $this->view->championship = $champ->getChamp($champ_id);
             
             if (empty($params['rodada'])) {
                 $rodada_id = $p_obj->getIdPrimeraRodadaDisponivel($champ_id);
@@ -67,7 +70,7 @@ class CampeonatosController extends Zend_Controller_Action
 
             $this->view->teams = $teams;
             $this->view->rodadas = $rodadas;
-            
+            $this->view->n_rodada = $rodada_id;
             $this->view->rondas = $rondas;   
         }
     }

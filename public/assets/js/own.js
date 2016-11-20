@@ -66,11 +66,49 @@ function box_mais_info() {
     $(".box_palpite").bind("click", function() {
 
         var box_opcoes = $(this).attr("id_opcoes");
+        var icone = $("#icone_"+box_opcoes);
 
         if ($("#"+box_opcoes).is(":visible")) {
              $("#"+box_opcoes).hide();    
+             icone.removeClass("fa-chevron-down");
+             icone.addClass("fa-chevron-right");
         } else {
              $("#"+box_opcoes).show();
+             icone.removeClass("fa-chevron-right");
+             icone.addClass("fa-chevron-down");
          }
     }) 
-}
+};
+
+
+function aceitar_teamusername(link, link_teamcoracao) {
+    $("#aceitar_teamusername").bind("click", function() {
+        var name = $('#team_coracao').find(":selected").text();
+        var id = $('#team_coracao').find(":selected").val();   
+        var champ = $('#champ').val();
+        $("#teamusername_popup").css("display","none");
+
+        $.post(link,{idteam : id, nameteam : name}, function(response) {
+            if (response == 200) {
+                $("#teamcoracao_nome").html(name);
+                $("#teamcoracao_nome").attr("href","http://localhost/penca/public/penca/bolao?team="+id+"&champ="+champ);
+                $("#head_timecoracao").html(name);
+                $("#teamcoracao_pick").css("display","none");
+            }
+            console.log(response);
+        });
+    });
+};
+    
+    
+function fechar_teamcoracao() {
+    $("#btn_cancel_teamcoracao").bind("click", function() {
+        $("#teamcoracao_pick").css("display","none");
+    });
+};
+    
+function teamusername_click() {
+    $("#teamusername").bind("click", function() {
+        $("#teamcoracao_pick").css("display","block");
+    });
+};

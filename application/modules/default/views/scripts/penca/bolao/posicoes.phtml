@@ -1,7 +1,4 @@
 <?php
-
-    $config = new Zend_Config_Ini('config.ini');
-
     $teams = $this->teams;
     $champ = $this->champ;
 
@@ -12,10 +9,17 @@
 //    print_r($champion['ch_sec1_fim']);
     
     if (!empty($teams)) {
+        
+        $p = new Helpers_Posicoes();
+        $p->champion = $champion;
+        $p->champ = $champ;
+        $p->teams = $teams;
+        $p->base = $this->baseUrl();
+        $p->posicoes();
     
 ?>
 
-
+<!--
 					<div class="box">
 						<div class="box-header">
 							<h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo $t->_("tabela.de.posicoes"); ?></h2>
@@ -75,7 +79,7 @@
 							  </ul>
 							</div>     
 						</div>
-					</div>
+					</div>-->
 <?php
 
     };

@@ -18,6 +18,7 @@ include APPLICATION_PATH.'/models/result.php';
 include APPLICATION_PATH.'/helpers/html.php';
 include APPLICATION_PATH.'/helpers/translate.php';
 include APPLICATION_PATH.'/helpers/box.php';
+include APPLICATION_PATH.'/helpers/posicoes.php';
 class PencaController extends Zend_Controller_Action {
     
     public function indexAction() {

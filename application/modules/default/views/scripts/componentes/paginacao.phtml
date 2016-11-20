@@ -1,0 +1,45 @@
+<?php
+
+    $t = Zend_Registry::get('translate'); 
+
+    $rondas = $this->rondas;
+    $rodadas = $this->rodada;
+    $rodada_id = $this->n_rodada;
+    
+    $rodada = $rondas[0]['mt_round'];
+    $champ = $this->champ; 
+
+      if (!empty($champ)) { 
+          
+          $teamuserid = $this->teamuserid;
+          $teamusername = $this->teamusername;
+          
+          if ($teamusername == "") {
+              $teamusername = "Time do coracao";
+          }
+          
+          $teams_coracao = $this->teams;
+          
+          $pag = new Helpers_Paginacao();
+          $pag->base = $this->baseUrl();
+          $pag->championship_id = $champ;
+          $pag->rondas = $rondas;
+          $pag->teams = $teams_coracao;
+          $pag->teamuserid = $teamuserid;
+          $pag->teamusername = $teamusername;
+          $pag->rodada_atual_id = $rodada_id;
+          $pag->link_click_rodada = "/campeonatos/index";
+          $pag->paginacao();
+
+    }
+
+?>    
+    
+<script type="text/javascript"> 
+    $(function() {
+        fechar_teamcoracao();
+        aceitar_teamusername("../penca/edittimecoracao","");
+        teamusername_click();
+
+    });
+</script>
