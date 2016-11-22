@@ -17,6 +17,26 @@
     
 if (!empty($palpites)) {
 
+   $box = new Helpers_Box();
+   $box->matches = $palpites;
+   $box->base = $this->baseUrl();
+   $box->disabled_input = true;
+   $box->mas_info = false;
+   $box->palpites_goal = true;
+   $box->show_final_result = false;
+   $box->show_solo_nopalpitados = false;
+   $box->show_solo_palpitados = true;
+   $box->show_titulo_rodada = false;
+   $box->tamanho_box = "col-lg-5 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
+   $box->btn_palpitar = false;
+   $box->id_result_input1 = "result1p_";
+   $box->id_result_input2 = "result2p_";
+   $box->id_box = "fila_";
+   $box->id_html_team = "teamp_";
+ 
+    $box->big_box();
+    
+    
    ?>
         
                 <div class="box">

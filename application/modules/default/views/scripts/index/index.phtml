@@ -1,99 +1,23 @@
-<?php 
-    $palpites = $this->palpites;
-
-    $translate = Zend_Registry::get('translate');
-   
-    
-    if (!empty($palpites)) { 
-
-//        print_r($palpites);
-       $html = new Helpers_Html();
-       
-       
-       
-?>
+<h1>Bem vindo ao Bolão Craque de Bola!</h1>
 
 
-<div class="col-md-13" id="box_emacao" style="display:yes">
-    <div class="box" id="box_box_emacao" carregado="y" style="display:yes">
-            <div class="box-header">
-                <h2><i class="fa fa-th"></i><span class="break"></span><?php echo $translate->_("palpites.em.acao"); ?></h2>
-                <div class="box-icon">
-                        <a href="javascript:void(0)" id="fechar_emacao" class="btn-close"><i class="fa fa-times"></i></a>
-                </div>
-            </div>
-            <div class="box-content">
-                   <div class="row">
-                       
-                       <?php
-                                $box = new Helpers_Box();
-                                $box->matches = $palpites;
-                                $box->base = $this->baseUrl();
-                                $box->disabled_input = true;
-                                $box->mas_info = true;
-                                $box->palpites_goal = true;
-                                $box->show_final_result = false;
-                                $box->show_solo_nopalpitados = false;
-                                $box->show_solo_palpitados = true;
-                                $box->show_titulo_rodada = false;
-                                $box->show_jugados = false;
-                                $box->tamanho_box = "col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
-                                $box->btn_excluir = true;
-                                $box->id_result_input1 = "result1pf_";
-                                $box->id_result_input2 = "result2pf_";
-                                $box->id_box = "rs_dados_";
-                                $box->show_titulo_rodada = true;
-                                $box->show_titulo_campeonato = true;
-                                echo $box->box();
-                       ?>
-                         
-                       
-                       
-                       
-                       
-                       
-                       
-<!--    <div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
-<form id="frChamp_palpites" action="../penca/meuspalpites" method="post">	
-                                    <div class="form-group">                                      
-                                      <div class="controls">
-                                            <div class="input-group date col-sm-12">
-                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
-                                                    <div class="controls">
-                                                    <select id="ordenar" name="ordenar" class="form-control">
-                                                    <option value="Vazio"><?php echo $translate->_("ordenado.por"); ?></option>
-                                                    <option value="1"><?php echo $translate->_("campeonato"); ?></option>
-                                                    <option value="2"><?php echo $translate->_("data"); ?></option>
-                                                    <option value="3"><?php echo $translate->_("rodada"); ?></option>
-                                                    </select></div>
-                                            </div>	
-                                      </div>
-                                    </div>    
-                            </form>
-</div>-->
-    
-</div>
-
-                </div>
-    </div>
-</div>
+<h2>Em fase final de desenvolvimento, trazendo novidades para vocês!</h2>
 
 
-<?php
+<h3>Venha se preparar para a temporada de 2017 do futebol brasileiro..</h3>
 
-    } else {
-        
-         echo $this->render('index/resenha1.phtml');
-    }
-
-?>
+<br><br>
+<p>Compartilhe com seus companheiros e ganhe R$ 1,00 para cada cadastro efetuado com seu link de compartilhamento.</p>
 
 
-<script type="text/javascript">
+** Clique aqui para gerar seu link e compartilhar com seus amigos e amigas! **
 
-    $(function() {
-        excluir("penca/excluirpalpite");
-        box_mais_info();
-    });
 
-</script>
+<p>Até logo, e bom divertimento.</p>
+
+<p>Equipe Craque de Bola.</p>
+
+
+<p>Previsão inauguração do site em Janeiro/2017.</p>
+
+
