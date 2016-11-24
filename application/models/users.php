@@ -16,24 +16,53 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
 
     protected $_name = 'user';
     
-    public function save($params) {
+    public function save_provisorio($params) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
         $info = array(
-            'us_username'=>$params['username'],
-            'us_password' => $params['password'],
+            'prov_username'=>$params['username'],
+            'prov_password' => $params['password'],
         );  
         
-        $db->insert($this->_name, $info);
+        $db->insert("provisorio", $info);
+        return $db->lastInsertId();
+    }
+    
+    public function cancomplete($id, $pass) { 
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $return = $db->select()->from("provisorio")
+                ->where("prov_id = ?", $id)
+                ->where("prov_password = ?", $pass)
+                ->query()
+                ->fetch();
+        
+        return $return;
+    }
+    
+    //$nome, $email, $cpf, $senha, $cep, $telefone, $result['prov_password']);
+    public function save_user($nome, $email, $cpf, $senha, $telefone, $username) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $data = array('us_username' => $username,
+            'us_password' => $senha,
+            'us_nome' => $nome,
+            'us_cpf' => $cpf,
+            'us_email' => $email,
+            'us_telefone' => $telefone);
+        
+        $db->insert("user", $data);
     }
     
     public function load_user($user) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        return $db->select()->from("user")
+        $result =  $db->select()->from("user")
                 ->where("us_username = ?", $user)
                 ->query()
                 ->fetch();
+        
+        return $result;
     }
     
     public function user_penca($penca) {

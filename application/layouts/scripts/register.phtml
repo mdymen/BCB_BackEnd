@@ -1,11 +1,20 @@
-<html lang="en"><head>
+<?php
+
+        $usuario = Zend_Controller_Front::getInstance()->getRequest()->getParam('id');
+
+?>  
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
 	
 	<!-- start: Meta -->
 	<meta charset="utf-8">
 	<title>Bolão Craque de Bola</title>
-	<meta name="description" content="Genius Dashboard - Bootstrap Admin Template.">
-	<meta name="author" content="Łukasz Holeczek">
-	<meta name="keyword" content="Genius, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+	<meta name="description" content="Bolão Craque de Bola.">
+	<meta name="author" content="Martin Dymenstein">
+	<meta name="keyword" content="Bolão, Futebol, Brasileirão, Campeonato">
 	<!-- end: Meta -->
 	
 	<!-- start: Mobile Specific -->
@@ -13,13 +22,17 @@
 	<!-- end: Mobile Specific -->
 	
 	<!-- start: CSS -->
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-	<link href="assets/css/style.min.css" rel="stylesheet">
-	<link href="assets/css/retina.min.css" rel="stylesheet">
-	<link href="assets/css/print.css" rel="stylesheet" type="text/css" media="print">
+        <link href="<?php echo $this->baseUrl("assets/css/bootstrap.min.css"); ?>" rel="stylesheet">
+	<link href="<?php echo $this->baseUrl("assets/css/style.min.css"); ?>"  rel="stylesheet">
+	<link href="<?php echo $this->baseUrl("assets/css/retina.min.css"); ?>" rel="stylesheet">
+	<link href="<?php echo $this->baseUrl("assets/css/print.css"); ?>" rel="stylesheet" type="text/css" media="print"/>
 	<!-- end: CSS -->
 	
-
+   <?php echo $this->headScript()->appendFile($this->baseUrl('jquery/jquery-1.8.3.js')); ?>
+   <?php echo $this->headScript()->appendFile($this->baseUrl('jquery/jquery-ui-1.9.2.custom.js')); ?>
+   <?php echo $this->headScript()->appendFile($this->baseUrl('jquery/jquery-ui-1.9.2.custom.min.js')); ?> 
+   <?php echo $this->headScript()->appendFile($this->baseUrl('assets/js/own.js')) ?>        
+        
 	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
 		
@@ -27,138 +40,147 @@
 		<script src="assets/js/respond.min.js"></script>
 		
 	<![endif]-->
-	
+            
 	<!-- start: Favicon and Touch Icons -->
 	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/ico/apple-touch-icon-57-precomposed.png">
-	<link rel="shortcut icon" href="<?php echo $this->baseUrl().'assets/ico/icone.gif'; ?>">
-        <link rel="icon" href="assets/ico/icone.gif">
+	<link rel="shortcut icon" href="<?php echo $this->baseUrl().'assets/ico/icone.jpg'; ?>">
+        <link rel="icon" href="assets/ico/icone.jpg">
 	<!-- end: Favicon and Touch Icons -->	
 		
 </head>
 
 <body>
-		<div class="container">
+	
+   <div class="container">
 		<div class="row">
-					<div id="content" class="col-sm-12 full">
-			<div class="row">
 				
-				<div class="login-box">
-					
-					<div class="header">
-						CRIAR SUA CONTA
+			<!-- start: Main Menu -->
+			
+			<!-- end: Main Menu -->
+						
+			<!-- start: Content -->
+			<div id="content" class="col-lg-12 col-sm-12 col-xs-12 ">
+	<div class=" col-xs-12 col-sm-12 col-lg-6 col-lg-offset-4 callout" style="padding-top:20px">
+                                <div class="box" style="background:white !important">
+                                    <div class="header" style="color:white;background-color:#222; padding: 20px">
+                                        <b>Cadastre-se Agora!</b>
 					</div>
-					<?php
-                                        $e = Zend_Controller_Front::getInstance()->getRequest()->getParam('error');
-                                    if (strcmp($e, "yes") == 0) {
-                                                    echo '<div class="alert alert-danger">
-								
-								 Nome de usuario já está em uso.
-							</div>  ';  
-              
-                                                }
-                                                
-                                                ?>
-					<form id="form_register" class="form-horizontal register" action="index/register" method="post">
-						
-						<fieldset class="col-sm-12">
+					<form id="novo_usuario" class="form-horizontal" role="form" action="public/index/registercompleted" style="padding: 40px 0 30px 30px">
+                                            <div><span id="erro" style="display:none; color:red"></span></div>
+                                                <input type="hidden" value="<?php echo $usuario; ?>" id="usuario">
+                                                <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <input type="text" class="form-control" style="width: 70%" id="nome" name="nome" placeholder="Nome completo">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <input type="email" class="form-control" style="width: 70%" id="email" name="email" placeholder="E-mail">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <input type="text" class="form-control" style="width: 40%" id="cpf" name="cpf" placeholder="CPF">
+						    </div>
+						  </div>
+                                                  <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <input type="text" class="form-control" style="width: 30%" id="cep" name="cep" placeholder="CEP" >
+						    </div>
+						  </div>                                            
+						  <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Telefone">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <input type="password" class="form-control" id="senha" name="password" placeholder="Confirme a senha">
+						    </div>
+						  </div>                                                                                      
+						  <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <button type="button" id="btnCadastro" class="btn btn-success">Cadastra-se</button>
+						    </div>
+						  </div>                                               
+					   </form>
+                                    </div>
+				</div>		
+           
+                            
 
-							
-							<div class="form-group">
-							  	<label class="control-label"  for="username">Username</label>
-							  	<div class="controls row">
-									<div class="input-group col-sm-12">
-										<input type="text" name="username" class="form-control" id="username">
-									</div>	
-							  	</div>
-							</div>
-							
-							<div class="form-group">
-							  	<label class="control-label" name="password" for="password">Password</label>
-							  	<div class="controls row">
-									<div class="input-group col-sm-12">
-										<input name="password" type="password" class="form-control" id="password">
-									</div>	
-							  	</div>
-							</div>
+<script type="text/javascript">
 
-							
+ 
+</script>
+                            
 
-							
-							<div class="row">
 
-								<button type="submit" class="btn btn-primary btn-lg col-xs-12">Cadastrar-se</button>
-							
-							</div>
-							
-							
-						</fieldset>	
 
-					</form>			
+
+
+
+    
+
+
+<script type="text/javascript">
+
+    $(function() {
+       $("#btnCadastro").bind("click", function() {
+           var nome = $("#nome").val();
+           var email = $("#email").val();
+           var cpf = $("#cpf").val();
+           var senha = $("#senha").val();
+           var cep = $("#cep").val();
+           var telefone = $("#telefone").val();
+           var usuario = $("#usuario").val();
+           
+           if (nome !== "" || email !== "" ) {
+                    $.post("index/validacpf", {cpf : cpf}, function(response) {
+                        if (response) {
+                            
+                            $.post("index/registercomplete", {usuario:usuario, nome : nome, email : email, cpf : cpf, senha : senha, cep : cep, telefone : telefone}, function(response) {
+
+                                console.log(response);
+
+                                if (!response) { 
+                                    $("#erro").html("Erro ao realizar cadastro, verifique os dados.");
+                                    $("#erro").show();                                        
+                                } else  {
+                                    var host = window.location.hostname;
+                                    if (host === "localhost") {
+                                        window.location = "http://localhost/penca/public";
+                                    } else {
+                                        window.location = "http://www.bolaocraquedebola.com.br/public";   
+                                    }                                    
+                                }
+                                
+                             });
+                             
+                        } else {
+                            $("#erro").html("CPF incorrecto.");
+                            $("#erro").show();
+                        }
+                    });
+            } else {
+                $("#erro").html("Erro ao realizar cadastro, verifique os dados.");
+                $("#erro").show();
+            }
+       });
+    });
+    
+    
+    
+</script>     
 					
-					<p>
-						<a href="http://www.bolaocraquedebola.com.br/public" class="btn btn-facebook"><span>via Facebook</span></a>
-					</p>				
-						
-				</div>
-			</div><!--/row-->
-		
-		</div>	
-
-			
-			
+			</div>
+			<!-- end: Content -->
+				
 				</div><!--/row-->		
 		
-	</div><!--/container-->
+	</div>
 	
-		
-	<!-- start: JavaScript-->
-	<!--[if !IE]>-->
-
-			<script src="assets/js/jquery-2.1.0.min.js"></script>
-
-	<!--<![endif]-->
-
-	<!--[if IE]>
-	
-		<script src="assets/js/jquery-1.11.0.min.js"></script>
-	
-	<![endif]-->
-
-	<!--[if !IE]>-->
-
-		<script type="text/javascript">
-			window.jQuery || document.write("<script src='assets/js/jquery-2.1.0.min.js'>"+"<"+"/script>");
-		</script>
-
-	<!--<![endif]-->
-
-	<!--[if IE]>
-	
-		<script type="text/javascript">
-	 	window.jQuery || document.write("<script src='assets/js/jquery-1.11.0.min.js'>"+"<"+"/script>");
-		</script>
-		
-	<![endif]-->
-	<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	
-		
-	
-	
-	<!-- page scripts -->
-	<script src="assets/js/jquery.icheck.min.js"></script>
-	
-	<!-- theme scripts -->
-	<script src="assets/js/custom.min.js"></script>
-	<script src="assets/js/core.min.js"></script>
-	
-	<!-- inline scripts related to this page -->
-	<script src="assets/js/pages/login.js"></script>
-	
-	<!-- end: JavaScript-->
-	
-
-</body></html>
+</body>

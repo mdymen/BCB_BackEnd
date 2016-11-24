@@ -172,12 +172,6 @@
 		<!-- ==== HEADERWRAP ==== -->
 	    <div id="headerwrap" id="home" name="home">
 			<header class="clearfix">
-<!--	  		 		<h1><span class="icon icon-shield"></span></h1>-->
-<!--	  		 		<p>Bolão Craque de Bola.</p>
-	  		 		<p>Uma nova forma de vivir o futebol!</p>
-                                        <div style="text-align: center">
-                            <a href="http://www.bolaocraquedebola.com.br/public" class="btn btn-lg btn-primary btn-round">Palpitar</a>
-                            <br><br>-->
                       
                             <!DOCTYPE html>
 <html>
@@ -188,27 +182,33 @@
                                     <div class="header" style="color:white;background-color:#222; padding: 20px">
                                         <b>Cadastre-se Agora!</b>
 					</div>
-					<form class="form-horizontal" role="form" style="padding: 40px 0 30px 30px">
-						  <div class="form-group">
+					<form id="novo_usuario" class="form-horizontal" role="form" action="public/index/register" style="padding: 40px 0 30px 30px">
+                                            <div><span id="erro" style="display:none; color:red"></span></div>  
+                                                <div class="form-group">
 						    <div class="col-xs-10 col-sm-10 col-lg-10">
-						      <input type="email" class="form-control" id="usuario" name="usuario" placeholder="Usuario">
+						      <input type="text" class="form-control" id="usuario" name="username" placeholder="Usuario">
 						    </div>
 						  </div>
 						  <div class="form-group">
 						    <div class="col-xs-10 col-sm-10 col-lg-10">
-						      <input type="text" class="form-control" id="senha" name="senha" placeholder="Senha">
+						      <input type="password" class="form-control" id="senha" name="password" placeholder="Senha">
 						    </div>
 						  </div>
                                                     <div class="form-group">
 						    <div class="col-xs-10 col-sm-10 col-lg-10">
-                                                        <input type="checkbox" id="termos" name="termos"> Aceito os termos de uso.
+                                                        <input type="checkbox" id="termos" name="termos"> <a href="http://www.bolaocraquedebola.com.br/termos.pdf" TARGET="_BLANK">Aceito os termos de uso.</a>
 						    </div>
 						  </div>                                            
 						  <div class="form-group">
 						    <div class="col-xs-10 col-sm-10 col-lg-10">
-						      <button type="submit" class="btn btn-success">Cadastra-se</button>
+						      <button type="button" id="btnCadastro" class="btn btn-success">Cadastra-se</button>
 						    </div>
 						  </div>
+                                                    <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10" style="text-align:left">
+                                                        <span><a href="public/?login">Já possuo uma conta?</a></span>
+						    </div>
+						  </div>                                              
 					   </form>
                                     </div>
 				</div>
@@ -216,61 +216,7 @@
 </html>
 
                             
-  
-<!--                            <div class="row">
-    <div class="col-lg-12">
-            <div class="box">
-                    <div class="box-content" style="background:white">
-                            <div class="row col-lg-5 col-sm-12 col-xs-12 col-xxs-12 col-xxs-12" style="padding-left: 40px; margin-left: 100px; background:white">
-				
-				<div class="">
-					
-					<div class="header">
-						CRIAR SUA CONTA
-					</div>
-										<form id="form_register" class="form-horizontal register" action="index/register" method="post">
-						
-						<fieldset class="col-sm-12">
-
-							
-							<div class="form-group">
-							  	<div class="controls row">
-									<div class="input-group col-sm-12">
-										<input type="text" name="username" class="form-control" id="username">
-									</div>	
-							  	</div>
-							</div>
-							
-							<div class="form-group">
-							  	<div class="controls row">
-									<div class="input-group col-sm-12">
-										<input name="password" type="password" class="form-control" id="password">
-									</div>	
-							  	</div>
-							</div>
-
-							
-
-							
-							<div class="row">
-
-								<button type="submit" class="btn btn-primary btn-lg col-xs-12">Cadastrar-se</button>
-							
-							</div>
-							
-							
-						</fieldset>	
-
-					</form>			
-					
-					<p>
-						<a href="http://www.bolaocraquedebola.com.br/public" class="btn btn-facebook"><span>via Facebook</span></a>
-					</p>				
-						
-				</div>
-			</div></div></div></div>
-                            
-                        </div>-->
+                        </div>
 	  		</header>	    
 	    </div><!-- /headerwrap -->
 
@@ -297,268 +243,6 @@
 			</div><!-- row -->
 		</div><!-- greywrap -->
 		
-<!--		 ==== ABOUT ==== 
-		<div class="container" id="about" name="about">
-			<div class="row white">
-			<br>
-				<h1 class="centered">A LITTLE ABOUT OUR AGENCY</h1>
-				<hr>
-				
-				<div class="col-lg-6">
-					<p>We believe ideas come from everyone, everywhere. In fact, at BlackTie, everyone within our agency walls is a designer in their own right. And there are a few principles we believe—and we believe everyone should believe—about our design craft. These truths drive us, motivate us, and ultimately help us redefine the power of design. We’re big believers in doing right by our neighbors. After all, we grew up in the Twin Cities and we believe this place has much to offer. So we do what we can to support the community we love.</p>
-				</div> col-lg-6 
-				
-				<div class="col-lg-6">
-					<p>Over the past four years, we’ve provided more than $1 million in combined cash and pro bono support to Way to Grow, an early childhood education and nonprofit organization. Other community giving involvement throughout our agency history includes pro bono work for more than 13 organizations, direct giving, a scholarship program through the Minneapolis College of Art & Design, board memberships, and ongoing participation in the Keystone Club, which gives five percent of our company’s earnings back to the community each year.</p>
-				</div> col-lg-6 
-			</div> row 
-		</div> container -->
-		
-		<!-- ==== SECTION DIVIDER1 -->
-<!--		<section class="section-divider textdivider divider1">
-			<div class="container">
-				<h1>DESIGN EXPAND BOUNDARIES</h1>
-				<hr>
-				<p>To achieve real change, we have to expand boundaries. Because the Wild West of what-could-be is unexplored but rife with opportunity.</p>
-			</div> container 
-		</section> section -->
-		
-		
-		<!-- ==== SERVICES ==== -->
-<!--		<div class="container" id="services" name="services">
-			<br>
-			<br>
-			<div class="row">
-				<h2 class="centered">ONE BRAND, ONE VOICE.</h2>
-				<hr>
-				<br>
-				<div class="col-lg-offset-2 col-lg-8">
-					<p>Employees and consumers. Two halves of a brand’s entirety, the whole of a brand’s audience. Sometimes these two halves have very different viewpoints, creating a weak spot in the brand story. Weakness tarnishes credibility. Brands that aren’t credible aren’t viable.
-					</p>
-					<p>We squash weakness by designing the whole brand story. It’s crafted around the truism held by employees and consumers to create an experience that connects from the inside out.</p>
-					<p>By being true to the brand we represent, we elevate the audiences’ relationship to it. Like becomes love becomes a passion. Passion becomes advocacy. And we see the brand blossom from within, creating a whole story the audience embraces. That’s when the brand can truly flex its muscles.</p>
-				</div> col-lg 
-			</div> row 
-			
-			<div class="row">
-				<h2 class="centered">MOBILE FIRST THINKING, ALWAYS.</h2>
-				<hr>
-				<br>
-				<div class="col-lg-offset-2 col-lg-8">
-					<img class="img-responsive" src="assets/img/iphone.png" alt="">
-				</div> col 
-			</div> row 
-		</div> container 
-  		
-
-		 ==== SECTION DIVIDER2 
-		<section class="section-divider textdivider divider2">
-			<div class="container">
-				<h1>DESIGN IS AN INTERACTION</h1>
-				<hr>
-				<p>To develop a deeper and more meaningful connection with consumers, we believe design must invite them to take part in the conversation.</p>
-			</div> container 
-		</section> section -->
-
-		<!-- ==== TEAM MEMBERS ==== -->
-<!--		<div class="container" id="team" name="team">
-		<br>
-			<div class="row white centered">
-				<h1 class="centered">MEET OUR AWESOME TEAM</h1>
-				<hr>
-				<br>
-				<br>
-				<div class="col-lg-3 centered">
-					<img class="img img-circle" src="assets/img/team/team01.jpg" height="120px" width="120px" alt="">
-					<br>
-					<h4><b>Mike Arney</b></h4>
-					<a href="#" class="icon icon-twitter"></a>
-					<a href="#" class="icon icon-facebook"></a>
-					<a href="#" class="icon icon-flickr"></a>
-					<p>Mike combines an expert technical knowledge with a real eye for design. Working with clients from a wide range of industries, he fully understands client objectives when working on a project, large or small.</p>
-				</div> col-lg-3 
-				
-				<div class="col-lg-3 centered">
-					<img class="img img-circle" src="assets/img/team/team02.jpg" height="120px" width="120px" alt="">
-					<br>
-					<h4><b>Tim Davies</b></h4>
-					<a href="#" class="icon icon-twitter"></a>
-					<a href="#" class="icon icon-facebook"></a>
-					<a href="#" class="icon icon-flickr"></a>
-					<p>Tim is an experienced marcoms practitioner and manages projects from inception to delivery. He understands the synergy between great design and commercial effectiveness which shines through on every project.</p>
-				</div> col-lg-3 
-				
-				<div class="col-lg-3 centered">
-					<img class="img img-circle" src="assets/img/team/team03.jpg" height="120px" width="120px" alt="">
-					<br>
-					<h4><b>Michele Lampa</b></h4>
-					<a href="#" class="icon icon-twitter"></a>
-					<a href="#" class="icon icon-facebook"></a>
-					<a href="#" class="icon icon-flickr"></a>
-					<p>Be a creative director is a hard task, but Michele loves what she does. Her combination of knowledge and expertise is an important pillar in our agency.</p>
-				</div> col-lg-3 
-				
-				<div class="col-lg-3 centered">
-					<img class="img img-circle" src="assets/img/team/team04.jpg" height="120px" width="120px" alt="">
-					<br>
-					<h4><b>Jaye Smith</b></h4>
-					<a href="#" class="icon icon-twitter"></a>
-					<a href="#" class="icon icon-facebook"></a>
-					<a href="#" class="icon icon-flickr"></a>
-					<p>Jaye began making websites when animated logos and scrolling text were cool, but has since found a love for simplicity, creating websites that are a pleasure to browse. Monkey Island Fan.</p>
-				</div> col-lg-3 
-				
-			</div> row 
-		</div> container -->
-
-		<!-- ==== GREYWRAP ==== -->
-<!--		<div id="greywrap">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-8 centered">
-						<img class="img-responsive" src="assets/img/macbook.png" align="">
-					</div>
-					<div class="col-lg-4">
-						<h2>We Are Hiring!</h2>
-						<p>Do you want to be one of use? Sure you want, because we are an awesome team!. Here we work hard every day to craft pixel perfect sites.</p>
-						<p><a class="btn btn-success">Contact Us</a></p>
-					</div>					
-				</div> row 
-			</div>
-			<br>
-			<br>
-		</div> greywrap -->
-		
-		<!-- ==== SECTION DIVIDER3 -->
-<!--		<section class="section-divider textdivider divider3">
-			<div class="container">
-				<h1>DESIGN SOLVE PROBLEMS</h1>
-				<hr>
-				<p>From the purely practical to the richly philosophical, design is the solution to a host of challenges.</p>
-			</div> container 
-		</section> section 
-		-->
-		<!-- ==== PORTFOLIO ==== -->
-<!--		<div class="container" id="portfolio" name="portfolio">
-		<br>
-			<div class="row">
-				<br>
-				<h1 class="centered">WE CREATE COOL STUFF</h1>
-				<hr>
-				<br>
-				<br>
-			</div> /row 
-			<div class="container">
-			<div class="row">	
-			
-				 PORTFOLIO IMAGE 1 
-				<div class="col-md-4 ">
-			    	<div class="grid mask">
-						<figure>
-							<img class="img-responsive" src="assets/img/portfolio/folio01.jpg" alt="">
-							<figcaption>
-								<h5>DASHBOARD</h5>
-								<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">Take a Look</a>
-							</figcaption> /figcaption 
-						</figure> /figure 
-			    	</div> /grid-mask 
-				</div> /col 
-				
-				
-						  MODAL SHOW THE PORTFOLIO IMAGE. In this demo, all links point to this modal. You should create
-						      a modal for each of your projects. 
-						      
-						  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						    <div class="modal-dialog">
-						      <div class="modal-content">
-						        <div class="modal-header">
-						          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						          <h4 class="modal-title">Project Title</h4>
-						        </div>
-						        <div class="modal-body">
-						          <p><img class="img-responsive" src="assets/img/portfolio/folio01.jpg" alt=""></p>
-						          <p>This project was crafted for Some Name corp. Detail here a little about your job requirements and the tools used. Tell about the challenges faced and what you and your team did to solve it.</p>
-						          <p><b><a href="#">Visit Site</a></b></p>
-						        </div>
-						        <div class="modal-footer">
-						          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						        </div>
-						      </div> /.modal-content 
-						    </div> /.modal-dialog 
-						  </div> /.modal 
-				
-				
-				 PORTFOLIO IMAGE 2 
-				<div class="col-md-4">
-			    	<div class="grid mask">
-						<figure>
-							<img class="img-responsive" src="assets/img/portfolio/folio02.jpg" alt="">
-							<figcaption>
-								<h5>UI DESIGN</h5>
-								<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">Take a Look</a>
-							</figcaption> /figcaption 
-						</figure> /figure 
-			    	</div> /grid-mask 
-				</div> /col 
-				
-				 PORTFOLIO IMAGE 3 
-				<div class="col-md-4">
-			    	<div class="grid mask">
-						<figure>
-							<img class="img-responsive" src="assets/img/portfolio/folio03.jpg" alt="">
-							<figcaption>
-								<h5>ANDROID PAGE</h5>
-								<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">Take a Look</a>
-							</figcaption> /figcaption 
-						</figure> /figure 
-			    	</div> /grid-mask 
-				</div> /col 
-			</div> /row 
-
-				 PORTFOLIO IMAGE 4 
-			<div class="row">	
-				<div class="col-md-4 ">
-			    	<div class="grid mask">
-						<figure>
-							<img class="img-responsive" src="assets/img/portfolio/folio04.jpg" alt="">
-							<figcaption>
-								<h5>PROFILE</h5>
-								<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">Take a Look</a>
-							</figcaption> /figcaption 
-						</figure> /figure 
-			    	</div> /grid-mask 
-				</div> /col 
-				
-				 PORTFOLIO IMAGE 5 
-				<div class="col-md-4">
-			    	<div class="grid mask">
-						<figure>
-							<img class="img-responsive" src="assets/img/portfolio/folio05.jpg" alt="">
-							<figcaption>
-								<h5>TWITTER STATUS</h5>
-								<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">Take a Look</a>
-							</figcaption> /figcaption 
-						</figure> /figure 
-			    	</div> /grid-mask 
-				</div> /col 
-				
-				 PORTFOLIO IMAGE 6 
-				<div class="col-md-4">
-			    	<div class="grid mask">
-						<figure>
-							<img class="img-responsive" src="assets/img/portfolio/folio06.jpg" alt="">
-							<figcaption>
-								<h5>PHONE MOCKUP</h5>
-								<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">Take a Look</a>
-							</figcaption> /figcaption 
-						</figure> /figure 
-			    	</div> /grid-mask 
-				</div> /col 
-			</div> /row 
-			<br>
-			<br>
-		</div> /row 
-	</div> /container -->
 
 		<!-- ==== SECTION DIVIDER4 ==== -->
 		<section class="section-divider textdivider divider4">
@@ -569,65 +253,6 @@
 			</div><!-- container -->
 		</section><!-- section -->
 		
-<!--		 ==== BLOG ==== 
-		<div class="container" id="blog" name="blog">
-		<br>
-			<div class="row">
-				<br>
-				<h1 class="centered">WE ARE STORYTELLERS</h1>
-				<hr>
-				<br>
-				<br>
-			</div> /row 
-			
-			<div class="row">
-				<div class="col-lg-6 blog-bg">
-					<div class="col-lg-4 centered">
-					<br>
-						<p><img class="img img-circle" src="assets/img/team/team04.jpg" width="60px" height="60px"></p>
-						<h4>Jaye Smith</h4>
-						<h5>Published Aug 30.</h5>
-					</div>
-					<div class="col-lg-8 blog-content">
-						<h2>We Define Success</h2>
-						<p>Armed with insight, we embark on designing the right brand experience that engages the audience. It encompasses both the strategic direction and creative execution that solves a business problem and brings the brand to life.</p>
-						<p>In the create phase, the big idea is unleashed to the world through different media touchpoints. This is when we watch the audience fall in love all over again with our client’s brand.</p>
-						<p><a href="#" class="icon icon-link"> Read More</a></p>
-						<br>
-					</div>
-				</div> /col 
-				
-				<div class="col-lg-6 blog-bg">
-					<div class="col-lg-4 centered">
-					<br>
-						<p><img class="img img-circle" src="assets/img/team/team03.jpg" width="60px" height="60px"></p>
-						<h4>Michele Lampa</h4>
-						<h5>Published Aug 28.</h5>
-					</div>
-					<div class="col-lg-8 blog-content">
-						<h2>A Beautiful Story</h2>
-						<p>Armed with insight, we embark on designing the right brand experience that engages the audience. It encompasses both the strategic direction and creative execution that solves a business problem and brings the brand to life.</p>
-						<p>In the create phase, the big idea is unleashed to the world through different media touchpoints. This is when we watch the audience fall in love all over again with our client’s brand.</p>
-						<p><a href="#" class="icon icon-link"> Read More</a></p>
-						<br>
-					</div>
-				</div> /col 
-			</div> /row 
-			<br>
-			<br>
-		</div> /container -->
-
-		
-		<!-- ==== SECTION DIVIDER6 ==== -->
-<!--		<section class="section-divider textdivider divider6">
-			<div class="container">
-				<h1>CRAFTED IN NEW YORK, USA.</h1>
-				<hr>
-				<p>Some Address 987,</p>
-				<p>+34 9884 4893</p>
-				<p><a class="icon icon-twitter" href="#"></a> | <a class="icon icon-facebook" href="#"></a></p>
-			</div> container 
-		</section> section -->
 		
 		<div class="container" id="contact" name="contact">
 			<div class="row">
@@ -698,3 +323,36 @@
 	<script type="text/javascript" src="assets/js/jquery-func.js"></script>
   </body>
 </html>
+
+
+<script type="text/javascript">
+
+    $(function() {
+       $("#btnCadastro").bind("click", function() {
+            var usuario = $("#usuario").val();
+            var password = $("#password").val();
+            if (usuario === "" || password === "") {
+                $("#erro").html("Nome de usuario ou senha incorretos");
+                $("#erro").show();
+            } else {
+                if ($("#termos").is(":checked")) {
+                    $.post("public/index/podecadastrarusuario", {usuario:usuario}, function(response) {
+//                        console.log(response);
+                        if (response) {
+                            $("#novo_usuario").submit();
+                        } else {
+                            $("#erro").html("O nome de usuario jà esta sendo utilizado");
+                            $("#erro").show();            
+                        }
+                    });
+                    
+                } else {
+                    $("#erro").html("Deve aceitar os termos");
+                    $("#erro").show();    
+                }
+            }
+       });
+    });
+    
+    
+</script>

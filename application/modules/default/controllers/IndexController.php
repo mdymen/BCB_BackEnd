@@ -80,21 +80,84 @@ class IndexController extends Zend_Controller_Action
         
     }
     
+//    public function registerAction() {
+//       $params = $this->_request->getParams();
+//       
+//       $user = new Application_Model_Users();
+//       $usuario = $user->load_user($params['username']);
+//       
+//       
+////       if (empty($usuario)) {
+////            $user->save($params);
+////            //$this->login1($params['username'], $params['password']);
+////       } else {
+////           
+////       }
+//       $this->redirect("../public/?register");
+//    }
+    
     public function registerAction() {
-       $params = $this->_request->getParams();
+        $params = $this->_request->getParams();
        
-       $user = new Application_Model_Users();
-       $usuario = $user->load_user($params['username']);
+        $user = new Application_Model_Users();
        
-       if (empty($usuario)) {
-            $user->save($params);
-            $this->login1($params['username'], $params['password']);
-       } else {
-           $this->redirect("?register&error=yes");
-       }
+        $usuario = $user->save_provisorio($params);
        
+        $this->redirect("../public/?register&id=".$usuario);
        
     }
+    
+    public function podecadastrarusuarioAction() {
+        $usuario = $this->_request->getParam("usuario");
+        
+        $u = new Application_Model_Users();
+        $return = $u->load_user($usuario);
+        
+        $result = false;
+        if (empty($return)) {
+            $result = true;
+        } 
+        
+        $this->getResponse()->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $this->_helper->json($result);
+    }
+    
+    public function registercompleteAction() {
+        $params = $this->_request->getParams();
+        //nome : nome, email : email, cpf : cpf, senha : senha, cep : cep, telefone : telefone}
+        $nome = $params["nome"];
+        $email = $params["email"];
+        $cpf = $params["cpf"];
+        $senha = $params["senha"];
+        $cep = $params["cep"];
+        $telefone = $params["telefone"];
+        $usuario = $params["usuario"];
+        
+        $u = new Application_Model_Users();
+        $result = $u->cancomplete($usuario, $senha);
+        
+        
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        if (!empty($result)) {
+            $u->save_user($nome, $email, $cpf, $senha, $cep, $telefone, $result['prov_username']);
+            $this->login1($result['prov_username'], $senha);
+            $this->_helper->json(true);
+        } 
+        else {
+           $this->_helper->json(false);
+        }
+        
+    }
+    
     
     function logoutAction() {
         $storage = new Zend_Auth_Storage_Session();
@@ -222,5 +285,61 @@ class IndexController extends Zend_Controller_Action
 //        $this->render("addfacebookuser")
     }
     
+    public function validacpfAction() {
+        $cpf = $this->_request->getParam("cpf");
+        
+        
+        // Verifica se um número foi informado
+        if(empty($cpf)) {
+            $result = false;
+        }
+
+        // Elimina possivel mascara
+        $cpf = ereg_replace('[^0-9]', '', $cpf);
+        $cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
+
+        // Verifica se o numero de digitos informados é igual a 11 
+        if (strlen($cpf) != 11) {
+            $result =  false;
+        }
+        // Verifica se nenhuma das sequências invalidas abaixo 
+        // foi digitada. Caso afirmativo, retorna falso
+        else if ($cpf == '00000000000' || 
+            $cpf == '11111111111' || 
+            $cpf == '22222222222' || 
+            $cpf == '33333333333' || 
+            $cpf == '44444444444' || 
+            $cpf == '55555555555' || 
+            $cpf == '66666666666' || 
+            $cpf == '77777777777' || 
+            $cpf == '88888888888' || 
+            $cpf == '99999999999') {
+            $result =  false;
+         // Calcula os digitos verificadores para verificar se o
+         // CPF é válido
+         } else {   
+
+            for ($t = 9; $t < 11; $t++) {
+
+                for ($d = 0, $c = 0; $c < $t; $c++) {
+                    $d += $cpf{$c} * (($t + 1) - $c);
+                }
+                $d = ((10 * $d) % 11) % 10;
+                if ($cpf{$c} != $d) {
+                    $result =  false;
+                }
+            }
+
+            $result =  true;
+        }
+        
+         $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($result);
+    }
 }
 
