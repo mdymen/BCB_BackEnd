@@ -126,7 +126,7 @@
                                                 
 					</ul>
 				</div>
-									<a href="2nd-level.html#" id="main-menu-min" class="full visible-md visible-lg"><i class="fa fa-angle-double-left"></i></a>
+									<a href="javascript:void(0)" id="main-menu-min" class="full visible-md visible-lg"><i class="fa fa-angle-double-left"></i></a>
 							</div>
 			<!-- end: Main Menu -->
 						

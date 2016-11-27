@@ -34,24 +34,41 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         $return = $db->select()->from("provisorio")
                 ->where("prov_id = ?", $id)
                 ->where("prov_password = ?", $pass)
+        
+//        print_r($return->__toString());
+//        die(".");
+        
                 ->query()
                 ->fetch();
-        
+//        
         return $return;
     }
     
-    //$nome, $email, $cpf, $senha, $cep, $telefone, $result['prov_password']);
-    public function save_user($nome, $email, $cpf, $senha, $telefone, $username) {
+    public function save_user($data) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->insert("user", $data);
+        return $db->lastInsertId();
+    }
+    
+    public function load_userbyid($user) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        $data = array('us_username' => $username,
-            'us_password' => $senha,
-            'us_nome' => $nome,
-            'us_cpf' => $cpf,
-            'us_email' => $email,
-            'us_telefone' => $telefone);
+        $result =  $db->select()->from("user")
+                ->where("us_id = ?", $user)
+                ->query()
+                ->fetch();
         
-        $db->insert("user", $data);
+        return $result;
+    }    
+    
+    public function update_cash($user, $cash) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+//        print_r($user);
+//        print_r("-".$cash);
+//        die("...");
+        
+        $db->update("user", array('us_cash' => $cash),'us_id = '.$user);
     }
     
     public function load_user($user) {
@@ -244,11 +261,50 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         
     }
     
-    public function isUsersName($user) {
+    public function isCpfUsed($cpf) {
+        $db = Zend_Db_Table::getDefaultAdapter();       
+        
+        $result = $db->select()->from("user")
+                ->where("us_cpf = ?",$cpf)
+        
+//        print_r($result->__toString());
+//        die(".");
+            ->query()
+                ->fetchAll();
+        
+        return $result;        
+    }
+    
+    public function isEmailUsed($email) {
+        $db = Zend_Db_Table::getDefaultAdapter();       
+        
+        $result = $db->select()->from("user")
+                ->where("us_email = ?",$email)
+        
+//        print_r($result->__toString());
+//        die(".");
+            ->query()
+                ->fetchAll();
+        
+        return $result;  
+    }    
+    
+    public function adicionarPorLinkReferencia($creador, $uso) {
         $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $dados = array('lr_idcreador' => $creador, 'lr_iduso' => $uso);
+        
+        $db->update("linkedreferencia", $dados);
+    }
+    
+    public function isUsersName($user) {
+        $db = Zend_Db_Table::getDefaultAdapter();       
         
         $result = $db->select()->from("user")
                 ->where("us_username = ?",$user)
+        
+//        print_r($result->__toString());
+//        die(".");
             ->query()
                 ->fetchAll();
         

@@ -1,7 +1,12 @@
 <?php
 
-        $usuario = Zend_Controller_Front::getInstance()->getRequest()->getParam('id');
+        $usuario = Zend_Controller_Front::getInstance()->getRequest()->getParam('id');        
+        $linked = Zend_Controller_Front::getInstance()->getRequest()->getParam('userlinked');
 
+        $checked = "";
+        if (!empty($linked)) {
+            $checked = "checked";
+        }
 ?>  
 
 
@@ -68,9 +73,37 @@
                                     <div class="header" style="color:white;background-color:#222; padding: 20px">
                                         <b>Cadastre-se Agora!</b>
 					</div>
-					<form id="novo_usuario" class="form-horizontal" role="form" action="public/index/registercompleted" style="padding: 40px 0 30px 30px">
+					<form id="novo_usuario" class="form-horizontal" role="form" action="index/registercomplete" style="padding: 40px 0 30px 30px">
                                             <div><span id="erro" style="display:none; color:red"></span></div>
-                                                <input type="hidden" value="<?php echo $usuario; ?>" id="usuario">
+                                                <input type="hidden" value="<?php echo $usuario; ?>" name="usuario" id="usuario">
+                                                <input type="hidden" value="<?php echo $linked; ?>" name="userlinked" id="userlinked">
+                                                <input style="display:none" type="checkbox" id="isuserlinked" <?php echo $checked; ?> >
+                                                <?php
+                                                
+                                                    if (!empty($linked)) { 
+                                                        echo '<div class="form-group">
+                                                            <div class="col-xs-8 col-sm-8 col-lg-8">
+                                                                <input type="text" class="form-control" style="width: 70%" id="nomeusuario" name="nomeusuario" placeholder="Nome de usuario">
+            						    </div>
+                					</div>';
+                                                        echo '<div class="form-group">
+                                                            <div class="col-xs-10 col-sm-10 col-lg-10">
+                                                                <input type="password" class="form-control" style="width: 70%" id="senha" name="senha" placeholder="Senha">
+            						    </div>
+                					</div>';                                                        
+                                                    }
+                                                
+                                                ?>
+                                                
+                                                
+                                                
+						  <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <input type="password" class="form-control" style="width: 70%" id="password" name="password" placeholder="Confirme a senha">
+						    </div>
+						  </div>   
+                                                <br>
+                                                
                                                 <div class="form-group">
 						    <div class="col-xs-10 col-sm-10 col-lg-10">
 						      <input type="text" class="form-control" style="width: 70%" id="nome" name="nome" placeholder="Nome completo">
@@ -95,12 +128,49 @@
 						    <div class="col-xs-10 col-sm-10 col-lg-10">
 						      <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Telefone">
 						    </div>
-						  </div>
+						  </div>    
 						  <div class="form-group">
 						    <div class="col-xs-10 col-sm-10 col-lg-10">
-						      <input type="password" class="form-control" id="senha" name="password" placeholder="Confirme a senha">
+                                                        <select id="dia" name="dia">
+                                                            <option value="Vazio">Dia</option>
+                                                            <?php
+                                                                for ($i = 1; $i < 32; $i = $i + 1) {
+                                                                    echo '<option value="'.$i.'">'.$i.'</option>';
+                                                                }                                                            
+                                                            ?>
+                                                        </select>
+                                                        <select id="mes" name="mes">
+                                                            <option value="Vazio">Mes</option>
+                                                            <option value="1">Janeiro</option>
+                                                            <option value="2">Fevreiro</option>
+                                                            <option value="3">Marco</option>
+                                                            <option value="4">Abril</option>
+                                                            <option value="5">Maio</option>
+                                                            <option value="6">Junho</option>
+                                                            <option value="7">Julho</option>
+                                                            <option value="8">Agosto</option>
+                                                            <option value="9">Setembro</option>
+                                                            <option value="10">Outubro</option>
+                                                            <option value="11">Novembro</option>
+                                                            <option value="12">Dezembro</option>
+                                                            
+                                                        </select>                                                        
+                                                        <select id="ano" name="ano">
+                                                            <option value="Vazio">Ano</option>
+                                                            <?php
+                                                                for ($i = 1998; $i > 1940; $i = $i - 1) {
+                                                                    echo '<option value="'.$i.'">'.$i.'</option>';
+                                                                }
+                                                            
+                                                            ?>
+                                                        </select>                                                                 
 						    </div>
-						  </div>                                                                                      
+						  </div> 
+                                                <div class="form-group">
+                                                    <div class="col-xs-10 col-sm-10 col-lg-10">
+                                                        <div class="g-recaptcha" data-sitekey="6Lfs7QwUAAAAAGFKfDGDCXLku0ch8hBpDre3WUas"></div>
+                                                    </div>
+                                                </div>
 						  <div class="form-group">
 						    <div class="col-xs-10 col-sm-10 col-lg-10">
 						      <button type="button" id="btnCadastro" class="btn btn-success">Cadastra-se</button>
@@ -137,45 +207,116 @@
            var cep = $("#cep").val();
            var telefone = $("#telefone").val();
            var usuario = $("#usuario").val();
+           var password = $("#password").val();
+           var senha = $("#senha").val();
            
-           if (nome !== "" || email !== "" ) {
-                    $.post("index/validacpf", {cpf : cpf}, function(response) {
-                        if (response) {
-                            
-                            $.post("index/registercomplete", {usuario:usuario, nome : nome, email : email, cpf : cpf, senha : senha, cep : cep, telefone : telefone}, function(response) {
-
-                                console.log(response);
-
-                                if (!response) { 
-                                    $("#erro").html("Erro ao realizar cadastro, verifique os dados.");
-                                    $("#erro").show();                                        
-                                } else  {
-                                    var host = window.location.hostname;
-                                    if (host === "localhost") {
-                                        window.location = "http://localhost/penca/public";
-                                    } else {
-                                        window.location = "http://www.bolaocraquedebola.com.br/public";   
-                                    }                                    
-                                }
-                                
-                             });
-                             
+           var dia = $("#dia").val();
+           var mes = $("#mes").val();
+           var ano = $("#ano").val();
+           
+           var nomeusuario = $("#nomeusuario").val();
+           
+           var escomlinkreferencia = $("#isuserlinked").is(":checked");
+           
+           var tudocerto = true;
+           if (escomlinkreferencia) {
+               tudocerto = false;
+//               console.log("paso1");
+               if (password === senha && password !== "" && senha !== "") {
+//               console.log("paso2");
+               
+                    $.post("index/usuarioexiste", {usuario : nomeusuario}, function(response) {
+//                        console.log("paso3"   );
+                        if (!response) {
+//                            console.log("paso4");
+                            tudocerto = true;
+                            processamento(tudocerto);
                         } else {
-                            $("#erro").html("CPF incorrecto.");
-                            $("#erro").show();
+                             $("#erro").html("Nome de usuario ja existe.");
+                             $("#erro").show();
                         }
                     });
-            } else {
-                $("#erro").html("Erro ao realizar cadastro, verifique os dados.");
-                $("#erro").show();
-            }
+                } else {
+                    $("#erro").html("Senha ou confirmacao incorretas");
+                    $("#erro").show();
+                }
+           } else {
+               processamento(tudocerto);
+           }
+           
+           
+           
+           
        });
     });
     
-    
+    function processamento(tudocerto) {
+        var nome = $("#nome").val();
+        var email = $("#email").val();
+        var cpf = $("#cpf").val();
+        var senha = $("#senha").val();
+        var cep = $("#cep").val();
+        var telefone = $("#telefone").val();
+        var usuario = $("#usuario").val();
+        var password = $("#password").val();
+        var senha = $("#senha").val();
+
+        var dia = $("#dia").val();
+        var mes = $("#mes").val();
+        var ano = $("#ano").val();
+
+        var nomeusuario = $("#nomeusuario").val();
+        
+        //console.log(tudocerto);
+           if (tudocerto) {
+                if (nome !== "" && email !== "") {
+
+                 if (password !== "") {
+
+                    if (dia !== "Vazio" && mes !== "Vazio" && ano !== "Vazio") {
+
+                         $.post("index/validacpf", {cpf : cpf}, function(response) {
+//                             console.log(response);
+                             if (response) {
+                                
+                                $.post("index/validaemail", { email : email }, function(response) {
+                                    console.log(response);
+                                    if (response) {
+                                        $("#novo_usuario").submit();        
+                                    } else {
+                                        $("#erro").html("O e-mail ja esta cadastrado");
+                                        $("#erro").show();                                        
+                                    }
+                                });
+ 
+                             } else {
+                                 
+                                 $("#erro").html("CPF incorrecto.");
+                                 $("#erro").show();
+                                 
+                             }
+                             
+                            });  
+
+                         } else {
+                             $("#erro").html("Verifique a data de aniversario.");
+                             $("#erro").show();
+                         }
+                     } else {
+                         $("#erro").html("Senha incorrecta.");
+                         $("#erro").show(); 
+                     }
+                 } else {
+                     $("#erro").html("Nome ou Email devem ser prenchidos.");
+                     $("#erro").show();
+                 }
+            }
+    }
     
 </script>     
-					
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
 			</div>
 			<!-- end: Content -->
 				

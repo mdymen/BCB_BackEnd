@@ -128,36 +128,155 @@ class IndexController extends Zend_Controller_Action
     
     public function registercompleteAction() {
         $params = $this->_request->getParams();
-        //nome : nome, email : email, cpf : cpf, senha : senha, cep : cep, telefone : telefone}
+     
+//        print_r($params);
+//        die(".");
+        
+        $ch = curl_init();
+
+        $data = array('response'=>$params['g-recaptcha-response'],
+            'secret'=>'6Lfs7QwUAAAAAHd5nUoanvbwefoZoW3IPt-6QVR5');
+        curl_setopt($ch, CURLOPT_URL,"https://www.google.com/recaptcha/api/siteverify");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($data));        
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        $server_output = curl_exec ($ch);
+        curl_close ($ch);        
+        $resp = json_decode($server_output, true);
+        
+        $usuario = $params['usuario'];
+        $userlinked = $params['userlinked'];
+        
+        
         $nome = $params["nome"];
         $email = $params["email"];
         $cpf = $params["cpf"];
-        $senha = $params["senha"];
+        $cpf = ereg_replace('[^0-9]', '', $cpf);
+        $cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
+        
+        
+        $senha = $params["password"];
         $cep = $params["cep"];
         $telefone = $params["telefone"];
-        $usuario = $params["usuario"];
+        $ano = $params['ano'];
+        $mes = $params['mes'];
+        $dia = $params['dia'];       
         
-        $u = new Application_Model_Users();
-        $result = $u->cancomplete($usuario, $senha);
-        
-        
-        $this->getResponse()
-             ->setHeader('Content-Type', 'application/json');
+        $data = array(
+            'us_password' => $senha,
+            'us_nome' => $nome,
+            'us_cpf' => $cpf,
+            'us_email' => $email,
+            'us_telefone' => $telefone,
+            'us_anio_niver' => $ano,
+            'us_mes_niver' => $mes,
+            'us_dia_niver' => $dia
+        );
 
-            $this->_helper->layout->disableLayout();
-            $this->_helper->viewRenderer->setNoRender(TRUE);
+        $u = new Application_Model_Users();
         
-        if (!empty($result)) {
-            $u->save_user($nome, $email, $cpf, $senha, $cep, $telefone, $result['prov_username']);
-            $this->login1($result['prov_username'], $senha);
-            $this->_helper->json(true);
-        } 
-        else {
-           $this->_helper->json(false);
+        $server = $this->view->serverUrl();
+        if (strcmp($server, "http://localhost") == 0) {
+            $server = $server."/penca";
         }
+        $server = $server."/public/index";
         
+//        print_r($server);
+//        die(".");
+        
+        if (!empty($usuario) && empty($userlinked)) {                   
+            $result = $u->cancomplete($usuario, $senha);
+
+            $username = $result['prov_username'];                     
+            $data['us_username'] = $username;
+            
+            $res = false;
+            if (!empty($result)) {                            
+               $u->save_user($data);
+               $this->login1($result['prov_username'], $senha);
+               $res = true;
+            } 
+
+            $this->redirect($server);
+
+        } 
+        else if (!empty($userlinked) && empty($usuario)) {
+            
+            $data['us_username'] = $params['nomeusuario'];
+            $lastIdUser = $u->save_user($data);
+            
+            $u->adicionarPorLinkReferencia($userlinked, $lastIdUser);
+            
+            $usuario_linked = $u->load_userbyid($userlinked);
+            $v = $usuario_linked['us_cash'] + 1;
+            $u->update_cash($usuario_linked['us_id'], $v);
+            
+            $this->login1($data['us_username'], $senha);
+            $this->redirect($server);
+        }
+        else {
+            
+        }
+       
     }
     
+    public function getIdUser() { 
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
+        return $data['us_id'];
+    }
+    
+    function gerarlinkreferenciaAction() { 
+        
+        $user_id = $this->getIdUser();
+        
+        $ch = curl_init();
+        
+        //$link = $this->view->serverUrl().$this->view->url()."?user=".$user_id;
+        
+        $server = $this->view->serverUrl();
+        if (strcmp($server, "http://localhost") == 0) {
+            $server = $server."/penca";
+        }
+        $server = $server."/public/?linkreferencia&userlinked=".$user_id;
+        
+        $data = array('longUrl'=>  $server);
+        $data = json_encode($data);  
+        
+        curl_setopt($ch, CURLOPT_URL,"https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyBxHbn3Y8XdBQqk7j-ZPzJRdrnG_fmpZ-o");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+
+        curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);         
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+            'Content-Type: application/json',                                                                                
+            'Content-Length: ' . strlen($data))                                                                       
+        );                                                                                                                   
+
+        
+        $server_output = curl_exec ($ch);
+
+        curl_close ($ch);        
+        
+        $this->getResponse()->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $result = json_decode($server_output);
+        
+        $this->_helper->json($result->id);
+    }
     
     function logoutAction() {
         $storage = new Zend_Auth_Storage_Session();
@@ -285,52 +404,80 @@ class IndexController extends Zend_Controller_Action
 //        $this->render("addfacebookuser")
     }
     
+    public function validaemailAction() {
+        $email = $this->_request->getParam("email");
+        $u = new Application_Model_Users();
+        $return = $u->isEmailUsed($email);
+        
+        $result = false;
+        if (empty($return)) {
+            $result = true;
+        }
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($result);
+    }
+    
     public function validacpfAction() {
         $cpf = $this->_request->getParam("cpf");
         
-        
-        // Verifica se um número foi informado
-        if(empty($cpf)) {
-            $result = false;
-        }
-
-        // Elimina possivel mascara
         $cpf = ereg_replace('[^0-9]', '', $cpf);
         $cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
-
-        // Verifica se o numero de digitos informados é igual a 11 
-        if (strlen($cpf) != 11) {
-            $result =  false;
-        }
-        // Verifica se nenhuma das sequências invalidas abaixo 
-        // foi digitada. Caso afirmativo, retorna falso
-        else if ($cpf == '00000000000' || 
-            $cpf == '11111111111' || 
-            $cpf == '22222222222' || 
-            $cpf == '33333333333' || 
-            $cpf == '44444444444' || 
-            $cpf == '55555555555' || 
-            $cpf == '66666666666' || 
-            $cpf == '77777777777' || 
-            $cpf == '88888888888' || 
-            $cpf == '99999999999') {
-            $result =  false;
-         // Calcula os digitos verificadores para verificar se o
-         // CPF é válido
-         } else {   
-
-            for ($t = 9; $t < 11; $t++) {
-
-                for ($d = 0, $c = 0; $c < $t; $c++) {
-                    $d += $cpf{$c} * (($t + 1) - $c);
-                }
-                $d = ((10 * $d) % 11) % 10;
-                if ($cpf{$c} != $d) {
-                    $result =  false;
-                }
+        
+        $u = new Application_Model_Users();
+        $result = $u->isCpfUsed($cpf);
+        
+        if (empty($result)) {
+            // Verifica se um número foi informado
+            if(empty($cpf)) {
+                $result = false;
             }
 
-            $result =  true;
+            // Elimina possivel mascara
+            
+
+            // Verifica se o numero de digitos informados é igual a 11 
+            if (strlen($cpf) != 11) {
+                $result =  false;
+            }
+            // Verifica se nenhuma das sequências invalidas abaixo 
+            // foi digitada. Caso afirmativo, retorna falso
+            else if ($cpf == '00000000000' || 
+                $cpf == '11111111111' || 
+                $cpf == '22222222222' || 
+                $cpf == '33333333333' || 
+                $cpf == '44444444444' || 
+                $cpf == '55555555555' || 
+                $cpf == '66666666666' || 
+                $cpf == '77777777777' || 
+                $cpf == '88888888888' || 
+                $cpf == '99999999999') {
+                $result =  false;
+             // Calcula os digitos verificadores para verificar se o
+             // CPF é válido
+             } else {   
+
+                for ($t = 9; $t < 11; $t++) {
+
+                    for ($d = 0, $c = 0; $c < $t; $c++) {
+                        $d += $cpf{$c} * (($t + 1) - $c);
+                    }
+                    $d = ((10 * $d) % 11) % 10;
+                    if ($cpf{$c} != $d) {
+                        $result =  false;
+                    }
+                }
+
+                $result =  true;
+            }
+        
+        } else {
+            $result = false;
         }
         
          $this->getResponse()
@@ -340,6 +487,27 @@ class IndexController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
         $this->_helper->json($result);
+    }
+    
+    public function usuarioexisteAction() {
+        $param = $this->_request->getParam("usuario");
+        
+        $u = new Application_Model_Users();
+        $result = $u->isUsersName($param);
+        
+        $existe = true;
+        if (empty($result)) {
+            $existe = false;
+        }
+          
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($existe);        
+        
     }
 }
 

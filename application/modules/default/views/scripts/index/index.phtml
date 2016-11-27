@@ -6,18 +6,43 @@
 
 <h3>Venha se preparar para a temporada de 2017 do futebol brasileiro..</h3>
 
-<br><br>
-<p>Compartilhe com seus companheiros e ganhe R$ 1,00 para cada cadastro efetuado com seu link de compartilhamento.</p>
+<h3>Compartilhe com seus companheiros e ganhe R$ 1,00 para cada cadastro efetuado com seu link de compartilhamento.</h3>
+<br>
 
+<a class="btn btn-info" id="linkreferencia" href="javascript:void(0)">Gerar link</a>  
 
-** Clique aqui para gerar seu link e compartilhar com seus amigos e amigas! **
+<br>
 
+<!--** Clique aqui para gerar seu link e compartilhar com seus amigos e amigas! **-->
+<br>
+<div class="form-group" id="divnewlink" style="display:none">
+    <div class="controls">
+          <div class="col-lg-4 col-sm-4 col-md-4" style="padding: 0px 0px 0px 0px">
+                  <input type="text" id="newlink" class="form-control">
+          </div>	
+    </div>
+</div>
 
-<p>Até logo, e bom divertimento.</p>
+<br>
 
+<h3><p>Até logo, e bom divertimento.</p></h3>
 <p>Equipe Craque de Bola.</p>
 
 
 <p>Previsão inauguração do site em Janeiro/2017.</p>
+
+
+<script type="text/javascript">
+    $(function() { 
+        $("#linkreferencia").bind("click", function() {
+            $.post("index/gerarlinkreferencia", function(response) {
+                $("#newlink").val(response);
+                $("#divnewlink").attr("style","display:yes");
+                console.log(response);
+            });
+        });
+    });
+    
+</script>
 
 

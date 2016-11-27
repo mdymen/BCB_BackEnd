@@ -236,7 +236,7 @@
 				</div><!-- col-lg-4 -->	
 				
 				<div class="col-lg-4 callout">
-					<span class="icon icon-heart"></span>
+					<span class="icon icon-balloon"></span>
 					<h2>Time do coracao</h2>
 					<p>Faca palpites no seu time do coracao, com uma pagina exclusiva para seu time. </p>
 				</div><!-- col-lg-4 -->	
@@ -297,8 +297,8 @@
 				</div><!-- col -->
 				
 				<div class="col-lg-4">
-					<h3>Support Us</h3>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+					<h3>Ajude-nos a melhorar!</h3>
+					<p>Estamos trabalhando para melhor comodidade ao usuario acessar a plataforma, ajude-nos informando seu feedback para que possamos estar sempre melhorando. Toda ajuda é sempre Bem vinda!</p>
 				</div><!-- col -->
 
 			</div><!-- row -->
