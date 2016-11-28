@@ -49,8 +49,8 @@
 	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/ico/apple-touch-icon-57-precomposed.png">
-	<link rel="shortcut icon" href="<?php echo $this->baseUrl().'/assets/ico/icone.jpg'; ?>">
-        <link rel="icon" href="assets/ico/icone.jpg">
+	<link rel="shortcut icon" href="<?php echo $this->baseUrl().'/assets/ico/icone.png'; ?>">
+        <link rel="icon" href="/assets/ico/icone.png">
 	<!-- end: Favicon and Touch Icons -->	
 		
 </head>
@@ -70,6 +70,15 @@
 			<!-- start: Header Menu -->
 			<div class="nav-no-collapse header-nav">
 				<ul class="nav navbar-nav pull-right">
+                                    <li>
+                                    <a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">							
+							<div class="user">
+								<span class="hello">R$</span>
+								<span class="name"><?php echo $data->us_cash; ?></span>
+							</div>
+                                                    
+						</a>
+                                    </li>                                    
 					<li class="dropdown" >
 						<a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="2nd-level.html#">							
 							<div class="user">
@@ -84,12 +93,15 @@
 							<li><a href="/penca/public/index/logout"><i class="fa fa-off"></i> Logout</a></li>
 						</ul>
 					</li>
+                                        
+                                        
                                         <li>
                                             <a class="btn" href="<?php echo $this->baseUrl("index/logout"); ?>">
 							<i class="fa fa-power-off"></i>
 						</a>
                                             
                                         </li>
+                                                                            
 				</ul>
 			</div>
 			<!-- end: Header Menu -->

@@ -206,7 +206,7 @@
 						  </div>
                                                     <div class="form-group">
 						    <div class="col-xs-10 col-sm-10 col-lg-10" style="text-align:left">
-                                                        <span><a href="public/?login">Já possuo uma conta?</a></span>
+                                                        <span><a href="public/?login">Já possui uma conta? Faça Login</a></span>
 						    </div>
 						  </div>                                              
 					   </form>
@@ -224,19 +224,19 @@
 		<div id="greywrap">
 			<div class="row">
 				<div class="col-lg-4 callout">
-					<span class="icon icon-stack"></span>
-					<h2>Bolao com os Amigos!</h2>
-					<p>Crie seu proprio bolao personalizado para curtir com a rapaziada, compartilhar com os amigos e se divertir. </p>
+					<span class="icon icon-user-plus"></span>
+					<h2>Bolão com os Amigos!</h2>
+					<p>Crie seu proprio bolão personalizado para curtir com a rapaziada, compartilhar com os amigos e se divertir. </p>
 				</div><!-- col-lg-4 -->
 					
 				<div class="col-lg-4 callout">
-					<span class="icon icon-eye"></span>
+					<span class="icon icon-star"></span>
 					<h2>Ranking e Histórico</h2>
-					<p>Tenha acesso ao Ranking do Bolao em que esta participando; veja todos os históricos de palpites e de quem está palpitando. </p>
+					<p>Tenha acesso ao Ranking do Bolão em que esta participando; veja todos os históricos de palpites e de quem está palpitando. </p>
 				</div><!-- col-lg-4 -->	
 				
 				<div class="col-lg-4 callout">
-					<span class="icon icon-balloon"></span>
+					<span class="icon icon-trophy"></span>
 					<h2>Time do coracao</h2>
 					<p>Faca palpites no seu time do coracao, com uma pagina exclusiva para seu time. </p>
 				</div><!-- col-lg-4 -->	
@@ -247,9 +247,9 @@
 		<!-- ==== SECTION DIVIDER4 ==== -->
 		<section class="section-divider textdivider divider4">
 			<div class="container">
-				<h1>DESIGN CREATES EMOTIONAL CONNECTION</h1>
+				<h1>Participe dos Bolões e ganhe dinheiro com seus palpites. </h1>
 				<hr>
-				<p>There’s more to design than meets the eye. It’s when it meets the heart that design creates a meaningful, lasting connection with the audience.</p>
+				<p>Ao juntar uma grana no site, caso queira tirar este dinheiro você pode! Faça uma aquisição de saque no site para retirar.</p>
 			</div><!-- container -->
 		</section><!-- section -->
 		
@@ -271,29 +271,7 @@
 				</div><!-- col -->
 				
 				<div class="col-lg-4">
-					<h3>Newsletter</h3>
-					<p>Register to our newsletter and be updated with the latests information regarding our services, offers and much more.</p>
-					<p>
-						<form class="form-horizontal" role="form">
-						  <div class="form-group">
-						    <label for="inputEmail1" class="col-lg-4 control-label"></label>
-						    <div class="col-lg-10">
-						      <input type="email" class="form-control" id="inputEmail1" placeholder="Email">
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <label for="text1" class="col-lg-4 control-label"></label>
-						    <div class="col-lg-10">
-						      <input type="text" class="form-control" id="text1" placeholder="Your Name">
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-lg-10">
-						      <button type="submit" class="btn btn-success">Sign in</button>
-						    </div>
-						  </div>
-					   </form><!-- form -->
-					</p>
+					<a class="twitter-timeline" data-width="280" data-height="250" href="https://twitter.com/BolaoCraqueBola">Bolão Craque de Bola</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 				</div><!-- col -->
 				
 				<div class="col-lg-4">
@@ -307,7 +285,7 @@
 
 		<div id="footerwrap">
 			<div class="container">
-				<h4>Created by Me - Copyright 2016</h4>
+				<h4>Created by Bolão Craque de Bola</h4>
 			</div>
 		</div>
 

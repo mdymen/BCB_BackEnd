@@ -126,6 +126,25 @@ class IndexController extends Zend_Controller_Action
         $this->_helper->json($result);
     }
     
+    public function testpagamentoAction() {
+        $ch = curl_init();
+
+        $data = array('response'=>$params['g-recaptcha-response'],
+            'secret'=>'6Lfs7QwUAAAAAHd5nUoanvbwefoZoW3IPt-6QVR5');
+        curl_setopt($ch, CURLOPT_URL,"https://www.google.com/recaptcha/api/siteverify");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($data));        
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        $server_output = curl_exec ($ch);
+        curl_close ($ch);        
+        $resp = json_decode($server_output, true);
+        
+    }
+    
     public function registercompleteAction() {
         $params = $this->_request->getParams();
      
@@ -426,8 +445,11 @@ class IndexController extends Zend_Controller_Action
     public function validacpfAction() {
         $cpf = $this->_request->getParam("cpf");
         
-        $cpf = ereg_replace('[^0-9]', '', $cpf);
+        $cpf = preg_replace('/\D/', "", $cpf);
         $cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
+        
+//        print_r($cpf);
+//        die("-");
         
         $u = new Application_Model_Users();
         $result = $u->isCpfUsed($cpf);

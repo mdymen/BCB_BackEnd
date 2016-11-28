@@ -17,9 +17,13 @@
 <br>
 <div class="form-group" id="divnewlink" style="display:none">
     <div class="controls">
-          <div class="col-lg-4 col-sm-4 col-md-4" style="padding: 0px 0px 0px 0px">
-                  <input type="text" id="newlink" class="form-control">
-          </div>	
+        <div class="input-group col-lg-4 col-sm-4 col-md-4">
+              <!--<div class="" style="padding: 0px 0px 0px 0px">-->
+                      <input type="text" id="newlink" class="form-control">
+                      <span class="input-group-btn"><button class="btn" id="copy" type="button"><i class="fa fa-copy"></i></button></span>
+                      <!--<a href="javascript:void()" ><i class="fa fa-copy"></i></a>-->
+              <!--</div>-->
+        </div>	
     </div>
 </div>
 
@@ -34,11 +38,16 @@
 
 <script type="text/javascript">
     $(function() { 
+        $("#copy").bind("click", function() {
+            $("#newlink").select();
+            document.execCommand("copy");
+        });
+        
         $("#linkreferencia").bind("click", function() {
             $.post("index/gerarlinkreferencia", function(response) {
-                $("#newlink").val(response);
+                $("#newlink").val(response);                
                 $("#divnewlink").attr("style","display:yes");
-                console.log(response);
+                $("#newlink").select();
             });
         });
     });
