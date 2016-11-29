@@ -149,14 +149,14 @@
               </span>
           </button>
                     <a class="navbar-brand hidden-xs hidden-sm" href="#home"><span style="font-size:18px; color:#3498db;">
-                            <img src="http://www.bolaocraquedebola.com.br/assets/img/iconelogo.png" width="28px" height="28px" style="background: none !important"/>
+                            <img src="http://www.bolaocraquedebola.com.br/assets/img/iconelogo.png" width="32px" height="32px" style="background: none !important"/>
                 </span></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="#home" class="smoothScroll">Home</a></li>
 			<li> <a href="public" class="smoothScroll"> Login</a></li>
-<!--			<li> <a href="#about" class="smoothScroll"> About</a></li>-->
+                        <li> <a href="comofunciona.html" class="smoothScroll"> Como funciona</a></li>
 			<!--<li> <a href="#services" class="smoothScroll"> Services</a></li>-->
 			<!--<li> <a href="#team" class="smoothScroll"> Team</a></li>-->
 			<!--<li> <a href="#portfolio" class="smoothScroll"> Portfolio</a></li>-->

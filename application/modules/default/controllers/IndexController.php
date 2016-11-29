@@ -145,6 +145,10 @@ class IndexController extends Zend_Controller_Action
         
     }
     
+    public function regulamentoAction() {
+        
+    }
+    
     public function registercompleteAction() {
         $params = $this->_request->getParams();
      

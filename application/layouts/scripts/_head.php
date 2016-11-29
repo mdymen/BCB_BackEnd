@@ -65,7 +65,9 @@
 			</button>
 			<a id="main-menu-toggle" class="hidden-xs open"><i class="fa fa-bars"></i></a>		
 			<a class="navbar-brand col-md-6 col-sm-6 col-xs-6" href="<?php echo $this->baseUrl(); ?>"><span>Craque de Bola</span></a>
-			
+						<div id="search" class="col-sm-4 col-xs-8 col-lg-3" style="background: none !important; margin-top:9px !important">
+                            <a href="<?php echo $this->baseUrl()."/index/regulamento"; ?>" style="color:white ">Regulamento</a>
+			</div>
 			<!-- start: Header Menu -->
 			<div class="nav-no-collapse header-nav">
 				<ul class="nav navbar-nav pull-right">
@@ -143,6 +145,7 @@
                                                 <li><a href="<?php echo $this->baseUrl("/usuario"); ?>"><i class="fa fa-user"></i><span class="hidden-sm text">Meu Perfil</span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/campeonatos"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Campeonatos</span></a></li> 
                                                  <li><a href="<?php echo $this->baseUrl("/penca/ranking"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Ranking</span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/caixa/index"); ?>"><i class="fa fa-dollar"></i><span class="hidden-sm text">Caixa</span></a></li>
                                                  <li><a href="<?php echo $this->baseUrl("/index/logout"); ?>"><i class="fa fa-power-off"></i><span class="hidden-sm text">Logout</span></a></li>-->
                                                 <!--<li><a href="<?php echo $this->baseUrl("/register/penca"); ?>"><i class="fa fa-legal"></i><span class="hidden-sm text"> Criar Balão </span></a></li>-->                                                
                                                 
