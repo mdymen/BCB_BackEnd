@@ -42,6 +42,8 @@ class Helpers_Box {
     
     public $btn_cantidad = false;
     
+    public $acumulado = true;
+    
     public $id_result_input1;
     
     public $id_result_input2;
@@ -185,7 +187,9 @@ class Helpers_Box {
                                
                                if (!$matches[$i]['mt_played']) {
                                
-                                   
+                                   if ($this->acumulado) {
+                                        echo '<span style="padding-right:10px">'.$matches[$i]['mt_acumulado'].'</span>';
+                                    }
                                    
                                    if ($this->btn_palpitar) {
                                         echo '<button team1="'.$matches[$i]['tm1_id'].'" team2="'.$matches[$i]['tm2_id'].'" data="'.$matches[$i]['mt_date'].'" match="'.$matches[$i]['mt_id'].'" class="btn btn-xs btn-success palpite">
@@ -202,6 +206,8 @@ class Helpers_Box {
                                                   . '<i style="padding: 6px 0 !important; font-size: 10px !important; margin-right: 0px !important; width: 15px !important" class="fa fa-globe"></i></i></a>';
 
                                     }
+                                    
+                                    
 
                                }
                                

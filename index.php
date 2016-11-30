@@ -226,7 +226,7 @@
 				<div class="col-lg-4 callout">
 					<span class="icon icon-user-plus"></span>
 					<h2>Bolão com os Amigos!</h2>
-					<p>Crie seu proprio bolão personalizado para curtir com a rapaziada, compartilhar com os amigos e se divertir. </p>
+					<p>Crie seu próprio bolão personalizado para curtir com a rapaziada, compartilhar com os amigos e se divertir. </p>
 				</div><!-- col-lg-4 -->
 					
 				<div class="col-lg-4 callout">
@@ -237,8 +237,8 @@
 				
 				<div class="col-lg-4 callout">
 					<span class="icon icon-trophy"></span>
-					<h2>Time do coracao</h2>
-					<p>Faca palpites no seu time do coracao, com uma pagina exclusiva para seu time. </p>
+					<h2>Time do coração</h2>
+					<p>Faça palpites no seu time do coração, com uma pagina exclusiva para seu time. </p>
 				</div><!-- col-lg-4 -->	
 			</div><!-- row -->
 		</div><!-- greywrap -->
