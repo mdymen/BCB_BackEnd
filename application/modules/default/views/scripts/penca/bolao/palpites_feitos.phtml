@@ -68,9 +68,20 @@ if (!empty($palpites_feitos)) {
                             </div>
                             </div>
                         </div>
-                                            <div class="box-header">
-                                                <h2>Total palpitado: <span id="total_palpitado" style="padding-left:10px"><?php echo $palpites_feitos[0]['rd_acumulado'];  ?></span> 
-                                                    <span style="padding-left:10px"><a href="javascript:void(0)" class="btn btn-success">Confirmar</a></span></h2>
+                                            <div class="box-header inline" style="height:50px !important">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <h2><span class="">Total: </span><span id="total_palpitado" style="padding-left:10px"><?php echo $palpites_feitos[0]['rd_acumulado'];  ?></span> </h2>
+                                                      <span style="padding-left:10px"><a href="javascript:void(0)" class="btn btn-success">Confirmar</a></span>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                </table>
+                                           
+                                               
+                                                    
+                                                
                                 <div class="box-icon">
                                     <!--<span><h2 style="margin-right: 30px !important"><?php echo $palpites_feitos[0]['rd_acumulado'];  ?></h2></span>-->
                                 </div>

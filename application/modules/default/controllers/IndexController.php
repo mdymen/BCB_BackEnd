@@ -6,6 +6,7 @@ include APPLICATION_PATH."/helpers/data.php";
 include APPLICATION_PATH."/helpers/html.php";
 include APPLICATION_PATH."/helpers/translate.php";
 include APPLICATION_PATH.'/helpers/box.php';
+include APPLICATION_PATH.'/helpers/mail.php';
 class IndexController extends Zend_Controller_Action
 {
 
@@ -207,7 +208,7 @@ class IndexController extends Zend_Controller_Action
             $server = $server."/penca";
         }
         $server = $server."/public/index";
-        
+        $data['us_codverificacion'] = rand();
 //        print_r($server);
 //        die(".");
         
@@ -223,7 +224,7 @@ class IndexController extends Zend_Controller_Action
                $this->login1($result['prov_username'], $senha);
                $res = true;
             } 
-
+            $this->mail($data);
             $this->redirect($server);
 
         } 
@@ -237,8 +238,9 @@ class IndexController extends Zend_Controller_Action
             $usuario_linked = $u->load_userbyid($userlinked);
             $v = $usuario_linked['us_cash'] + 1;
             $u->update_cash($usuario_linked['us_id'], $v);
-            
+                     
             $this->login1($data['us_username'], $senha);
+            $this->mail($data);
             $this->redirect($server);
         }
         else {
@@ -534,6 +536,17 @@ class IndexController extends Zend_Controller_Action
         
         $this->_helper->json($existe);        
         
+    }
+    
+    public function mail($data) {
+        $mail = Helpers_Mail::getInstance();
+        $mail->addTo('<'.$data['us_email'].'>');
+        $mail->setSubject('Confirme seu email');
+        $root = 'TESTANDO';
+        $string = 'Testinsg';
+        $mail->setBodyHtml($string);
+        $mail->setFrom('bolaocraquedebola16@gmail.com', 'Bolão Craque de Bola');
+        $mail->send();
     }
 }
 

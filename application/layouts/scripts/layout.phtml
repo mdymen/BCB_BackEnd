@@ -22,7 +22,11 @@ if (strpos($uri, 'public/?linkreferencia&userlinked=')) {
     
     echo $this->render('login.phtml');    
     
-} else {
+} else if (strpos($uri,'public/?confmail=')) {
+ 
+    
+}
+else {
  
 //        $storage = new Zend_Auth_Storage_Session();
 //        $data = $storage->read();
@@ -40,8 +44,9 @@ if (strpos($uri, 'public/?linkreferencia&userlinked=')) {
 //        print_r($data);
 //        die(".");
         
-        
-        if (!empty($data) && $data['us_admin'] == 0) {
+        if (!empty($data) && !empty($data['us_codverificacion'])) {
+            echo $this->render('_confirmemail.php');
+        } else if (!empty($data) && $data['us_admin'] == 0) {
             echo $this->render('_head.php');      
         } else if (!empty($data) && $data['us_admin'] == 1) {
             echo $this->render('_adminhead.php');      
