@@ -165,7 +165,9 @@
 			</ol>
            
                             <?php echo $this->render('alerts.phtml'); ?>
-                            <?php echo $this->layout()->content; ?>
+                            <?php 
+                            echo $this->layout()->content;
+                            ?>
      
 					
 			</div>
@@ -260,6 +262,13 @@
 	
 </body>
 </html>
+
+<!--<script type="text/javascript"> 
+    $(function() { 
+        alert("asdf"); 
+        $("#formConMail").submit(); 
+    });
+</script>-->
 
 
 <script type="text/javascript">

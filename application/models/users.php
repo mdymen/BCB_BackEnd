@@ -319,6 +319,23 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         $db->update("user", $dados, "us_id = ".$id );
     }
     
+    public function user_bycod($cod) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("user")
+                ->where("us_codverificacion = ?", $cod)
+                ->query()
+                ->fetch();
+        
+        return $result;
+    }
+    
+    public function confirmaremail($data) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $db->update("user", array("us_codverificacion" => ""), "us_id = ".$data);
+    }
+    
 //    public function 
     
 }

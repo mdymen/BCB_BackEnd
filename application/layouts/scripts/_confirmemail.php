@@ -63,13 +63,17 @@
 			<div id="content" class="col-lg-12 col-sm-12 col-xs-12 ">
 	<div class=" col-xs-12 col-sm-12 col-lg-6 col-lg-offset-4 callout" style="padding-top:20px">
                                 <div class="box" style="background:white !important">
-                                    <div class="header" style="color:white;background-color:#222; padding: 20px">
-                                        <b>Confirme seu email!</b>
-					</div>
-                                        <form action="/index/reenviaremail" method="post">
-                                            <button class="btn btn-primary">Re-enviar e-mal</button>
-                                        </form>
+                                    <form action="<?php echo $this->baseUrl(); ?>/index/reenviaremail" method="post">
+                                        <div class="header" style="color:white;background-color:#222; padding: 20px">
+
+                                            <b>Confirme seu email!</b>                                            
+                                            
+                                        </div> 
+                                        <br>
+                                        <center> <button class="btn btn-primary">Re-enviar e-mal</button> </center>
+                                    </form>
                                     </div>
+                                    
 				</div>		
            
                             

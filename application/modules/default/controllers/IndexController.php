@@ -538,15 +538,47 @@ class IndexController extends Zend_Controller_Action
         
     }
     
+    public function reenviaremailAction() {
+        $params = $this->_request->getParams();
+        
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
+        
+        $this->mail($data);
+        
+        
+        $this->redirect("/index");
+
+    }
+    
     public function mail($data) {
         $mail = Helpers_Mail::getInstance();
         $mail->addTo('<'.$data['us_email'].'>');
         $mail->setSubject('Confirme seu email');
-        $root = 'TESTANDO';
-        $string = 'Testinsg';
+        $root = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/penca/public'."/?confmail=".$data['us_codverificacion'];
+        $string = 'Confirme seu email: <a href="'.$root.'" > Faça clique.</a>';
         $mail->setBodyHtml($string);
         $mail->setFrom('bolaocraquedebola16@gmail.com', 'Bolão Craque de Bola');
         $mail->send();
+    }
+    
+    public function confirmaremailAction() {
+        $params = $this->_request->getParams();
+        
+//        print_r($params);
+//        die(".");
+        
+        $u = new Application_Model_Users();
+        $user = $u->user_bycod($params['confmail']);
+        
+        if (!empty($user)) {
+            $u->confirmaremail($user['us_id']);
+            
+            $this->login1($user['us_username'], $user[us_password]);
+            
+        }
+        $this->redirect("/index");
     }
 }
 

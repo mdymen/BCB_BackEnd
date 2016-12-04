@@ -23,8 +23,23 @@ if (strpos($uri, 'public/?linkreferencia&userlinked=')) {
     echo $this->render('login.phtml');    
     
 } else if (strpos($uri,'public/?confmail=')) {
- 
     
+    echo "Processando...";
+    
+    
+    $cod = Zend_Controller_Front::getInstance()->getRequest()->getParam('confmail');
+    echo '<form action="index/confirmaremail" id="formConMail" method="post">'
+    . '<input type="hidden" value="'.$cod.'" name="confmail"></form>';
+
+    echo '<script type="text/javascript"> 
+                window.onload=function(){
+                    document.forms["formConMail"].submit();
+                }
+       </script>';
+    //    echo $this->render('_head.php');
+//    $cod = Zend_Controller_Front::getInstance()->getRequest()->getParam('confmail');
+//    echo $c
+//    $this->redirect("index/confirmaremail?confemail=".$cod);
 }
 else {
  
