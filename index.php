@@ -157,6 +157,7 @@
             <li><a href="#home" class="smoothScroll">Home</a></li>
 			<li> <a href="public" class="smoothScroll"> Login</a></li>
                         <li> <a href="comofunciona.html" class="smoothScroll"> Como funciona</a></li>
+                        <li> <a href="contato.html" class="smoothScroll"> Contato</a></li>
 			<!--<li> <a href="#services" class="smoothScroll"> Services</a></li>-->
 			<!--<li> <a href="#team" class="smoothScroll"> Team</a></li>-->
 			<!--<li> <a href="#portfolio" class="smoothScroll"> Portfolio</a></li>-->
