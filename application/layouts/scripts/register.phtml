@@ -2,9 +2,10 @@
 
         $usuario = Zend_Controller_Front::getInstance()->getRequest()->getParam('id');        
         $linked = Zend_Controller_Front::getInstance()->getRequest()->getParam('userlinked');
-
+        $login = Zend_Controller_Front::getInstance()->getRequest()->getParam('login');       
+        
         $checked = "";
-        if (!empty($linked)) {
+        if (!empty($linked) || !empty($login)) {
             $checked = "checked";
         }
 ?>  
@@ -80,7 +81,7 @@
                                                 <input style="display:none" type="checkbox" id="isuserlinked" <?php echo $checked; ?> >
                                                 <?php
                                                 
-                                                    if (!empty($linked)) { 
+                                                    if (!empty($linked) || !empty($login)) { 
                                                         echo '<div class="form-group">
                                                             <div class="col-xs-12 col-sm-8 col-lg-8">
                                                                 <input type="text" class="form-control" style="width: 70%" id="nomeusuario" name="nomeusuario" placeholder="Nome de usuario">

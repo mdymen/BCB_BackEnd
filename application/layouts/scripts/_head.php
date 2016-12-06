@@ -94,7 +94,7 @@
                                     <a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">							
 							<div class="user">
 								<span class="hello">R$</span>
-								<span class="name"><?php echo $data->us_cash; ?></span>
+								<span class="name" id="cash_usuario"><?php echo $data->us_cash; ?></span>
 							</div>
                                                     
 						</a>

@@ -16,6 +16,13 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
 
     protected $_name = 'user';
     
+    public function users() {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        return $db->select()->from("user")->query()->fetchAll();
+        
+    }
+    
     public function save_provisorio($params) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
@@ -336,6 +343,14 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         $db->update("user", array("us_codverificacion" => ""), "us_id = ".$data);
     }
     
+    public function getDinheiro($user_id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("user",array('us_cash'))
+                ->where("us_id = ?", $user_id)->query()->fetch();
+        
+        return $result;
+    }
 //    public function 
     
 }

@@ -97,13 +97,24 @@ if (!empty($palpites)) {
            var team1 = $("#teamp_"+id_team1).html();
            var team2 = $("#teamp_"+id_team2).html();
 
+//           alert($("#champ").val());
+
            if (parseInt(r1) >= 0 && parseInt(r2) >= 0 ) {
                $('#fila_'+match).attr("style","display:none");
-                $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round  }, function(response) {
+                $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round, champ : $("#champ").val()  }, function(response) {
+                    console.log(response);
                     if (response.sucesso === 200) {
-                        console.log(response);
+                                                
+                        
 
                         $("#btn_excluir_"+match).attr("result",response.rs_id);
+
+//                        var total = parseFloat(2.50)+parseFloat($("#total_palpitado").html());
+//                        $("#total_palpitado").html(response.total);
+
+                        $("#ronda_total_palpitado").html(parseFloat(response.total).toFixed(2));
+
+                        $("#cash_usuario").html(parseFloat(response.total_usuario).toFixed(2));
 
                         $('#rs_dados_'+match).show(); 
 
@@ -115,7 +126,11 @@ if (!empty($palpites)) {
                         $(".alert-success").show();
                         fechar_sucesso();
                     } else {
-                        $('#fila_'+match).attr("style","display:yes");
+                        if (response.sucesso === 401) {
+                            alert("sem saldo");
+                        } else {
+                            $('#fila_'+match).attr("style","display:yes");
+                        }
                     }
 //                    excluir();
                });

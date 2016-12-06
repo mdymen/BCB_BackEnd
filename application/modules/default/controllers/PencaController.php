@@ -327,16 +327,34 @@ class PencaController extends Zend_Controller_Action {
         $user_id = $data['us_id'];
         $match_id = $params['match'];
         $round = $params['round'];
+        $champ = $params['champ'];
         
 //        print_r($params);
 //        die(".");
         
-        $matchs_obj = new Application_Model_Matchs();     
-        $id = $matchs_obj->submeter_result($user_id, $result1, $result2, $match_id, $round);
+        $temSaldo = $this->verificarsaldo();
+        if ($temSaldo) {
         
-        $result_obj = new Application_Model_Result();    
-        $result = $result_obj->getResult($id);
-        $result['sucesso'] = 200;
+            $matchs_obj = new Application_Model_Matchs();     
+            $id = $matchs_obj->submeter_result($user_id, $result1, $result2, $match_id, $round);
+
+            $result_obj = new Application_Model_Result();    
+            $result = $result_obj->getResult($id);
+
+            $penca = new Application_Model_Penca();
+            $total = $penca->update_acumulado_rodada($round, $champ, floatval(2.5));
+
+            $total_usuario = $penca->update_cash_usuario($this->getIdUser(), (-1)*floatval(2.5));
+            
+            $result['sucesso'] = 200;
+            $result['total'] = $total;
+            $result['total_usuario'] = $total_usuario;
+            
+            $this->login();
+   
+        } else {
+            $result['sucesso'] = 401;
+        }
         
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
@@ -353,7 +371,20 @@ class PencaController extends Zend_Controller_Action {
         $result = $params['result'];
         $matchs_obj = new Application_Model_Matchs();   
         $r = $matchs_obj->result($result);
-        $matchs_obj->delete_palpite($result);   
+        $matchs_obj->delete_palpite($result);
+        $round = $params['round'];
+        $champ = $params['champ'];
+        
+        $penca = new Application_Model_Penca();
+        $total = $penca->update_acumulado_rodada($round, $champ, (-1)*floatval(2.5));
+        
+        
+        $total_usuario = $penca->update_cash_usuario($this->getIdUser(), floatval(2.5));
+                    
+        $params['total'] = $total;
+        $params['total_usuario'] = $total_usuario;
+        
+        $this->login();
         
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
@@ -551,4 +582,26 @@ class PencaController extends Zend_Controller_Action {
         }
 
     }
+    
+    private function verificarsaldo() {        
+        $u = new Application_Model_Users();
+        $mycash = $u->getDinheiro($this->getIdUser());
+        
+        $total = floatval(2.5);
+        
+        $res = false;
+        if ($mycash >= $total) {
+            $res = true;
+        }
+        
+        return $res;
+        
+    }
+//    
+//    public function processarpalpitesAction() { 
+//        $params = $this->_request->getParams();
+//        
+//        print_r($params);
+//        die(".");
+//    }
 }

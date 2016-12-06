@@ -29,13 +29,15 @@ if (!empty($palpites_feitos)) {
                             ?>
        
                 <div class="box">
+                    <!--<form action="<?php echo $this->baseUrl(); ?>/penca/processarpalpites" method="post" id="processarpalpites" >-->
                         <div class="box-header">
                                 <h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo $titulo; ?></h2>
                                 <div class="box-icon">
-                                    <span><h2 style="margin-right: 30px !important"><?php echo $palpites_feitos[0]['rd_acumulado'];  ?></h2></span>
+                                    <span><h2 style="margin-right: 30px !important" id="ronda_total_palpitado"><?php echo number_format((float)$palpites_feitos[0]['rd_acumulado'], 2, '.', '');  ?></h2></span>
                                 </div>
                         </div>
                         <div class="box-content">
+                            
                             <div class="row">
                             
                             <?php
@@ -69,15 +71,15 @@ if (!empty($palpites_feitos)) {
                             </div>
                         </div>
                                             <div class="box-header inline" style="height:50px !important">
-                                                <table>
+<!--                                                <table>
                                                     <tr>
                                                         <td>
                                                             <h2><span class="">Total: </span><span id="total_palpitado" style="padding-left:10px"><?php echo $palpites_feitos[0]['rd_acumulado'];  ?></span> </h2>
-                                                      <span style="padding-left:10px"><a href="javascript:void(0)" class="btn btn-success">Confirmar</a></span>
+                                                      <span style="padding-left:10px"><a id="btnConfPalpites" href="javascript:void(0)" class="btn btn-success">Confirmar</a></span>
                                                         </td>
                                                         
                                                     </tr>
-                                                </table>
+                                                </table>-->
                                            
                                                
                                                     
@@ -86,6 +88,7 @@ if (!empty($palpites_feitos)) {
                                     <!--<span><h2 style="margin-right: 30px !important"><?php echo $palpites_feitos[0]['rd_acumulado'];  ?></h2></span>-->
                                 </div>
                         </div>
+                    <!--</form>-->
                 </div>
          
 <?php
@@ -99,7 +102,20 @@ if (!empty($palpites_feitos)) {
 <script type="text/javascript">
     
     $(function() { 
+        
         excluir("excluirpalpite");
+        
+        $("#btnConfPalpites").bind("click", function() {
+            var total = $("#total_palpitado").html();
+            
+            $.post("verificarsaldo", { total : total}, function(response) {
+                if (response) {
+//                    $("#processarpalpites").submit();
+                }
+                alert(response);
+            });
+            
+        });
     });
     
     </script>

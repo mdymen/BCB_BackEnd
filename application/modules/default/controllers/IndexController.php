@@ -65,12 +65,7 @@ class IndexController extends Zend_Controller_Action
         $resultados['jogados'] = $results->getPlayedMatches($id_user);
         $resultados['pontos'] = $results->getPoints($id_user);
         $resultados['position'] = $results->getPoisition($id_user);
-//        $ganados = $result->ganados($data['us_id']);
-//        $perdidos = $result->perdidos($data['us_id']);
-//        $puntuacao = $result->puntuacao($data['us_id']);
-//        
-//        $resultados = array($ganados[0], $perdidos[0], $puntuacao[0]);
-//        
+
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
         
@@ -80,22 +75,6 @@ class IndexController extends Zend_Controller_Action
         $this->_helper->json($resultados);
         
     }
-    
-//    public function registerAction() {
-//       $params = $this->_request->getParams();
-//       
-//       $user = new Application_Model_Users();
-//       $usuario = $user->load_user($params['username']);
-//       
-//       
-////       if (empty($usuario)) {
-////            $user->save($params);
-////            //$this->login1($params['username'], $params['password']);
-////       } else {
-////           
-////       }
-//       $this->redirect("../public/?register");
-//    }
     
     public function registerAction() {
         $params = $this->_request->getParams();
@@ -152,10 +131,7 @@ class IndexController extends Zend_Controller_Action
     
     public function registercompleteAction() {
         $params = $this->_request->getParams();
-     
-//        print_r($params);
-//        die(".");
-        
+
         $ch = curl_init();
 
         $data = array('response'=>$params['g-recaptcha-response'],
@@ -209,9 +185,7 @@ class IndexController extends Zend_Controller_Action
         }
         $server = $server."/public/index";
         $data['us_codverificacion'] = rand();
-//        print_r($server);
-//        die(".");
-        
+
         if (!empty($usuario) && empty($userlinked)) {                   
             $result = $u->cancomplete($usuario, $senha);
 
@@ -381,10 +355,6 @@ class IndexController extends Zend_Controller_Action
         if (!empty($params['facebookid'])) {        
             $this->login1($result['us_username'], $result['us_password']);
         }
-//        $this->_request->setParams(array("username" => $params['facebookid'], "password" => $params['facebookid']));
-        //$this->forward("login", "index", "default",array("username" => $params['facebookid'], "password" => $params['facebookid']));
-//           $this->_helper->redirector("login", "index", "default", array("username" => $params['facebookid'], "password" => $params['facebookid']));
-       // $this->redirect("/index/login",array("username" => $params['facebookid'], "password" => $params['facebookid']));
 
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
@@ -553,11 +523,13 @@ class IndexController extends Zend_Controller_Action
     }
     
     public function mail($data) {
+        $config = new Zend_Config_Ini("config.ini");
+        
         $mail = Helpers_Mail::getInstance();
         $mail->addTo('<'.$data['us_email'].'>');
         $mail->setSubject('Confirme seu email');
-        $root = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/penca/public'."/?confmail=".$data['us_codverificacion'];
-        $string = 'Confirme seu email: <a href="'.$root.'" > Faça clique.</a>';
+        $root = $config->hostpublic."/?confmail=".$data['us_codverificacion'];
+        $string = 'Bolão Craque de Bola agradece seu cadastro...<br>para finalizar seu cadastro valide seu e-mail: <br> Clique aqui para confirmar.<a href="'.$root.'">'.$root.'</a>';
         $mail->setBodyHtml($string);
         $mail->setFrom('bolaocraquedebola16@gmail.com', 'Bolão Craque de Bola');
         $mail->send();

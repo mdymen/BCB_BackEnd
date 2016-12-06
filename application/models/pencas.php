@@ -107,6 +107,21 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
 
     }
     
+    public function update_cash_usuario($id_us, $valor) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("user", array("us_cash"))
+                ->where("us_id = ?", $id_us)->query()->fetch();
+        
+        $din = $result['us_cash'];
+        
+        $din = floatval($valor) + $din;
+        
+        $db->update("user", array("us_cash" => $din), "us_id = ".$id_us);
+        
+        return $din;
+    }
+    
     public function load_championship_with_results($id_user) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
@@ -260,6 +275,42 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
                 ->query()->fetch();
  
         return $result['round'];
+    }
+    
+    public function update_acumulado_rodada($rodada, $campeonato, $dinhero) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->beginTransaction();
+        try {
+            $d = $db->select()
+                    ->from("round",array("rd_acumulado"))
+                    ->where("rd_round = ?", $rodada)
+                    ->where("rd_idchampionship = ?", $campeonato)
+                    ->query()
+                    ->fetch();
+            
+            $d = $d['rd_acumulado'];
+            
+//            print_r($d);
+//            die(",");
+            
+            
+            $d = floatval($d) + $dinhero;
+            
+//            print_r($d);
+//            die(".");
+            
+            $db->update("round", array("rd_acumulado" => $d), "rd_round = ".$rodada." and rd_idchampionship = ".$campeonato);
+                        
+            $db->commit();
+            
+            //$d = number_format((float)$d, 2, '.', '');
+            
+            return $d;
+            
+        } catch (Exception $ex) {
+            $db->rollBack();
+            
+        }
     }
 
 }

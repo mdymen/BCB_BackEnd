@@ -70,5 +70,16 @@ class Admin_IndexController extends Zend_Controller_Action
         $this->_helper->json(200);
     }
     
+    
+    public function usuariosAction() {
+        
+        $u = new Application_Model_Users();
+        
+        $users = $u->users();
+        
+        $this->view->users = $users;
+        
+    }
+           
 }
 

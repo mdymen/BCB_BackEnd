@@ -67,11 +67,11 @@
 					<div class="header">
 						Login Bolão Craque de Bola
 					</div>
-                                    <span id="status"></span>
+<!--                                    <span id="status"></span>
 					<p>      
                                                 <input type="hidden" id="idface">
 						<div class="fb-login-button" data-max-rows="1" data-size="icon" data-show-faces="true" data-auto-logout-link="false"></div>
-					</p>
+					</p>-->
                                         <?php
                                         
                                                 if (strcmp($e, "yes") == 0) {
@@ -119,7 +119,7 @@
 					</form>
 					
 					<a class="pull-left" href="page-login.html#">Esqueceu a senha?</a>
-					<a class="pull-right" href="<?php echo $this->baseUrl()."/?register"; ?>">Cadastre-se!</a>
+					<a class="pull-right" href="<?php echo $this->baseUrl()."/?register&login=yes"; ?>">Cadastre-se!</a>
 					
 					<div class="clearfix"></div>				
 						

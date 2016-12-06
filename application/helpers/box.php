@@ -187,7 +187,7 @@ class Helpers_Box {
                                
                                if (!$matches[$i]['mt_played']) {
                                
-                                   if ($this->acumulado) {
+                                    if ($this->acumulado) {
                                         echo '<span style="padding-right:10px">'.$matches[$i]['mt_acumulado'].'</span>';
                                     }
                                    
