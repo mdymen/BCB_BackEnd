@@ -27,6 +27,21 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         );       
         $this->insert($info);
     }
+    
+    public function update_acumulado_match($match_id, $valor) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("match", array("mt_acumulado"))
+                ->where("mt_id = ?", $match_id)->query()->fetch();
+        
+        $din = $result['mt_acumulado'];
+        
+        $din = floatval($valor) + $din;
+        
+        $db->update("match", array("mt_acumulado" => $din), "mt_id = ".$match_id);
+        
+        return $din;
+    }
         
     public function load($championship) {
         $db = Zend_Db_Table::getDefaultAdapter();

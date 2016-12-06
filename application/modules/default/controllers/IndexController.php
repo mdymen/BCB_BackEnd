@@ -552,5 +552,22 @@ class IndexController extends Zend_Controller_Action
         }
         $this->redirect("/index");
     }
+    
+    public function contatoAction() {
+        $params = $this->_request->getParams();
+        
+        $mail = Helpers_Mail::getInstance();
+        $mail->addTo('<info@bolaocraquedebola.com.br>');
+        $mail->setSubject('Contato desde o site');
+        $string = "De: ".$params['email']."</br>".$params['texto'];
+        $mail->setBodyHtml($string);
+        $mail->setFrom('bolaocraquedebola16@gmail.com', 'Bolão Craque de Bola');
+        $mail->send();
+        
+        $config = new Zend_Config_Ini("config.ini");
+        
+        $this->redirect($config->host);
+
+    }
 }
 
