@@ -319,6 +319,10 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
         
         $sql = "call update_palpites(".$dpalpite.",".$dchamp.",".$s_ch_id.",".$s_us_id.",".$drodada.",".$rd_id.", ".$djogo.",".$s_mt_id.")";
         
+//        print_r($sql);
+//        die(".");
+        
+        
         $result = $db->query($sql)->fetch();
         
         return $result;

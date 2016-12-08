@@ -382,6 +382,8 @@ class PencaController extends Zend_Controller_Action {
         $penca = new Application_Model_Penca();
         $transaction = $penca->setMatch($champ_obj['ch_dpalpite'], (-1)*$champ_obj['ch_dchamp'], $champ, $this->getIdUser(), (-1)*$champ_obj['ch_drodada'], $round, (-1)*$champ_obj['ch_djogo'], $match_id);
 
+        $result = array();
+        
         $result['total'] = $transaction['tr_res_rd_acumulado'];
         $result['total_usuario'] = $transaction['tr_res_us_cash'];
         $result['total_match'] = $transaction['tr_res_mt_acumulado'];
@@ -394,7 +396,10 @@ class PencaController extends Zend_Controller_Action {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json($params);
+//        print_r($result);
+//        die(".");
+        
+        $this->_helper->json($result);
                 
     }
     
