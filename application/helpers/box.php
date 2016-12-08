@@ -90,8 +90,8 @@ class Helpers_Box {
             
             $r = $r.'<td width="35%">
                 <div class="row">
-                <div class="col-xs-10 col-sm-10 col-lg-10">                    
-                    <input id="'.$result_input.'" style="text-align:center" class="form-control" '.$disabled.' value="'.$result.'" type="text">
+                <div class="col-xs-10 col-sm-10 col-lg-10 numeros">                    
+                    <input id="'.$result_input.'" style="text-align:center" class="form-control numeros_input" '.$disabled.' value="'.$result.'" type="text">
                 </div>
                 </div>
             </td>

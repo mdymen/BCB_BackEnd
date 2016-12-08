@@ -26,6 +26,19 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
             'mt_round' => $params['round']
         );       
         $this->insert($info);
+        
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $return = $db->select()->from("round")
+                ->where("rd_round = ?", $info['mt_round'])
+                ->where("rd_idchampionship = ?", $info['mt_idchampionship'])
+                ->query()->fetch();
+        
+        if (empty($return)) {
+            $db->insert("round", array("rd_round" => $info['mt_round'],
+                        "rd_idchampionship" => $info['mt_idchampionship'],
+                        "rd_acumulado" => 0));
+        }
     }
     
     public function update_acumulado_match($match_id, $valor) {
@@ -109,7 +122,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
             `t2`.*, r.*, round.*  FROM `match` 
   INNER JOIN `team` AS `t1` ON t1.tm_id = match.mt_idteam1 
   INNER JOIN `team` AS `t2` ON t2.tm_id = match.mt_idteam2   
-  INNER JOIN vwpalpites ON vwpalpites.rs_idmatch = match.mt_id
+  LEFT JOIN vwpalpites ON vwpalpites.rs_idmatch = match.mt_id
   LEFT JOIN round ON round.rd_round = match.mt_round
   LEFT JOIN (select * from result where rs_iduser = ".$usuario.") r ON r.rs_idmatch = match.mt_id 
   WHERE (match.mt_idchampionship = '".$championship."') AND (mt_round = '".$rodada."') ORDER BY `mt_date` ASC";

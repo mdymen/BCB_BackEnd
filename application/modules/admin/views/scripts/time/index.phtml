@@ -70,6 +70,7 @@ $champs = $this->champs;
           
           $.post("time/salvartime", {time : time, logo : logo, championship : champ}, function(response) {
              console.log(response); 
+             alert(response);
           });
           
        }); 

@@ -6,6 +6,8 @@
 
  $t = Zend_Registry::get('translate');   
  
+ $config = new Zend_Config_Ini("config.ini");
+ 
 ?>
 
 <div class="row">
@@ -53,9 +55,13 @@
 
 <div class="row">
     <div class="col-lg-8">
-        <?php echo $this->render('penca/bolao/palpites_feitos.phtml'); ?>  
-        
-        <?php echo $this->render('penca/bolao/palpites.phtml'); ?>
+        <div id="gif" style="display:none"><img class="col-sm-offset-5" width="100px" hight="100px" src="<?php echo $config->host."/assets/img/pendente.gif"; ?>" /></div>
+        <div id="panel_palpites_palpites_feitos">
+            <?php echo $this->render('penca/bolao/palpites_feitos.phtml'); ?>  
+
+            <?php echo $this->render('penca/bolao/palpites.phtml'); ?>
+                        
+       </div>
     </div>
     
     <div class="col-lg-4">

@@ -49,6 +49,8 @@ function excluir(url) {
         var round = $("#round").val();
         var champ = $("#champ").val();        
         
+        $("#panel_palpites_palpites_feitos").attr("style","display:none");
+        $("#gif").attr("style","display:yes");
         $.post(url,{ result : rs, champ : champ, round : round, match :match}, function(response) {
 //           $("#info_msg").html("Palpite excluido!");
 //           $("#append_info").html($("#info").html());
@@ -67,6 +69,9 @@ function excluir(url) {
 
             $('#rs_dados_'+match).attr("style","display:none"); 
             $('#fila_'+match).attr("style","display:yes");
+            
+            $("#panel_palpites_palpites_feitos").attr("style","display:yes");
+            $("#gif").attr("style","display:none");
         }); 
     });
 }
