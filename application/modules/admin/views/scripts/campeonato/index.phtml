@@ -4,68 +4,118 @@
             <div class="box-content">
                 <form id="frChamp_palpites" action="<?php echo $this->baseUrl()."/admin/campeonato"; ?>" method="post">	
                         
-                    <div class="form-group">                                        
+                    <div class="form-group">
                         <div class="controls">
                               <div class="input-group col-sm-4">
-                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-                                <input type="text" id="campeonato" name="campeonato" class="form-control" placeholder="Campeonato">
+                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                <input type="text" id="campeonato" name="ch_nome" class="form-control" placeholder="Campeonato">
                               </div>                                              
                         </div>
+                    </div>
+                    <div class="form-group">
                         <div class="controls">
-                              <div class="input-group col-sm-4">
-                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-                                <input type="text" id="campeonato" name="sec1inicio" class="form-control" placeholder="Sector 1 Inicio">
+                              <div class="input-group col-sm-2">
+                                <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                                <input type="text" id="campeonato" name="ch_sec1_ini" class="form-control" placeholder="Sector 1 In.">
                               </div>                                              
                         </div>
+                    </div>    
+                    <div class="form-group">
                         <div class="controls">
-                              <div class="input-group col-sm-4">
-                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-                                <input type="text" id="campeonato" name="sec1fin" class="form-control" placeholder="Sector 1 Fin">
+                              <div class="input-group col-sm-2">
+                                <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                                <input type="text" id="campeonato" name="ch_sec1_fin" class="form-control" placeholder="Sector 1 Fin">
                               </div>                                              
-                        </div>      
+                        </div>
+                    </div>
+                   <div class="form-group">
                         <div class="controls">
                               <div class="input-group col-sm-4">
-                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-                                <input type="text" id="campeonato" name="sec1descripcion" class="form-control" placeholder="Sector 1 Descripcion">
-                              </div>                                              
-                        </div>                              
-                        <div class="controls">
-                              <div class="input-group col-sm-4">
-                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-                                <input type="text" id="campeonato" name="sec2inicio" class="form-control" placeholder="Sector 2 Inicio">
-                              </div>                                              
-                        </div>                          
-                        <div class="controls">
-                              <div class="input-group col-sm-4">
-                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-                                <input type="text" id="campeonato" name="sec1fin" class="form-control" placeholder="Sector 2 Fin">
-                              </div>                                              
-                        </div>          
-                        <div class="controls">
-                              <div class="input-group col-sm-4">
-                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-                                <input type="text" id="campeonato" name="sec2descripcion" class="form-control" placeholder="Sector 2 Descripcion">
-                              </div>                                              
-                        </div>                          
-                        <div class="controls">
-                              <div class="input-group col-sm-4">
-                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-                                <input type="text" id="campeonato" name="campeonato" class="form-control" placeholder="Sector 3 Inicio">
-                              </div>                                              
-                        </div>                              
-                        <div class="controls">
-                              <div class="input-group col-sm-4">
-                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-                                <input type="text" id="campeonato" name="campeonato" class="form-control" placeholder="Sector 3 Fin">
+                                <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                                <input type="text" id="campeonato" name="ch_sec1_desc" class="form-control" placeholder="Sector 1 Descripcion">
                               </div>                                              
                         </div>             
+                   </div>
+                    <div class="form-group">
+                        <div class="controls">
+                              <div class="input-group col-sm-2">
+                                <span class="input-group-addon"><i class="fa fa-star-half-empty"></i></span>
+                                <input type="text" id="campeonato" name="ch_sec2_ini" class="form-control" placeholder="Sector 2 In.">
+                              </div>                                              
+                        </div>   
+                    </div>
+                    <div class="form-group">
+                        <div class="controls">
+                              <div class="input-group col-sm-2">
+                                <span class="input-group-addon"><i class="fa fa-star-half-empty"></i></span>
+                                <input type="text" id="campeonato" name="ch_sec2_fin" class="form-control" placeholder="Sector 2 Fin">
+                              </div>                                              
+                        </div>          
+                    </div>  
+                    <div class="form-group">
                         <div class="controls">
                               <div class="input-group col-sm-4">
-                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-                                <input type="text" id="campeonato" name="campeonato" class="form-control" placeholder="Sector 3 Descripcion">
+                                <span class="input-group-addon"><i class="fa fa-star-half-empty"></i></span>
+                                <input type="text" id="campeonato" name="ch_sec2_desc" class="form-control" placeholder="Sector 2 Descripcion">
+                              </div>                                              
+                        </div>              
+                    </div>
+                    <div class="form-group">
+                        <div class="controls">
+                              <div class="input-group col-sm-2">
+                                <span class="input-group-addon"><i class="fa fa-star-o"></i></span>
+                                <input type="text" id="campeonato" name="ch_sec3_ini" class="form-control" placeholder="Sector 3 In.">
+                              </div>                                              
+                        </div>              
+                    </div>
+                    <div class="form-group">
+                        <div class="controls">
+                              <div class="input-group col-sm-2">
+                                <span class="input-group-addon"><i class="fa fa-star-o"></i></span>
+                                <input type="text" id="campeonato" name="ch_sec3_fin" class="form-control" placeholder="Sector 3 Fin">
+                              </div>                                              
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <div class="controls">
+                              <div class="input-group col-sm-4">
+                                <span class="input-group-addon"><i class="fa fa-star-o"></i></span>
+                                <input type="text" id="campeonato" name="ch_sec3_desc" class="form-control" placeholder="Sector 3 Descricao">
+                              </div>                                              
+                        </div>              
+                    </div>                    
+                    <div class="form-group">
+                        <div class="controls">
+                              <div class="input-group col-sm-2">
+                                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                <input type="text" id="campeonato" name="ch_dchamp" class="form-control" placeholder="p/ o campeonato">
                               </div>                                              
                         </div>                          
                     </div>
+                    <div class="form-group">
+                        <div class="controls">
+                              <div class="input-group col-sm-2">
+                                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                <input type="text" id="campeonato" name="ch_djogo" class="form-control" placeholder="p/ o jogo">
+                              </div>                                              
+                        </div>                          
+                    </div>     
+                    <div class="form-group">
+                        <div class="controls">
+                              <div class="input-group col-sm-2">
+                                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                <input type="text" id="campeonato" name="ch_drodada" class="form-control" placeholder="p/ a rodada">
+                              </div>                                              
+                        </div>                          
+                    </div>                    
+                    <div class="form-group">
+                        <div class="controls">
+                              <div class="input-group col-sm-2">
+                                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                <input type="text" id="campeonato" name="ch_dpalpite" class="form-control" placeholder="Custo do palpite">
+                              </div>                                              
+                        </div>                          
+                    </div>                                        
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Salvar Campeonato</button>
                       </div>

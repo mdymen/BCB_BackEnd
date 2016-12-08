@@ -16,9 +16,13 @@ class Admin_CampeonatoController extends Zend_Controller_Action
     {
        $params = $this->_request->getParams();
        
-       if (!empty($params['campeonato'])) {
+       if ($this->getRequest()->isPost()) {
+           unset($params['module']);
+           unset($params['controller']);
+           unset($params['action']);
+           $params['ch_atualround'] = 1;
            $champ = new Application_Model_Championships();
-           $champ->save(array("ch_nome" => $params['campeonato'], "ch_atualround" => 1));
+           $champ->save($params);
        }
     }
     
