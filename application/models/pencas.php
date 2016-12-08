@@ -312,5 +312,17 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
             
         }
     }
+    
+    public function setMatch($dpalpite, $dchamp, $s_ch_id, $s_us_id, $drodada, $rd_id, $djogo, $s_mt_id) {
+        
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $sql = "call update_palpites(".$dpalpite.",".$dchamp.",".$s_ch_id.",".$s_us_id.",".$drodada.",".$rd_id.", ".$djogo.",".$s_mt_id.")";
+        
+        $result = $db->query($sql)->fetch();
+        
+        return $result;
+    }
+    
 
 }

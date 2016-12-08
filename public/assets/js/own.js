@@ -45,13 +45,22 @@ function excluir(url) {
     $(".excluir").bind('click', function() {
         var rs = $(this).attr("result");
         var match = $(this).attr("match");
-        $.post(url,{ result : rs }, function(response) {
+        
+        var round = $("#round").val();
+        var champ = $("#champ").val();        
+        
+        $.post(url,{ result : rs, champ : champ, round : round, match :match}, function(response) {
 //           $("#info_msg").html("Palpite excluido!");
 //           $("#append_info").html($("#info").html());
 //           $(".alert-info").show();
 //            fechar_info();
 
             console.log(response);
+                       
+            $("#ronda_total_palpitado").html(parseFloat(response.total).toFixed(2));
+            $("#cash_usuario").html(parseFloat(response.total_usuario).toFixed(2));
+
+            $(".ac_"+match).html(parseFloat(response.total_match).toFixed(2));
 
             $('#result1pf_'+match).val(0);
             $('#result2pf_'+match).val(0);
