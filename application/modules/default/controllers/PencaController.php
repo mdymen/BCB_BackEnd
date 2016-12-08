@@ -312,8 +312,14 @@ class PencaController extends Zend_Controller_Action {
             $teams = $teams_obj->load_teams_championship($champ_id); 
             
             $this->view->teams = $teams;
+            
+            //los partidos de la rodada n_rodada
             $this->view->rodada = $rodada;
+            
+            //el numero de la rodada activa. La que siguiente inmediata que se va a jugar
             $this->view->n_rodada = $rodada_id;
+            
+            //las rodadas del campeonato registradas en el sistema
             $this->view->rondas = $rondas;          
         }
     }
@@ -340,7 +346,9 @@ class PencaController extends Zend_Controller_Action {
             $id = $matchs_obj->submeter_result($user_id, $result1, $result2, $match_id, $round);
             
             $penca = new Application_Model_Penca();
-            $transaction = $penca->setMatch((-1)*$champ_obj['ch_dpalpite'], $champ_obj['ch_dchamp'], $champ, $this->getIdUser(), $champ_obj['ch_drodada'], $round, $champ_obj['ch_djogo'], $match_id);           
+            $transaction = $penca->setMatch((-1)*$champ_obj['ch_dpalpite'], $champ_obj['ch_dchamp'], 
+                    $champ, $this->getIdUser(), $champ_obj['ch_drodada'], 
+                    $round, $champ_obj['ch_djogo'], $match_id, 'null');           
    
             $result_obj = new Application_Model_Result();    
             $result = $result_obj->getResult($id);
@@ -369,9 +377,6 @@ class PencaController extends Zend_Controller_Action {
         $params = $this->_request->getParams();
         
         $result = $params['result'];
-        $matchs_obj = new Application_Model_Matchs();   
-        $r = $matchs_obj->result($result);
-        $matchs_obj->delete_palpite($result);
         $round = $params['round'];
         $champ = $params['champ'];
         $match_id = $params['match'];      
@@ -380,26 +385,23 @@ class PencaController extends Zend_Controller_Action {
         $champ_obj = $champs->getChamp($champ);
         
         $penca = new Application_Model_Penca();
-        $transaction = $penca->setMatch($champ_obj['ch_dpalpite'], (-1)*$champ_obj['ch_dchamp'], $champ, $this->getIdUser(), (-1)*$champ_obj['ch_drodada'], $round, (-1)*$champ_obj['ch_djogo'], $match_id);
+        $transaction = $penca->setMatch($champ_obj['ch_dpalpite'], (-1)*$champ_obj['ch_dchamp'], 
+                $champ, $this->getIdUser(), (-1)*$champ_obj['ch_drodada'], 
+                $round, (-1)*$champ_obj['ch_djogo'], $match_id, $result);
 
-        $result = array();
-        
-        $result['total'] = $transaction['tr_res_rd_acumulado'];
-        $result['total_usuario'] = $transaction['tr_res_us_cash'];
-        $result['total_match'] = $transaction['tr_res_mt_acumulado'];
+        $return = array();        
+        $return['total'] = $transaction['tr_res_rd_acumulado'];
+        $return['total_usuario'] = $transaction['tr_res_us_cash'];
+        $return['total_match'] = $transaction['tr_res_mt_acumulado'];
         
         $this->login();
         
         $this->getResponse()
-         ->setHeader('Content-Type', 'application/json');
-        
+         ->setHeader('Content-Type', 'application/json');        
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-//        print_r($result);
-//        die(".");
-        
-        $this->_helper->json($result);
+        $this->_helper->json($return);
                 
     }
     
