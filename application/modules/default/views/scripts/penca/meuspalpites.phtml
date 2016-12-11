@@ -182,6 +182,10 @@
                             $box->id_result_input1 = "result1pf_";
                             $box->id_result_input2 = "result2pf_";
                             $box->id_box = "rs_dados_";
+                            $box->ganadores = true;
+                            $box->infoescrita = true;
+                            $box->infoescrita_msg = "Encerrado";
+//                            $box->btn_cantidad = true;
                             echo $box->box();
 
                         ?>
@@ -209,6 +213,8 @@
     }); 
     
     $(function()  {
+        ganadores_jogo();
+        
         $(".champ").bind("click",function() {
             var champ = $(this).attr("champ");
             var ronda = $(this).attr("ronda");

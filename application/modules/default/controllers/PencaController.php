@@ -606,11 +606,24 @@ class PencaController extends Zend_Controller_Action {
         return $res;
         
     }
-//    
-//    public function processarpalpitesAction() { 
-//        $params = $this->_request->getParams();
-//        
-//        print_r($params);
-//        die(".");
-//    }
+
+    /*
+     * Envia por JSON a lista de ganadores de un determinado partido
+     */
+    public function ganadoresjogoAction() {
+        $params = $this->_request->getParams();
+        
+        $jogo = $params['match_id'];
+        
+        $r = new Application_Model_Result();
+        $ganadores = $r->ganadores_match($jogo);
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($ganadores);
+    }
 }

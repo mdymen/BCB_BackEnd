@@ -131,13 +131,15 @@
                                                 <li><a href="<?php echo $this->baseUrl("/penca/ranking"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Ranking</span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/caixa/index"); ?>"><i class="fa fa-dollar"></i><span class="hidden-sm text">Caixa</span></a></li>
                                                 <!--<li><a href="<?php echo $this->baseUrl("/register/penca"); ?>"><i class="fa fa-legal"></i><span class="hidden-sm text"> Criar Balão </span></a></li>-->                                                
-                                                <li><a href="<?php echo $this->baseUrl("/admin"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Adicionar Jogo </span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/admin/jogos"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Jogos </span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/admin/campeonato"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Adicionar Camp. </span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/admin/time"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Adicionar Time </span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/admin/team"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Admin Teams </span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/admin/resultados"); ?>"><i class="fa fa-question-circle"></i><span class="hidden-sm text"> Resultados </span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/admin/index/usuarios"); ?>"><i class="fa fa-question-circle"></i><span class="hidden-sm text"> Usuarios </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/admin/campeonato"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text">Add Campeonato</span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/admin/time"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Add Time </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/admin"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text">Add Jogo</span></a></li>                                                
+                                                <li><a href="<?php echo $this->baseUrl("/admin/jogos"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Jogos </span></a></li>
+                                                
+                                                
+                                                <!--<li><a href="<?php echo $this->baseUrl("/admin/team"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Admin Teams </span></a></li>-->
+                                                <li><a href="<?php echo $this->baseUrl("/admin/resultados"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Resultados </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/admin/index/usuarios"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Usuarios </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/index/logout"); ?>"><i class="fa fa-power-off"></i><span class="hidden-sm text">Logout</span></a></li>
                                                 
 					</ul>

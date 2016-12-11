@@ -190,4 +190,16 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
         return $return;
     }
     
+    public function ganadores_match($match) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("vwmatchsresult", array('vwmatchsresult.mt_id', 'vwmatchsresult.rs_points'))
+                ->joinInner("user", "user.us_id = vwmatchsresult.rs_iduser", array('user.us_id','user.us_username'))
+                ->where("mt_id = ?", $match)
+                ->where("rs_points = 5");
+                
+        $return = $result->query()->fetchAll();
+        
+        return $return;
+    }
 }

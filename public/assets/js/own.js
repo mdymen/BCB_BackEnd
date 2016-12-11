@@ -126,3 +126,40 @@ function teamusername_click() {
         $("#teamcoracao_pick").css("display","block");
     });
 };
+
+function ganadores_jogo() {
+    $(".ganadores").bind("click", function() {
+        var match = $(this).attr("match");
+        
+        if ($("#dvInfo_"+match).attr("style") === "display:none") {        
+            $.post("ganadoresjogo", {match_id : match}, function(response) {
+               console.log(response);
+               var tabela = '<table class="table">';
+               for (var i = 0; i < response.length; i = i + 1) {
+                   var j = i + 1;
+
+                   tabela = tabela + "<tr>";
+
+                   tabela = tabela + "<td>"+j+"</td>";               
+                   tabela = tabela + "<td>"+response[i].rs_points+"</td>";
+                   tabela = tabela + "<td>"+response[i].us_username+"</td>";
+
+                   tabela = tabela + "</tr>";
+               } 
+               tabela = tabela + "</table>";
+               
+               $("#dvInfo_"+match).attr("style","display:block");
+               if (response.length > 0) {
+                   $("#dvInfo_"+match).html(tabela);
+               } else {
+                   $("#dvInfo_"+match).html("Sem ganadores");
+               }
+               
+               
+               
+            });
+        } else {
+            $("#dvInfo_"+match).attr("style","display:none");
+        }
+    })
+}

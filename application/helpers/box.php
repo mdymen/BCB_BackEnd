@@ -65,6 +65,12 @@ class Helpers_Box {
     public $display_boxcontent = true;
     
     public $titulo_bigbox = "";
+    
+    public $ganadores = false;
+    
+    public $infoescrita = false;
+    
+    public $infoescrita_msg = "";
 
     public function getrow($base, $tm_id, $tm_nome, $tm_logo, $mt_championship, $rs_res, $goal, $palpites_ou_result, $disabled_input, $result_input, $mt_id, $played, $ganou) {
         $result =  $goal;
@@ -206,13 +212,17 @@ class Helpers_Box {
                             }
 
                             echo '<div id="'.$id.'" style="margin: 15px 0 0 0; '.$mas_info_display.'">';
-                                                             
+                                       
+                            if ($matches[$i]['mt_played'] && $this->infoescrita) {                                
+                                  echo '<span class="label label-important" style="margin-right:70px">'.$this->infoescrita_msg.'</span>';                                
+                            }
+                            
+                            if ($this->acumulado) {
+                                echo '<span style="padding-right:10px" class="ac_'.$matches[$i]['mt_id'].'">'.$matches[$i]['mt_acumulado'].'</span>';
+                            }         
+
                                
-                               if (!$matches[$i]['mt_played']) {
-                               
-                                    if ($this->acumulado) {
-                                        echo '<span style="padding-right:10px" class="ac_'.$matches[$i]['mt_id'].'">'.$matches[$i]['mt_acumulado'].'</span>';
-                                    }
+                               if (!$matches[$i]['mt_played']) {                                                                                                                                                        
                                    
                                    if ($this->btn_palpitar) {
                                         echo '<button team1="'.$matches[$i]['tm1_id'].'" team2="'.$matches[$i]['tm2_id'].'" data="'.$matches[$i]['mt_date'].'" match="'.$matches[$i]['mt_id'].'" class="btn btn-xs btn-success palpite">
@@ -232,8 +242,15 @@ class Helpers_Box {
                                     
                                     
 
+                               } else {
+                                    if ($this->ganadores) {
+                                        echo '<button match="'.$matches[$i]['mt_id'].'" class="btn btn-xs btn-warning ganadores">
+                                        <i style="padding: 6px 0 !important; font-size: 10px !important; margin-right: 0px !important; width: 15px !important"  class="fa fa-trophy"></i></button>';
+                                    }   
                                }
                                
+                               echo '<div id="dvInfo_'.$matches[$i]['mt_id'].'" style="display:none">'                                      
+                                . '</div>';
                                         
                             echo '</div>    
                         </div>

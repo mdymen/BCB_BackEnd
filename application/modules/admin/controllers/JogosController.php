@@ -22,11 +22,8 @@ class Admin_JogosController extends Zend_Controller_Action
             $t_obj = new Application_Model_Matchs();
             $teams = $t_obj->load_all_matchs($params['champ']);
             $this->view->matches = $teams;
-            $this->view->champ = $params['champ'];
-            
-            
-        }
-       
+            $this->view->champ = $params['champ'];                        
+        }       
     }
     
     public function excluirjogoAction() {
@@ -44,8 +41,6 @@ class Admin_JogosController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
         $this->_helper->json(200);
-        
-        
     }
     
     
