@@ -18,6 +18,7 @@ include APPLICATION_PATH.'/helpers/box.php';
 include APPLICATION_PATH.'/helpers/translate.php';
 include APPLICATION_PATH.'/helpers/paginacao.php';
 include APPLICATION_PATH.'/helpers/posicoes.php';
+include APPLICATION_PATH.'/helpers/ranking.php';
 class CampeonatosController extends Zend_Controller_Action
 {
     public function indexAction() {
@@ -68,10 +69,16 @@ class CampeonatosController extends Zend_Controller_Action
             $teams_obj = new Application_Model_Teams();
             $teams = $teams_obj->load_teams_championship($champ_id); 
 
+            $ranking = new Application_Model_Result();
+            $rankings = $ranking->ranking_round($rodada_id, $champ_id);
+            $rankings_champ = $ranking->ranking_champ($champ_id);
+            
             $this->view->teams = $teams;
             $this->view->rodadas = $rodadas;
             $this->view->n_rodada = $rodada_id;
             $this->view->rondas = $rondas;   
+            $this->view->rankings = $rankings;
+            $this->view->ranking_champ = $rankings_champ;
         }
     }
     

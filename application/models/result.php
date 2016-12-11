@@ -165,4 +165,29 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
         return $result;        
     }
     
+    public function ranking_round($round, $championship) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("vwranking_round")
+                ->where("mt_round = ?", $round)
+                ->where("mt_idchampionship = ?", $championship)
+                ->order("points DESC");
+        
+        $return = $result->query()->fetchAll();
+        
+        return $return;
+    }
+    
+    public function ranking_champ($championship) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("vwranking_championship")
+                ->where("mt_idchampionship = ?", $championship)
+                ->order("points DESC");
+        
+        $return = $result->query()->fetchAll();
+        
+        return $return;
+    }
+    
 }

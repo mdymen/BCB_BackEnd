@@ -29,16 +29,16 @@ class CaixaController extends Zend_Controller_Action
         $preco = 0;
         $nome_plano = "";
         if ($plano == 1) {
-            $preco = 2;
+            $preco = 10.80;
             $nome_plano = "Plano 1";
         } else if ($plano == 2) {
-            $preco = 20;
+            $preco = 21.20;
             $nome_plano = "Plano 2";
         } else if ($plano == 3) {
-            $preco = 50;
+            $preco = 52.40;
             $nome_plano = "Plano 3";
         } else if ($plano == 4) {
-            $preco = 100;
+            $preco = 104.40;
             $nome_plano = "Plano 4";
         }
         
@@ -49,7 +49,7 @@ class CaixaController extends Zend_Controller_Action
             'currency' => 'BRL',
             'itemId1' => 0001,
             'itemDescription1'=> $nome_plano,
-            'itemAmount1' => $preco.'.00',
+            'itemAmount1' => $preco,
             'itemQuantity1' =>1,
             'itemWeight1' => 1000
             );
@@ -69,7 +69,7 @@ class CaixaController extends Zend_Controller_Action
         $my_array = (array)$return->code;
         
         $codigo = $my_array[0];
- 
+        
         $this->redirect("https://pagseguro.uol.com.br/v2/checkout/payment.html?code=".$codigo);
     }
     

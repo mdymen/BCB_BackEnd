@@ -59,6 +59,12 @@ class Helpers_Box {
     public $link_campeonato = "/campeonatos/index";
     
     public $link_ronda = "/campeonatos/index";
+    
+    public $btn_minimize = false;
+    
+    public $display_boxcontent = true;
+    
+    public $titulo_bigbox = "";
 
     public function getrow($base, $tm_id, $tm_nome, $tm_logo, $mt_championship, $rs_res, $goal, $palpites_ou_result, $disabled_input, $result_input, $mt_id, $played, $ganou) {
         $result =  $goal;
@@ -107,13 +113,30 @@ class Helpers_Box {
     }
     
     public function big_box() {
+        
+                      $display_boxcontent = "";
+                      $chevron = "up";
+                      if (!$this->display_boxcontent) { 
+                          $display_boxcontent = 'style="display:none"';
+                          $chevron = "down";
+                      }
+                      
+                      $matches = $this->matches;
+        
          echo '<div class="box">
                         <div class="box-header">
-                            <h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo $titulo; ?></h2>
-                            <div class="box-icon">
-                        </div>
-                </div>
-                <div class="box-content">
+                            <h2><i class="fa fa-align-justify"></i><span class="break"></span>'.$this->titulo_bigbox.'</h2>';
+                                if ($this->btn_minimize) {
+                                    echo '<div class="box-icon">
+                                        <span><h2 style="margin-right: 30px !important" id="ronda_total_palpitado">'.number_format((float)$matches[0]['rd_acumulado'], 2, '.', '').'</h2></span>
+                                       <a href="form-elements.html#" class="btn-minimize"><i class="fa fa-chevron-'.$chevron.'"></i></a>
+                                    </div>';
+                                }
+                        echo '</div>';
+                        
+
+                        
+                echo '<div class="box-content" '.$display_boxcontent.'>
                     <div class="row">';
 
                         echo $this->box();

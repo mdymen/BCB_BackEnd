@@ -4,6 +4,9 @@
  
     $palpites = $this->results;
     
+//    print_r($º
+    
+    
 //    print_r($palpites);
     
     if (!empty($palpites)) {
@@ -38,86 +41,6 @@ if (!empty($palpites)) {
     
     
    ?>
-        
-                <div class="box">
-                        <div class="box-header">
-                            
-                            <?php
-                                    $titulo = "Palpites da Rodada: ".$palpites[0]['mt_round'];
-
-                            ?>
-                            
-                            
-                                <h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo $titulo; ?></h2>
-                                <div class="box-icon">
-<!--                                        <a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
-                                        <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                                        <a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>-->
-                                </div>
-                        </div>
-                        <div class="box-content">
-                                <table class="table" id="tb_palpites" >
-                                          <thead>
-                                                  <tr>
-                                                          <th></th>
-                                                          <th></th>
-                                                          <th></th>
-                                                          <th></th> 
-                                                          <th></th> 
-                                                          <th></th> 
-                                                  </tr>
-                                          </thead>   
-                                          <tbody>
-                                              
-                                              <?php
-                                              
-                                              for ($i = 0; $i < count($palpites); $i = $i + 1) {
-                                                  
-                                                $st = 'style=""';
-                                                
-                                                    echo '<input '.$st.' type="hidden" name="rs_'.$i.'" id="rs_'.$i.'" value="'.$palpites[$i]['mt_id'].'" />';
-
-                                                    if (($i == 0) || ($i > 0 && strcmp($palpites[$i]['mt_date'],$palpites[$i-1]['mt_date']) != 0)) { 
-                                                        echo '<tr '.$st.' style="text-align:center" name="'.$palpites[$i]['mt_date'].'">
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td id="date'.$palpites[$i]['mt_id'].'"><b>'.  Helpers_Data::day($palpites[$i]['mt_date']).'</b></td>                                      
-                                                        </tr>';
-                                                                
-                                                    } 
-                                                            
-                                                        echo '
-                                                            <tr '.$st.' id="fila_'.$palpites[$i]['mt_id'].'">
-                                                            <td style="text-align:right" id="team1p'.$palpites[$i]['mt_id'].'">'.Helpers_Html::getTeamLinkRight($this->baseUrl(), $palpites[$i]['tm1_id'], $palpites[$i]['t1nome'], $config->host.$palpites[$i]['tm1_logo'], $palpites[$i]['mt_idchampionship']).'</td>
-                                                            <td></td>
-                                                            <td class="col-sm-3 col-xs-3">
-                                                                <div class="row">
-                                                                    <div class="col-xs-6 col-sm-6 col-lg-6">
-                                                                        <input style="text-align:center" class="form-control" value="'.$palpites[$i]['rs_res1'].'" disabled> 
-                                                                    </div>
-                                                                   <div class="col-xs-6 col-sm-6 col-lg-6">		
-                                                                        <input style="text-align:center" class="form-control" value="'.$palpites[$i]['rs_res2'].'" disabled>
-                                                                    </div>   
-                                                                </div>
-                                                            </td>   
-                                                            <td></td>
-                                                            <td style="text-align:left;" id="team2p'.$palpites[$i]['mt_id'].'">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(),$palpites[$i]['tm2_id'], $palpites[$i]['t2nome'], $config->host.$palpites[$i]['tm2_logo'], $palpites[$i]['mt_idchampionship']).'</td>
-                                                            <td><a href="'.$this->baseUrl("/usuario/index?usuario=".$palpites[$i]['us_id']).'" >'.$palpites[$i]['us_username'].'</a></td>                                      
-                                                        </tr>';
-                                                    }
-                                               
-                                              
-                                              ?>
-                                              
-                                                                           
-                                          </tbody>
-                                 </table>  
-                               
-                            <div class="form-action">
-                                <!--<a href="javascript:void(0)" id="btnAceitarPalpites" class="btn btn-success">Aceitar Palpites</a>--> 
-                            </div>
-                        </div>
-                </div>
        
 <?php
 }

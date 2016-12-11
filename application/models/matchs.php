@@ -18,6 +18,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     protected $_name = 'match';
     
     public function save($params) {
+        
         $info = array(
             'mt_idteam1'=>$params['team1'],
             'mt_idteam2'=>$params['team2'],
@@ -25,10 +26,9 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
             'mt_idchampionship' => $params['championship'],
             'mt_round' => $params['round']
         );       
-        $this->insert($info);
         
-        $db = Zend_Db_Table::getDefaultAdapter();
-        
+        $db = Zend_Db_Table::getDefaultAdapter();       
+
         $return = $db->select()->from("round")
                 ->where("rd_round = ?", $info['mt_round'])
                 ->where("rd_idchampionship = ?", $info['mt_idchampionship'])
@@ -38,7 +38,14 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
             $db->insert("round", array("rd_round" => $info['mt_round'],
                         "rd_idchampionship" => $info['mt_idchampionship'],
                         "rd_acumulado" => 0));
+            
+            $id_round = $db->lastInsertId("round");
+            $return['rd_id'] = $id_round;
         }
+        
+        $info['mt_idround'] = $return['rd_id'];
+                  
+        $this->insert($info);        
     }
     
     public function update_acumulado_match($match_id, $valor) {
@@ -75,12 +82,17 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
                 ->where("rs_iduser= ?", $usuario)
                 ->where("mt_idchampionship = ?", $championship)
                 ->where("mt_round = ?", $rodada)
-                ->order(array('mt_date ASC'))
+                ->order(array('mt_date ASC'));
+        
+//        print_r($result->__toString());
+//        die(".");
+        
+        $return = $result
                 ->query()
                 ->fetchAll();
         
         
-        return $result;       
+        return $return;       
     }
     
 //    public function load_palpites_simples($championship, $rodada, $usuario) {

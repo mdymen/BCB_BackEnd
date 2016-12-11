@@ -91,6 +91,7 @@
     <div class="col-lg-8">
 <?php
 
+//print_r($matchs);
 
         $box = new Helpers_Box();
         $box->disabled_input = true;
@@ -102,11 +103,45 @@
         $box->show_titulo_campeonato = false;
         $box->show_titulo_rodada = false;
         $box->tamanho_box = "col-lg-6 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
+        $box->btn_minimize = true;
+        $box->display_boxcontent = false;
+        $box->titulo_bigbox = "Jogos da rodada";
         $box->big_box();
     }
 ?>
-
+<div class="col-lg-6" style="padding-left:0px !important; padding-right:0px !important">
+    <?php
+    
+        $ranking_round = new Helpers_Ranking();
+        $rankings = $this->rankings;
+        
+        $ranking_round->vwranking = $rankings;
+        $ranking_round->acumulado = $matchs[0]['rd_acumulado'];
+        $ranking_round->titulo="Ranking da Rodada";
+        $ranking_round->fechado = true;
+        echo $ranking_round->ranking();
+    
+    ?>
+    
+</div>
+        <div class="col-lg-6" style="padding-right:0px !important; padding-left:0px !important">        
+            <?php 
+            
+                    $ranking_champ = new Helpers_Ranking();
+                    $r_champ = $this->ranking_champ;
+                    
+                    $ranking_champ->vwranking = $r_champ;
+                    $ranking_champ->acumulado = $r_champ[0]['ch_acumulado'];
+                    $ranking_champ->titulo="Campeonato";
+                    $ranking_champ->fechado = true;
+                    echo $ranking_champ->ranking();
+            
+            
+            ?>
+        </div>    
+            
     </div>
+   
 
 
 
