@@ -33,7 +33,7 @@ class Helpers_Posicoes {
                     <h2><i class="fa fa-align-justify"></i><span class="break"></span>Tabela de Posicoes</h2>
 
                     <div class="box-icon">
-                        <span><h2 style="margin-right: 30px !important" id="ronda_total_palpitado">'.number_format((float)$champion['ch_acumulado'], 2, '.', '').'</h2></span>
+                        <span><h2 style="margin-right: 30px !important" id="campeonato_total_palpitado">'.number_format((float)$champion['ch_acumulado'], 2, '.', '').'</h2></span>
                         </div>
             </div>
             <div class="box-content">

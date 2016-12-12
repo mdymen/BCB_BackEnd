@@ -357,6 +357,7 @@ class PencaController extends Zend_Controller_Action {
             $result['total'] = $transaction['tr_res_rd_acumulado'];
             $result['total_usuario'] = $transaction['tr_res_us_cash'];
             $result['total_match'] = $transaction['tr_res_mt_acumulado'];
+            $result['total_campeonato'] = $transaction['tr_res_ch_acumulado'];
   
             $this->login();
    
@@ -393,6 +394,7 @@ class PencaController extends Zend_Controller_Action {
         $return['total'] = $transaction['tr_res_rd_acumulado'];
         $return['total_usuario'] = $transaction['tr_res_us_cash'];
         $return['total_match'] = $transaction['tr_res_mt_acumulado'];
+        $result['total_campeonato'] = $transaction['tr_res_ch_acumulado'];
         
         $this->login();
         

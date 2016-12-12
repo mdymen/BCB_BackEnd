@@ -61,6 +61,7 @@ function excluir(url) {
                        
             $("#ronda_total_palpitado").html(parseFloat(response.total).toFixed(2));
             $("#cash_usuario").html(parseFloat(response.total_usuario).toFixed(2));
+            $("#campeonato_total_palpitado").html(parseFloat(response.total_campeonato).toFixed(2));
 
             $(".ac_"+match).html(parseFloat(response.total_match).toFixed(2));
 

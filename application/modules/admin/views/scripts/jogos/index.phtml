@@ -83,6 +83,12 @@
                                               <?php
                                               echo '<input type="hidden" value="'.count($matchs).'" name="count_palpites" id="count_palpites">';
                                               for ($i = 0; $i < count($matchs); $i = $i + 1) {  
+                                                  
+                                                    if (!$matchs[$i]['mt_played']) {
+                                                        $matchs[$i]['mt_goal1'] = "";
+                                                        $matchs[$i]['mt_goal2'] = "";
+                                                    }
+                                                  
                                                     $date = date("H:i",strtotime($matchs[$i]['mt_date']))."hs. ".date("d-m-y",strtotime($matchs[$i]['mt_date']) );
                                                     $matchs[$i]['mt_date'] = $date;
                                                     if (($i == 0) || ($i > 0 && strcmp($matchs[$i]['mt_date'],$matchs[$i-1]['mt_date']) != 0)) { 
@@ -99,7 +105,7 @@
                                                                 <td>'.$matchs[$i]['mt_id'].'</td>
                                                             <td width="15%">
                                                                 <div class="input-group col-sm-7">
-                                                                    <input disabled class="form-control" value="'.$matchs[$i]['mt_goal1'].'" type="text" placeholder="0">
+                                                                    <input disabled class="form-control" value="'.$matchs[$i]['mt_goal1'].'" type="text">
                                                                 </div>
                                                             </td>
                                                             <td><img width="28px;" height="21px;" src="'.$config->host.$matchs[$i]['tm1_logo'].'" />'.$matchs[$i]['t1nome'].'</td>
@@ -107,7 +113,7 @@
                                                             <td><img width="28px;" height="21px;" src="'.$config->host.$matchs[$i]['tm2_logo'].'" />'.$matchs[$i]['t2nome'].'</td>
                                                             <td width="15%">     
                                                                 <div class="input-group col-sm-7">		
-                                                                    <input disabled class="form-control" value="'.$matchs[$i]['mt_goal2'].'" type="text" placeholder="0">
+                                                                    <input disabled class="form-control" value="'.$matchs[$i]['mt_goal2'].'" type="text">
                                                                 </div>
                                                             </td>
                                                             <td>';

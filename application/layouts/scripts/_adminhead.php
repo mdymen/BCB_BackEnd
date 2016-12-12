@@ -138,6 +138,7 @@
                                                 
                                                 
                                                 <!--<li><a href="<?php echo $this->baseUrl("/admin/team"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Admin Teams </span></a></li>-->
+                                                <li><a href="<?php echo $this->baseUrl("/admin/transacoes"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Transações </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/resultados"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Resultados </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/index/usuarios"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Usuarios </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/index/logout"); ?>"><i class="fa fa-power-off"></i><span class="hidden-sm text">Logout</span></a></li>
