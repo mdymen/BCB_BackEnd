@@ -202,4 +202,32 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
         
         return $return;
     }
+    
+    public function getresultsbychamp($champ)  {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("vwmatchsresult")
+                ->joinInner("user","user.us_id = rs_iduser")                
+                ->where("mt_idchampionship = ?", $champ)
+                ->order("user.us_id")
+                ->order("mt_round")
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+        
+    }
+    
+    public function calcularmoney($match, $res1, $res2, $s_id_team1, $s_id_team2) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $sql = "call jogo_terminado(".$match.", ".$res1.", ".$res2.", ".$s_id_team1.", ".$s_id_team2.")";
+        
+        return $sql;
+        
+        print_r($sql);
+        //die(".");
+        
+        //$db->query($sql)->fetch();
+    }
 }

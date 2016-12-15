@@ -111,7 +111,7 @@
 		</div>	
 	</header>
 	<!-- end: Header -->
-	
+        
 		<div class="container">
 		<div class="row">
 				
@@ -124,9 +124,9 @@
                                                 <!--<li><a href="index.html"><i class="fa fa-dollar"></i><span class="hidden-sm text"> Caixa</span></a></li>-->	
 						<!--<li><a href="<?php echo $this->baseUrl("/penca/pencas"); ?>"><i class="fa fa-dribbble"></i><span class="hidden-sm text"> Baloes</span></a></li>-->	
                                                 <!--<li><a href="<?php echo $this->baseUrl("/penca/meusbaloes"); ?>" ><i class="fa fa-globe"></i><span class="hidden-sm text"> Meus Baloes </span></a></li>-->	
-                                                <li><a href="<?php echo $this->baseUrl("/penca/meuspalpites"); ?>" ><i class="fa fa-globe"></i><span class="hidden-sm text"> Meus Palpites </span></a></li>	
+                                                <li><a href="<?php echo $this->baseUrl("/penca/meuspalpites"); ?>" ><i class="ttt fa fa-globe"></i><span class="hidden-sm text"> Meus Palpites </span></a></li>	
                                                 <li><a href="<?php echo $this->baseUrl("/penca/bolao"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Palpites </span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/usuario"); ?>"><i class="fa fa-user"></i><span class="hidden-sm text">Meu Perfil</span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/usuario"); ?>"><i class="fa fa-user"></i><span class="test hidden-sm text">Meu Perfil</span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/campeonatos"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Campeonatos</span></a></li> 
                                                 <li><a href="<?php echo $this->baseUrl("/penca/ranking"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Ranking</span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/caixa/index"); ?>"><i class="fa fa-dollar"></i><span class="hidden-sm text">Caixa</span></a></li>
@@ -139,6 +139,7 @@
                                                 
                                                 <!--<li><a href="<?php echo $this->baseUrl("/admin/team"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Admin Teams </span></a></li>-->
                                                 <li><a href="<?php echo $this->baseUrl("/admin/transacoes"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Transações </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/admin/campeonato/palpites"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Palpites </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/resultados"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Resultados </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/index/usuarios"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Usuarios </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/index/logout"); ?>"><i class="fa fa-power-off"></i><span class="hidden-sm text">Logout</span></a></li>

@@ -51,40 +51,46 @@ class Admin_ResultadosController extends Zend_Controller_Action
         $team1 = $params['team1'];
         $team2 = $params['team2'];
         
-        $result = new Application_Model_Result();        
-        $result->update_resultado($matchid, $res1, $res2);
         
-        $teams = new Application_Model_Teams();
         
-        if ($res1 > $res2) {
-            $teams->sum_points($team1, 3);
-            $teams->sum_match($team2);
-        }
-        if ($res1 < $res2) {            
-            $teams->sum_match($team1);
-            $teams->sum_points($team2, 3);
-        }
-
-        if ($res1 == $res2) {
-            $teams->sum_points($team1, 1);
-            $teams->sum_points($team2, 1);
-        }
+        $result = new Application_Model_Result();   
+        $r = $result->calcularmoney($matchid, $res1, $res2, $team1, $team2);
         
-        /* Retorna los RESULT con ID MATCH 
-         *  [rs_id] => 11 [rs_idmatch] => 41 [rs_res1] => 9 [rs_res2] => 2 
-            [rs_date] => 2004-09-16 00:00:00 [rs_idpenca] => 1 [rs_iduser] => 1 
-            [rs_round] => 1 [rs_result] => [rs_points] => 0 ) )
-         */
-        $matchs = new Application_Model_Matchs();
-        $match = $matchs->load_resultados_palpitados($matchid);
-
-        $x = "";                
-        
-        for ($j = 0; $j < count($match); $j = $j + 1) {
-            $puntagem = $this->puntuacao($match[$j], $res1, $res2);
-            $x = $puntagem;
-            $result->update_puntagem($puntagem, $match[$j]['rs_id']);
-        }
+        print_r($r);
+        die(".");
+//        $result->update_resultado($matchid, $res1, $res2);
+//        
+//        $teams = new Application_Model_Teams();
+//        
+//        if ($res1 > $res2) {
+//            $teams->sum_points($team1, 3);
+//            $teams->sum_match($team2);
+//        }
+//        if ($res1 < $res2) {            
+//            $teams->sum_match($team1);
+//            $teams->sum_points($team2, 3);
+//        }
+//
+//        if ($res1 == $res2) {
+//            $teams->sum_points($team1, 1);
+//            $teams->sum_points($team2, 1);
+//        }
+//        
+//        /* Retorna los RESULT con ID MATCH 
+//         *  [rs_id] => 11 [rs_idmatch] => 41 [rs_res1] => 9 [rs_res2] => 2 
+//            [rs_date] => 2004-09-16 00:00:00 [rs_idpenca] => 1 [rs_iduser] => 1 
+//            [rs_round] => 1 [rs_result] => [rs_points] => 0 ) )
+//         */
+//        $matchs = new Application_Model_Matchs();
+//        $match = $matchs->load_resultados_palpitados($matchid);
+//
+//        $x = "";                
+//        
+//        for ($j = 0; $j < count($match); $j = $j + 1) {
+//            $puntagem = $this->puntuacao($match[$j], $res1, $res2);
+//            $x = $puntagem;
+//            $result->update_puntagem($puntagem, $match[$j]['rs_id']);
+//        }
 //        
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
@@ -92,7 +98,7 @@ class Admin_ResultadosController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json(200);
+        $this->_helper->json($r);
     }
     
     private function puntuacao($match, $res1, $res2) {

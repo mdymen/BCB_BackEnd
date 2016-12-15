@@ -32,15 +32,33 @@ class Application_Model_Transaction extends Zend_Db_Table_Abstract
         
     }
     
-    public function getCampeonato($id_champ) {
+    public function getCampeonato($id_champ, $usuario, $rodada) {
         $db = Zend_Db_table::getDefaultAdapter();
         
-        $result = $db->select()->from($this->_name)
-                ->where("tr_idcampeonato = ?", $id_champ);
+        $return = $db->select()->from("vwmatchsteams")
+                ->distinct()
+                ->joinInner("transaction","vwmatchsteams.mt_id = transaction.tr_idmatch")
+                ->joinInner("championship","championship.ch_id = transaction.tr_idcampeonato")
+                ->joinInner("user","user.us_id = transaction.tr_iduser")
+                ->where("transaction.tr_idcampeonato = ?", $id_champ);
         
-        $return = $result->query()->fetchAll();
+        if (!empty($usuario)) {
+            $return = $return->where("transaction.tr_iduser = ?", $usuario);
+        }
+        if (!empty($rodada)) {
+            $return = $return->where("vwmatchsteams.mt_round = ?", $rodada);
+        }
         
-        return $return;
+        $return = $return->order("championship.ch_id")
+                ->order("vwmatchsteams.mt_round")
+                ->order("transaction.tr_id");
+        
+        print_r($return->__toString());
+        
+        
+        $result = $return->query()->fetchAll();
+        
+        return $result;
     }
     
     

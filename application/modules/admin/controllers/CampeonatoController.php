@@ -66,5 +66,22 @@ class Admin_CampeonatoController extends Zend_Controller_Action
         $this->_helper->json(200);
     }
     
+    public function palpitesAction() { 
+        $params = $this->_request->getParams();
+        
+       $id_champ = $params['championship'];
+       
+       $u = new Application_Model_Championships();
+       $champ = $u->load();
+       $this->view->champs = $champ;
+       $this->view->champ = $id_champ;
+        
+        if ($this->getRequest()->isPost()) {
+            $r = new Application_Model_Result();
+            $results = $r->getresultsbychamp($id_champ);
+            $this->view->results = $results;
+        }
+    }
+    
 }
 

@@ -135,7 +135,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
   INNER JOIN `team` AS `t1` ON t1.tm_id = match.mt_idteam1 
   INNER JOIN `team` AS `t2` ON t2.tm_id = match.mt_idteam2   
   LEFT JOIN vwpalpites ON vwpalpites.rs_idmatch = match.mt_id
-  LEFT JOIN round ON round.rd_round = match.mt_round
+  LEFT JOIN round ON round.rd_id = match.mt_idround
   LEFT JOIN (select * from result where rs_iduser = ".$usuario.") r ON r.rs_idmatch = match.mt_id 
   WHERE (match.mt_idchampionship = '".$championship."') AND (mt_round = '".$rodada."') ORDER BY `mt_date` ASC";
         
@@ -331,6 +331,19 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         
         return $result;
                         
+    }
+    
+    public function getusuarios_do_campeonato($champ) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $return = $db->select()->from("vwmatchsresult","")
+                ->distinct()
+                ->joinInner("user","user.us_id = vwmatchsresult.rs_iduser",array("us_id","us_username"))
+                ->where("vwmatchsresult.mt_idchampionship = ?", $champ);
+        
+        $result = $return->query()->fetchAll();
+        
+        return $result;
     }
     
     public function load_matchs_byrodada($champ, $rodada) {

@@ -4,18 +4,18 @@ $champs = $this->champs;
 $champ = $this->champ;
 
 ?>
-
+<form id="frChamp_transactions" action="<?php echo $this->baseUrl()."/admin/transacoes"; ?>" method="post">	
 <div class="row">
     <div class="col-lg-12">
         <div class="box">
             <div class="box-content">
-                <form id="frChamp_transactions" action="<?php echo $this->baseUrl()."/admin/transacoes"; ?>" method="post">	
+                
                     <div class="form-group">                                      
                         <div class="controls">
                               <div class="input-group date col-sm-12">
                                       <span class="input-group-addon"><i class="fa  fa-search"></i></span>
                                       <div class="controls">
-                                      <input type="hidden" value="1" name="rodada" />
+                                      <input type="hidden" value="<?php echo $champ; ?>" name="champ" />
                                       <select id="championship" name="championship" class="form-control">
                                       <?php   
                                           if (empty($pencas)) {
@@ -34,11 +34,22 @@ $champ = $this->champ;
                               </div>	
                         </div>    
                     </div>                    
-                </form>   
+                 
             </div>
         </div>
     </div>
 </div>
+
+<?php
+
+    $usuarios = $this->usuarios;
+    $rondas = $this->rondas;
+    
+//    print_r($usuarios);
+//    print_r($rondas);
+
+
+?>
 
 
 <div class="box">
@@ -51,37 +62,102 @@ $champ = $this->champ;
                     <div class="box-content">
                         <div class="row">
 
-                        <div style="" id="rs_dados_111" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
-                        <div class="smallstat box"><table width="100%"><tbody><tr><td style="text-align:center"><b>Domingo 11 Dec. 17:00hs</b></td></tr></tbody></table>
-                            <table><tbody><tr>
-            <td width="55%" style="text-align:left"><span id="69"><img width="28px;" height="21px;" src="http://localhost/penca/assets/img/logos/palmeiras.png"><a href="/penca/public/team/team?team=69&amp;champ=6">Palmeiras</a></span></td><td width="35%">
-                <div class="row">
-                <div class="col-xs-10 col-sm-10 col-lg-10 numeros">                    
-                    <input id="result1pf_111" style="text-align:center" class="form-control numeros_input" disabled="" value="2" type="text">
-                </div>
-                </div>
-            </td>
-            </tr>
-        </tbody></table>
-                            <table><tbody><tr>
-            <td width="55%" style="text-align:left"><span id="70"><img width="28px;" height="21px;" src="http://localhost/penca/assets/img/logos/flamengo.png"><a href="/penca/public/team/team?team=70&amp;champ=6">Flamengo</a></span></td><td width="35%">
-                <div class="row">
-                <div class="col-xs-10 col-sm-10 col-lg-10 numeros">                    
-                    <input id="result2pf_111" style="text-align:center" class="form-control numeros_input" disabled="" value="1" type="text">
-                </div>
-                </div>
-            </td>
-            </tr>
-        </tbody></table><div id="443" style="margin: 15px 0 0 0; "><span style="padding-right:10px" class="ac_111">2.00</span><button id="btn_excluir_111" title="Excluir palpite" data="2016-12-11 17:00:00" match="111" result="689" class="btn btn-xs btn-danger excluir"><i style="padding: 6px 0 !important; font-size: 10px !important; margin-right: 0px !important; width: 15px !important" class="fa fa-trash-o "></i></button><div id="dvInfo_111" style="display:none"></div></div>    
-                        </div>
-                </div>
+                            <div style="" id="rs_dados_111" class="col-lg-12 col-sm-12 col-xs-12 col-xxs-12 col-xxs-12">
+                                    <div class="form-inline" id="frFiltroTransacao" style="text-align:left !important;margin-bottom:15px">
+                                        <div class="form-group">                                      
+                                            <div class="controls">
+                                                <div class="input-group">
+                                                  <div class="controls">
+                                                    <select id="rodada" name="rodada" class="form-control">
+                                                    <option value="">Filtro por rodada</option>
+                                                      <?php
+                                                        $rodada = $this->rodada;
+                                                        for ($i = 0; $i < count($rondas);$i = $i + 1) {
+                                                            $selected = "";
+                                                            if (!empty($rodada) && $rodada == $rondas[$i]["mt_round"]) {
+                                                                $selected = "selected";
+                                                            }
+                                                            echo '<option '.$selected.' value="'.$rondas[$i]["mt_round"].'">'.$rondas[$i]["mt_round"].'</option>';
+                                                        }
+                                                      
+                                                      ?>
+                                                    </select>
+                                                  </div>
+                                                </div>                                        
+                                            </div>    
+                                        </div>
+                                        
+                                        <div class="form-group">                                      
+                                            <div class="controls">
+                                                <div class="input-group">
+                                                  <div class="controls">
+                                                        <select id="usuario" name="usuario" class="form-control">
+                                                           <option value="">Filtro por usuario</option>
+                                                            <?php
+                                                                $usuario = $this->usuario;
+                                                              for ($i = 0; $i < count($usuarios);$i = $i + 1) {
+                                                                  $selected = "";
+                                                                  if (!empty($usuario) && $usuario == $usuarios[$i]["us_id"]) {
+                                                                      $selected = "selected";
+                                                                  }
+                                                                  echo '<option '.$selected.' value="'.$usuarios[$i]["us_id"].'">'.$usuarios[$i]["us_username"].'</option>';
+                                                              }
+
+                                                            ?>
+                                                        </select>  
+                                                  </div>
+                                                </div>                                        
+                                            </div>    
+                                        </div>
+                                        </div>
+                                    
+                                    
+                                    
+                                    <table class="col-lg-12 col-sm-12 col-xs-12 col-xxs-12 col-xxs-12">
+                                        <thead>
+                                            <th width="10%">Transacao</th>
+                                            <th width="10%">p/Campeonato</th>
+                                            <th width="10%">p/Rodada</th>
+                                            <th width="10%">p/Jogo</th>
+                                            <th width="10%">Campeonato</th>
+                                            <th width="10%">Rodada</th>
+                                            <th width="10%">Jogo</th>
+                                            <th width="10%">Usuario</th>
+                                            <th width="10%">Cash</th>
+                                            
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <?php
+                                                $tr = $this->transactions;
+                                            
+                                                for ($i = 0; $i < count($tr); $i = $i + 1) {                                            
+                                                    echo '<tr>
+                                                        <td width="10%">'.$tr[$i]['tr_valortransaccion'].'</td>
+                                                        <td width="10%">'.$tr[$i]['tr_valorcampeonato'].'</td>
+                                                        <td width="10%">'.$tr[$i]['tr_valorrodada'].'</td>
+                                                        <td width="10%">'.$tr[$i]['tr_valorjogo'].'</td>
+                                                            
+                                                        <td width="10%">'.$tr[$i]['tr_res_ch_acumulado'].'</td>
+                                                        <td width="10%">'.$tr[$i]['tr_res_rd_acumulado'].'</td>
+                                                        <td width="10%">'.$tr[$i]['tr_res_mt_acumulado'].'</td>
+                                                        <td width="10%">'.$tr[$i]['us_username'].'</td>
+                                                        <td width="10%">'.$tr[$i]['tr_res_us_cash'].'</td>
+                                                                
+                                                    </tr>';
+                                                }
+                                                    
+                                            ?>
+                                        </tbody>
+                                    </table>                                   
+                            </div>
 
                         <div class="form-action">                              
                         </div>
                         </div>
                     </div>
                 </div>
-
+</form>
 <script type="text/javascript">
     
     $(function() {
@@ -89,6 +165,14 @@ $champ = $this->champ;
           $("#frChamp_transactions").submit();
           
        }); 
+       
+       $("#rodada").change(function() {
+           $("#frChamp_transactions").submit();
+       });
+       
+       $("#usuario").change(function() {
+           $("#frChamp_transactions").submit();
+       });
     });
     
 

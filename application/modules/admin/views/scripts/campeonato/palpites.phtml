@@ -1,0 +1,113 @@
+<?php
+
+$champs = $this->champs;
+$champ = $this->champ;
+
+?>
+<form id="frChamp_transactions" action="<?php echo $this->baseUrl()."/admin/campeonato/palpites"; ?>" method="post">	
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box">
+            <div class="box-content">
+                
+                    <div class="form-group">                                      
+                        <div class="controls">
+                              <div class="input-group date col-sm-12">
+                                      <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                      <div class="controls">
+                                      <input type="hidden" value="<?php echo $champ; ?>" name="champ" />
+                                      <select id="championship" name="championship" class="form-control">
+                                      <?php   
+                                          if (empty($pencas)) {
+                                              echo '<option value="Vazio"></option>';    
+                                          }
+
+                                          for ($i = 0; $i < count($champs); $i = $i + 1) {
+                                              $selected = "";
+                                              if (!empty($champ) && $champs[$i]['ch_id'] == $champ) {
+                                                  $selected = "selected";    
+                                              }
+                                              echo '<option '.$selected.' value="'.$champs[$i]['ch_id'].'">'.$champs[$i]['ch_nome'].'</option>';
+                                          }                                                        
+                                      ?>
+                                      </select></div>
+                              </div>	
+                        </div>    
+                    </div>                    
+                 
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    <?php
+    
+        $results = $this->results;
+        print_r($results);
+    
+    ?>
+
+    
+    
+    
+
+<div class="box">
+                    <div class="box-header">
+                            <h2><i class="fa fa-align-justify"></i><span class="break"></span></h2>
+                            <div class="box-icon">
+
+                            </div>
+                    </div>
+                    <div class="box-content">
+                        <div class="row">
+
+                            <div style="" id="rs_dados_111" class="col-lg-12 col-sm-12 col-xs-12 col-xxs-12 col-xxs-12">
+                                    
+                                    
+                                    
+                                    
+                                    <table class="col-lg-12 col-sm-12 col-xs-12 col-xxs-12 col-xxs-12">
+                                        <thead>
+                                            <th width="10%">Usuario</th>
+                                            <th width="10%">Rodada</th>
+                                            <th width="10%">Jogo</th>
+                                            <th width="10%">Resultado</th>
+                                            
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <?php
+                                            
+                                                for ($i = 0; $i < count($results); $i = $i + 1) {                                            
+                                                    echo '<tr>
+                                                        <td width="10%">'.$results[$i]['us_username'].'</td>
+                                                        <td width="10%">'.$results[$i]['mt_round'].'</td>
+                                                        <td width="10%">'.$results[$i]['t1nome'].' vs '.$results[$i]['t2nome'].'</td>
+                                                        <td width="10%">'.$results[$i]['rs_res1'].' vs '.$results[$i]['rs_res2'].'</td>                                                                
+                                                    </tr>';
+                                                }
+                                                    
+                                            ?>
+                                        </tbody>
+                                    </table>                                   
+                            </div>
+
+                        <div class="form-action">                              
+                        </div>
+                        </div>
+                    </div>
+                </div>
+</form>
+    
+    <script type="text/javascript">
+    
+    $(function() {
+       $("#championship").change(function() {
+          $("#frChamp_transactions").submit();
+          
+       }); 
+    });
+    
+
+</script>

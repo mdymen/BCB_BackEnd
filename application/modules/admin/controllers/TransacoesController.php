@@ -25,11 +25,32 @@ class Admin_TransacoesController extends Zend_Controller_Action
        $this->view->champ = $id_champ;
        
        if ($this->getRequest()->isPost()) {
-           $t = new Application_Model_Transaction();
-           $transactions = $t->getCampeonato($id_champ);
-           $this->view->transactions = $transactions;
            
-           print_r($transactions);
+           $usuario = "";
+           $rodada = "";
+           
+           if (!empty($params['usuario'])) {
+                $usuario = $params['usuario'];
+                $this->view->usuario = $usuario;
+           }
+           
+           if (!empty($params['rodada'])) {
+                $rodada = $params['rodada'];
+                $this->view->rodada = $rodada;
+           }
+           
+           $m = new Application_Model_Matchs();
+           $rondas = $m->getrondas($id_champ);
+           $usuarios = $m->getusuarios_do_campeonato($id_champ);
+           
+           $t = new Application_Model_Transaction();
+           $transactions = $t->getCampeonato($id_champ, $usuario, $rodada);
+           $this->view->transactions = $transactions;
+           $this->view->rondas = $rondas;
+           $this->view->usuarios = $usuarios;
+           
+ 
+           
        }
        
     }
