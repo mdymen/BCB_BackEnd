@@ -32,7 +32,7 @@ class Application_Model_Transaction extends Zend_Db_Table_Abstract
         
     }
     
-    public function getCampeonato($id_champ, $usuario, $rodada) {
+    public function getCampeonato($id_champ, $usuario, $rodada, $tipo = null) {
         $db = Zend_Db_table::getDefaultAdapter();
         
         $return = $db->select()->from("vwmatchsteams")
@@ -46,14 +46,18 @@ class Application_Model_Transaction extends Zend_Db_Table_Abstract
             $return = $return->where("transaction.tr_iduser = ?", $usuario);
         }
         if (!empty($rodada)) {
-            $return = $return->where("vwmatchsteams.mt_round = ?", $rodada);
+            $return = $return->where("vwmatchsteams.mt_idround = ?", $rodada);
+        }
+        
+        if (!empty($tipo)) {
+            $return = $return->where("transaction.tr_tipo = ?", "CREDITO");
         }
         
         $return = $return->order("championship.ch_id")
                 ->order("vwmatchsteams.mt_round")
                 ->order("transaction.tr_id");
         
-        print_r($return->__toString());
+//        print_r($return->__toString()."  - - --");
         
         
         $result = $return->query()->fetchAll();

@@ -190,6 +190,16 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
         return $return;
     }
     
+    public function rankings_champ_usuario($usuario) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $sql ="call rankings_championships(". $usuario .")";       
+        
+        $result = $db->query($sql)->fetchAll();
+        
+        return $result;
+    }
+    
     public function ganadores_match($match) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
@@ -218,16 +228,15 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
         
     }
     
-    public function calcularmoney($match, $res1, $res2, $s_id_team1, $s_id_team2) {
+    public function calcularmoney($match, $res1, $res2, $s_id_team1, $s_id_team2, $champ) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        $sql = "call jogo_terminado(".$match.", ".$res1.", ".$res2.", ".$s_id_team1.", ".$s_id_team2.")";
+        $sql = "call jogo_terminado(".$match.", ".$res1.", ".$res2.", ".$s_id_team1.", ".$s_id_team2.", ".$champ.")";
         
-        return $sql;
+//        return $sql;
         
-        print_r($sql);
         //die(".");
         
-        //$db->query($sql)->fetch();
+        $db->query($sql)->fetch();
     }
 }

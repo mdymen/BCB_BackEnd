@@ -66,4 +66,17 @@ class Application_Model_Championships extends Zend_Db_Table_Abstract
         
     }
     
+    public function getrondas($champ) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("round")
+                ->where("rd_idchampionship = ?", $champ)
+                ->order("rd_round")
+                ->query()
+                ->fetchAll();
+        
+        return $result;
+                        
+    }
+    
 }

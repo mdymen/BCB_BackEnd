@@ -146,8 +146,9 @@ if (!empty($matchs)) {
            var res2 = $("#res2_"+match).val();
            var team1 = $("#idteam1_"+match).val();
            var team2 = $("#idteam2_"+match).val();
+           var champ = $("#championship").val();
            
-           $.post("resultados/setresultado", {team1: team1, team2: team2, match : match, res1 : res1, res2 : res2}, function(response) {
+           $.post("resultados/setresultado", {team1: team1, team2: team2, match : match, res1 : res1, res2 : res2, champ : champ}, function(response) {
                 console.log(response);
                 if (response == 200) {
                     $("#rs_success_"+match).html('<span class="label label-success">Complete</span>');

@@ -1,7 +1,8 @@
-
+<div class="row">
+    <div class="col-lg-3" style="padding-left:0px !important; padding-right:0px !important">
 <div class="price-table-overlay">	
 
-					<div class="price-table type2 four">
+					<div class="price-table type2 one">
 
 						<ul class="col-sm-8 col-lg-3 col-xs-12">
 							<li class="header">Plano Básico</li>
@@ -14,8 +15,25 @@
 							<li>Custo: R$ 10.80</li>
                                                         <li>&nbsp;</li>
 							
-							<li class="select"><a href="<?php echo $this->baseUrl()."/caixa/plano?p=1"; ?>">selecionar</a></li>
+							<li class="select"><a href="/public/caixa/plano?p=1">selecionar</a></li>
 						</ul>
+
+						
+
+						
+
+						
+
+					</div>
+
+</div>
+        </div>
+    <div class="col-lg-3" style="padding-left:0px !important; padding-right:0px !important">
+<div class="price-table-overlay">	
+
+					<div class="price-table type2 one">
+
+						
 
 						<ul class="col-sm-8 col-lg-3 col-xs-12">
 							<li class="header">Plano Estándar</li>
@@ -28,8 +46,25 @@
 							
 							
 							
-							<li class="select"><a href="<?php echo $this->baseUrl()."/caixa/plano?p=2"; ?>">selecionar</a></li>
+							<li class="select"><a href="/public/caixa/plano?p=2">selecionar</a></li>
 						</ul>
+
+						
+
+						
+
+					</div>
+
+</div>
+        </div>
+    <div class="col-lg-3" style="padding-left:0px !important; padding-right:0px !important">
+<div class="price-table-overlay">	
+
+					<div class="price-table type2 one">
+
+						
+
+						
 
 						<ul class="best-option col-sm-8 col-lg-3 col-xs-12">
 							<li class="header">Plano Premium</li>
@@ -42,27 +77,32 @@
 							
 							
 							
-							<li class="select"><a href="<?php echo $this->baseUrl()."/caixa/plano?p=3"; ?>">selecionar</a></li>
+							<li class="select"><a href="/public/caixa/plano?p=3">selecionar</a></li>
 						</ul>
 
+						
+
+					</div>
+
+</div>
+        </div>
+    <div class="col-lg-3" style="padding-left:0px !important; padding-right:0px !important">
+<div class="price-table-overlay">	
+
+					<div class="price-table type2 one">
 						<ul class="col-sm-8 col-lg-3 col-xs-12">
 							<li class="header">Plano Profissional</li>
 							<li class="price"><span>R$</span>100</li>
 							<li>Custo: R$ 104.40</li>
                                                         <li>&nbsp;</li>
-							
-							
-							
-							
-							
-							
-							<li class="select"><a href="<?php echo $this->baseUrl()."/caixa/plano?p=4"; ?>">selecionar</a></li>
+							<li class="select"><a href="/penca/public/caixa/plano?p=4">selecionar</a></li>
 						</ul>
 
 					</div>
 
-				</div>
-
+</div>
+        </div>
+    </div>
 
 
 
@@ -72,16 +112,33 @@
 
 
     $ts = $this->transactions;
-    print_r($ts);
+    $ts_credito = $this->tr_credito;
+    $rs = $this->ranking;
+//    print_r($rs);
     
     $config = new Zend_Config_Ini("config.ini");
     
+    $cs = $this->champs;
+    $rds = array() ;
+    
+    
+    $champ = "";
+    $round_filtro_palpites = "";
+    if (!empty($this->rondas)) {
+        $rds = $this->rondas;
+        $champ = $this->champ;
+        $round_filtro_palpites = $this->round;
+    }
+
+    
+//    print_r("RODADA ".$round_filtro_palpites);
+//    print_r($rds);
     ?>
 
 <div class="row">
 <div class="col-lg-4">
 <div class="box">
-                    <!--<form action="/penca/public/penca/processarpalpites" method="post" id="processarpalpites" >-->
+                    <form id="frmCaixaCamp" action="index" method="post">
                         <div class="box-header">
                                 <h2><i class="fa fa-align-justify"></i><span class="break"></span>Palpites</h2>
                                 <div class="box-icon">
@@ -93,6 +150,69 @@
                             <div class="row">
                             
                             <div style="" id="rs_dados_111" class="col-lg-12 col-sm-12 col-xs-12 col-xxs-12 col-xxs-12">
+                                
+                                
+                                <div class="form-inline" id="frFiltroTransacao" style="text-align:left !important;margin-bottom:15px">
+                                        <div class="form-group">                                      
+                                            <div class="controls">
+                                                <div class="input-group">
+                                                  <div class="controls">
+                                                    
+                                                        <select id="campeonato" name="campeonato" class="form-control">
+
+                                                        <?php 
+                                                            echo '<option value="Vazio">Vazio</option>';       
+                                                            for ($i = 0; $i < count($cs); $i++) {
+                                                                $selected = "";
+                                                                
+                                                                if ($cs[$i]['ch_id'] == $champ) {
+                                                                    $selected = "selected";
+                                                                }
+                                                                echo '<option '.$selected.' value="'.$cs[$i]['ch_id'].'">'.$cs[$i]['ch_nome'].'</option>';       
+                                                            }                                                    
+
+                                                        ?>
+
+                                                        </select>
+
+                                                  </div>
+                                                </div>                                        
+                                            </div>    
+                                        </div>
+                                        
+                                        <div class="form-group">                                      
+                                            <div class="controls">
+                                                <div class="input-group">
+                                                  <div class="controls">
+                                                        <select id="rodada" name="rodada" class="form-control">
+                                                            
+                                                            <option value="Vazio">Vazio</option>
+                                                            <?php
+                                                            
+                                                                
+                                                            
+                                                                for ($i = 0; $i < count($rds); $i = $i + 1 ) {
+
+                                                                    $selected = "";
+                                                                    if ($rds[$i]['rd_id'] == $round_filtro_palpites) {
+                                                                        $selected = "selected";
+                                                                    }
+                                                                    echo '<option '.$selected.' value="'.$rds[$i]['rd_id'].'">'.$rds[$i]['rd_round'].'</option>';
+                                                                }
+                                                            
+                                                            ?>
+                                                            
+                                                           
+                                                           
+                                                         </select>  
+                                                  </div>
+                                                </div>                                        
+                                            </div>    
+                                        </div>
+                                        </div>
+                                
+                                
+                                
                         <div class="smallstat box">
                             <table>
                                 <?php
@@ -152,7 +272,7 @@
                             </div>
                         </div>
                                             
-                    <!--</form>-->
+                    </form>
                 </div>
 </div>
     
@@ -165,9 +285,9 @@
 <div class="box">
                     <!--<form action="/penca/public/penca/processarpalpites" method="post" id="processarpalpites" >-->
                         <div class="box-header">
-                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Rodada: 1</h2>
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Creditos</h2>
                                 <div class="box-icon">
-                                    <span><h2 style="margin-right: 30px !important" id="ronda_total_palpitado">0.78</h2></span>
+                                    <span><h2 style="margin-right: 30px !important" id="ronda_total_palpitado"></h2></span>
                                 </div>
                         </div>
                         <div class="box-content">
@@ -179,10 +299,14 @@
                             <table>
                                 <?php
                                 
-                                    for ($i = 0; $i < count($ts); $i++) {
-                                        echo '<tr><td width="60%" style="text-align:left">Campeonato <br>Rodada </td>'
-                                        . '<td width="20%" style="text-align:left">'.$ts[$i]['tr_valortransaccion'].'</td>'
-                                        . '<td width="20%" style="text-align:right">'.$ts[$i]['tr_res_us_cash'].'</td>'
+                                    for ($i = 0; $i < count($ts_credito); $i++) {
+                                        $date = "";
+                                        if (!empty($ts_credito[$i]['tr_date'])) {
+                                            $date = Helpers_Data::day($ts_credito[$i]['tr_date']);
+                                        }
+                                        echo '<tr><td width="60%" style="text-align:left">'.$date.'</td>'
+                                        . '<td width="20%" style="text-align:left">'.$ts_credito[$i]['tr_valortransaccion'].'</td>'
+                                        . '<td width="20%" style="text-align:right">'.$ts_credito[$i]['tr_res_us_cash'].'</td>'      
                                        . '</tr>';
                                         
                                         
@@ -219,9 +343,9 @@
 <div class="box">
                     <!--<form action="/penca/public/penca/processarpalpites" method="post" id="processarpalpites" >-->
                         <div class="box-header">
-                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Rodada: 1</h2>
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Ranking</h2>
                                 <div class="box-icon">
-                                    <span><h2 style="margin-right: 30px !important" id="ronda_total_palpitado">0.78</h2></span>
+                                    
                                 </div>
                         </div>
                         <div class="box-content">
@@ -233,10 +357,10 @@
                             <table>
                                 <?php
                                 
-                                    for ($i = 0; $i < count($ts); $i++) {
-                                        echo '<tr><td width="60%" style="text-align:left">Campeonato <br>Rodada </td>'
-                                        . '<td width="20%" style="text-align:left">'.$ts[$i]['tr_valortransaccion'].'</td>'
-                                        . '<td width="20%" style="text-align:right">'.$ts[$i]['tr_res_us_cash'].'</td>'
+                                    for ($i = 0; $i < count($rs); $i++) {
+                                        echo '<tr><td width="10%" style="text-align:left">'.$rs[$i]['position'].'</td>'
+                                                .'<td width="10%" style="text-align:left">'.$rs[$i]['points'].'</td>'
+                                        . '<td width="20%" style="text-align:left">'.$rs[$i]['ch_nome'].'</td>'
                                        . '</tr>';
                                         
                                         
@@ -268,3 +392,18 @@
     
     
     </div>
+
+
+
+<script type="text/javascript">
+    
+    $("#campeonato").change(function() {
+       $("#frmCaixaCamp").submit();
+    });
+        
+    $("#rodada").change(function() {
+       $("#frmCaixaCamp").submit();
+    });
+    
+</script>    
+    

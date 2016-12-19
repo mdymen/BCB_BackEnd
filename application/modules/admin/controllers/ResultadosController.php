@@ -50,14 +50,13 @@ class Admin_ResultadosController extends Zend_Controller_Action
         $res2 = $params['res2'];
         $team1 = $params['team1'];
         $team2 = $params['team2'];
+        $champ = $params['champ'];
         
         
         
         $result = new Application_Model_Result();   
-        $r = $result->calcularmoney($matchid, $res1, $res2, $team1, $team2);
-        
-        print_r($r);
-        die(".");
+        $r = $result->calcularmoney($matchid, $res1, $res2, $team1, $team2, $champ);
+       
 //        $result->update_resultado($matchid, $res1, $res2);
 //        
 //        $teams = new Application_Model_Teams();
