@@ -57,6 +57,7 @@
                    ?>
             </ul>
         </div>
+        <?php echo $this->render('componentes/timecoracao.phtml'); ?>
     </div>
 </div>
 
@@ -131,44 +132,48 @@
       ?>
 
 <script type="text/javascript">
-    
-    function fechar_teamusername() {
-        $("#fechar_teamusername").bind("click", function() {
-            $("#teamusername_popup").css("display","none");       
-        });
-    }
-    
-    function aceitar_teamusername() {
-        $("#aceitar_teamusername").bind("click", function() {
-            var name = $('#team_coracao').find(":selected").text();
-            var id = $('#team_coracao').find(":selected").val();   
-            var champ = $('#champ').val();
-            $("#teamusername_popup").css("display","none");
-            
-            $.post("edittimecoracao",{idteam : id, nameteam : name}, function(response) {
-                if (response == 200) {
-                    $("#teamcoracao_nome").html(name);
-                    $("#teamcoracao_nome").attr("href","http://localhost/penca/public/penca/bolao?team="+id+"&champ="+champ);
-                    $("#head_timecoracao").html(name);
-                    
-                }
-                console.log(response);
-            });
-        });
-    }
-    
-    $(function() {
-        aceitar_teamusername();
-        fechar_teamusername();
+//    
+//    function fechar_teamusername() {
+//        $("#fechar_teamusername").bind("click", function() {
+//            $("#teamusername_popup").css("display","none");       
+//        });
+//    }
+//    
+//    function aceitar_teamusername() {
+//        $("#aceitar_teamusername").bind("click", function() {
+//            var name = $('#team_coracao').find(":selected").text();
+//            var id = $('#team_coracao').find(":selected").val();   
+//            var champ = $('#champ').val();
+//            $("#teamusername_popup").css("display","none");
+//            
+//            $.post("edittimecoracao",{idteam : id, nameteam : name}, function(response) {
+//                if (response == 200) {
+//                    $("#teamcoracao_nome").html(name);
+//                    $("#teamcoracao_nome").attr("href","http://localhost/penca/public/penca/bolao?team="+id+"&champ="+champ);
+//                    $("#head_timecoracao").html(name);
+//                    
+//                }
+//                console.log(response);
+//            });
+//        });
+//    }
+//    
+//    $(function() {
+//        aceitar_teamusername();
+//        fechar_teamusername();
+//        $("#teamusername").bind("click", function() {
+//            $("#teamusername_popup").css("display","block");
+//            
+//        });  
+//        
+//        
+//            
+//        
+//        
+// 
+//    });
+
         $("#teamusername").bind("click", function() {
-            $("#teamusername_popup").css("display","block");
-            
-        });  
-        
-        
-            
-        
-        
- 
-    });
+            $("#teamcoracao_pick").show();    
+        });
 </script>

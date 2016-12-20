@@ -20,13 +20,19 @@ include APPLICATION_PATH.'/helpers/box.php';
 class CaixaController extends Zend_Controller_Action
 {
     public function indexAction() {
+
+        
+    }
+    
+    public function transacoesAction() {
         $params = $this->_request->getParams();
         
         $c = new Application_Model_Championships();
         
+        $t = new Application_Model_Transaction();
+        $ts_credito = $t->getCampeonato("", $this->getIdUser(), "", "CREDITO");
+         $this->view->tr_credito = $ts_credito;
         if (!empty($params['campeonato'])) {
-            $t = new Application_Model_Transaction();
-            
             
             $campeonato = $params['campeonato'];
             
@@ -36,11 +42,10 @@ class CaixaController extends Zend_Controller_Action
                 $rodada = $params['rodada'];
             }
             
-            $ts = $t->getCampeonato($campeonato, $this->getIdUser(), $rodada);
-            $ts_credito = $t->getCampeonato($campeonato, $this->getIdUser(), "", "CREDITO");
+            $ts = $t->getCampeonato($campeonato, $this->getIdUser(), $rodada);            
             
             $this->view->transactions = $ts;
-            $this->view->tr_credito = $ts_credito;
+           
             
             $rs = $c->getrondas($campeonato);          
             
@@ -56,7 +61,6 @@ class CaixaController extends Zend_Controller_Action
         
         $champs = $c->load();
         $this->view->champs = $champs;
-        
     }
     
     public function planoAction() {

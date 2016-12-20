@@ -1,0 +1,76 @@
+<div class="box" id="teamcoracao_pick" style="display: none;">
+                        <div class="box-header">
+                            <h2><i class="fa fa-align-justify"></i><span class="break"></span>Time do coracao</h2>
+                            <div class="box-icon">
+                        </div>
+                </div>
+                <div class="box-content" style="margin-left:10px; margin-right:10px">
+                    <div class="row">
+
+                        <div class="box-content">
+                <div class="pagination pagination-centered" style="margin: 0px !important">
+                    <form class="col-lg-4 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6" style="padding-left: 0px">
+                        <div class="control-group form-group"><div>
+                                <div class="editable-input" style="position: relative;">
+                                    <div class="form-group">
+                                    <div class="controls">
+                                                    <div class="input-group date">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa  fa-search"></i>
+                                                            </span>
+                                                            <div class="controls">
+                                                                <input type="hidden" value="<?php echo $champ; ?>" name="rodada">
+                                                            <select id="team_coracao" name="team_coracao" class="form-control">
+                                                                <option value="69">Palmeiras</option>
+                                                                <option value="70">Flamengo</option>
+                                                                <option value="71">Santos</option>
+                                                                <option value="72">Corinthians</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>	
+                                              </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                <div class="controls">
+                                    <div>
+                                        <button id="aceitar_teamusername" type="button" class="btn btn-primary btn-sm editable-submit">
+                                            <i class="glyphicon glyphicon-ok"></i>
+                                        </button>
+                                        <button type="button" id="btn_cancel_teamcoracao" class="btn btn-default btn-sm editable-cancel">
+                                            <i class="glyphicon glyphicon-remove"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                    </div>
+                            </div>
+                            <div class="editable-error-block help-block" style="display: none;">
+
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>    
+                 
+                        
+
+                    <div class="form-action">                              
+                    </div>
+                    </div>
+                </div>
+        </div>
+
+
+<script type="text/javascript">
+    
+    $(function() {
+       $("#btn_cancel_teamcoracao").bind("click", function() {
+           $("#teamcoracao_pick").hide();
+       });
+       
+       aceitar_teamusername("edittimecoracao");
+    });
+
+</script>

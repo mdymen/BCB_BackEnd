@@ -130,6 +130,7 @@
                                                 <li><a href="<?php echo $this->baseUrl("/campeonatos"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Campeonatos</span></a></li> 
                                                 <li><a href="<?php echo $this->baseUrl("/penca/ranking"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Ranking</span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/caixa/index"); ?>"><i class="fa fa-dollar"></i><span class="hidden-sm text">Caixa</span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/caixa/transacoes"); ?>"><i class="fa fa-dollar"></i><span class="hidden-sm text">Transacoes</span></a></li>
                                                 <!--<li><a href="<?php echo $this->baseUrl("/register/penca"); ?>"><i class="fa fa-legal"></i><span class="hidden-sm text"> Criar Balão </span></a></li>-->                                                
                                                 <li><a href="<?php echo $this->baseUrl("/admin/campeonato"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text">Add Campeonato</span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/time"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Add Time </span></a></li>

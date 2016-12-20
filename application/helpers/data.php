@@ -18,6 +18,11 @@ class Helpers_Data {
         return date_format($d,'d/m/y H:i')."hs";
     }
     
+   public static function formats($date) {
+        $d = date_create($date);
+        return date_format($d,'d/m/y');
+    }
+    
     public function today() {
         return new Date('d/m/Y H:i');
     }

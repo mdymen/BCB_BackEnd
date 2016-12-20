@@ -39,8 +39,12 @@ class Application_Model_Transaction extends Zend_Db_Table_Abstract
                 ->distinct()
                 ->joinInner("transaction","vwmatchsteams.mt_id = transaction.tr_idmatch")
                 ->joinInner("championship","championship.ch_id = transaction.tr_idcampeonato")
-                ->joinInner("user","user.us_id = transaction.tr_iduser")
-                ->where("transaction.tr_idcampeonato = ?", $id_champ);
+                ->joinInner("user","user.us_id = transaction.tr_iduser");
+        
+        
+        if (!empty($id_champ)) {
+            $return = $return->where("transaction.tr_idcampeonato = ?", $id_champ);
+        }
         
         if (!empty($usuario)) {
             $return = $return->where("transaction.tr_iduser = ?", $usuario);
