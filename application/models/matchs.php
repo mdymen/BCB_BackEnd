@@ -112,17 +112,38 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
 //        return $result;       
 //    }
     
+    public function load_matchs($championship, $rodada) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("vwmatchsteams")
+                ->distinct()
+                ->where("mt_idchampionship = ?", $championship)
+                ->where("mt_round = ?", $rodada)
+                ->order(array('mt_date ASC'));
+        
+//        print_r($result->__toString());
+        
+        $return = $result->query()
+                ->fetchAll();
+
+        return $return;
+    }
+    
     public function load_rodada($championship, $rodada) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
         $result = $db->select()->from("vwmatchsresult")
+                ->distinct()
                 ->where("mt_idchampionship = ?", $championship)
                 ->where("mt_round = ?", $rodada)
-                ->order(array('mt_date ASC'))
-                ->query()
+                ->order(array('mt_date ASC'));
+        
+//        print_r($result->__toString());
+        
+        $return = $result->query()
                 ->fetchAll();
 
-        return $result;
+        return $return;
         
     }
     
@@ -369,7 +390,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
         return $matchs;
     }
     
-    public function load_all_matchs($champ) {
+    public function load_all_matchs($champ) {  
         $db = Zend_Db_Table::getDefaultAdapter();
         
         $result = $db->select()->from("match")  
@@ -386,12 +407,29 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     public function result_matchs($match) {
         $db = Zend_Db_Table::getDefaultAdapter();
         
-        $result = $db->select()->from("vwmatchsresult")
-                ->joinInner("user", "user.us_id = vwmatchsresult.rs_iduser")
-                ->where("rs_idmatch = ?", $match)
+        $result = $db->select()->from("match")
+                ->where("mt_id = ?", $match)
                 ->query()->fetchAll();
         
         return $result;
+    }
+    
+    public function get_quantidade_palpites($match) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $result = $db->select()->from("result",array("count(*) as quantidade", "rs_res1","rs_res2", "rs_idmatch","rs_result"))
+                ->joinInner("match","match.mt_id = result.rs_idmatch",array("mt_idteam1", "mt_idteam2"))
+                ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('tm1_id' =>'t1.tm_id', 'tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
+                ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('tm2_id' =>'t2.tm_id','tm2_logo' => 't2.tm_logo', 't2nome' => 't2.tm_name'))
+                ->where("rs_idmatch = ?",$match)
+                ->group(array("rs_res1", "rs_res2", "rs_idmatch","mt_idteam1", "mt_idteam2","rs_result"));
+        
+//        print_r($result->__toString());
+        
+        
+        $return = $result->query()->fetchAll();
+        
+        return $return;
     }
     
 }

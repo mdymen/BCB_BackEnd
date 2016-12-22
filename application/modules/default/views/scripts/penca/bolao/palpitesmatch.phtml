@@ -26,9 +26,9 @@ if (!empty($palpites)) {
    $box->disabled_input = true;
    $box->mas_info = false;
    $box->palpites_goal = true;
-   $box->show_final_result = false;
+//   $box->show_final_result = false;
    $box->show_solo_nopalpitados = false;
-   $box->show_solo_palpitados = true;
+   $box->show_solo_palpitados = false;
    $box->show_titulo_rodada = false;
    $box->tamanho_box = "col-lg-5 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
    $box->btn_palpitar = false;
@@ -36,6 +36,10 @@ if (!empty($palpites)) {
    $box->id_result_input2 = "result2p_";
    $box->id_box = "fila_";
    $box->id_html_team = "teamp_";
+   $box->show_total_palpites_desse_marcador = true;
+   $box->show_data_quadrado = false;
+   $box->show_final_result = true;
+   $box->titulo_bigbox = "Rodada ".$palpites[0]['mt_round']." - ".(Helpers_Data::day($palpites[0]['mt_date']));
  
     $box->big_box();
     

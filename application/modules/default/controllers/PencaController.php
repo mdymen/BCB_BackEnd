@@ -257,8 +257,52 @@ class PencaController extends Zend_Controller_Action {
         $m = new Application_Model_Matchs();
         $results = $m->result_matchs($match);
         
-        $this->view->results = $results;
+        $quanto = $m->get_quantidade_palpites($match);
+        
+//        print_r("results");
+//        print_r($results);
+        
+
+        
+        for ($i = 0; $i < count($quanto); $i = $i + 1) {
+            for ($j = 0; $j < count($results); $j = $j + 1) {
+//                $results[$i]['rs_id'] = "x";
+//                $results[$i]['rs_res1'] = $quanto[$j]['rs_res1'];
+//                $results[$i]['rs_res2'] = $quanto[$j]['rs_res2'];
+//                $results[$i]['rs_idmatch'] = $quanto[$j]['rs_idmatch'];
+//
+//                $results[$i]['tm1_id'] = $quanto[$j]['tm1_id'];
+//                $results[$i]['tm1_logo'] = $quanto[$j]['tm1_logo'];
+//                $results[$i]['t1nome'] = $quanto[$j]['t1nome'];
+//
+//                $results[$i]['tm2_id'] = $quanto[$j]['tm2_id'];
+//                $results[$i]['tm2_logo'] = $quanto[$j]['tm2_logo'];
+//                $results[$i]['t2nome'] = $quanto[$j]['t2nome'];
+//
+//                $results[$i]['rs_result'] = "";
+//                $results[$i]['quantidade'] = $quanto[$i]['quantidade'];
+                $quanto[$i]['mt_id'] = $results[$j]['mt_id'];
+                $quanto[$i]['mt_idteam1'] = $results[$j]['mt_idteam1'];
+                $quanto[$i]['mt_idteam2'] = $results[$j]['mt_idteam2'];
+                $quanto[$i]['mt_date'] = $results[$j]['mt_date'];
+                $quanto[$i]['mt_goal1'] = $results[$j]['mt_goal1'];
+                $quanto[$i]['mt_goal2'] = $results[$j]['mt_goal2'];
+                $quanto[$i]['mt_idchampionship'] = $results[$j]['mt_idchampionship'];
+                $quanto[$i]['mt_round'] = $results[$j]['mt_round'];
+                $quanto[$i]['mt_played'] = $results[$j]['mt_played'];
+                $quanto[$i]['mt_acumulado'] = $results[$j]['mt_acumulado'];
+                $quanto[$i]['mt_idround'] = $results[$j]['mt_idround'];
+            }
+
+        }
+        
+////        print_r($results);
+//        print_r("<br> quanto");
+//        print_r($quanto);
+        
+        $this->view->results = $quanto;
         $this->view->champ = $params['champ'];
+        $this->view->championship = $champ->getChamp($params['champ']);
         
     }
     

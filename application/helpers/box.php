@@ -42,6 +42,8 @@ class Helpers_Box {
     
     public $btn_cantidad = false;
     
+    public $btn_palpitar_sem_ter_jugado = false;
+    
     public $acumulado = true;
     
     public $id_result_input1;
@@ -71,11 +73,15 @@ class Helpers_Box {
     public $infoescrita = false;
     
     public $infoescrita_msg = "";
+    
+    public $show_total_palpites_desse_marcador = false;
+    
+    public $show_data_quadrado = true;
 
     public function getrow($base, $tm_id, $tm_nome, $tm_logo, $mt_championship, $rs_res, $goal, $palpites_ou_result, $disabled_input, $result_input, $mt_id, $played, $ganou) {
+    
+        
         $result =  $goal;
-//        print_r("palpites ou result ".$palpites_ou_result);
-//        print_r($rs_res);
         if ($palpites_ou_result) {
             $result = $rs_res;
         }
@@ -85,7 +91,6 @@ class Helpers_Box {
             $disabled = "";
         }
         
-//        print_r("base ".$base);
         $r = '<table><tr>
             <td width="55%" style="text-align:left"><span id="'.$this->id_html_team.$tm_id.'">'.Helpers_Html::getTeamLinkLeft($base, $tm_id, $tm_nome, $tm_logo, $mt_championship).'</span></td>';                   
              
@@ -166,14 +171,13 @@ class Helpers_Box {
             
             $mas_info_display = "display:none";
         }
-//        print_r($matches);
         
         for($i = 0; $i < count($matches); $i = $i + 1) {   
             if (!$this->show_jugados && $matches[$i]['mt_played']) {
                 //si no se pueden mostrar los jugados y este partido fue jugado 
                 //entonces no muestra nada
+
             } else {
-//            print_r($matches[$i]);
             $st = 'style=""';
             if ($this->show_solo_palpitados) {
                 if (empty($matches[$i]['rs_id'])) {
@@ -188,21 +192,30 @@ class Helpers_Box {
                 }
             }
             
-            
                 $id = rand(0,1000);
                 echo '<div '.$st.' id="'.$this->id_box.$matches[$i]['mt_id'].'" class="'.$this->tamanho_box.'">
                         <div class="smallstat box">';
-          
+
                             if ($this->show_titulo_campeonato) {
                                 echo $this->titulo($matches[$i]['ch_nome'], $this->base.$this->link_campeonato."?rodada=".$matches[$i]['mt_round']."&champ=".$matches[$i]['ch_id']);
                             }
                 
                             if ($this->show_titulo_rodada) {
                                 echo $this->titulo("Rodada ".$matches[$i]['mt_round'], $this->base.$this->link_ronda."?rodada=".$matches[$i]['mt_round']."&champ=".$matches[$i]['ch_id']);
+                            }                          
+                            
+                            if (!isset($matches[$i]['rs_res1'])) {
+                                $matches[$i]['rs_res1'] = "";
+                                $matches[$i]['rs_res2'] = "";
+                                $matches[$i]['rs_result'] = "";
+                                
                             }
-                            echo Helpers_Html::_titulo(Helpers_Data::day($matches[$i]['mt_date'])).'
-                            '.$this->getrow($this->base, $matches[$i]['tm1_id'], $matches[$i]['t1nome'], $config->host.$matches[$i]['tm1_logo'], $matches[$i]['mt_idchampionship'], $matches[$i]['rs_res1'], $matches[$i]['mt_goal1'], $this->palpites_goal, $this->disabled_input, $this->id_result_input1.$matches[$i]['mt_id'], $matches[$i]['mt_id'], $matches[$i]['mt_played'], $matches[$i]['rs_result']).'
-                            '.$this->getrow($this->base, $matches[$i]['tm2_id'], $matches[$i]['t2nome'], $config->host.$matches[$i]['tm2_logo'], $matches[$i]['mt_idchampionship'], $matches[$i]['rs_res2'], $matches[$i]['mt_goal2'], $this->palpites_goal, $this->disabled_input, $this->id_result_input2.$matches[$i]['mt_id'], $matches[$i]['mt_id'], $matches[$i]['mt_played'], $matches[$i]['rs_result']);                        
+
+                            if ($this->show_data_quadrado) {
+                                echo Helpers_Html::_titulo(Helpers_Data::day($matches[$i]['mt_date']));
+                            }
+                            echo $this->getrow($this->base, $matches[$i]['tm1_id'], $matches[$i]['t1nome'], $config->host.$matches[$i]['tm1_logo'], $matches[$i]['mt_idchampionship'], $matches[$i]['rs_res1'], $matches[$i]['mt_goal1'], $this->palpites_goal, $this->disabled_input, $this->id_result_input1.$matches[$i]['mt_id'], $matches[$i]['mt_id'], $matches[$i]['mt_played'], $matches[$i]['rs_result']);
+                            echo $this->getrow($this->base, $matches[$i]['tm2_id'], $matches[$i]['t2nome'], $config->host.$matches[$i]['tm2_logo'], $matches[$i]['mt_idchampionship'], $matches[$i]['rs_res2'], $matches[$i]['mt_goal2'], $this->palpites_goal, $this->disabled_input, $this->id_result_input2.$matches[$i]['mt_id'], $matches[$i]['mt_id'], $matches[$i]['mt_played'], $matches[$i]['rs_result']);                        
 
                             if ($this->mas_info) {    
                                 echo '<a href="javascript:void(0)" id_opcoes="'.$id.'" class="more box_palpite">
@@ -212,7 +225,16 @@ class Helpers_Box {
                             }
 
                             echo '<div id="'.$id.'" style="margin: 15px 0 0 0; '.$mas_info_display.'">';
-                                       
+                                   
+                            
+                            if ($this->show_total_palpites_desse_marcador) {
+                                $palpitados = "palpites";
+                                if ($matches[$i]['quantidade'] == 1) {
+                                    $palpitados = "palpite";
+                                }
+                                    echo '<span class="" style="margin-right:70px">'.$matches[$i]['quantidade'].' '.$palpitados.'</span>';
+                            }
+                            
                             if ($matches[$i]['mt_played'] && $this->infoescrita) {                                
                                   echo '<span class="label label-important" style="margin-right:70px">'.$this->infoescrita_msg.'</span>';                                
                             }
@@ -243,11 +265,18 @@ class Helpers_Box {
                                     
 
                                } else {
+                                    
                                     if ($this->ganadores) {
                                         echo '<button match="'.$matches[$i]['mt_id'].'" class="btn btn-xs btn-warning ganadores">
                                         <i style="padding: 6px 0 !important; font-size: 10px !important; margin-right: 0px !important; width: 15px !important"  class="fa fa-trophy"></i></button>';
                                     }   
                                }
+                               
+                                if ($this->btn_palpitar_sem_ter_jugado) {
+                                    echo  '<a title="'.$matches[$i]['cantidad'].' Palpites" href="'.$this->base."/penca/palpites?match=".$matches[$i]['mt_id']."&champ=".$matches[$i]['mt_idchampionship'].'" class="btn btn-xs btn-warning">'
+                                    . '<i style="padding: 6px 0 !important; font-size: 10px !important; margin-right: 0px !important; width: 15px !important" class="fa fa-globe"></i></i></a>';
+                                } 
+                                
                                
                                echo '<div id="dvInfo_'.$matches[$i]['mt_id'].'" style="display:none">'                                      
                                 . '</div>';
