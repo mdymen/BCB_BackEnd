@@ -32,6 +32,30 @@ class Helpers_Data {
         return "20".$res[2]."-".$res[1]."-".$res[0];
     }
     
+    public static function antesDeHoras($date) {
+        $config = new Zend_Config_Ini("config.ini");
+        $diferenciaMinutos = $config->diferenciaminutos;
+        $minutosParaFechar = $config->minutosparafechar;
+        
+        $totalDif = $diferenciaMinutos + $minutosParaFechar;
+        $dataHoraServer = date("Y-m-d H:i:s", strtotime($totalDif.' minutes', strtotime(date("Y-m-d H:i:s"))));
+        
+        $jogo = $date;
+        
+//        print_r($jogo);
+//        print_r("<br>");
+//        print_r($dataHoraServer);
+        
+        if( strtotime($dataHoraServer)<=strtotime($jogo) )
+        {            
+            return true;
+        }
+        else
+        {
+            return false;
+        }       
+    }
+    
     public static function paradia($dia) {
         $dia = str_replace("Thursday", "Quinta", $dia);
         $dia = str_replace("Friday", "Sexta", $dia);

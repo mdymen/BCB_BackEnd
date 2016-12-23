@@ -28,6 +28,9 @@ class Helpers_Posicoes {
         $champ = $this->champ;
         $champion = $this->champion;
         
+        $temGrupos = isset($teams[0]['tm_grupo']) ? true : false;
+       
+        
         echo '<div class="box">
             <div class="box-header">
                     <h2><i class="fa fa-align-justify"></i><span class="break"></span>Tabela de Posicoes</h2>
@@ -38,17 +41,20 @@ class Helpers_Posicoes {
             </div>
             <div class="box-content">
                     <table class="table">
-                              <thead>
-                                      <tr>
+                              <thead>';
+                                    $grupoInicial = "";
+                                    if (!$temGrupos) {
+                                      echo '<tr>
                                         <th>Pos</th>
                                         <th>Time</th>
                                         <th>P</th>
                                         <th>J</th>
-
-                                      </tr>
-                              </thead>   
+                                      </tr>';
+                                      
+                                    } 
+                              echo '</thead>   
                               <tbody>';  
-
+                                    
                                     for ($i = 0; $i < count($teams); $i = $i + 1) {
 
                                         $torneo = "";
@@ -64,6 +70,26 @@ class Helpers_Posicoes {
                                             $torneo = "badge badge-important";
                                         }
 
+//                                        print_r($teams[$i]['tm_grupo']);
+                                        
+                                        if ($temGrupos && strcmp($teams[$i]['tm_grupo'],$grupoInicial) != 0) {
+                                          $grupoInicial = $teams[$i]['tm_grupo'];
+                                           echo '<tr>
+                                                    <td></td>
+                                                    <td>&nbsp;</td>
+                                                    <td></td>
+                                                    <td></td>
+
+                                            </tr>';                                           
+                                            echo '<tr>
+                                                    <td></td>
+                                                    <td>Grupo '.$grupoInicial.'</td>
+                                                    <td></td>
+                                                    <td></td>
+
+                                            </tr>';                                            
+                                            
+                                        }
                                         echo '<tr>
                                                 <td id="tm_id'.$i.'"><span class="'.$torneo.'">'.($i+1).'</td>
                                                 <td id="tm_name'.$i.'">'.Helpers_Html::getTeamLinkLeft($this->base, $teams[$i]['tm_id'], $teams[$i]['tm_name'], $config->host.$teams[$i]['tm_logo'], $champ).'</td>

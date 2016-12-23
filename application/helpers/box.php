@@ -173,6 +173,15 @@ class Helpers_Box {
         }
         
         for($i = 0; $i < count($matches); $i = $i + 1) {   
+            $habilitado = Helpers_Data::antesDeHoras($matches[$i]['mt_date']);
+            if (!$habilitado) {
+                $this->infoescrita = true;
+                $this->infoescrita_msg = "Encerrado";
+            }   else {
+                $this->infoescrita = false;
+                $this->infoescrita_msg = "";
+            }                                                                                         
+            
             if (!$this->show_jugados && $matches[$i]['mt_played']) {
                 //si no se pueden mostrar los jugados y este partido fue jugado 
                 //entonces no muestra nada
@@ -235,7 +244,7 @@ class Helpers_Box {
                                     echo '<span class="" style="margin-right:70px">'.$matches[$i]['quantidade'].' '.$palpitados.'</span>';
                             }
                             
-                            if ($matches[$i]['mt_played'] && $this->infoescrita) {                                
+                            if ($this->infoescrita) {                                
                                   echo '<span class="label label-important" style="margin-right:70px">'.$this->infoescrita_msg.'</span>';                                
                             }
                             
@@ -251,9 +260,11 @@ class Helpers_Box {
                                         <i style="padding: 6px 0 !important; font-size: 10px !important; margin-right: 0px !important; width: 15px !important"  class="fa fa-check"></i></button>';
                                     } 
                                    
-                                    if ($this->btn_excluir) {
+                                    if ($this->btn_excluir) {                                        
+                                        if ($habilitado) {    
                                           echo '<button id="btn_excluir_'.$matches[$i]['mt_id'].'" title="Excluir palpite" data="'.$matches[$i]['mt_date'].'" match="'.$matches[$i]['mt_id'].'" result="'.$matches[$i]['rs_id'].'"  class="btn btn-xs btn-danger excluir">'
                                                   . '<i style="padding: 6px 0 !important; font-size: 10px !important; margin-right: 0px !important; width: 15px !important" class="fa fa-trash-o "></i></button>';
+                                        }
 
                                     }
                                     if ($this->btn_cantidad) {

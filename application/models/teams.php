@@ -21,9 +21,11 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
             'tm_name'=>$params['tm_name'],
             'tm_idchampionship' =>$params['tm_idchampionship'],
             'tm_logo' => $params['tm_logo'],
+            'tm_grupo' => $params['tm_grupo'],
             'tm_points' => 0,
             'tm_played' => 0
         );       
+        print_r($info);
         $this->insert($info);
     }
     
@@ -57,7 +59,7 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
         
         $result = $db->select()->from('team')
                 ->where('team.tm_idchampionship = ?', $champ)
-                ->order("team.tm_points DESC")    
+                ->order(array("team.tm_points DESC","team.tm_grupo"))    
                 ->query()
                 ->fetchAll();
 

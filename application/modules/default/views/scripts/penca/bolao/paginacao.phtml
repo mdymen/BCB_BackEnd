@@ -6,8 +6,12 @@
     
     $rodada_id = $this->n_rodada;
     
-    $rodada = $rodadas[0]['mt_round'];
-    $champ = $rodadas[0]['mt_idchampionship']; 
+    if (isset($rodadas[0]['mt_round'])) {
+        $rodada = $rodadas[0]['mt_round'];
+        $champ = $rodadas[0]['mt_idchampionship']; 
+    } else {
+        print_r("Ainda nao tem jogos");
+    }
 
 //    print_r($rodadas);
     

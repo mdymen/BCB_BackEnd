@@ -45,6 +45,14 @@ $champs = $this->champs;
                     <div class="form-group">                                        
                         <div class="controls">
                               <div class="input-group col-sm-4">
+                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                <input type="text" id="grupo" name="grupo" class="form-control" placeholder="Grupo">
+                              </div>                          
+                        </div>
+                    </div>                    
+                    <div class="form-group">                                        
+                        <div class="controls">
+                              <div class="input-group col-sm-4">
                                 <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
                                 <input type="text" id="logo" name="logo" class="form-control" placeholder="Logo">
                               </div>                              
@@ -67,8 +75,9 @@ $champs = $this->champs;
           var time = $("#time").val();
           var logo = $("#logo").val();
           var champ = $("#championship").val();
+          var grupo = $("#grupo").val();
           
-          $.post("time/salvartime", {time : time, logo : logo, championship : champ}, function(response) {
+          $.post("time/salvartime", {time : time, logo : logo, championship : champ, grupo : grupo}, function(response) {
              console.log(response); 
              alert(response);
           });

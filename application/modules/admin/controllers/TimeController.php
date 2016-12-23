@@ -28,9 +28,10 @@ class Admin_TimeController extends Zend_Controller_Action
         $nome = $params['time'];
         $logo = $params['logo'];
         $champ = $params['championship'];
+        $grupo = $params['grupo'];
         
         $time = new Application_Model_Teams();
-        $time->save(array('tm_name' => $nome, 'tm_logo' => $logo, 'tm_idchampionship' => $champ));
+        $time->save(array('tm_name' => $nome, 'tm_logo' => $logo, 'tm_idchampionship' => $champ, 'tm_grupo' => $grupo));
 
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');

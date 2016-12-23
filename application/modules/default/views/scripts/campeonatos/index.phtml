@@ -83,7 +83,7 @@
 
  if (!empty($matchs)) {
 
-//     print_r($matchs);
+     print_r($matchs);
      
 ?>
 
@@ -119,7 +119,7 @@
         $rankings = $this->rankings;
         
         $ranking_round->vwranking = $rankings;
-        $ranking_round->acumulado = $matchs[0]['rd_acumulado'];
+        $ranking_round->acumulado = isset($matchs[0]['rd_acumulado']) ? $matchs[0]['rd_acumulado'] : '0.00';
         $ranking_round->titulo="Ranking da Rodada";
         $ranking_round->fechado = true;
         echo $ranking_round->ranking();
@@ -134,7 +134,7 @@
                     $r_champ = $this->ranking_champ;
                     
                     $ranking_champ->vwranking = $r_champ;
-                    $ranking_champ->acumulado = $r_champ[0]['ch_acumulado'];
+                    $ranking_champ->acumulado = isset($r_champ[0]['ch_acumulado']) ? $r_champ[0]['ch_acumulado'] : '0.00';
                     $ranking_champ->titulo="Campeonato";
                     $ranking_champ->fechado = true;
                     echo $ranking_champ->ranking();
