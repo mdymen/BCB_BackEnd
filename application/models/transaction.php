@@ -11,13 +11,14 @@
  *
  * @author Martin Dymenstein
  */
-class Application_Model_Transaction extends Zend_Db_Table_Abstract
+
+class Application_Model_Transaction extends Application_Model_Bd_Adapter
 {
     protected $_name = 'transaction';
     
     public function save_transaction($valortransaccion, $valorcampeonato, $iduser, $valorrodada, $valorjogo,  $idcampeonato, $idmatch ) {
         
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $data = array(
             'tr_valortransaccion' => $valortransaccion,
@@ -33,7 +34,7 @@ class Application_Model_Transaction extends Zend_Db_Table_Abstract
     }
     
     public function getCampeonato($id_champ, $usuario, $rodada, $tipo = null) {
-        $db = Zend_Db_table::getDefaultAdapter();
+        $db = $this->db;
         
         $return = $db->select()->from("vwmatchsteams")
                 ->distinct()
@@ -71,7 +72,7 @@ class Application_Model_Transaction extends Zend_Db_Table_Abstract
     
     
     public function getRondaCampeonato($id_champ, $rodada) {
-        $db = Zend_Db_table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from($this->_name)
                 ->innerJoin("match","match.mt_id = transaction.tr_idmatch")
@@ -84,7 +85,7 @@ class Application_Model_Transaction extends Zend_Db_Table_Abstract
     }
     
     public function getUsuario($us_id) {
-        $db = Zend_Db_table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from($this->_name)
                 ->where("tr_iduser = ?", $us_id);
@@ -95,7 +96,7 @@ class Application_Model_Transaction extends Zend_Db_Table_Abstract
     }
     
     public function getCampeonatoRodadaUsuario($camp, $rodada, $us) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("transaction")
                 ->innerJoin("match", "match.mt_id = transaction.tr_idmatch")

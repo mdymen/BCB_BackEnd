@@ -11,20 +11,29 @@
  *
  * @author Martin Dymenstein
  */
-class Application_Model_Championships extends Zend_Db_Table_Abstract
+
+
+class Application_Model_Championships extends Application_Model_Bd_Adapter
 {
 
     protected $_name = 'championship';
     
+    public function __construct() {
+        parent::__construct(); 
+    }
+    
     public function save($params) {
         
-        $db = Zend_Db_Table::getDefaultAdapter();     
+        $db = $this->db;     
         
         $db->insert($this->_name,$params);
     }
     
     public function load() {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        
+//        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $db = $this->db;
         
         $table = $this->_name;
         
@@ -38,7 +47,7 @@ class Application_Model_Championships extends Zend_Db_Table_Abstract
     }
 
     public function ranking($champ) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("ranking")
                 ->where("rk_idchamp = ?", $champ)
@@ -50,7 +59,7 @@ class Application_Model_Championships extends Zend_Db_Table_Abstract
     }
     
     public function setAtualRound($champ, $round) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $return = $db->select()->from("vwranking_round", array('max(points) as points'))
                 ->where("mt_idchampionship = ?", $champ)
@@ -102,7 +111,7 @@ class Application_Model_Championships extends Zend_Db_Table_Abstract
     }
     
     public function getChamp($id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         $result = $db->select()->from("championship")
                 ->where("ch_id = ?", $id)
                 ->query()
@@ -113,7 +122,7 @@ class Application_Model_Championships extends Zend_Db_Table_Abstract
     }
     
     public function getrondas($champ) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("round")
                 ->where("rd_idchampionship = ?", $champ)

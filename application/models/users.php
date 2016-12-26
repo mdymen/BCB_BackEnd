@@ -11,20 +11,20 @@
  *
  * @author Martin Dymenstein
  */
-class Application_Model_Users extends Zend_Db_Table_Abstract
+class Application_Model_Users extends Application_Model_Bd_Adapter
 {
 
     protected $_name = 'user';
     
     public function users() {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         return $db->select()->from("user")->query()->fetchAll();
         
     }
     
     public function save_provisorio($params) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $info = array(
             'prov_username'=>$params['username'],
@@ -36,7 +36,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function cancomplete($id, $pass) { 
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $return = $db->select()->from("provisorio")
                 ->where("prov_id = ?", $id)
@@ -52,13 +52,13 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function save_user($data) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         $db->insert("user", $data);
         return $db->lastInsertId();
     }
     
     public function load_userbyid($user) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result =  $db->select()->from("user")
                 ->where("us_id = ?", $user)
@@ -69,7 +69,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }    
     
     public function update_cash($user, $cash) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
 //        print_r($user);
 //        print_r("-".$cash);
@@ -79,7 +79,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function load_user($user) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result =  $db->select()->from("user")
                 ->where("us_username = ?", $user)
@@ -90,7 +90,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function user_penca($penca) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from('user_penca')
                 ->joinInner('user', 'user_penca.up_iduser = user.us_id')
@@ -102,18 +102,18 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
         
     public function setTeamCoracao($id, $name, $us_id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $db->update("user", array("us_team" => $id, "us_teamname" => $name), "us_id = ".$us_id);
     }
     
     public function setNovaSenha($senha, $us_id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         $db->update("user", array("us_password" => $senha), "us_id = ".$us_id);
     }
     
     public function getWonMatches($id_user) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result", array("count(*) as wonmatches"))
                ->where("rs_iduser = ?",$id_user)
@@ -127,7 +127,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }    
     
     public function getLostMatches($us_id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result", array("count(*) as losts"))
                ->where("rs_iduser = ?",$us_id)
@@ -140,7 +140,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function getMatchesLostMatches($us_id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("vwmatchsresult")
                 ->where("rs_iduser = ?",$us_id)
@@ -153,7 +153,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function getMatchesWonMatches($us_id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $query = $db->select()->from("match")
                 ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name', 'tm1_logo' => 't1.tm_logo', 'tm1_id' => 't1.tm_id'))
@@ -173,7 +173,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function getPlayedMatches($id_user) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result", array("count(*) as played"))
                ->where("rs_iduser = ?",$id_user)
@@ -185,7 +185,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function getPoints($id_user) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result", array("sum(rs_points) as points"))
                 ->where("rs_iduser = ?",$id_user)
@@ -203,7 +203,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function getPoisition($id_user) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $index = "@us_".$id_user;
         
@@ -227,14 +227,14 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function save_opcoes($id_user, $array_opcoes) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         
         //$db->update("user", array('us_palppublicos' => 0, 'us_puntpublica' => 0), "us_id = ".$id_user);
     }
     
     public function historico_palpites($us) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("match")  
             ->joinInner("result", "result.rs_idmatch = match.mt_id")    
@@ -250,7 +250,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function isUserRegistered($facebookid) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("user")
                  ->where("us_idfacebook = ?", $facebookid)
@@ -260,7 +260,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function facebookUserSave($id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $datas = array("us_idfacebook" => $id, "us_userbyfaceseted" => false, "us_password" => $id, "us_username" => $id);
         
@@ -269,7 +269,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function isCpfUsed($cpf) {
-        $db = Zend_Db_Table::getDefaultAdapter();       
+        $db = $this->db;       
         
         $result = $db->select()->from("user")
                 ->where("us_cpf = ?",$cpf)
@@ -283,7 +283,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function isEmailUsed($email) {
-        $db = Zend_Db_Table::getDefaultAdapter();       
+        $db = $this->db;       
         
         $result = $db->select()->from("user")
                 ->where("us_email = ?",$email)
@@ -297,7 +297,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }    
     
     public function adicionarPorLinkReferencia($creador, $uso) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $dados = array('lr_idcreador' => $creador, 'lr_iduso' => $uso);
         
@@ -305,7 +305,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function isUsersName($user) {
-        $db = Zend_Db_Table::getDefaultAdapter();       
+        $db = $this->db;       
         
         $result = $db->select()->from("user")
                 ->where("us_username = ?",$user)
@@ -319,7 +319,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function registerUsernameFacebook($username, $id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $dados = array("us_username" => $username, "us_userbyfaceseted" => 1);
         
@@ -327,7 +327,7 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function user_bycod($cod) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("user")
                 ->where("us_codverificacion = ?", $cod)
@@ -338,13 +338,13 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
     }
     
     public function confirmaremail($data) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $db->update("user", array("us_codverificacion" => ""), "us_id = ".$data);
     }
     
     public function getDinheiro($user_id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("user",array('us_cash'))
                 ->where("us_id = ?", $user_id);
@@ -353,4 +353,10 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         
         return $return;
     } 
+    
+    public function trocar_base($nome, $id) {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $db->update("user", array("us_base" => $nome), "us_id = ".$id);
+    }
 }

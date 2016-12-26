@@ -11,13 +11,14 @@
  *
  * @author Martin Dymenstein
  */
-class Application_Model_Result extends Zend_Db_Table_Abstract
+
+class Application_Model_Result extends Application_Model_Bd_Adapter
 {
     protected $_name = 'result';
     
     public function update(array $params, $where) {
         
-        $db = Zend_Db_Table::getDefaultAdapter(); 
+        $db = $this->db; 
 
         $info = array(
             'rs_res1'=>$params['res1'],
@@ -28,7 +29,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function update_puntagem($puntagem, $rs_id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $res = 0;
         if ($puntagem != 0) {
@@ -45,7 +46,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function update_resultado($id_match, $res1, $res2) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $dados = array(
             'mt_goal1' => $res1, 
@@ -57,7 +58,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function getResult($id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         return $db->select()->from("result")
                 ->where("rs_id = ?", $id)
@@ -66,7 +67,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function palpites_em_acao($us_id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result", array("count(rs_id) as cantidad"))
                 ->where("rs_result is null")
@@ -78,7 +79,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function points($us_id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result", array("sum(rs_points) as pontos"))
                 ->where("rs_iduser = ?", $us_id)
@@ -89,7 +90,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function palpites_em_acao_group($us_id, $ordem) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $o = "";
         if (!empty($ordem)) {
@@ -131,7 +132,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function puntuacao($id_user) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result", array("sum(rs_points) as pontos"))
                 ->where("rs_iduser = ?", $id_user)
@@ -142,7 +143,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function ganados($id_user) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result", array("count(rs_points) as ganados"))
                 ->where("rs_iduser = ?", $id_user)
@@ -154,7 +155,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }    
     
     public function perdidos($id_user) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result", array("count(rs_points) as perdidos"))
                 ->where("rs_iduser = ?", $id_user)
@@ -166,7 +167,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function ranking_round($round, $championship) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("vwranking_round")
                 ->where("mt_round = ?", $round)
@@ -179,7 +180,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function ranking_champ($championship) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("vwranking_championship")
                 ->where("mt_idchampionship = ?", $championship)
@@ -191,7 +192,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function rankings_champ_usuario($usuario) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $sql ="call rankings_championships(". $usuario .")";       
         
@@ -201,7 +202,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function ganadores_match($match) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("vwmatchsresult", array('vwmatchsresult.mt_id', 'vwmatchsresult.rs_points'))
                 ->joinInner("user", "user.us_id = vwmatchsresult.rs_iduser", array('user.us_id','user.us_username'))
@@ -214,7 +215,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function getresultsbychamp($champ)  {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("vwmatchsresult")
                 ->joinInner("user","user.us_id = rs_iduser")                
@@ -229,7 +230,7 @@ class Application_Model_Result extends Zend_Db_Table_Abstract
     }
     
     public function calcularmoney($match, $res1, $res2, $s_id_team1, $s_id_team2, $champ) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $sql = "call jogo_terminado(".$match.", ".$res1.", ".$res2.", ".$s_id_team1.", ".$s_id_team2.", ".$champ.")";
         

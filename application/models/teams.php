@@ -11,12 +11,13 @@
  *
  * @author Martin Dymenstein
  */
-class Application_Model_Teams extends Zend_Db_Table_Abstract
+class Application_Model_Teams extends Application_Model_Bd_Adapter
 {
 
     protected $_name = 'team';
     
     public function save($params) {
+        $db = $this->db;
         $info = array(
             'tm_name'=>$params['tm_name'],
             'tm_idchampionship' =>$params['tm_idchampionship'],
@@ -26,13 +27,13 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
             'tm_played' => 0
         );       
         print_r($info);
-        $this->insert($info);
+        $db->insert($info);
     }
     
     public function load($championship) {
         
 
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $teams = $db->select()->from("team")
           ->where("tm_idchampionship = ?",$championship)
@@ -42,7 +43,7 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
     }
         
     public function load_penca_limit($championship, $limit) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from('team')
                 ->where('team.tm_idchampionship = ?', $championship)
@@ -55,7 +56,7 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
     }
     
     public function load_teams_championship($champ) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from('team')
                 ->where('team.tm_idchampionship = ?', $champ)
@@ -67,7 +68,7 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
     }
     
     public function sum_points($team, $points) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("team", array('tm_points','tm_played'))
                 ->where("tm_id = ?", $team)->query()->fetch();
@@ -77,7 +78,7 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
     }
     
     public function sum_match($team) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("team", array('tm_played'))
                 ->where("team.tm_id = ?", $team)->query()->fetch();
@@ -86,7 +87,7 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
     }
     
     public function getJogosTeam($team, $champ) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("match")
             ->joinInner("championship", "championship.ch_id = match.mt_idchampionship and championship.ch_id = ".$champ)

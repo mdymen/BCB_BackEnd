@@ -4,7 +4,6 @@
 //        $storage->clear();
 
 
-
 $uri = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
 //
 //    print_r($uri);
@@ -63,7 +62,7 @@ else {
             echo $this->render('_confirmemail.php');
         } else if (!empty($data) && $data['us_admin'] == 0) {
             echo $this->render('_head.php');      
-        } else if (!empty($data) && $data['us_admin'] == 1) {
+        } else if (!empty($data) && $data['us_admin'] == 1) {           
             echo $this->render('_adminhead.php');      
         } else {
 //            $config = new Zend_Config_Ini("config.ini");

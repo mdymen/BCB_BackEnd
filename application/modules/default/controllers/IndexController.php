@@ -1,7 +1,8 @@
 <?php
-
+include APPLICATION_PATH.'/models/bd_adapter.php';
 include APPLICATION_PATH.'/models/users.php';
 include APPLICATION_PATH.'/models/pencas.php';
+//include APPLICATION_PATH.'/models/bd_adapter.php';
 include APPLICATION_PATH."/helpers/data.php";
 include APPLICATION_PATH."/helpers/html.php";
 include APPLICATION_PATH."/helpers/translate.php";
@@ -569,5 +570,6 @@ class IndexController extends Zend_Controller_Action
         $this->redirect($config->host);
 
     }
+    
 }
 

@@ -1,8 +1,9 @@
 <?php
-
+include APPLICATION_PATH.'/models/bd_adapter.php';
 include APPLICATION_PATH.'/models/pencas.php';
 include APPLICATION_PATH.'/models/teams.php';
 include APPLICATION_PATH.'/models/matchs.php';
+//include APPLICATION_PATH.'/models/bd_adapter.php';
 //include APPLICATION_PATH.'/helpers/data.php';
 class Admin_CampeonatoController extends Zend_Controller_Action
 {

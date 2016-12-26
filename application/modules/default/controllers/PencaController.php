@@ -11,6 +11,8 @@
  *
  * @author Martin Dymenstein
  */
+
+include APPLICATION_PATH.'/models/bd_adapter.php';
 include APPLICATION_PATH.'/models/teams.php';
 include APPLICATION_PATH.'/models/pencas.php';
 include APPLICATION_PATH.'/models/matchs.php';
@@ -678,5 +680,17 @@ class PencaController extends Zend_Controller_Action {
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
         $this->_helper->json($ganadores);
+    }
+    
+    
+    public function selecionarbaseAction() {
+        $params = $this->_request->getParams();
+        
+        if ($this->getRequest()->isPost()) {
+            $u = new Application_Model_Users();
+            $u->trocar_base($params['base'], $this->getIdUser());
+            $this->login();
+        }
+        
     }
 }

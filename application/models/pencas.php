@@ -11,7 +11,8 @@
  *
  * @author Martin Dymenstein
  */
-class Application_Model_Penca extends Zend_Db_Table_Abstract
+
+class Application_Model_Penca extends Application_Model_Bd_Adapter
 {
 
     protected $_name = 'penca';
@@ -30,7 +31,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
         
     public function save_userpenca($params) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $info = array(
             'up_idpenca' => $params['up_idpenca'],
@@ -41,7 +42,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function load_penca__puntagem_usuario($id_user) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         return $db->select()->from("user_penca")
                 ->joinInner("penca", "user_penca.up_idpenca = penca.pn_id")
@@ -51,7 +52,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function load_penca_users($penca) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         return $db->select()->from("user_penca")
                 ->joinInner("user","user_penca.up_iduser = user.us_id")
@@ -61,7 +62,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function load_pencas() {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $return = $db->select()->from("penca")
                 ->joinInner("championship", "penca.pn_idchampionship = championship.ch_id")
@@ -71,7 +72,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function load_pencas_usuario($id_usuario) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
 
         $return = $db->select()->from("penca") 
                 ->joinInner("championship", "penca.pn_idchampionship = championship.ch_id")
@@ -85,7 +86,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function load_participantes($penca) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from('user_penca', array('count(*) as participantes'))
                 ->where('user_penca.up_idpenca = ?', $penca)->query()->fetchAll();
@@ -94,7 +95,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function load_penca($penca) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from('penca')
                 ->joinInner('championship','penca.pn_idchampionship = championship.ch_id')
@@ -108,7 +109,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function update_cash_usuario($id_us, $valor) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("user", array("us_cash"))
                 ->where("us_id = ?", $id_us)->query()->fetch();
@@ -123,7 +124,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function load_championship_with_results($id_user) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->distinct()->from("result", array('championship.ch_nome', 'championship.ch_id'))
                 ->joinInner('match','match.mt_id = result.rs_idmatch',"")
@@ -137,7 +138,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function load_usuarios($id_penca) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("user_penca")
                 ->joinInner('user', 'user_penca.up_iduser = user.us_id')
@@ -149,7 +150,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function palpites($penca, $round, $usuario) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result")
                 ->joinInner('match','result.rs_idmatch = match.mt_id')
@@ -165,7 +166,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function rodada($idcham, $round) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("match")
                 ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('t1nome' => 't1.tm_name'))
@@ -179,7 +180,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function load_pencas_byChamp($id_championship) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("penca")
                 ->joinInner("championship", 'championship.ch_id = penca.pn_idchampionship')
@@ -191,7 +192,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function load_pencas_incripto_usuario($usuario) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("user_penca")
             ->joinInner("penca", 'user_penca.up_idpenca = penca.pn_id')
@@ -205,14 +206,14 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function sair_penca($usuario, $penca) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $db->delete("user_penca",'up_iduser = '.$usuario.' and up_idpenca = '.$penca);
         $db->delete("result", 'rs_iduser = '.$usuario.' and rs_idpenca = '.$penca);
     }
     
     public function isIscriptoEmPenca($user, $penca) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("user_penca")
                 ->where("up_idpenca = ? ", $penca)
@@ -223,7 +224,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function getpalpites($user) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result")
                 ->joinInner('match','result.rs_idmatch = match.mt_id')
@@ -237,7 +238,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function primera_rodada_disponible($champ) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $sql = "select * from penca.match where mt_played is false and mt_round in (select min(mt_round) "
                 . "as mt_round from "
@@ -249,7 +250,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function getIdPrimeraRodadaDisponivel($champ) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
 //        $sql_before = $db->select()->from("match",array("min(mt_round) as mt_round"))
 //                ->where("mt_played is false")
@@ -282,7 +283,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     }
     
     public function update_acumulado_rodada($rodada, $campeonato, $dinhero) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         $db->beginTransaction();
         try {
             $d = $db->select()
@@ -319,7 +320,7 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
     
     public function setMatch($dpalpite, $dchamp, $s_ch_id, $s_us_id, $drodada, $rd_id, $djogo, $s_mt_id, $rs_id) {
         
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $sql = "call update_palpites(".$dpalpite.",".$dchamp.",".$s_ch_id.",".$s_us_id.",".$drodada.",".$rd_id.", ".$djogo.",".$s_mt_id.", ".$rs_id.")";
         

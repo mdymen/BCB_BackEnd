@@ -12,7 +12,8 @@
  * @author Martin Dymenstein
  */
 include APPLICATION_PATH."/helpers/data.php";
-class Application_Model_Matchs extends Zend_Db_Table_Abstract
+
+class Application_Model_Matchs extends Application_Model_Bd_Adapter
 {
 
     protected $_name = 'match';
@@ -27,7 +28,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
             'mt_round' => $params['round']
         );       
         
-        $db = Zend_Db_Table::getDefaultAdapter();       
+        $db = $this->db;       
 
         $return = $db->select()->from("round")
                 ->where("rd_round = ?", $info['mt_round'])
@@ -49,7 +50,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function update_acumulado_match($match_id, $valor) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("match", array("mt_acumulado"))
                 ->where("mt_id = ?", $match_id)->query()->fetch();
@@ -64,7 +65,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
         
     public function load($championship) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("match")
                 ->where("mt_idchampionship = ?", $championship)
@@ -76,7 +77,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function load_palpites_simples($championship, $rodada, $usuario) {
-         $db = Zend_Db_Table::getDefaultAdapter();
+         $db = $this->db;
         
         $result = $db->select()->from("vwmatchsresult")
                 ->where("rs_iduser= ?", $usuario)
@@ -113,7 +114,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
 //    }
     
     public function load_matchs($championship, $rodada) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("vwmatchsteams")
                 ->distinct()
@@ -130,7 +131,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function load_rodada($championship, $rodada) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("vwmatchsresult")
                 ->distinct()
@@ -148,7 +149,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function load_rodada_com_palpites($championship, $rodada, $usuario) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $sql = "SELECT vwpalpites.*, `match`.*, t1.tm_id as tm1_id, t1.tm_name as t1nome, t1.tm_logo as tm1_logo,  `t1`.*, t2.tm_id as tm2_id, 
             t2.tm_name as t2nome, t2.tm_logo as tm2_logo,
@@ -216,7 +217,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function load_rodada_porteam($championship, $team, $usuario) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("vwmatchsresult")
 //                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
@@ -239,7 +240,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }    
     
     public function load_porteam($championship, $team, $usuario) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("vwmatchsresult")
                 ->where("rs_iduser = ?", $usuario)
@@ -264,7 +265,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function save_penca_match($dados) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
 //        print_r($dados);
 //        die(".");
@@ -283,7 +284,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function submeter_result($user_id, $result1, $result2, $match_id, $round) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $dados = array(
             'rs_idmatch' => $match_id,
@@ -299,7 +300,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function load_resultados_palpitados($match) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result")
                 ->where("rs_idmatch = ?", $match)
@@ -310,13 +311,13 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function delete_palpite($result) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $db->delete("result", "rs_id = ".$result);
     }
     
     public function result($id) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result")
                 ->joinInner('match','result.rs_idmatch = match.mt_id')
@@ -330,7 +331,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function rondas($champ) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         $result = $db->select()->from('match', array('count(distinct mt_round) as rounds'))
                 ->where("mt_idchampionship", $champ)
                 ->query()
@@ -341,7 +342,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function getrondas($champ) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("match", 'mt_round')
                 ->distinct()
@@ -355,7 +356,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function getusuarios_do_campeonato($champ) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $return = $db->select()->from("vwmatchsresult","")
                 ->distinct()
@@ -368,7 +369,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function load_matchs_byrodada($champ, $rodada) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("match")
             ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('t1nome' => 't1.tm_name'))
@@ -391,7 +392,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function load_all_matchs($champ) {  
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("match")  
             ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
@@ -405,7 +406,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function result_matchs($match) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("match")
                 ->where("mt_id = ?", $match)
@@ -415,7 +416,7 @@ class Application_Model_Matchs extends Zend_Db_Table_Abstract
     }
     
     public function get_quantidade_palpites($match) {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $db = $this->db;
         
         $result = $db->select()->from("result",array("count(*) as quantidade", "rs_res1","rs_res2", "rs_idmatch","rs_result"))
                 ->joinInner("match","match.mt_id = result.rs_idmatch",array("mt_idteam1", "mt_idteam2"))

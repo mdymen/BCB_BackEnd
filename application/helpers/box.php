@@ -241,7 +241,7 @@ class Helpers_Box {
                                 if ($matches[$i]['quantidade'] == 1) {
                                     $palpitados = "palpite";
                                 }
-                                    echo '<span class="" style="margin-right:70px">'.$matches[$i]['quantidade'].' '.$palpitados.'</span>';
+                                    echo '<span class="" style="margin-right:20px">'.$matches[$i]['quantidade'].' '.$palpitados.'</span>';
                             }
                             
                             if ($this->infoescrita) {                                

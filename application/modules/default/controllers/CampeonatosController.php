@@ -11,7 +11,9 @@
  *
  * @author Martin Dymenstein
  */
+include APPLICATION_PATH.'/models/bd_adapter.php';
 include APPLICATION_PATH.'/models/pencas.php';
+//include APPLICATION_PATH.'/models/bd_adapter.php';
 include APPLICATION_PATH.'/helpers/html.php';
 include APPLICATION_PATH.'/helpers/box.php';
 

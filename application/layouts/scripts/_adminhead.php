@@ -8,6 +8,7 @@
 ?>
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,6 +73,15 @@
 			<!-- start: Header Menu -->
 			<div class="nav-no-collapse header-nav">
 				<ul class="nav navbar-nav pull-right">
+                                    <li>
+                                    <a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">							
+							<div class="user">
+								<span>Base:</span>
+								<?php echo $data->us_base; ?>
+							</div>
+                                                    
+						</a>
+                                    </li>                                      
                                     <li>
                                     <a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">							
 							<div class="user">
@@ -143,6 +153,7 @@
                                                 <li><a href="<?php echo $this->baseUrl("/admin/campeonato/palpites"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Palpites </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/resultados"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Resultados </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/index/usuarios"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Usuarios </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/penca/selecionarbase"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Selecionar base </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/index/logout"); ?>"><i class="fa fa-power-off"></i><span class="hidden-sm text">Logout</span></a></li>
                                                 
 					</ul>

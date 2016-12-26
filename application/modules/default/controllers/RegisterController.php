@@ -1,9 +1,11 @@
 <?php
 
+include APPLICATION_PATH.'/models/bd_adapter.php';
 include APPLICATION_PATH.'/models/users.php';
 include APPLICATION_PATH.'/models/championships.php';
 include APPLICATION_PATH.'/models/pencas.php';
 include APPLICATION_PATH.'/models/matchs.php';
+//include APPLICATION_PATH.'/models/bd_adapter.php';
 
 class RegisterController extends Zend_Controller_Action
 {

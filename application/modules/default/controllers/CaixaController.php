@@ -11,8 +11,10 @@
  *
  * @author Martin Dymenstein
  */
+include APPLICATION_PATH.'/models/bd_adapter.php';
 include APPLICATION_PATH.'/models/teams.php';
 include APPLICATION_PATH.'/models/transaction.php';
+//include APPLICATION_PATH.'/models/bd_adapter.php';
 include APPLICATION_PATH.'/helpers/data.php';
 include APPLICATION_PATH.'/helpers/html.php';
 include APPLICATION_PATH.'/helpers/translate.php';

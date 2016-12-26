@@ -11,9 +11,11 @@
  *
  * @author Martin Dymenstein
  */
+include APPLICATION_PATH.'/models/bd_adapter.php';
 include APPLICATION_PATH.'/models/teams.php';
 include APPLICATION_PATH.'/helpers/data.php';
 include APPLICATION_PATH.'/models/pencas.php';
+//include APPLICATION_PATH.'/models/bd_adapter.php';
 class PencasjsonController extends Zend_Controller_Action
 {
     public function indexAction() {
