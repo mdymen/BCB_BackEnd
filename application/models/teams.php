@@ -94,7 +94,7 @@ class Application_Model_Teams extends Zend_Db_Table_Abstract
             ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('tm2_id' => 't2.tm_id', 't2nome' => 't2.tm_name', 'tm2_logo' => 't2.tm_logo'))
             ->where("t1.tm_id = ?", $team)
             ->orWhere("t2.tm_id = ?", $team)
-            ->order("mt_round DESC")    
+            ->order(array("mt_round ASC"))    
             ->query()
             ->fetchAll();
         

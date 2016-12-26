@@ -13,7 +13,7 @@
     $box->matches = $matchs;
     $box->base = $this->baseUrl();
     $box->disabled_input = true;
-    $box->mas_info = true;
+    $box->mas_info = false;
     $box->palpites_goal = false;
     $box->show_final_result = false;
     $box->show_solo_nopalpitados = true;
@@ -24,4 +24,5 @@
     $box->id_result_input2 = "result2p_";
     $box->id_box = "fila_";
     $box->id_html_team = "teamp_";
+    $box->titulo_bigbox = "Jogos de ".$team;
     echo $box->big_box();

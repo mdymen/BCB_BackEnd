@@ -206,7 +206,7 @@ class Helpers_Box {
                         <div class="smallstat box">';
 
                             if ($this->show_titulo_campeonato) {
-                                echo $this->titulo($matches[$i]['ch_nome'], $this->base.$this->link_campeonato."?rodada=".$matches[$i]['mt_round']."&champ=".$matches[$i]['ch_id']);
+                                echo $this->titulo($matches[$i]['ch_nome'], $this->base.$this->link_campeonato."?champ=".$matches[$i]['ch_id']);
                             }
                 
                             if ($this->show_titulo_rodada) {
