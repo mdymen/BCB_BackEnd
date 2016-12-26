@@ -37,7 +37,7 @@ class Application_Model_Transaction extends Zend_Db_Table_Abstract
         
         $return = $db->select()->from("vwmatchsteams")
                 ->distinct()
-                ->joinInner("transaction","vwmatchsteams.mt_id = transaction.tr_idmatch")
+                ->joinRight("transaction","vwmatchsteams.mt_id = transaction.tr_idmatch")
                 ->joinInner("championship","championship.ch_id = transaction.tr_idcampeonato")
                 ->joinInner("user","user.us_id = transaction.tr_iduser");
         
@@ -53,8 +53,8 @@ class Application_Model_Transaction extends Zend_Db_Table_Abstract
             $return = $return->where("vwmatchsteams.mt_idround = ?", $rodada);
         }
         
-        if (!empty($tipo)) {
-            $return = $return->where("transaction.tr_tipo = ?", "CREDITO");
+        if (isset($tipo)) {
+            $return = $return->where("transaction.tr_tipo = ?", $tipo);
         }
         
         $return = $return->order("championship.ch_id")

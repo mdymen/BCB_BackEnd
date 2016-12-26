@@ -142,7 +142,7 @@ class Admin_ResultadosController extends Zend_Controller_Action
         
         $ch = new Application_Model_Championships();
         
-        $rodada = $params['rodada'] + 1;
+        $rodada = $params['rodada'];
         $champ = $params['champ'];
         
         $ch->setAtualRound($champ, $rodada);

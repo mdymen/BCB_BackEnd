@@ -198,10 +198,22 @@
                                 
                                     for ($i = 0; $i < count($ts_credito); $i++) {
                                         $date = "";
+//                                        print_r($ts_credito);
                                         if (!empty($ts_credito[$i]['tr_date'])) {
                                             $date = Helpers_Data::formats($ts_credito[$i]['tr_date']);
                                         }
-                                        echo '<tr><td width="5%" style="text-align:left"><div><i style="padding: 6px 0 !important; font-size: 10px !important; margin-right: 0px !important; width: 15px !important" class="fa fa-globe"></i></div></td>'
+                                        $icone = "";
+                                        if (isset($ts_credito[$i]['tr_tipo']) && strcmp($ts_credito[$i]['tr_motivo'],"JOGO") == 0) {
+                                            $icone = 'globe';
+                                        }
+                                        if (isset($ts_credito[$i]['tr_tipo']) && strcmp($ts_credito[$i]['tr_motivo'],"CAMPEONATO") == 0) {
+                                            $icone = 'trophy';
+                                        }         
+                                        if (isset($ts_credito[$i]['tr_tipo']) && strcmp($ts_credito[$i]['tr_motivo'],"RODADA") == 0) {
+                                            $icone = 'star';
+                                        }                                          
+                                        echo '<tr>'
+                                        . '<td width="5%" style="text-align:left"><div><i style="color:black !important; padding: 6px 0 !important; font-size: 10px !important; margin-right: 0px !important; width: 15px !important" class="fa fa-'.$icone.'"></i></div></td>'
                                         . '<td width="55%" style="text-align:left">'.$date.'</td>'
                                         . '<td width="20%" style="text-align:left">'.$ts_credito[$i]['tr_valortransaccion'].'</td>'
                                         . '<td width="20%" style="text-align:right">'.$ts_credito[$i]['tr_res_us_cash'].'</td>'      

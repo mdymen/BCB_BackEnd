@@ -8,6 +8,9 @@ if (!empty($matchs)) {
     $champ = $matchs[0]['mt_idchampionship'];
 }
 
+//print_r($matchs);
+
+
 ?>
 
 
@@ -21,7 +24,7 @@ if (!empty($matchs)) {
                                             <div class="input-group date col-sm-4">
                                                     <span class="input-group-addon"><i class="fa  fa-search"></i></span>
                                                     <div class="controls">
-                                                    <input type="hidden" value="1" name="rodada" />
+                                                    <input type="hidden" value="<?php echo isset($matchs[0]['mt_idround']) ? $matchs[0]['mt_idround'] : ""; ?>" name="rodada" id="rodada" />
                                                     <select id="championship" name="champ" class="form-control">
                                                     <?php   
                                                         if (empty($pencas)) {
@@ -158,9 +161,10 @@ if (!empty($matchs)) {
         });
         
        $("#btnFecharRodada").bind("click", function() {
-            var rodada = $("#ronda").val();     
+            var rodada = $("#rodada").val();     
             var champ = $("#championship").val();     
             $.post("resultados/fecharrodada", {champ : champ, rodada: rodada}, function(response) {
+                console.log(response);
                    if (response === 200) {
                        alert("ok");
                    }

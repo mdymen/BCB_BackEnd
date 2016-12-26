@@ -42,7 +42,7 @@ class CaixaController extends Zend_Controller_Action
                 $rodada = $params['rodada'];
             }
             
-            $ts = $t->getCampeonato($campeonato, $this->getIdUser(), $rodada);            
+            $ts = $t->getCampeonato($campeonato, $this->getIdUser(), $rodada,"JOGO");            
             
             $this->view->transactions = $ts;
            
