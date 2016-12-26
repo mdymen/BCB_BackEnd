@@ -347,10 +347,10 @@ class Application_Model_Users extends Zend_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         
         $result = $db->select()->from("user",array('us_cash'))
-                ->where("us_id = ?", $user_id)->query()->fetch();
+                ->where("us_id = ?", $user_id);
+                
+        $return = $result->query()->fetch();
         
-        return $result;
-    }
-//    public function 
-    
+        return $return;
+    } 
 }

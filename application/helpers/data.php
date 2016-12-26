@@ -47,7 +47,7 @@ class Helpers_Data {
 //        print_r($dataHoraServer);
         
         if( strtotime($dataHoraServer)<=strtotime($jogo) )
-        {            
+        {        
             return true;
         }
         else

@@ -271,10 +271,14 @@ class Application_Model_Penca extends Zend_Db_Table_Abstract
 //        $stmt = $stmt[0]['mt_round'];
         
         $result = $db->select()->from("championship", array("ch_atualround as round"))
-                ->where("ch_id = ?", $champ)
-                ->query()->fetch();
+                ->where("ch_id = ?", $champ);
+        
+//        print_r($result->__toString());
+//        die(".");
+        
+        $return = $result->query()->fetch();
  
-        return $result['round'];
+        return $return['round'];
     }
     
     public function update_acumulado_rodada($rodada, $campeonato, $dinhero) {

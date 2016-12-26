@@ -255,10 +255,12 @@ class Helpers_Box {
                                
                                if (!$matches[$i]['mt_played']) {                                                                                                                                                        
                                    
-                                   if ($this->btn_palpitar) {
-                                        echo '<button team1="'.$matches[$i]['tm1_id'].'" team2="'.$matches[$i]['tm2_id'].'" data="'.$matches[$i]['mt_date'].'" match="'.$matches[$i]['mt_id'].'" class="btn btn-xs btn-success palpite">
-                                        <i style="padding: 6px 0 !important; font-size: 10px !important; margin-right: 0px !important; width: 15px !important"  class="fa fa-check"></i></button>';
-                                    } 
+                                   if ($habilitado) {
+                                        if ($this->btn_palpitar) {
+                                             echo '<button team1="'.$matches[$i]['tm1_id'].'" team2="'.$matches[$i]['tm2_id'].'" data="'.$matches[$i]['mt_date'].'" match="'.$matches[$i]['mt_id'].'" class="btn btn-xs btn-success palpite">
+                                             <i style="padding: 6px 0 !important; font-size: 10px !important; margin-right: 0px !important; width: 15px !important"  class="fa fa-check"></i></button>';
+                                         } 
+                                   }
                                    
                                     if ($this->btn_excluir) {                                        
                                         if ($habilitado) {    

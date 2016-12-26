@@ -316,8 +316,8 @@ class PencaController extends Zend_Controller_Action {
         
         $p_obj = new Application_Model_Penca();
 
-        if (!empty($params['champ'])) {  
-        
+        if (!empty($params['champ'])) {                      
+            
             $this->view->teamuserid = $this->getTimeUserId();
             $this->view->teamusername = $this->getTimeUserName();
             
@@ -331,7 +331,9 @@ class PencaController extends Zend_Controller_Action {
             } else {            
                 $rodada_id = $params['rodada'];
             }
-           
+            
+//            print_r("Champ ".$params['champ']);
+//            print_r("Rodada ".$params['rodada']);
 
             $storage = new Zend_Auth_Storage_Session();
             $data = (get_object_vars($storage->read()));
@@ -433,12 +435,16 @@ class PencaController extends Zend_Controller_Action {
         $transaction = $penca->setMatch($champ_obj['ch_dpalpite'], (-1)*$champ_obj['ch_dchamp'], 
                 $champ, $this->getIdUser(), (-1)*$champ_obj['ch_drodada'], 
                 $round, (-1)*$champ_obj['ch_djogo'], $match_id, $result);
-
+        
         $return = array();        
         $return['total'] = $transaction['tr_res_rd_acumulado'];
         $return['total_usuario'] = $transaction['tr_res_us_cash'];
         $return['total_match'] = $transaction['tr_res_mt_acumulado'];
-        $result['total_campeonato'] = $transaction['tr_res_ch_acumulado'];
+        $return['total_campeonato'] = $transaction['tr_res_ch_acumulado'];
+        
+        
+//        print_r($return);
+        
         
         $this->login();
         
@@ -643,6 +649,7 @@ class PencaController extends Zend_Controller_Action {
         $mycash = $u->getDinheiro($this->getIdUser());
         
         $total = floatval(2.5);
+        $mycash = $mycash['us_cash'];
         
         $res = false;
         if ($mycash >= $total) {

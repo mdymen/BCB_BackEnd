@@ -104,7 +104,7 @@ if (!empty($palpites)) {
                $("#panel_palpites_palpites_feitos").attr("style","display:none");
                $("#gif").attr("style","display:yes");
                 $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round, champ : $("#champ").val()  }, function(response) {
-                    console.log(response);
+//                    console.log(response);
                     if (response.sucesso === 200) {
                                                 
                         
@@ -137,10 +137,12 @@ if (!empty($palpites)) {
                         fechar_sucesso();
                     } else {
                         if (response.sucesso === 401) {
-                            alert("sem saldo");
-                        } else {
-                            $('#fila_'+match).attr("style","display:yes");
-                        }
+                            $("#alert_msg").html("Saldo insuficente.");
+                            $("#append_danger").html($("#alert").html());
+                            $(".alert-danger").show();
+                            fechar_alert();
+                        }                         
+                        $('#fila_'+match).attr("style","display:yes");
                         $("#panel_palpites_palpites_feitos").attr("style","display:yes");
                         $("#gif").attr("style","display:none");
                     }
