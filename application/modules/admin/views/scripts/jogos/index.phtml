@@ -95,7 +95,7 @@
                                                         echo '
                                                             <tr>
                                                                 <td></td>
-                                                                <td><b>Rodada '.$matchs[$i]['mt_round'].'</b></td>
+                                                                <td><b>Rodada '.$matchs[$i]['rd_round'].'</b></td>
                                                                 <td><b>'.$date.'</b></td>
                                                                 
                                                             </tr>';                                      
@@ -118,6 +118,7 @@
                                                             </td>
                                                             <td>';
                                                                 if ($matchs[$i]['mt_played'] == 0) {
+                                                                    echo '<a href="'.$this->baseUrl("/admin/jogos/edit").'?jogo='.$matchs[$i]['mt_id'].'" class="btn btn-warning"><i class="fa fa-edit"></i></a>';
                                                                     echo '<button match="'.$matchs[$i]['mt_id'].'" tr="tr_'.$i.'" class="btn btn-danger palpite"><i class="fa fa-times"></i></button>';
                                                                 }
                                                                 

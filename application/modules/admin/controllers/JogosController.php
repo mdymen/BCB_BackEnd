@@ -83,5 +83,24 @@ class Admin_JogosController extends Zend_Controller_Action
         $this->_helper->json(200);
     }
     
+    public function editAction() {
+        $params = $this->_request->getParams();
+        
+        $id_match = $params['jogo'];
+        
+        $m = new Application_Model_Matchs();
+        $match = $m->load_match($id_match);
+        
+        $c = new Application_Model_Championships();
+        $rondas = $c->getrondas($match['rd_idchampionship']);
+        
+        $t = new Application_Model_Teams();
+        $teams = $t->load_teams_championship($match['rd_idchampionship']);
+        
+        $this->view->match = $match;
+        $this->view->rondas = $rondas;        
+        $this->view->teams = $teams;
+    }
+    
 }
 

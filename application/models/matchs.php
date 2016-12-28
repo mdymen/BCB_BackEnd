@@ -380,10 +380,11 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         $db = $this->db;
         
         $result = $db->select()->from("match")  
+            ->joinInner("round", "round.rd_id = match.mt_idround")
             ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
             ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('tm2_logo' => 't2.tm_logo', 't2nome' => 't2.tm_name'))
             ->where('mt_idchampionship = ?', $champ)
-            ->order('mt_round','mt_date')
+            ->order('mt_idround','mt_date')
             ->query()
             ->fetchAll();
         
@@ -412,10 +413,20 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
                 ->where("rs_idmatch = ?",$match)
                 ->group(array("rs_res1", "rs_res2", "rs_idmatch","mt_idteam1", "mt_idteam2","rs_result"));
         
-//        print_r($result->__toString());
-        
-        
         $return = $result->query()->fetchAll();
+        
+        return $return;
+    }
+    
+    public function load_match($id_match) {
+        $db = $this->db;
+        
+        $result = $db->select()->from("match")
+                ->joinInner("round","round.rd_id = match.mt_idround")
+                ->joinInner("championship", "championship.ch_id = round.rd_idchampionship")
+                ->where("match.mt_id = ?", $id_match);
+        
+        $return = $result->query()->fetch();
         
         return $return;
     }

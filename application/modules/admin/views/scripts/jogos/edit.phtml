@@ -1,0 +1,116 @@
+<?php
+
+$match = $this->match;
+$teams = $this->teams;
+$rondas = $this->rondas;
+
+?>
+ 
+<div class="row">
+    <div class="col-lg-12">
+            <div class="box">
+                <div class="box-content">
+                    <div class="form-group">                                      
+                      <div class="controls">
+                            <div class="input-group date col-sm-12">
+                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                    <div class="controls">
+                                        <?php echo $match['ch_nome']; ?>
+                                    </div>
+                            </div>	
+                      </div>
+                    </div>     
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col-lg-12">
+            <div class="box">
+                    <div class="box-header">
+                            <h2><i class="fa fa-edit"></i>Alterar jogo</h2>
+                    </div>
+                    <div class="box-content">
+                            <form class="form-horizontal">
+                                 <div class="form-group">
+                                      <div class="controls">
+                                            <div class="input-group col-sm-4">
+                                                <select id="ronda" name="ronda">
+                                                    <?php
+                                                        for ($i = 0; $i < count($rondas); $i = $i + 1) {
+                                                            $selected = "";
+                                                            if ($rondas[$i]['rd_id'] == $matchs['mt_idround'] ) {
+                                                                $selected = "selected";
+                                                            }
+                                                            echo '<option '.$selected.' value="'.$rondas[$i]['rd_id'].'">'.$rondas[$i]['rd_round'].'</option>';
+                                                        }                                                                                                        
+                                                    ?>
+                                                    
+                                                </select>                                                
+                                            </div>
+                                      </div>
+                                    </div>                                
+                                    <div class="form-group">
+                                      <div class="controls">
+                                            <div class="input-group col-sm-4">
+                                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                              <input type="text" id="date" name="date" class="form-control" value="<?php echo $match['mt_date'] ?>" placeholder="Data dd/mm/yy">
+                                            </div>
+                                      </div>
+                                    </div>
+
+                                <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                        <select id="team1" name="team1" class="form-control">
+                                                        <?php   
+                                                            for ($i = 0; $i < count($teams); $i = $i + 1) {
+                                                                $selected = "";
+                                                                if ($teams[$i]['tm_id'] == $match['mt_idteam1']) {
+                                                                    echo '<option '.$selected.' value="'.$teams[$i]['tm_id'].'">'.$teams[$i]['tm_name'].'</option>';
+                                                                }
+                                                            }                                                        
+                                                        ?>
+                                                        </select>
+                                                    </div>
+                                            </div>	
+                                      </div>
+                                    </div>  
+                                
+                                    <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                        <select id="team2" name="team2" class="form-control">                                                    
+                                                        <?php                                                           
+                                                            for ($i = 0; $i < count($teams); $i = $i + 1) {
+                                                                $selected = "";
+                                                                if ($teams[$i]['tm_id'] == $match['mt_idteam2']) {
+                                                                    $selected = "selected";
+                                                                }
+                                                                echo '<option value="'.$teams[$i]['tm_id'].'">'.$teams[$i]['tm_name'].'</option>';
+                                                            }                                                        
+                                                        ?>
+                                                        </select>
+                                                    </div>
+                                            </div>	
+                                      </div>
+                                    </div>  
+                                
+
+
+
+
+                                    <div class="form-actions">
+                                      <button type="submit" class="btn btn-primary">Salvar edicao</button>
+                                    </div>
+                            </form>   
+
+                    </div>
+            </div>
+    </div><!--/col-->
+</div>
