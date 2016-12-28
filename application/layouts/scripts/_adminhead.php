@@ -143,7 +143,9 @@
                                                 <li><a href="<?php echo $this->baseUrl("/caixa/transacoes"); ?>"><i class="fa fa-dollar"></i><span class="hidden-sm text">Transacoes</span></a></li>
                                                 <!--<li><a href="<?php echo $this->baseUrl("/register/penca"); ?>"><i class="fa fa-legal"></i><span class="hidden-sm text"> Criar Balão </span></a></li>-->                                                
                                                 <li><a href="<?php echo $this->baseUrl("/admin/campeonato"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text">Add Campeonato</span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/admin/time"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Add Time </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/admin/time"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Add Time </span></a></li>                                                
+                                                <li><a href="<?php echo $this->baseUrl("/admin/rodada"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Add Rodada </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/admin/rodada/rodadaatual"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Set Rodada Atual </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text">Add Jogo</span></a></li>                                                
                                                 <li><a href="<?php echo $this->baseUrl("/admin/jogos"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Jogos </span></a></li>
                                                 

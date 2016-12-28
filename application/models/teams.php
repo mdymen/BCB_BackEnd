@@ -26,8 +26,8 @@ class Application_Model_Teams extends Application_Model_Bd_Adapter
             'tm_points' => 0,
             'tm_played' => 0
         );       
-        print_r($info);
-        $db->insert($info);
+//        print_r($info);
+        $db->insert("team", $info);
     }
     
     public function load($championship) {
@@ -90,12 +90,13 @@ class Application_Model_Teams extends Application_Model_Bd_Adapter
         $db = $this->db;
         
         $result = $db->select()->from("match")
+            ->joinInner("round", "match.mt_idround = round.rd_id")
             ->joinInner("championship", "championship.ch_id = match.mt_idchampionship and championship.ch_id = ".$champ)
             ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('tm1_id' => 't1.tm_id', 't1nome' => 't1.tm_name', 'tm1_logo' => 't1.tm_logo'))
             ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('tm2_id' => 't2.tm_id', 't2nome' => 't2.tm_name', 'tm2_logo' => 't2.tm_logo'))
             ->where("t1.tm_id = ?", $team)
             ->orWhere("t2.tm_id = ?", $team)
-            ->order(array("mt_round ASC"))    
+            ->order(array("mt_idround ASC"))    
             ->query()
             ->fetchAll();
         

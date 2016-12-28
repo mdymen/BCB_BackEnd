@@ -3,6 +3,8 @@
 $champs = $this->championships;
 $champ = $this->champ;
 $teams = $this->teams;
+$rondas = $this->rondas;
+
 //print_r($teams);
 //die(".");
 ?>
@@ -81,8 +83,14 @@ $teams = $this->teams;
                                  <div class="form-group">
                                       <div class="controls">
                                             <div class="input-group col-sm-4">
-                                              <span class="input-group-addon"><i class="fa fa-sort-numeric-asc"></i></span>
-                                              <input type="text" id="ronda" name="ronda" class="form-control" placeholder="Nº Ronda">
+                                                <select id="ronda" name="ronda">
+                                                    <?php
+                                                        for ($i = 0; $i < count($rondas); $i = $i + 1) {
+                                                            echo '<option value="'.$rondas[$i]['rd_id'].'">'.$rondas[$i]['rd_round'].'</option>';
+                                                        }                                                                                                        
+                                                    ?>
+                                                    
+                                                </select>                                                
                                             </div>
                                       </div>
                                     </div>                                

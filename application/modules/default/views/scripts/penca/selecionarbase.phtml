@@ -1,10 +1,19 @@
 <form action="selecionarbase" method="post">
 
+        <?php
+            $config = new Zend_Config_Ini("config.ini");
+        
+        ?>
+    
         <div class="form-group">
             <div class="controls">
                 <div class="input-group col-sm-2">
-                    <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                    <input type="text" id="base" name="base" class="form-control" placeholder="Nome da base">
+                    <select name="base">
+                        <option value="">Seleciona base</option>
+                        <option value="<?php echo $config->baseteste; ?>">Teste</option>
+                        <option value="<?php echo $config->baseproducao; ?>">Producao</option>                        
+                    </select>
+                    
                 </div>                                              
             </div>                          
         </div>                                        

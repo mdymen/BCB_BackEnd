@@ -290,10 +290,10 @@ class PencaController extends Zend_Controller_Action {
                 $quanto[$i]['mt_goal1'] = $results[$j]['mt_goal1'];
                 $quanto[$i]['mt_goal2'] = $results[$j]['mt_goal2'];
                 $quanto[$i]['mt_idchampionship'] = $results[$j]['mt_idchampionship'];
-                $quanto[$i]['mt_round'] = $results[$j]['mt_round'];
                 $quanto[$i]['mt_played'] = $results[$j]['mt_played'];
                 $quanto[$i]['mt_acumulado'] = $results[$j]['mt_acumulado'];
                 $quanto[$i]['mt_idround'] = $results[$j]['mt_idround'];
+                $quanto[$i]['rd_round'] = $results[$j]['rd_round'];
             }
 
         }
@@ -335,7 +335,7 @@ class PencaController extends Zend_Controller_Action {
             }
             
 //            print_r("Champ ".$params['champ']);
-//            print_r("Rodada ".$params['rodada']);
+//            print_r("Rodada ".$rodada_id);
 
             $storage = new Zend_Auth_Storage_Session();
             $data = (get_object_vars($storage->read()));
@@ -383,6 +383,9 @@ class PencaController extends Zend_Controller_Action {
         $match_id = $params['match'];
         $round = $params['round'];
         $champ = $params['champ'];
+//        
+//        print_r($round);
+//        die(".");
         
         $temSaldo = $this->verificarsaldo();
         if ($temSaldo) {

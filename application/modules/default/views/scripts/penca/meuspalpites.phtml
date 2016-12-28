@@ -83,10 +83,10 @@
                         for ($i = 0; $i < count($rondas); $i = $i + 1) {
                             $r = $i + 1;
                             $active = "";
-                            if ($rondas[$i]['mt_round'] == $this->n_rodada ) { 
+                            if ($rondas[$i]['mt_idround'] == $this->n_rodada ) { 
                                 $active = 'class="active"';                                
                             } 
-                            echo '<li '.$active.'><a href="'.$this->baseUrl('/penca/meuspalpites?rodada='.$rondas[$i]['mt_round'].'&champ='.$champ).'">'.$rondas[$i]['mt_round'].'</a></li>';
+                            echo '<li '.$active.'><a href="'.$this->baseUrl('/penca/meuspalpites?rodada='.$rondas[$i]['mt_idround'].'&champ='.$champ).'">'.$rondas[$i]['rd_round'].'</a></li>';
                         }
 
                   ?>    
@@ -115,7 +115,7 @@
                         <?php
 
                             for ($i = 0; $i < count($rondas); $i = $i + 1) {
-                                $round = $rondas[$i]['mt_round'];
+                                $round = $rondas[$i]['mt_idround'];
                                 echo '<input type="hidden" id="hd_ronda_'.$round.'" carregado="no">';                                
                                 echo '<div class="panel panel-default champ" ronda="'.$round.'" champ="'.$champ.'">
                                     <div class="panel-heading">

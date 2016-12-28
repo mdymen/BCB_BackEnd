@@ -119,10 +119,10 @@ class Helpers_Paginacao {
                                 for ($i = 0; $i < count($rondas); $i = $i + 1) {
                                     $r = $i + 1;
                                     $active = "";
-                                    if ($rondas[$i]['mt_round'] == $this->rodada_atual_id ) { 
+                                    if ($rondas[$i]['mt_idround'] == $this->rodada_atual_id ) { 
                                         $active = 'class="active"';                                
                                     } 
-                                    echo '<li '.$active.'><a href="'.$this->base.$this->link_click_rodada.'?rodada='.$rondas[$i]['mt_round'].'&champ='.$champ.'">'.$rondas[$i]['mt_round'].'</a></li>';
+                                    echo '<li '.$active.'><a href="'.$this->base.$this->link_click_rodada.'?rodada='.$rondas[$i]['mt_idround'].'&champ='.$champ.'">'.$rondas[$i]['rd_round'].'</a></li>';
                                 }
 
                             

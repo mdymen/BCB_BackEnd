@@ -10,7 +10,7 @@
 //    print_r($palpites);
     
     if (!empty($palpites)) {
-        $rodada = $palpites[0]['mt_round'];   
+        $rodada = $palpites[0]['mt_idround'];   
     }
     
 //    print_r(count($palpites));
@@ -39,7 +39,7 @@ if (!empty($palpites)) {
    $box->show_total_palpites_desse_marcador = true;
    $box->show_data_quadrado = false;
    $box->show_final_result = true;
-   $box->titulo_bigbox = "Rodada ".$palpites[0]['mt_round']." - ".(Helpers_Data::day($palpites[0]['mt_date']));
+   $box->titulo_bigbox = "Rodada ".$palpites[0]['rd_round']." - ".(Helpers_Data::day($palpites[0]['mt_date']));
  
    $box->big_box();
     

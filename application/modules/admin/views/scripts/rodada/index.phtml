@@ -1,0 +1,75 @@
+<?php
+
+$champs = $this->championships;
+
+?>
+ <form action="rodada/salvarrodada" method="post">
+<div class="row">
+    <div class="col-lg-12">
+            <div class="box">
+                    <div class="box-content">
+                                    <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                    <select id="championship" name="champ" class="form-control">
+                                                    <?php   
+                                                        if (empty($pencas)) {
+                                                            echo '<option value="Vazio"></option>';    
+                                                        }
+                                                        
+                                                        for ($i = 0; $i < count($champs); $i = $i + 1) {
+                                                            $selected = "";
+                                                            if (!empty($champ) && $champs[$i]['ch_id'] == $champ) {
+                                                                $selected = "selected";    
+                                                            }
+                                                            echo '<option '.$selected.' value="'.$champs[$i]['ch_id'].'">'.$champs[$i]['ch_nome'].'</option>';
+                                                        }                                                        
+                                                    ?>
+                                                    </select></div>
+                                            </div>	
+                                      </div>
+                                    </div>    
+                    </div>
+            </div>
+        </div>
+    </div>
+
+<div class="row">
+    
+    <div class="col-lg-12">
+            <div class="box">
+                    <div class="box-header">
+                            <h2><i class="fa fa-edit"></i>Adicionar rodada</h2>
+                            <div class="box-icon">
+                                    <a href="form-elements.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
+                                    <a href="form-elements.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                                    <a href="form-elements.html#" class="btn-close"><i class="fa fa-times"></i></a>
+                            </div>
+                    </div>
+                    <div class="box-content">
+                                 <div class="form-group">                              
+                                    <div class="form-group">
+                                      <div class="controls">
+                                            <div class="input-group col-sm-4">
+                                              <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                              <input type="text" id="rodada" name="rodada" class="form-control" placeholder="Nome da rodada">
+                                            </div>
+                                      </div>
+                                    </div>
+
+
+                                    <div class="form-actions">
+                                      <button type="submit" id="salvar_rodada" class="btn btn-primary">Salvar</button>
+                                    </div>  
+
+                    </div>
+            </div>
+    </div><!--/col-->
+    
+</div>
+
+</div>
+</form>
+

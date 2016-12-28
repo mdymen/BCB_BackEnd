@@ -6,8 +6,8 @@
     
     $rodada_id = $this->n_rodada;
     
-    if (isset($rodadas[0]['mt_round'])) {
-        $rodada = $rodadas[0]['mt_round'];
+    if (isset($rodadas[0]['mt_idround'])) {
+        $rodada = $rodadas[0]['mt_idround'];
         $champ = $rodadas[0]['mt_idchampionship']; 
     } else {
         print_r("Ainda nao tem jogos");
@@ -45,10 +45,10 @@
                         for ($i = 0; $i < count($rondas); $i = $i + 1) {
                             $r = $i + 1;
                             $active = "";
-                            if ($rondas[$i]['mt_round'] == $this->n_rodada ) { 
+                            if ($rondas[$i]['mt_idround'] == $this->n_rodada ) { 
                                 $active = 'class="active"';                                
                             } 
-                            echo '<li '.$active.'><a href="'.$this->baseUrl('/penca/bolao?rodada='.$rondas[$i]['mt_round'].'&champ='.$champ).'">'.$rondas[$i]['mt_round'].'</a></li>';
+                            echo '<li '.$active.'><a href="'.$this->baseUrl('/penca/bolao?rodada='.$rondas[$i]['mt_idround'].'&champ='.$champ).'">'.$rondas[$i]['rd_round'].'</a></li>';
                         }
 
                   ?>    

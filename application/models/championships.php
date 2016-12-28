@@ -134,4 +134,20 @@ class Application_Model_Championships extends Application_Model_Bd_Adapter
                         
     }
     
+    public function salvar_rodada($id_champ, $nome_rodada) {
+        $db = $this->db;
+        
+        $db->insert("round",array("rd_idchampionship" => $id_champ, "rd_round" => $nome_rodada));
+    }
+    
+    
+    public function setRondaAtual($id_champ, $id_ronda) {
+        $db = $this->db;
+        
+//        print_r($id_champ);
+//        print_r($id_ronda);
+//        die(".");
+        
+        $db->update("championship", array("ch_atualround" => $id_ronda), "ch_id = ".$id_champ);
+    }
 }

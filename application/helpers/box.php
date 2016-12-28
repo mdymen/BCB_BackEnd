@@ -210,7 +210,7 @@ class Helpers_Box {
                             }
                 
                             if ($this->show_titulo_rodada) {
-                                echo $this->titulo("Rodada ".$matches[$i]['mt_round'], $this->base.$this->link_ronda."?rodada=".$matches[$i]['mt_round']."&champ=".$matches[$i]['ch_id']);
+                                echo $this->titulo("Rodada ".$matches[$i]['rd_round'], $this->base.$this->link_ronda."?rodada=".$matches[$i]['mt_idround']."&champ=".$matches[$i]['ch_id']);
                             }                          
                             
                             if (!isset($matches[$i]['rs_res1'])) {

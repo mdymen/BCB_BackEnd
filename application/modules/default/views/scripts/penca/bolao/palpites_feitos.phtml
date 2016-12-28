@@ -17,12 +17,12 @@ if (!empty($palpites_feitos)) {
    ?>
 
 <input type="hidden" value="<?php echo $palpites_feitos[0]['mt_idchampionship']; ?>" name="champ" id="champ" />
-<input type="hidden" value="<?php echo $palpites_feitos[0]['mt_round']; ?>" name="rodada" id="round" />
+<input type="hidden" value="<?php echo $palpites_feitos[0]['mt_idround']; ?>" name="rodada" id="round" />
 
 
                                     <?php
                                 if ($this->porteam) { 
-                                    $titulo = "Rodada: ".$palpites_feitos[0]['mt_round'];
+                                    $titulo = "Rodada: ".$palpites_feitos[0]['rd_round'];
                                 } else {
                                     $titulo = "Time: ".$this->teamusername;
                                 }

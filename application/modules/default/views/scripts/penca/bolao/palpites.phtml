@@ -6,7 +6,7 @@
     $palpites = $this->rodada;
     
     if (!empty($palpites)) {
-        $rodada = $palpites[0]['mt_round'];   
+        $rodada = $palpites[0]['mt_idround'];   
     }
     
 //    print_r(count($palpites));
@@ -19,7 +19,7 @@ if (!empty($palpites)) {
    ?>
 
 <input type="hidden" value="<?php echo $palpites[0]['mt_idchampionship']; ?>" name="champ" id="champ" />
-<input type="hidden" value="<?php echo $palpites[0]['mt_round']; ?>" name="rodada" id="round" />
+<input type="hidden" value="<?php echo $palpites[0]['mt_idround']; ?>" name="rodada" id="round" />
 
 
         <?php echo $this->render('penca/bolao/alerts.phtml'); ?>  
@@ -31,7 +31,7 @@ if (!empty($palpites)) {
                             
                             <?php
                                 if ($this->porteam) { 
-                                    $titulo = "Palpites da Rodada: ".$palpites[0]['mt_round'];
+                                    $titulo = "Palpites da Rodada: ".$palpites[0]['rd_round'];
                                 } else {
                                     $titulo = "Palpites do Time: ".$this->teamusername;
                                 }
@@ -104,7 +104,7 @@ if (!empty($palpites)) {
                $("#panel_palpites_palpites_feitos").attr("style","display:none");
                $("#gif").attr("style","display:yes");
                 $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round, champ : $("#champ").val()  }, function(response) {
-//                    console.log(response);
+                    console.log(response);
                     if (response.sucesso === 200) {
                                                 
                         

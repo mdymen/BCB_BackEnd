@@ -1,0 +1,94 @@
+<?php
+
+$champs = $this->championships;
+$champ = $this->champ;
+$rondas = $this->rondas;
+?>
+ 
+<div class="row">
+    <form id="frChamp_setrodada" action="<?php echo $this->baseUrl('admin/rodada/rodadaatual'); ?>" method="post">
+    <div class="col-lg-12">
+            <div class="box">
+                    <div class="box-content">
+                                    <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                    <select id="championship" name="champ" class="form-control">
+                                                    <?php   
+                                                        if (empty($pencas)) {
+                                                            echo '<option value="Vazio"></option>';    
+                                                        }
+                                                        
+                                                        for ($i = 0; $i < count($champs); $i = $i + 1) {
+                                                            $selected = "";
+                                                            if (!empty($champ) && $champs[$i]['ch_id'] == $champ) {
+                                                                $selected = "selected";    
+                                                            }
+                                                            echo '<option '.$selected.' value="'.$champs[$i]['ch_id'].'">'.$champs[$i]['ch_nome'].'</option>';
+                                                        }                                                        
+                                                    ?>
+                                                    </select></div>
+                                            </div>	
+                                      </div>
+                                    </div>    
+                    </div>
+            </div>
+        
+        </div>
+        </form>	
+    </div>
+
+
+<form action="setrodadaatual" method="post">
+<div class="row">
+    
+    <div class="col-lg-12">
+            <div class="box">
+                    <div class="box-header">
+                            <h2><i class="fa fa-edit"></i>Set rodada atual</h2>
+                            <div class="box-icon">
+                                    <a href="form-elements.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
+                                    <a href="form-elements.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                                    <a href="form-elements.html#" class="btn-close"><i class="fa fa-times"></i></a>
+                            </div>
+                    </div>
+               
+                    <div class="box-content">
+                                 <div class="form-group"> 
+                                       <input type="hidden" id="champ_selected" name="champ_selected" value="<?php echo $champ; ?>" />
+                                    <select id="ronda" name="ronda" class="form-control">
+                                        <?php   
+
+                                            for ($i = 0; $i < count($rondas); $i = $i + 1) {
+                                                echo '<option value="'.$rondas[$i]['rd_id'].'">'.$rondas[$i]['rd_round'].'</option>';
+                                            }                                                        
+                                        ?>
+                                    </select>
+                                </div>
+
+
+                                    <div class="form-actions">
+                                      <button type="submit" class="btn btn-primary">Set ronda actual</button>
+                                    </div>  
+
+                    </div>
+            </div>
+    </div><!--/col-->
+    
+</div>
+
+</div>
+</form>
+
+<script type="text/javascript">
+
+    $(function() { 
+        $("#championship").change(function() {
+           $('#frChamp_setrodada').submit(); 
+        });
+    });
+    
+    
+</script>

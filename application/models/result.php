@@ -170,7 +170,7 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
         $db = $this->db;
         
         $result = $db->select()->from("vwranking_round")
-                ->where("mt_round = ?", $round)
+                ->where("mt_idround = ?", $round)
                 ->where("mt_idchampionship = ?", $championship)
                 ->order("points DESC");
         

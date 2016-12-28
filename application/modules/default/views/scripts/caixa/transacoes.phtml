@@ -24,6 +24,9 @@
     }
 
     
+//    print_r($ts);
+    
+    
 //    print_r("RODADA ".$round_filtro_palpites);
 //    print_r($rds);
     ?>
@@ -122,13 +125,13 @@
                                             echo '<tr><td>'.$ts[$i]['ch_nome'].'</td></tr>';
                                             $ch_nome = $ts[$i]['ch_nome'];
                                         }
-                                        if (strcmp($round, $ts[$i]['mt_round']) != 0) {
+                                        if (strcmp($round, $ts[$i]['mt_idround']) != 0) {
                                             if ($i != 0) {
                                                 echo '<tr><td width="60%" style="text-align:center">Total</td><td width="20%" style="text-align:left">'.number_format((float)(-1)*$total_rodada, 2, ".","").'</td><td width="20%"></td></tr>';
                                                 echo '<td width="60%" style="text-align:center"></td><td width="20%" style="text-align:left">&nbsp;</td><td width="20%"></td>';
                                             }                                            
-                                            echo '<tr><td>Rodada '.$ts[$i]['mt_round'].'</td></tr>';
-                                            $round = $ts[$i]['mt_round'];  
+                                            echo '<tr><td>Rodada '.$ts[$i]['mt_idround'].'</td></tr>';
+                                            $round = $ts[$i]['mt_idround'];  
                                             $total_rodada = 0;
                                         } 
                                         $total_rodada = $total_rodada + $ts[$i]['tr_valortransaccion'];

@@ -25,28 +25,12 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
             'mt_idteam2'=>$params['team2'],
             'mt_date'=>$params['date'],
             'mt_idchampionship' => $params['championship'],
-            'mt_round' => $params['round']
+            'mt_idround' => $params['round']
         );       
         
         $db = $this->db;       
-
-        $return = $db->select()->from("round")
-                ->where("rd_round = ?", $info['mt_round'])
-                ->where("rd_idchampionship = ?", $info['mt_idchampionship'])
-                ->query()->fetch();
-        
-        if (empty($return)) {
-            $db->insert("round", array("rd_round" => $info['mt_round'],
-                        "rd_idchampionship" => $info['mt_idchampionship'],
-                        "rd_acumulado" => 0));
-            
-            $id_round = $db->lastInsertId("round");
-            $return['rd_id'] = $id_round;
-        }
-        
-        $info['mt_idround'] = $return['rd_id'];
                   
-        $this->insert($info);        
+        $db->insert("match",$info);        
     }
     
     public function update_acumulado_match($match_id, $valor) {
@@ -159,7 +143,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
   LEFT JOIN vwpalpites ON vwpalpites.rs_idmatch = match.mt_id
   LEFT JOIN round ON round.rd_id = match.mt_idround
   LEFT JOIN (select * from result where rs_iduser = ".$usuario.") r ON r.rs_idmatch = match.mt_id 
-  WHERE (match.mt_idchampionship = '".$championship."') AND (mt_round = '".$rodada."') ORDER BY `mt_date` ASC";
+  WHERE (match.mt_idchampionship = '".$championship."') AND (mt_idround = '".$rodada."') ORDER BY `mt_date` ASC";
         
 //        print_r($sql);
         
@@ -344,10 +328,11 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
     public function getrondas($champ) {
         $db = $this->db;
         
-        $result = $db->select()->from("match", 'mt_round')
+        $result = $db->select()->from("match", 'mt_idround')
                 ->distinct()
+                ->joinInner('round','match.mt_idround = round.rd_id')
                 ->where("mt_idchampionship = ?", $champ)
-                ->order("mt_round")
+                ->order("mt_idround")
                 ->query()
                 ->fetchAll();
         
@@ -409,6 +394,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         $db = $this->db;
         
         $result = $db->select()->from("match")
+                ->joinInner("round", "match.mt_idround = round.rd_id")
                 ->where("mt_id = ?", $match)
                 ->query()->fetchAll();
         
@@ -422,6 +408,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
                 ->joinInner("match","match.mt_id = result.rs_idmatch",array("mt_idteam1", "mt_idteam2"))
                 ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('tm1_id' =>'t1.tm_id', 'tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
                 ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('tm2_id' =>'t2.tm_id','tm2_logo' => 't2.tm_logo', 't2nome' => 't2.tm_name'))
+                ->joinInner("round", "match.mt_idround = round.rd_id")
                 ->where("rs_idmatch = ?",$match)
                 ->group(array("rs_res1", "rs_res2", "rs_idmatch","mt_idteam1", "mt_idteam2","rs_result"));
         
