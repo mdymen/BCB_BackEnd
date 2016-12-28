@@ -68,9 +68,11 @@ class CampeonatosController extends Zend_Controller_Action
                 $rodadas = $matchs_obj->load_rodada_porteam($champ_id, $team_id, $data['us_id']);
             }
 
+            
+            
             $teams_obj = new Application_Model_Teams();
             $teams = $teams_obj->load_teams_championship($champ_id); 
-
+            
             $ranking = new Application_Model_Result();
             $rankings = $ranking->ranking_round($rodada_id, $champ_id);
             $rankings_champ = $ranking->ranking_champ($champ_id);

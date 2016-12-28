@@ -463,7 +463,7 @@ class PencaController extends Zend_Controller_Action {
     }
     
     public function meuspalpitesAction() { 
-        try {
+//        try {
             $params = $this->_request->getParams();
 
 //            print_r($params);
@@ -497,11 +497,11 @@ class PencaController extends Zend_Controller_Action {
 
             
             $this->view->championships = $champs;
-        }
-        catch (Zend_Exception $e) {
-            $config = new Zend_Config_Ini("config.ini");
-            $this->redirect($config->hostpublic);
-        }
+//        }
+//        catch (Zend_Exception $e) {
+//            $config = new Zend_Config_Ini("config.ini");
+//            $this->redirect($config->hostpublic);
+//        }
     }
     
     public function getpalpitesAction() {

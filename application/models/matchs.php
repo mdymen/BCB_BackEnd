@@ -66,7 +66,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         $result = $db->select()->from("vwmatchsresult")
                 ->where("rs_iduser= ?", $usuario)
                 ->where("mt_idchampionship = ?", $championship)
-                ->where("mt_round = ?", $rodada)
+                ->where("mt_idround = ?", $rodada)
                 ->order(array('mt_date ASC'));
         
 //        print_r($result->__toString());
@@ -103,7 +103,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         $result = $db->select()->from("vwmatchsteams")
                 ->distinct()
                 ->where("mt_idchampionship = ?", $championship)
-                ->where("mt_round = ?", $rodada)
+                ->where("mt_idround = ?", $rodada)
                 ->order(array('mt_date ASC'));
         
 //        print_r($result->__toString());

@@ -59,7 +59,7 @@ class Application_Model_Transaction extends Application_Model_Bd_Adapter
         }
         
         $return = $return->order("championship.ch_id")
-                ->order("vwmatchsteams.mt_round")
+                ->order("vwmatchsteams.mt_idround")
                 ->order("transaction.tr_id");
         
 //        print_r($return->__toString()."  - - --");

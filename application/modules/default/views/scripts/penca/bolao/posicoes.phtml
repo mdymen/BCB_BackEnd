@@ -7,7 +7,7 @@
     $t = Zend_Registry::get('translate');
 //    print_r($champion['ch_sec1_fim']);
     
-    if (!empty($teams)) {
+    if (isset($teams)) {
         
         $p = new Helpers_Posicoes();
         $p->champion = $champion;
@@ -16,71 +16,4 @@
         $p->base = $this->baseUrl();
         $p->posicoes();
     
-?>
-
-<!--
-					<div class="box">
-						<div class="box-header">
-							<h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo $t->_("tabela.de.posicoes"); ?></h2>
-							
-						</div>
-						<div class="box-content">
-							<table class="table">
-								  <thead>
-									  <tr>
-                                                                            <th>Pos</th>
-                                                                            <th>Time</th>
-                                                                            <th>P</th>
-                                                                            <th>J</th>
-										                                  
-									  </tr>
-								  </thead>   
-								  <tbody>
-                                                                      
-                                                                   <?php   
-                                                                   
-                                                                        for ($i = 0; $i < count($teams); $i = $i + 1) {
-                                                                        
-//                                                                            print_r("xxxx ".$champion['ch_sec_ini']);
-                                                                            
-                                                                            $torneo = "";
-                                                                            $k = $i + 1;
-                                                                            if (!empty($champion['ch_sec1_ini']) && $k >= $champion['ch_sec1_ini'] && $k <= $champion['ch_sec1_fin']) {
-                                                                                $torneo = "badge badge-success";
-                                                                            }
-                                                                            if (!empty($champion['ch_sec2_ini']) && $k >= $champion['ch_sec2_ini'] && $k <= $champion['ch_sec2_fin']) {
-                                                                                $torneo = "badge badge-info";
-                                                                            }
-                                                                            
-                                                                            if (!empty($champion['ch_sec3_ini']) && $k >= $champion['ch_sec3_ini'] && $k <= $champion['ch_sec3_fin']) {
-                                                                                $torneo = "badge badge-important";
-                                                                            }
-                                                                            
-                                                                            echo '<tr>
-                                                                                    <td id="tm_id'.$i.'"><span class="'.$torneo.'">'.($i+1).'</td>
-                                                                                    <td id="tm_name'.$i.'">'.Helpers_Html::getTeamLinkLeft($this->baseUrl(), $teams[$i]['tm_id'], $teams[$i]['tm_name'], $config->host.$teams[$i]['tm_logo'], $champ).'</td>
-                                                                                    <td id="tm_points'.$i.'">'.$teams[$i]['tm_points'].'</td>
-                                                                                    <td id="tm_played'.$i.'">'.$teams[$i]['tm_played'].'</td>
-                                                                                                                         
-                                                                            </tr>';
-                                                                        
-                                                                        }
-                                                                        
-                                                                    ?>    
-                                                                                                          
-								  </tbody>
-							 </table>  
-							 <div class="pagination pagination-centered">
-							  <ul class="pagination" id="ul_positions">
-
-                                                                
-                                                                
-							  </ul>
-							</div>     
-						</div>
-					</div>-->
-<?php
-
-    };
-
-?>
+    }

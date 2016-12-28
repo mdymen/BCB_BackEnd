@@ -79,20 +79,13 @@
 ?>
 
 
-<?php
-
- if (!empty($matchs)) {
-
-//     print_r($matchs);
-     
-?>
 
 <div class="row">
     <div class="col-lg-8">
 <?php
 
 //print_r($matchs);
-
+if (!empty($matchs)) {
         $box = new Helpers_Box();
         $box->disabled_input = true;
         $box->mas_info = true;

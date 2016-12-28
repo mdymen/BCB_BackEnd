@@ -131,7 +131,7 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         
         $result = $db->select()->from("result", array("count(*) as losts"))
                ->where("rs_iduser = ?",$us_id)
-                ->where("rs_date < " + date("m-d-Y"))
+                ->where("rs_date < ".date("m-d-Y"))
                ->where("rs_points = 0")
                 ->query()
                 ->fetch();
@@ -145,6 +145,7 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         $result = $db->select()->from("vwmatchsresult")
                 ->where("rs_iduser = ?",$us_id)
                 ->where("rs_points = 0")
+                ->where("rs_result = 0")
                 ->query()
                 ->fetchAll();
         
@@ -177,7 +178,6 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         
         $result = $db->select()->from("result", array("count(*) as played"))
                ->where("rs_iduser = ?",$id_user)
-                ->where("rs_result = 1 or rs_result = 0")
                 ->query()
                 ->fetch();
         
@@ -237,6 +237,7 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         $db = $this->db;
         
         $result = $db->select()->from("match")  
+            ->joinInner("round", "match.mt_idround = round.rd_id")
             ->joinInner("result", "result.rs_idmatch = match.mt_id")    
             ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('tm1_id' => 't1.tm_id', 'tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
             ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('tm2_id' => 't2.tm_id', 'tm2_logo' => 't2.tm_logo', 't2nome' => 't2.tm_name'))
