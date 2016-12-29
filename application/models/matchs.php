@@ -431,4 +431,41 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         return $return;
     }
     
+    public function atualizar_match($params) {
+        $info = array(
+            'mt_idteam1' => $params['mt_idteam1'],
+            'mt_idteam2' => $params['mt_idteam2'],
+            'mt_date' => $params['mt_date'],
+            'mt_idround' => $params['mt_idround']
+        );
+        
+        $db = $this->db;
+        
+        $db->update("match", $info, "mt_id = ".$params['mt_id']);
+        
+    }
+    
+    public function load_by_date($date_ini, $date_fim) {
+        $db = $this->db;
+        
+        $result = $db->select()->from("match")
+                ->joinInner("round", "match.mt_idround = round.rd_id")
+                ->joinInner("championship", "championship.ch_id = round.rd_idchampionship")
+                 ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('tm1_id' =>'t1.tm_id', 'tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
+                ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('tm2_id' =>'t2.tm_id','tm2_logo' => 't2.tm_logo', 't2nome' => 't2.tm_name'));
+        
+        if (!empty($date_ini)){
+            $result = $result->where("match.mt_date >= ?", $date_ini);
+        }
+        
+        if (!empty($date_fim)) {
+            $result = $result->where("match.mt_date <= ?", $date_fim);
+        }        
+        
+        $return = $result->query()->fetchAll();
+        
+        return $return;
+                
+    }
+    
 }

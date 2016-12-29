@@ -146,10 +146,9 @@
                                                 <li><a href="<?php echo $this->baseUrl("/admin/time"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Add Time </span></a></li>                                                
                                                 <li><a href="<?php echo $this->baseUrl("/admin/rodada"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Add Rodada </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/rodada/rodadaatual"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Set Rodada Atual </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/admin/jogos/jogospordata"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text">Jogos por data</span></a></li>                                                
                                                 <li><a href="<?php echo $this->baseUrl("/admin"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text">Add Jogo</span></a></li>                                                
                                                 <li><a href="<?php echo $this->baseUrl("/admin/jogos"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Jogos </span></a></li>
-                                                
-                                                
                                                 <!--<li><a href="<?php echo $this->baseUrl("/admin/team"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Admin Teams </span></a></li>-->
                                                 <li><a href="<?php echo $this->baseUrl("/admin/transacoes"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Transações </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/campeonato/palpites"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Palpites </span></a></li>

@@ -32,15 +32,17 @@ $rondas = $this->rondas;
                             <h2><i class="fa fa-edit"></i>Alterar jogo</h2>
                     </div>
                     <div class="box-content">
-                            <form class="form-horizontal">
+                            <form action="<?php echo $this->baseUrl("/admin/jogos/salvaredit"); ?>" method="post" class="form-horizontal">
+                                 <input type="hidden" name="mt_id" value="<?php echo $match['mt_id'] ?>" />
+                                 <input type="hidden" name="mt_idchampionship" value="<?php echo $match['mt_idchampionship'] ?>" />
                                  <div class="form-group">
                                       <div class="controls">
                                             <div class="input-group col-sm-4">
-                                                <select id="ronda" name="ronda">
+                                                <select id="ronda" name="mt_idround">
                                                     <?php
                                                         for ($i = 0; $i < count($rondas); $i = $i + 1) {
                                                             $selected = "";
-                                                            if ($rondas[$i]['rd_id'] == $matchs['mt_idround'] ) {
+                                                            if ($rondas[$i]['rd_id'] == $match['mt_idround'] ) {
                                                                 $selected = "selected";
                                                             }
                                                             echo '<option '.$selected.' value="'.$rondas[$i]['rd_id'].'">'.$rondas[$i]['rd_round'].'</option>';
@@ -55,7 +57,7 @@ $rondas = $this->rondas;
                                       <div class="controls">
                                             <div class="input-group col-sm-4">
                                               <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                              <input type="text" id="date" name="date" class="form-control" value="<?php echo $match['mt_date'] ?>" placeholder="Data dd/mm/yy">
+                                              <input type="text" id="date" name="mt_date" class="form-control" value="<?php echo $match['mt_date'] ?>" placeholder="Data dd/mm/yy">
                                             </div>
                                       </div>
                                     </div>
@@ -65,13 +67,14 @@ $rondas = $this->rondas;
                                             <div class="input-group date col-sm-12">
                                                     <span class="input-group-addon"><i class="fa  fa-search"></i></span>
                                                     <div class="controls">
-                                                        <select id="team1" name="team1" class="form-control">
+                                                        <select id="team1" name="mt_idteam1" class="form-control">
                                                         <?php   
                                                             for ($i = 0; $i < count($teams); $i = $i + 1) {
                                                                 $selected = "";
                                                                 if ($teams[$i]['tm_id'] == $match['mt_idteam1']) {
-                                                                    echo '<option '.$selected.' value="'.$teams[$i]['tm_id'].'">'.$teams[$i]['tm_name'].'</option>';
+                                                                    $selected = "selected";
                                                                 }
+                                                                echo '<option '.$selected.' value="'.$teams[$i]['tm_id'].'">'.$teams[$i]['tm_name'].'</option>';
                                                             }                                                        
                                                         ?>
                                                         </select>
@@ -85,14 +88,14 @@ $rondas = $this->rondas;
                                             <div class="input-group date col-sm-12">
                                                     <span class="input-group-addon"><i class="fa  fa-search"></i></span>
                                                     <div class="controls">
-                                                        <select id="team2" name="team2" class="form-control">                                                    
+                                                        <select id="team2" name="mt_idteam2" class="form-control">                                                    
                                                         <?php                                                           
                                                             for ($i = 0; $i < count($teams); $i = $i + 1) {
                                                                 $selected = "";
                                                                 if ($teams[$i]['tm_id'] == $match['mt_idteam2']) {
                                                                     $selected = "selected";
                                                                 }
-                                                                echo '<option value="'.$teams[$i]['tm_id'].'">'.$teams[$i]['tm_name'].'</option>';
+                                                                echo '<option '.$selected.' value="'.$teams[$i]['tm_id'].'">'.$teams[$i]['tm_name'].'</option>';
                                                             }                                                        
                                                         ?>
                                                         </select>

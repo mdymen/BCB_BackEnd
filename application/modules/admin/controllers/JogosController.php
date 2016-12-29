@@ -102,5 +102,28 @@ class Admin_JogosController extends Zend_Controller_Action
         $this->view->teams = $teams;
     }
     
+    public function salvareditAction() {
+        $params = $this->_request->getParams();
+        
+        $m = new Application_Model_Matchs();
+        $m->atualizar_match($params);
+        
+        
+        $this->redirect("admin/jogos/index", array('champ' => $params['mt_idchampionship']));
+    }
+    
+    public function jogospordataAction() {
+        $params = $this->_request->getParams();
+        
+        if (!empty($params['mt_date_ini']) || !empty($params['mt_date_fim'])) {
+            $date_ini = $params['mt_date_ini'];
+            $date_fim = $params['mt_date_fim'];           
+            
+            $m = new Application_Model_Matchs();
+            $matchs = $m->load_by_date($date_ini, $date_fim);
+            
+            $this->view->matchs = $matchs;
+        }
+    }
 }
 
