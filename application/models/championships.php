@@ -121,6 +121,28 @@ class Application_Model_Championships extends Application_Model_Bd_Adapter
         
     }
     
+    public function getMatchs($champ) {
+        $db = $this->db;
+        
+        $result = $db->select()->from("match")
+                ->where("mt_idchampionship = ?", $champ);
+        
+        $return = $result->query()->fetchAll();
+        
+        return $return;
+    }
+    
+    public function getTeams($champ) {
+        $db = $this->db;
+        
+        $result = $db->select()->from("team")
+                ->where("tm_idchampionship = ?", $champ);
+        
+        $return = $result->query()->fetchAll();
+        
+        return $return;
+    }
+    
     public function getrondas($champ) {
         $db = $this->db;
         

@@ -1,0 +1,103 @@
+<?php
+$champs = $this->champs;
+
+$champ = $this->champ;
+$teams = $this->teams;
+$rounds = $this->rounds;
+$matchs = $this->matchs;
+
+?>
+ 
+<div class="row">
+    <div class="col-lg-12">
+            <div class="box">
+                    <div class="box-content">
+                            <form id="frChamp" action="<?php echo $this->baseUrl('admin/campeonato/backup'); ?>" method="post">	
+                                    <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                    <select id="championship" name="champ" class="form-control">
+                                                    <?php   
+                                                        if (empty($pencas)) {
+                                                            echo '<option value="Vazio"></option>';    
+                                                        }
+                                                        
+                                                        for ($i = 0; $i < count($champs); $i = $i + 1) {
+                                                            $selected = "";
+                                                            if (!empty($champ) && $champs[$i]['ch_id'] == $champ) {
+                                                                $selected = "selected";    
+                                                            }
+                                                            echo '<option '.$selected.' value="'.$champs[$i]['ch_id'].'">'.$champs[$i]['ch_nome'].'</option>';
+                                                        }                                                        
+                                                    ?>
+                                                    </select></div>
+                                            </div>	
+                                      </div>
+                                    </div>    
+                            </form>   
+                    </div>
+            </div>
+        </div>
+    </div>
+
+<?php
+
+ if (!empty($champ)) {
+     
+        echo "INSERT INTO championship(ch_id , ch_nome, ch_idfixture, ch_started, ch_atualround, "
+     . "ch_sec1_ini, ch_sec1_fin, ch_sec2_ini, ch_sec2_fin, ch_sec3_ini, ch_sec3_fin, "
+                . "ch_sec1_desc, ch_sec2_desc, ch_sec3_desc, ch_acumulado, ch_dchamp, "
+                . "ch_djogo, ch_drodada, ch_dpalpite) VALUES(".$champ['ch_id'].", '".$champ['ch_nome']."','".$champ['ch_idfixture']."','".$champ['ch_started']."','"
+                . "".$champ['ch_atualround']."','".$champ['ch_sec1_ini']."','".$champ['ch_sec1_fin']."','".$champ['ch_sec2_ini']."','"
+                . "".$champ['ch_sec2_fin']."','".$champ['ch_sec3_ini']."','"
+                . "".$champ['ch_sec3_fin']."','".$champ['ch_sec1_desc']."','".$champ['ch_sec2_desc']."','".$champ['ch_sec3_desc']."','"
+                . "".$champ['ch_acumulado']."','".$champ['ch_dchamp']."','"
+                . "".$champ['ch_djogo']."','".$champ['ch_drodada']."','".$champ['ch_dpalpite']."');";
+        
+        echo "<br><br>";
+        
+     
+    for ($i = 0; $i < count($teams); $i = $i + 1) { 
+        echo "INSERT INTO team(tm_id, tm_name, tm_idchampionship, tm_points, tm_played, tm_logo, tm_grupo) VALUES(".$teams[$i]['tm_id'].","
+                . "'".$teams[$i]['tm_name']."','".$teams[$i]['tm_idchampionship']."','".$teams[$i]['tm_points']."','".$teams[$i]['tm_played']."','".$teams[$i]['tm_logo']."'"
+                . ",'".$teams[$i]['tm_grupo']."');";
+        echo "<br>";
+    }
+    
+    echo "<br>";
+    
+    for ($i = 0; $i < count($rounds); $i = $i + 1) { 
+        echo "INSERT INTO round(rd_id, rd_round, rd_idchampionship, rd_acumulado) VALUES(".$rounds[$i]['rd_id'].","
+                . "'".$rounds[$i]['rd_round']."','".$rounds[$i]['rd_idchampionship']."','".$rounds[$i]['rd_acumulado']."');";
+        echo "<br>";
+    }
+    
+    echo "<br>";
+    
+    for ($i = 0; $i < count($matchs); $i = $i + 1) { 
+        echo "INSERT INTO match(mt_id, mt_idteam1, mt_idteam2, mt_date, mt_goal1, mt_goal2, mt_idchampionship, "
+        . "mt_played, mt_acumulado, mt_idround) "
+                . "VALUES(".$matchs[$i]['mt_id'].",".$matchs[$i]['mt_idteam1'].",".$matchs[$i]['mt_idteam2'].",'".$matchs[$i]['mt_date']."','".$matchs[$i]['mt_goal1']."',"
+                . "'".$matchs[$i]['mt_goal2']."',".$matchs[$i]['mt_idchampionship'].",'".$matchs[$i]['mt_played']."',".$matchs[$i]['mt_acumulado'].",".$matchs[$i]['mt_idround'].");";
+        
+        echo "<br>";
+    }
+
+ }
+
+ ?>
+
+
+
+
+<script type="text/javascript">
+
+    $(function() {
+        $("#championship").change(function() {
+            $('#frChamp').submit();
+         });
+     });
+    
+ </script>

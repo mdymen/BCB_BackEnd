@@ -360,7 +360,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
             ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('t1nome' => 't1.tm_name'))
             ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('t2nome' => 't2.tm_name'))
             ->where('mt_idchampionship = ?', $champ)
-            ->where("mt_round = ?",$rodada)
+            ->where("mt_idround = ?",$rodada)
             ->query()
             ->fetchAll();
         

@@ -84,5 +84,23 @@ class Admin_CampeonatoController extends Zend_Controller_Action
         }
     }
     
+    public function backupAction() {
+        $params = $this->_request->getParams();
+        
+        $c = new Application_Model_Championships();
+        
+        $this->view->champs = $c->load();
+        
+        if (isset($params['champ'])) {
+            
+            $champ = $params['champ'];            
+            
+            $this->view->champ = $c->getChamp($champ);            
+            $this->view->rounds = $c->getrondas($champ);                        
+            $this->view->teams = $c->getTeams($champ);           
+            $this->view->matchs = $c->getMatchs($champ);
+        }
+    }
+    
 }
 

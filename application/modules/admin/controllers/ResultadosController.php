@@ -18,17 +18,28 @@ class Admin_ResultadosController extends Zend_Controller_Action
     {
         $params = $this->_request->getParams();
         
-        if (!empty($params['ronda']) && !empty($params['champ'])) {
-            $ronda = $params['ronda'];
-            $champ = $params['champ'];
-            $m_obj = new Application_Model_Matchs();
-            $matchs = $m_obj->load_matchs_byrodada($champ, $ronda);
-            $matchs = $m_obj->setDatas($matchs);
-            $this->view->matchs = $matchs;
+        $c = new Application_Model_Championships();
+        if (!empty($params['champ'])) {
+            $this->view->rounds = $c->getrondas($params['champ']);
+            $this->view->champ = $params['champ'];
+            
+            if (!empty($params['ronda'])) {
+                
+//                print_r($params);
+//                die(".");
+                
+                $ronda = $params['ronda'];
+                $champ = $params['champ'];
+                $m_obj = new Application_Model_Matchs();
+                $matchs = $m_obj->load_matchs_byrodada($champ, $ronda);
+                $matchs = $m_obj->setDatas($matchs);
+                $this->view->matchs = $matchs;      
+                $this->view->ronda = $ronda;
+            }
         }
         
-        $c_obj = new Application_Model_Championships();
-        $this->view->championships = $c_obj->load();
+        
+        $this->view->championships = $c->load();
         
     }
     

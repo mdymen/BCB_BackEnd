@@ -8,8 +8,8 @@ if (!empty($matchs)) {
     $champ = $matchs[0]['mt_idchampionship'];
 }
 
-//print_r($matchs);
-
+$rounds = $this->rounds;
+$ronda = $this->ronda;
 
 ?>
 
@@ -46,8 +46,17 @@ if (!empty($matchs)) {
                     <div class="form-group">                                        
                         <div class="controls">
                               <div class="input-group col-sm-4">
-                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
-                                <input type="text" value="<?php echo $matchs[0]['mt_round']; ?>" id="ronda" name="ronda" class="form-control" placeholder="N° Ronda">
+                                  <select id="ronda" name="ronda" class="form-control">
+                                        <?php   
+                                            for ($i = 0; $i < count($rounds); $i = $i + 1) {
+                                                $selected = "";
+                                                if (!empty($rounds) && $rounds[$i]['rd_id'] == $ronda) {
+                                                    $selected = "selected";    
+                                                }
+                                                echo '<option '.$selected.' value="'.$rounds[$i]['rd_id'].'">'.$rounds[$i]['rd_round'].'</option>';
+                                            }                                                        
+                                        ?>
+                                   </select>                                                                  
                               </div>                                              
                         </div>
                     </div>
@@ -125,7 +134,7 @@ if (!empty($matchs)) {
                                  </table>  
 
                             <div class="form-actions">
-                                <button id="btnFecharRodada" type="button" class="btn btn-primary">Fechar Rodada</button>
+                                <button id="btnFecharRodada" type="button" class="btn btn-primary">Fechar Rodada</button> <span><b>LEMBRAR TESTAR PRIMERO COM BASE DE TESTE</b></span>
                             </div>
 
                         </div>
@@ -143,6 +152,10 @@ if (!empty($matchs)) {
 
 <script type="text/javascript">
     $(function() { 
+        $("#championship").change(function() {
+            $("#frChamp_palpites").submit();
+        });
+        
         $(".btnslvr").bind('click', function() {
            var match = $(this).attr("match"); 
            var res1 = $("#res1_"+match).val();
