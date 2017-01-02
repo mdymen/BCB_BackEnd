@@ -44,7 +44,7 @@ $champ = $this->champ;
     <?php
     
         $results = $this->results;
-        print_r($results);
+//        print_r($results);
     
     ?>
 
@@ -82,7 +82,7 @@ $champ = $this->champ;
                                                 for ($i = 0; $i < count($results); $i = $i + 1) {                                            
                                                     echo '<tr>
                                                         <td width="10%">'.$results[$i]['us_username'].'</td>
-                                                        <td width="10%">'.$results[$i]['mt_round'].'</td>
+                                                        <td width="10%">'.$results[$i]['rd_round'].'</td>
                                                         <td width="10%">'.$results[$i]['t1nome'].' vs '.$results[$i]['t2nome'].'</td>
                                                         <td width="10%">'.$results[$i]['rs_res1'].' vs '.$results[$i]['rs_res2'].'</td>                                                                
                                                     </tr>';

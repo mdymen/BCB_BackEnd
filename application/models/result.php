@@ -221,7 +221,7 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
                 ->joinInner("user","user.us_id = rs_iduser")                
                 ->where("mt_idchampionship = ?", $champ)
                 ->order("user.us_id")
-                ->order("mt_round")
+                ->order("mt_idround")
                 ->query()
                 ->fetchAll();
         

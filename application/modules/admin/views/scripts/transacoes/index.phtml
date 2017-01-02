@@ -115,6 +115,7 @@ $champ = $this->champ;
                                     
                                     <table class="col-lg-12 col-sm-12 col-xs-12 col-xxs-12 col-xxs-12">
                                         <thead>
+                                            <th width="10%">Data</th>
                                             <th width="10%">Transacao</th>
                                             <th width="10%">p/Campeonato</th>
                                             <th width="10%">p/Rodada</th>
@@ -133,6 +134,7 @@ $champ = $this->champ;
                                             
                                                 for ($i = 0; $i < count($tr); $i = $i + 1) {                                            
                                                     echo '<tr>
+                                                        <td width="10%">'.$tr[$i]['tr_date'].'</td>
                                                         <td width="10%">'.$tr[$i]['tr_valortransaccion'].'</td>
                                                         <td width="10%">'.$tr[$i]['tr_valorcampeonato'].'</td>
                                                         <td width="10%">'.$tr[$i]['tr_valorrodada'].'</td>
