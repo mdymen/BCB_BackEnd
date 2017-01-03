@@ -40,13 +40,13 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         
         $return = $db->select()->from("provisorio")
                 ->where("prov_id = ?", $id)
-                ->where("prov_password = ?", $pass)
+                ->where("prov_password = ?", $pass);
         
-//        print_r($return->__toString());
-//        die(".");
+        print_r($return->__toString());
+        die(".");
         
-                ->query()
-                ->fetch();
+//                ->query()
+//                ->fetch();
 //        
         return $return;
     }
@@ -314,7 +314,7 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
 //        print_r($result->__toString());
 //        die(".");
             ->query()
-                ->fetchAll();
+                ->fetch();
         
         return $result;
     }

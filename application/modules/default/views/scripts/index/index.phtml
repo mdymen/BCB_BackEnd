@@ -1,4 +1,26 @@
-<h1>Bem vindo ao Bolão Craque de Bola!</h1>
+<?php
+
+$matchs = $this->matchs;
+
+
+$box = new Helpers_Box();
+$box->base = $this->baseUrl();
+$box->matches = $matchs;
+$box->show_titulo_campeonato = true;
+$box->show_titulo_rodada = true;
+$box->show_data_quadrado = true;
+$box->tamanho_box = "col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
+$box->mas_info = false;
+$box->titulo_bigbox = "Próximos jogos";
+$box->palpites_goal = true;
+$box->show_palpitar = true;
+
+$box->big_box();
+
+?>
+
+
+<!--<h1>Bem vindo ao Bolão Craque de Bola!</h1>
 
 
 <h2>Em fase final de desenvolvimento, trazendo novidades para vocês!</h2>
@@ -13,16 +35,16 @@
 
 <br>
 
-<!--** Clique aqui para gerar seu link e compartilhar com seus amigos e amigas! **-->
+** Clique aqui para gerar seu link e compartilhar com seus amigos e amigas! **
 <br>
 <div class="form-group" id="divnewlink" style="display:none">
     <div class="controls">
         <div class="input-group col-lg-4 col-sm-4 col-md-4">
-              <!--<div class="" style="padding: 0px 0px 0px 0px">-->
+              <div class="" style="padding: 0px 0px 0px 0px">
                       <input type="text" id="newlink" class="form-control">
                       <span class="input-group-btn"><button class="btn" id="copy" type="button"><i class="fa fa-copy"></i></button></span>
-                      <!--<a href="javascript:void()" ><i class="fa fa-copy"></i></a>-->
-              <!--</div>-->
+                      <a href="javascript:void()" ><i class="fa fa-copy"></i></a>
+              </div>
         </div>	
     </div>
 </div>
@@ -53,5 +75,5 @@
     });
     
 </script>
-
+-->
 

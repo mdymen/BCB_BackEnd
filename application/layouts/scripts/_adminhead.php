@@ -210,7 +210,16 @@
 		<div class="row">
 			
 			<div class="col-sm-5">
-			
+                            <h5>Campeonatos</h5>                                                            
+                            <?php $c = new Application_Model_Championships();
+                            $champs = $c->load();
+                            
+                            for ($i = 0; $i < count($champs); $i++) {
+                                echo '<h5><a href="'.$this->baseUrl("penca/bolao?champ=".$champs[$i]['ch_id']).'">'.$champs[$i]['ch_nome'].'</a></h5>';                                                            
+                            }
+                            
+                            ?>
+                            
 			</div><!--/.col-->
 			
 			<div class="col-sm-7 text-right">

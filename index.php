@@ -22,6 +22,26 @@
     <link href="publicassets/css/style.min.css"  rel="stylesheet">-->
 
 <script type="text/css">
+    
+    <?php
+        $error = $_GET['error'];
+        $msg = "";
+        if (isset($error)) {
+            
+            if (strcmp($error, "t") == 0) {
+                $msg = "Deve aceitar os termos";
+            }
+            
+            elseif (strcmp($error, "u") == 0) {
+                $msg = "Nome de usuario existente";
+            }
+            elseif (strcmp($error, "s") == 0) {
+                $msg = "Verifique a senha e a confirmação";
+            }
+            
+        }
+    
+    ?>
 
 /****** LOGIN MODAL ******/
 .loginmodal-container {
@@ -184,15 +204,20 @@
                                         <b>Cadastre-se Agora!</b>
 					</div>
 					<form id="novo_usuario" class="form-horizontal" role="form" action="public/index/register" style="padding: 40px 0 30px 30px">
-                                            <div><span id="erro" style="display:none; color:red"></span></div>  
+                                            <div><span id="erro" style="display:yes; color:red"><?php echo $msg; ?></span></div>  
                                                 <div class="form-group">
 						    <div class="col-xs-10 col-sm-10 col-lg-10">
-						      <input type="text" class="form-control" id="usuario" name="username" placeholder="Usuario">
+						      <input type="text" class="form-control" name="username" placeholder="Usuario">
 						    </div>
 						  </div>
 						  <div class="form-group">
 						    <div class="col-xs-10 col-sm-10 col-lg-10">
-						      <input type="password" class="form-control" id="senha" name="password" placeholder="Senha">
+						      <input type="password" class="form-control" name="password" placeholder="Senha">
+						    </div>
+						  </div>
+                                                    <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <input type="password" class="form-control" name="confpassword" placeholder="Confirmação">
 						    </div>
 						  </div>
                                                     <div class="form-group">
@@ -202,7 +227,7 @@
 						  </div>                                            
 						  <div class="form-group">
 						    <div class="col-xs-10 col-sm-10 col-lg-10">
-						      <button type="button" id="btnCadastro" class="btn btn-success">Cadastra-se</button>
+						      <button type="submit" id="btnCadastro" class="btn btn-success">Cadastra-se</button>
 						    </div>
 						  </div>
                                                     <div class="form-group">
@@ -248,9 +273,7 @@
 		<!-- ==== SECTION DIVIDER4 ==== -->
 		<section class="section-divider textdivider divider4">
 			<div class="container">
-				<h1>Participe dos Bolões e ganhe dinheiro com seus palpites. </h1>
-				<hr>
-				<p>Ao juntar uma grana no site, caso queira tirar este dinheiro você pode! Faça uma aquisição de saque no site para retirar.</p>
+				<h1>Participe dos Bolões do Futebol Brasileiro com seus palpites e ganhe prêmios! Faça o cadastro e compartilhe com seus amigos!.</h1>
 			</div><!-- container -->
 		</section><!-- section -->
 		
@@ -305,33 +328,33 @@
 
 
 <script type="text/javascript">
-
-    $(function() {
-       $("#btnCadastro").bind("click", function() {
-            var usuario = $("#usuario").val();
-            var password = $("#password").val();
-            if (usuario === "" || password === "") {
-                $("#erro").html("Nome de usuario ou senha incorretos");
-                $("#erro").show();
-            } else {
-                if ($("#termos").is(":checked")) {
-                    $.post("public/index/podecadastrarusuario", {usuario:usuario}, function(response) {
-//                        console.log(response);
-                        if (response) {
-                            $("#novo_usuario").submit();
-                        } else {
-                            $("#erro").html("O nome de usuario jà esta sendo utilizado");
-                            $("#erro").show();            
-                        }
-                    });
-                    
-                } else {
-                    $("#erro").html("Deve aceitar os termos");
-                    $("#erro").show();    
-                }
-            }
-       });
-    });
+//
+//    $(function() {
+//       $("#btnCadastro").bind("click", function() {
+//            var usuario = $("#usuario").val();
+//            var password = $("#password").val();
+//            if (usuario === "" || password === "") {
+//                $("#erro").html("Nome de usuario ou senha incorretos");
+//                $("#erro").show();
+//            } else {
+//                if ($("#termos").is(":checked")) {
+//                    $.post("public/index/podecadastrarusuario", {usuario:usuario}, function(response) {
+////                        console.log(response);
+//                        if (response) {
+//                            $("#novo_usuario").submit();
+//                        } else {
+//                            $("#erro").html("O nome de usuario jà esta sendo utilizado");
+//                            $("#erro").show();            
+//                        }
+//                    });
+//                    
+//                } else {
+//                    $("#erro").html("Deve aceitar os termos");
+//                    $("#erro").show();    
+//                }
+//            }
+//       });
+//    });
     
     
 </script>

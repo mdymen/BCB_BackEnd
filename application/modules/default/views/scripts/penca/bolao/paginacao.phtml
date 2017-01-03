@@ -18,6 +18,8 @@
     
       if (!empty($champ)) { 
           
+          $championship = $this->championship;
+          
           $teamuserid = $this->teamuserid;
           $teamusername = $this->teamusername;
           
@@ -27,7 +29,14 @@
 ?>
 
 <input type="hidden" value="<?php echo $champ ?>" id="champ">
+
 <div class="box">
+    <div class="box-header">
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo "Palpite: R$ ". $championship['ch_dpalpite']; ?></h2>
+                                <div class="box-icon">
+                                    <span></span>
+                                </div>
+                        </div>
     <div class="box-content">
         <div class="pagination pagination-centered" style="margin: 0px !important">
             <ul class="pagination">

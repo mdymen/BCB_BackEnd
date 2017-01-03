@@ -18,6 +18,7 @@ include APPLICATION_PATH.'/models/pencas.php';
 include APPLICATION_PATH.'/models/matchs.php';
 include APPLICATION_PATH.'/models/result.php';
 include APPLICATION_PATH.'/models/transaction.php';
+include APPLICATION_PATH."/helpers/data.php";
 include APPLICATION_PATH.'/helpers/html.php';
 include APPLICATION_PATH.'/helpers/translate.php';
 include APPLICATION_PATH.'/helpers/box.php';
@@ -387,11 +388,13 @@ class PencaController extends Zend_Controller_Action {
 //        print_r($round);
 //        die(".");
         
-        $temSaldo = $this->verificarsaldo();
+        $champs = new Application_Model_Championships();
+        $champ_obj = $champs->getChamp($champ);
+        
+        $temSaldo = $this->verificarsaldo($champ_obj);
         if ($temSaldo) {
 
-            $champs = new Application_Model_Championships();
-            $champ_obj = $champs->getChamp($champ);
+            
             
             $matchs_obj = new Application_Model_Matchs();     
             $id = $matchs_obj->submeter_result($user_id, $result1, $result2, $match_id, $round);
@@ -649,11 +652,11 @@ class PencaController extends Zend_Controller_Action {
 
     }
     
-    private function verificarsaldo() {        
+    private function verificarsaldo($champ) {        
         $u = new Application_Model_Users();
         $mycash = $u->getDinheiro($this->getIdUser());
         
-        $total = floatval(2.5);
+        $total = floatval($champ['ch_dpalpite']);
         $mycash = $mycash['us_cash'];
         
         $res = false;

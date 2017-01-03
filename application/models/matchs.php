@@ -11,7 +11,7 @@
  *
  * @author Martin Dymenstein
  */
-include APPLICATION_PATH."/helpers/data.php";
+//include APPLICATION_PATH."/helpers/data.php";
 
 class Application_Model_Matchs extends Application_Model_Bd_Adapter
 {
@@ -129,6 +129,28 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
                 ->fetchAll();
 
         return $return;
+        
+    }
+    
+    public function proximos_jogos($us_id) { 
+        
+        $db = $this->db;
+        
+        $sql = "SELECT vwpalpites.*, `match`.*, t1.tm_id as tm1_id, t1.tm_name as t1nome, t1.tm_logo as tm1_logo,  `t1`.*, t2.tm_id as tm2_id, 
+            t2.tm_name as t2nome, t2.tm_logo as tm2_logo,
+            `t2`.*, r.*, round.*,c.* FROM `match` 
+  INNER JOIN `team` AS `t1` ON t1.tm_id = match.mt_idteam1 
+  INNER JOIN `team` AS `t2` ON t2.tm_id = match.mt_idteam2   
+  INNER JOIN championship c ON c.ch_id = mt_idchampionship
+  LEFT JOIN vwpalpites ON vwpalpites.rs_idmatch = match.mt_id
+  LEFT JOIN round ON round.rd_id = match.mt_idround
+  LEFT JOIN (select * from result where rs_iduser = ".$us_id.") r ON r.rs_idmatch = match.mt_id ORDER BY `mt_date` ASC limit 8";
+        
+//        print_r($sql);
+        
+        $result = $db->query($sql)->fetchAll();
+        
+        return $result;
         
     }
     
@@ -467,5 +489,6 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         return $return;
                 
     }
+   
     
 }

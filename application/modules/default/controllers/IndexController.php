@@ -24,30 +24,41 @@ class IndexController extends Zend_Controller_Action
     
     public function indexAction() {
         try {
-            $params = $this->_request->getParams();
-            //$this->view->error = $params['error'];
-            
-            $ordem = "";
-            if (!empty($params['ordem'])) {
-                $ordem = $params['ordem'];
-            }
+            $m = new Application_Model_Matchs();
+            $matchs = $m->proximos_jogos($this->getIdUser());
 
-            $storage = new Zend_Auth_Storage_Session();
-            $data = (get_object_vars($storage->read()));
-
-            $result = new Application_Model_Result();
-            $em_acao_group = $result->palpites_em_acao_group($data['us_id'], $ordem);
-
-            $config = new Zend_Config_Ini('config.ini');
-
-            $h_date = new Helpers_Data();
-            $this->view->palpites = $em_acao_group;
-
+            $this->view->matchs = $matchs;
         }
         catch (Exception $e) {
-//             $config = new Zend_Config_Ini("config.ini");
-//            $this->redirect("/index/logout");
+            
         }
+//        print_r($matchs);
+        
+//        try {
+//            $params = $this->_request->getParams();
+//            //$this->view->error = $params['error'];
+//            
+//            $ordem = "";
+//            if (!empty($params['ordem'])) {
+//                $ordem = $params['ordem'];
+//            }
+//
+//            $storage = new Zend_Auth_Storage_Session();
+//            $data = (get_object_vars($storage->read()));
+//
+//            $result = new Application_Model_Result();
+//            $em_acao_group = $result->palpites_em_acao_group($data['us_id'], $ordem);
+//
+//            $config = new Zend_Config_Ini('config.ini');
+//
+//            $h_date = new Helpers_Data();
+//            $this->view->palpites = $em_acao_group;
+//
+//        }
+//        catch (Exception $e) {
+////             $config = new Zend_Config_Ini("config.ini");
+////            $this->redirect("/index/logout");
+//        }
     }
     
     public function puntuacaoAction() {
@@ -80,11 +91,38 @@ class IndexController extends Zend_Controller_Action
     public function registerAction() {
         $params = $this->_request->getParams();
        
+//        print_r($params);
+//        die(".");
+        
         $user = new Application_Model_Users();
+        
+        $username = $params['username'];
+        
+        $r_u = $user->isUsersName($username);
+        
+        if (!empty($r_u)) {
+            $this->redirect("../?error=u");
+        }
        
-        $usuario = $user->save_provisorio($params);
-       
-        $this->redirect("../public/?register&id=".$usuario);
+        $senha = $params['password'];
+        $confsenha = $params['confpassword'];
+        
+
+        if (!empty($senha) && strcmp($senha, $confsenha) == 0) {
+           
+            if (!empty($params['termos']) && strcmp($params['termos'], "on") == 0) {
+                
+                $info = array("us_username" => $username, "us_password" => $senha);
+                $user->save_user($info);
+                $this->login1($username, $senha);
+                $this->redirect("../public");
+                
+            } else {
+                $this->redirect("../?error=t");
+            }
+        }
+        
+        $this->redirect("../?error=s");
        
     }
     
@@ -149,15 +187,20 @@ class IndexController extends Zend_Controller_Action
         curl_close ($ch);        
         $resp = json_decode($server_output, true);
         
-        $usuario = $params['usuario'];
+        
+        if (isset($params['nomeusuario'])) {
+            $usuario = $params['nomeusuario'];    
+        } else {
+            $usuario = $params['usuario'];
+        }
         $userlinked = $params['userlinked'];
         
         
         $nome = $params["nome"];
         $email = $params["email"];
         $cpf = $params["cpf"];
-        $cpf = ereg_replace('[^0-9]', '', $cpf);
-        $cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
+//        $cpf = ereg_replace('[^0-9]', '', $cpf);
+//        $cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
         
         
         $senha = $params["password"];
@@ -187,9 +230,15 @@ class IndexController extends Zend_Controller_Action
         $server = $server."/public/index";
         $data['us_codverificacion'] = rand();
 
+//        
+//   print_r($usuario." - ".$userlinked);
+//        die(".");
+//        
         if (!empty($usuario) && empty($userlinked)) {                   
             $result = $u->cancomplete($usuario, $senha);
 
+            
+                 
             $username = $result['prov_username'];                     
             $data['us_username'] = $username;
             
@@ -203,6 +252,8 @@ class IndexController extends Zend_Controller_Action
             $this->redirect($server);
 
         } 
+        
+        
         else if (!empty($userlinked) && empty($usuario)) {
             
             $data['us_username'] = $params['nomeusuario'];

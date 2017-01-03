@@ -77,6 +77,9 @@ class Helpers_Box {
     public $show_total_palpites_desse_marcador = false;
     
     public $show_data_quadrado = true;
+    
+    //muestra opcion para ir a la pagina para palpitar este partido
+    public $show_palpitar = false;
 
     public function getrow($base, $tm_id, $tm_nome, $tm_logo, $mt_championship, $rs_res, $goal, $palpites_ou_result, $disabled_input, $result_input, $mt_id, $played, $ganou) {
     
@@ -242,6 +245,11 @@ class Helpers_Box {
                                     $palpitados = "palpite";
                                 }
                                     echo '<span class="" style="margin-right:20px">'.$matches[$i]['quantidade'].' '.$palpitados.'</span>';
+                            }
+                            
+                            
+                            if ($this->show_palpitar) {                                
+                                  echo '<a href="'.$this->base."/penca/bolao?rodada=".$matches[$i]['mt_idround']."&champ=".$matches[$i]['mt_idchampionship'].'"><span class="label label-success" style="margin-right:70px">Palpitar</span></a>';                                
                             }
                             
                             if ($this->infoescrita) {                                
