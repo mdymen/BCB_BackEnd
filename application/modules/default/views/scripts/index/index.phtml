@@ -1,5 +1,14 @@
 <?php
 
+            $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+
+//        print_r($data);
+        
+$email = $data['us_email'];
+
+if (!empty($email)) {
+
 $matchs = $this->matchs;
 
 
@@ -77,3 +86,141 @@ $box->big_box();
 </script>
 -->
 
+<?php
+
+}
+
+else {
+   $e = Zend_Controller_Front::getInstance()->getRequest()->getParam('error');
+   
+   $error = "";
+   if (strcmp($e, "s") == 0) {
+       $error = "Senha incorrecta";
+   } else if (strcmp($e, "e") == 0) {
+       $error = "Email incorrecto";
+   } else if (strcmp($e, "a") == 0) {
+       $error = "Aniversario incorrecto";
+   } else if (strcmp($e, "c") == 0) {
+       $error = "CPF incorrecto";
+   }
+    
+    ?>
+  		<div class="row">
+				
+			<!-- start: Main Menu -->
+			
+			<!-- end: Main Menu -->
+						
+			<!-- start: Content -->
+			<div id="content" class="col-lg-12 col-sm-12 col-xs-12 ">
+	<div class=" col-xs-12 col-sm-12 col-lg-6 col-lg-offset-4 callout" style="padding-top:20px">
+                                <div class="box" style="background:white !important">
+                                    <div class="header" style="color:white;background-color:#222; padding: 20px">
+                                        <b>Complete seu cadastro!</b>
+					</div>
+					<form id="novo_usuario" class="form-horizontal" role="form" action="index/registercompletedos" style="padding: 40px 0 30px 30px">
+                                            <div><span  style="color:red"><?php echo $error; ?></span></div>    
+                                                
+						  <div class="form-group">
+						    <div class="col-xs-12 col-sm-10 col-lg-10">
+						      <input type="text" disabled value="<?php echo $data['us_username']; ?>" class="form-control" style="width: 70%" placeholder="Confirme a senha">
+						    </div>
+						  </div>                                             
+                                            
+						  <div class="form-group">
+						    <div class="col-xs-12 col-sm-10 col-lg-10">
+						      <input type="password" class="form-control" style="width: 70%" id="password" name="password" placeholder="Confirme a senha">
+						    </div>
+						  </div>   
+                                                <br>
+                                                
+                                                <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <input type="text" class="form-control" style="width: 70%" id="nome" name="nome" placeholder="Nome completo">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <input type="email" class="form-control" style="width: 70%" id="email" name="email" placeholder="E-mail">
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <input type="text" class="form-control" style="width: 40%" id="cpf" name="cpf" placeholder="CPF">
+						    </div>
+						  </div>
+                                                  <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <input type="text" class="form-control" style="width: 30%" id="cep" name="cep" placeholder="CEP" >
+						    </div>
+						  </div>                                            
+						  <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Telefone">
+						    </div>
+						  </div>    
+						  <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+                                                        <select id="dia" name="dia">
+                                                            <option value="Vazio">Dia</option>
+                                                            <?php
+                                                                for ($i = 1; $i < 32; $i = $i + 1) {
+                                                                    echo '<option value="'.$i.'">'.$i.'</option>';
+                                                                }                                                            
+                                                            ?>
+                                                        </select>
+                                                        <select id="mes" name="mes">
+                                                            <option value="Vazio">Mes</option>
+                                                            <option value="1">Janeiro</option>
+                                                            <option value="2">Fevreiro</option>
+                                                            <option value="3">Marco</option>
+                                                            <option value="4">Abril</option>
+                                                            <option value="5">Maio</option>
+                                                            <option value="6">Junho</option>
+                                                            <option value="7">Julho</option>
+                                                            <option value="8">Agosto</option>
+                                                            <option value="9">Setembro</option>
+                                                            <option value="10">Outubro</option>
+                                                            <option value="11">Novembro</option>
+                                                            <option value="12">Dezembro</option>
+                                                            
+                                                        </select>                                                        
+                                                        <select id="ano" name="ano">
+                                                            <option value="Vazio">Ano</option>
+                                                            <?php
+                                                                for ($i = 1998; $i > 1940; $i = $i - 1) {
+                                                                    echo '<option value="'.$i.'">'.$i.'</option>';
+                                                                }
+                                                            
+                                                            ?>
+                                                        </select>                                                                 
+						    </div>
+						  </div> 
+                                                <div class="form-group">
+                                                    <div class="col-xs-10 col-sm-10 col-lg-10">
+                                                        <div class="g-recaptcha" data-sitekey="6Lfs7QwUAAAAAGFKfDGDCXLku0ch8hBpDre3WUas"></div>
+                                                    </div>
+                                                </div>
+						  <div class="form-group">
+						    <div class="col-xs-10 col-sm-10 col-lg-10">
+						      <button type="submit" id="btnCadastro" class="btn btn-success">Cadastra-se</button>
+						    </div>
+						  </div>                                               
+					   </form>
+                                    </div>
+				</div>		
+           
+   
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+			</div>
+			<!-- end: Content -->
+				
+
+                </div>
+
+<?php
+}
+
+?>

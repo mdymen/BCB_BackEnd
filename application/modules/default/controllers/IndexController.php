@@ -24,10 +24,14 @@ class IndexController extends Zend_Controller_Action
     
     public function indexAction() {
         try {
+            
+            $email = $this->getEmailUser();                        
+            
             $m = new Application_Model_Matchs();
             $matchs = $m->proximos_jogos($this->getIdUser());
 
             $this->view->matchs = $matchs;
+            $this->view->email = $email;
         }
         catch (Exception $e) {
             
@@ -168,6 +172,100 @@ class IndexController extends Zend_Controller_Action
         
     }
     
+    
+    public function registercompletedosAction() {
+        $params = $this->_request->getParams();
+
+//        print_r($params);
+        
+        
+        $ch = curl_init();
+
+        $data = array('response'=>$params['g-recaptcha-response'],
+            'secret'=>'6Lfs7QwUAAAAAHd5nUoanvbwefoZoW3IPt-6QVR5');
+        curl_setopt($ch, CURLOPT_URL,"https://www.google.com/recaptcha/api/siteverify");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($data));        
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        $server_output = curl_exec ($ch);
+        curl_close ($ch);        
+        $resp = json_decode($server_output, true);
+        
+        $nome = $params["nome"];
+        $email = $params["email"];
+        $cpf = $params["cpf"];
+//        $cpf = ereg_replace('[^0-9]', '', $cpf);
+//        $cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
+        
+        
+        $senha = $params["password"];
+        $cep = $params["cep"];
+        $telefone = $params["telefone"];
+        $ano = $params['ano'];
+        $mes = $params['mes'];
+        $dia = $params['dia'];       
+        
+        $data = array(
+            'us_password' => $senha,
+            'us_nome' => $nome,
+            'us_cpf' => $cpf,
+            'us_email' => $email,
+            'us_telefone' => $telefone,
+            'us_anio_niver' => $ano,
+            'us_mes_niver' => $mes,
+            'us_dia_niver' => $dia
+        );
+        
+        
+//        
+//        print_r(empty($senha));
+//die(".");
+        
+        $d_usuario = $this->getUserData();
+        
+        if (empty($senha) || strcmp($d_usuario['us_password'], $senha) != 0) {
+            $this->redirect("index?error=s");
+        } 
+        else if (empty($email)) {
+            $this->redirect("index?error=e");
+        } 
+        
+        else if (empty($ano) || empty($mes) || empty($dia)) {
+            $this->redirect("index?error=a");
+        }
+        else if (empty($cpf)) {
+            $this->redirect("index?error=c");
+        } else {
+        
+            $u = new Application_Model_Users();
+            $u->update_user($data, $this->getIdUser());
+                        
+//        $u = new Application_Model_Users();
+//        
+        $server = $this->view->serverUrl();
+        if (strcmp($server, "http://localhost") == 0) {
+            $server = $server."/penca";
+        }
+        $server = $server."/public/index";
+        $data['us_codverificacion'] = rand();
+//
+////        
+////   print_r($usuario." - ".$userlinked);
+////        die(".");
+////        
+        
+        }
+        
+        $this->login1($d_usuario['us_username'], $d_usuario['us_password']);
+        
+        $this->redirect($server);
+    }
+    
+    
     public function registercompleteAction() {
         $params = $this->_request->getParams();
 
@@ -280,6 +378,20 @@ class IndexController extends Zend_Controller_Action
         $data = (get_object_vars($storage->read()));
         
         return $data['us_id'];
+    }
+    
+    public function getEmailUser() { 
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
+        return $data['us_email'];
+    }    
+    
+    public function getUserData() {
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
+        return $data;
     }
     
     function gerarlinkreferenciaAction() { 

@@ -78,6 +78,12 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         $db->update("user", array('us_cash' => $cash),'us_id = '.$user);
     }
     
+    public function update_user($dados, $us_id) {
+        $db = $this->db;
+        
+        $db->update("user", $dados, "us_id = ".$us_id);
+    }
+    
     public function load_user($user) {
         $db = $this->db;
         
