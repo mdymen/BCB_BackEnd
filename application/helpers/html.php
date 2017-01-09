@@ -318,11 +318,11 @@ class Helpers_Html {
     }
     
     public static function getTeamLinkRight($baseUrl, $id_team, $nome_team, $logo_team, $champ) {
-        return '<a href="'.$baseUrl."/team/team?team=".$id_team."&champ=".$champ.'">'.$nome_team.'</a><img width="28px;" height="21px;" src="'.$logo_team.'" />';
+        return '<a href="'.$baseUrl."/team/team?team=".$id_team."&champ=".$champ.'">'.$nome_team.'</a><img width="25px;" height="21px;" src="'.$logo_team.'" />';
     }
     
     public static function getTeamLinkLeft($baseUrl, $id_team, $nome_team, $logo_team, $champ) {
-        return '<img width="28px;" height="21px;" src="'.$logo_team.'" /><a href="'.$baseUrl."/team/team?team=".$id_team."&champ=".$champ.'">'.$nome_team.'</a>';
+        return '<img width="25px;" height="21px;" src="'.$logo_team.'" /><a href="'.$baseUrl."/team/team?team=".$id_team."&champ=".$champ.'">'.$nome_team.'</a>';
     }
     
     

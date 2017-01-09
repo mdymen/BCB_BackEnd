@@ -366,4 +366,10 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         
         $db->update("user", array("us_base" => $nome), "us_id = ".$id);
     }
+    
+    public function addprovisorio($us, $pass) { 
+        $db = $this->db;
+        
+        $db->insert("provisorio",array('prov_username' => $us, 'prov_password' => $pass));
+    }
 }

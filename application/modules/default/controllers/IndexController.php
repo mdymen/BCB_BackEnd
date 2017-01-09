@@ -447,6 +447,8 @@ class IndexController extends Zend_Controller_Action
         $this->_redirect();
     }           
     
+    
+    
     public function loginAction() {
         $params = $this->_request->getParams();
         
@@ -529,6 +531,21 @@ class IndexController extends Zend_Controller_Action
         $this->_helper->json($result);
         
         
+    }
+    
+    public function celloginAction() {
+        $body = $this->getRequest()->getRawBody();
+        $data = Zend_Json::decode($body);
+        
+        $this->login1($data['us'], $data['pass']);
+        
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json("loginok"); 
     }
     
     public function login1($usuario, $pass) {
@@ -732,6 +749,46 @@ class IndexController extends Zend_Controller_Action
         
         $this->redirect($config->host);
 
+    }
+    
+    public function celproximojogosAction() {
+       // $params = $this->_request->getParams();
+        
+        $us_id = 1;//$params['us_id'];
+        
+        $m = new Application_Model_Matchs();
+        $matchs = $m->proximos_jogos($us_id);
+
+        $this->view->matchs = $matchs;
+            
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($matchs);      
+    }
+    
+    public function celaddprovisorioAction() {
+        
+        $body = $this->getRequest()->getRawBody();
+        $data = Zend_Json::decode($body);
+            
+        $us = $data['us'];
+        $pass = $data['pass'];
+        
+        $u = new Application_Model_Users();
+        $u->addprovisorio($us, $pass);
+        
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json(1); 
+        
     }
     
 }
