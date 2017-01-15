@@ -144,7 +144,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
   INNER JOIN championship c ON c.ch_id = mt_idchampionship
   LEFT JOIN vwpalpites ON vwpalpites.rs_idmatch = match.mt_id
   LEFT JOIN round ON round.rd_id = match.mt_idround
-  LEFT JOIN (select * from result where rs_iduser = ".$us_id.") r ON r.rs_idmatch = match.mt_id ORDER BY `mt_date` ASC limit 8";
+  LEFT JOIN (select * from result where rs_iduser = ".$us_id.") r ON r.rs_idmatch = match.mt_id WHERE mt_played <> 1 ORDER BY `mt_date` ASC limit 8";
         
 //        print_r($sql);
         

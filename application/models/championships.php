@@ -29,6 +29,16 @@ class Application_Model_Championships extends Application_Model_Bd_Adapter
         $db->insert($this->_name,$params);
     }
     
+	public function getcampeonatos() { 
+	    $db = $this->db;
+        
+        $select = $db->select()->from("championship");
+        
+        $championships = $select->query()->fetchAll();
+        
+        return $championships;
+	}
+	
     public function load() {
         
 //        $db = Zend_Db_Table::getDefaultAdapter();

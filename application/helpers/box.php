@@ -103,6 +103,7 @@ class Helpers_Box {
                     $res = "label-success";
                     if ($ganou == 0) {
                         $res = "label-danger";
+                        $disabled = "disabled";
                     }
                     $r = $r.'<td width="10%" style="text-align:right"><span class="label '.$res.'">'.$goal.'</span></td>';
                 }
@@ -248,7 +249,7 @@ class Helpers_Box {
                             }
                             
                             
-                            if ($this->show_palpitar) {                                
+                            if ($this->show_palpitar && !$this->infoescrita) {                                
                                   echo '<a href="'.$this->base."/penca/bolao?rodada=".$matches[$i]['mt_idround']."&champ=".$matches[$i]['mt_idchampionship'].'"><span class="label label-success" style="margin-right:70px">Palpitar</span></a>';                                
                             }
                             

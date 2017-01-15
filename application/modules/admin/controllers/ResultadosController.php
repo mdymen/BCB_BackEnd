@@ -5,6 +5,7 @@ include APPLICATION_PATH.'/models/pencas.php';
 include APPLICATION_PATH.'/models/teams.php';
 include APPLICATION_PATH.'/models/matchs.php';
 include APPLICATION_PATH.'/models/championships.php';
+include APPLICATION_PATH."/helpers/data.php";
 //include APPLICATION_PATH.'/models/bd_adapter.php';
 class Admin_ResultadosController extends Zend_Controller_Action
 {

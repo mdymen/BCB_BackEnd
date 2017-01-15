@@ -372,4 +372,16 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         
         $db->insert("provisorio",array('prov_username' => $us, 'prov_password' => $pass));
     }
+    
+    public function login($us, $pass) {
+        $db = $this->db;
+        
+        $result = $db->select()->from("user")
+                ->where("us_username = ?", $us)
+				->where("us_password = ?", $pass);
+				
+		$return = $result->query()->fetch();		
+		
+		return $return;
+    }
 }
