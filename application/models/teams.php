@@ -60,7 +60,19 @@ class Application_Model_Teams extends Application_Model_Bd_Adapter
         
         $result = $db->select()->from('team')
                 ->where('team.tm_idchampionship = ?', $champ)
-                ->order(array("team.tm_points DESC","team.tm_grupo"))    
+                ->order(array("team.tm_grupo", "team.tm_points DESC"))    
+                ->query()
+                ->fetchAll();
+
+        return $result;  
+    }
+    
+    public function load_teams_para_jogo($champ) {
+        $db = $this->db;
+        
+        $result = $db->select()->from('team')
+                ->where('team.tm_idchampionship = ?', $champ)
+                ->order(array("team.tm_name ASC"))    
                 ->query()
                 ->fetchAll();
 

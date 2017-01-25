@@ -24,7 +24,7 @@ class Admin_IndexController extends Zend_Controller_Action
         
         if (!empty($params['champ'])) {            
             $t_obj = new Application_Model_Teams();
-            $teams = $t_obj->load_teams_championship($params['champ']);
+            $teams = $t_obj->load_teams_para_jogo($params['champ']);
             
             $c = new Application_Model_Championships();
             

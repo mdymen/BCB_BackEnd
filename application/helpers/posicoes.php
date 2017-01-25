@@ -135,8 +135,9 @@ class Helpers_Posicoes {
                                         echo '<tr>
                                                 <td id="tm_id'.$i.'"><span class="'.$torneo.'">'.($k).'</td>
                                                 <td id="tm_name'.$i.'">'.Helpers_Html::getTeamLinkLeft($this->base, $teams[$i]['tm_id'], $teams[$i]['tm_name'], $config->host.$teams[$i]['tm_logo'], $champ).'</td>
-                                                <td id="tm_points'.$i.'">'.$teams[$i]['tm_points'].'</td>
                                                 <td id="tm_played'.$i.'">'.$teams[$i]['tm_played'].'</td>
+												<td id="tm_points'.$i.'">'.$teams[$i]['tm_points'].'</td>
+                                                
 
                                         </tr>';
 

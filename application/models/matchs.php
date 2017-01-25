@@ -67,7 +67,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
                 ->where("rs_iduser= ?", $usuario)
                 ->where("mt_idchampionship = ?", $championship)
                 ->where("mt_idround = ?", $rodada)
-                ->order(array('mt_date ASC'));
+                ->order(array('mt_idround ASC','mt_date ASC'));
         
 //        print_r($result->__toString());
 //        die(".");

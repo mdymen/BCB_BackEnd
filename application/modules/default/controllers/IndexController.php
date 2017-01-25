@@ -17,10 +17,15 @@ class IndexController extends Zend_Controller_Action
     }
     
     public function testAction() {
-        
+        print_r(date("Y-m-d H:i:s", strtotime('60 minutes', strtotime(date("Y-m-d H:i:s")))));
         print_r($config->host);
         die(".");
     }
+	
+	public function timeAction() {
+		print_r(date('h:i'));
+		die(".");
+	}
     
     public function indexAction() {
         try {

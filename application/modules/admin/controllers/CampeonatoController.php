@@ -12,6 +12,19 @@ class Admin_CampeonatoController extends Zend_Controller_Action
     {
         /* Initialize action controller here */
     }
+    
+    public function cerrarAction() {
+        $params = $this->_request->getParams();
+        
+        $c = new Application_Model_Championships();
+        $champs = $c->load();
+        $this->view->champs = $champs;
+        if (!empty($params)) {
+            
+            $this->view->champ = $params['champ'];
+            
+        }
+    }
 
     public function indexAction()
     {

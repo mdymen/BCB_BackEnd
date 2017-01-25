@@ -33,11 +33,12 @@ class Helpers_Data {
     }
     
     public static function antesDeHoras($date) {
+		
         $config = new Zend_Config_Ini("config.ini");
         $diferenciaMinutos = $config->diferenciaminutos;
         $minutosParaFechar = $config->minutosparafechar;
         
-        $totalDif = $diferenciaMinutos + $minutosParaFechar;
+        $totalDif = $diferenciaMinutos;//$minutosParaFechar;
         $dataHoraServer = date("Y-m-d H:i:s", strtotime($totalDif.' minutes', strtotime(date("Y-m-d H:i:s"))));
         
         $jogo = $date;
@@ -46,6 +47,11 @@ class Helpers_Data {
 //        print_r("<br>");
 //        print_r($dataHoraServer);
         
+		//print_r($diferenciaMinutos);
+		//print_r($dataHoraServer."  -  ".$jogo);
+		//print_r("----");
+		
+		
         if( strtotime($dataHoraServer)<=strtotime($jogo) )
         {        
             return true;
