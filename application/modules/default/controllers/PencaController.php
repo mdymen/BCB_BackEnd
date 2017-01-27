@@ -373,6 +373,71 @@ class PencaController extends Zend_Controller_Action {
         }
     }
     
+    
+    public function encerradosAction() {
+        $params = $this->_request->getParams();
+                    
+//        print_r($params);
+        
+        $champ = new Application_Model_Championships();
+        $this->view->championships = $champ->load_encerrados();
+        
+        $p_obj = new Application_Model_Penca();
+
+        if (!empty($params['champ'])) {                      
+            
+            $this->view->teamuserid = $this->getTimeUserId();
+            $this->view->teamusername = $this->getTimeUserName();
+            
+            $champ_id = $params['champ'];
+
+            $this->view->champ = $champ_id;
+            $this->view->championship = $champ->getChamp($champ_id);
+            
+            if (empty($params['rodada'])) {
+                $rodada_id = $p_obj->getIdPrimeraRodadaDisponivel($champ_id);
+            } else {            
+                $rodada_id = $params['rodada'];
+            }
+            
+//            print_r("Champ ".$params['champ']);
+//            print_r("Rodada ".$rodada_id);
+
+            $storage = new Zend_Auth_Storage_Session();
+            $data = (get_object_vars($storage->read()));
+
+            $matchs_obj = new Application_Model_Matchs();
+            $rondas = $matchs_obj->getrondas($champ_id);
+
+            
+            
+            if (empty($params['team'])) {
+                $rodada = $matchs_obj->load_rodada_com_palpites($champ_id, $rodada_id, $data['us_id']);
+                $this->view->porteam = true;
+                $this->view->porrodada = false;
+            } else {
+                $this->view->porteam = false;
+                $this->view->porrodada = true;
+                $team_id = $params['team'];
+                $rodada = $matchs_obj->load_rodada_porteam($champ_id, $team_id, $data['us_id']);
+            }
+
+            $teams_obj = new Application_Model_Teams();
+            $teams = $teams_obj->load_teams_championship($champ_id); 
+            
+            $this->view->teams = $teams;
+            
+            //los partidos de la rodada n_rodada
+            $this->view->rodada = $rodada;
+            
+            //el numero de la rodada activa. La que siguiente inmediata que se va a jugar
+            $this->view->n_rodada = $rodada_id;
+            
+            //las rodadas del campeonato registradas en el sistema
+            $this->view->rondas = $rondas;          
+        }
+    }
+    
     public function submeterpalpiteAction() {
         $params = $this->_request->getParams();
         $storage = new Zend_Auth_Storage_Session();

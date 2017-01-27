@@ -1,5 +1,7 @@
 <?php
 
+$t = Zend_Registry::get('translate'); 
+
     $rondas = $this->rondas;
     
     $rodadas = $this->rodada;
@@ -10,7 +12,7 @@
         $rodada = $rodadas[0]['mt_idround'];
         $champ = $rodadas[0]['mt_idchampionship']; 
     } else {
-        print_r("Ainda nao tem jogos");
+        $t->_("ainda.nao.tem.jogos");
     }
 
 //    print_r($rodadas);

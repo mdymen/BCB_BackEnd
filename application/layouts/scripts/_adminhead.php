@@ -1,9 +1,34 @@
 <?php
 
+   if(!Zend_Registry::isRegistered('translate'))
+   {
+//       $translate = new Zend_Translate(
+//            array(
+//                'adapter' => 'array',
+//                'content' => 'idiomas/'.$data['us_idioma'].'.php',
+//                'locale'  => $data['us_idioma']
+//           )
+//        );
+
+       
+          $translate = new Zend_Translate(
+            array(
+                'adapter' => 'array',
+                'content' => 'idiomas/'.$data['us_idioma'].'.php',
+                'locale'  => $data['us_idioma']
+           )
+        );
+          
+        Zend_Registry::set('translate', $translate);
+
+    }
+
         $storage = new Zend_Auth_Storage_Session();
         $data = $storage->read();
 //        print_r($data->us_username);
 //        die(".");
+        
+        $t = Zend_Registry::get('translate');
 
 ?>
 
@@ -73,6 +98,8 @@
 			<!-- start: Header Menu -->
 			<div class="nav-no-collapse header-nav">
 				<ul class="nav navbar-nav pull-right">
+                                    <li><a href="<?php echo $this->baseUrl("index/idioma?i=pt"); ?>">Portugues</a></li>
+                                    <li><a href="<?php echo $this->baseUrl("index/idioma?i=es"); ?>">Español</a></li>
                                     <li>
                                     <a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">							
 							<div class="user">
@@ -94,7 +121,7 @@
 					<li class="dropdown" >
 						<a style="padding-right: 20px !important" class="btn account dropdown-toggle" data-toggle="dropdown" href="2nd-level.html#">							
 							<div class="user">
-								<span class="hello">Bem-vindo!</span>
+								<span class="hello"><?php echo $t->_('bem.vindo'); ?></span>
 								<span class="name"><?php echo $data->us_username; ?></span>
 							</div>
 						</a>
@@ -134,13 +161,23 @@
                                                 <!--<li><a href="index.html"><i class="fa fa-dollar"></i><span class="hidden-sm text"> Caixa</span></a></li>-->	
 						<!--<li><a href="<?php echo $this->baseUrl("/penca/pencas"); ?>"><i class="fa fa-dribbble"></i><span class="hidden-sm text"> Baloes</span></a></li>-->	
                                                 <!--<li><a href="<?php echo $this->baseUrl("/penca/meusbaloes"); ?>" ><i class="fa fa-globe"></i><span class="hidden-sm text"> Meus Baloes </span></a></li>-->	
-                                                <li><a href="<?php echo $this->baseUrl("/penca/meuspalpites"); ?>" ><i class="ttt fa fa-globe"></i><span class="hidden-sm text"> Meus Palpites </span></a></li>	
-                                                <li><a href="<?php echo $this->baseUrl("/penca/bolao"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Palpites </span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/usuario"); ?>"><i class="fa fa-user"></i><span class="test hidden-sm text">Meu Perfil</span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/campeonatos"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Campeonatos</span></a></li> 
+                                                <li><a href="<?php echo $this->baseUrl("/penca/meuspalpites"); ?>" ><i class="ttt fa fa-globe"></i><span class="hidden-sm text"> <?php echo $t->_('meus.palpites'); ?> </span></a></li>	
+                                                <li><a href="<?php echo $this->baseUrl("/penca/bolao"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"><?php echo $t->_('palpites'); ?>  </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/usuario"); ?>"><i class="fa fa-user"></i><span class="test hidden-sm text"><?php echo $t->_('meu.perfil'); ?> </span></a></li>
+<!--                                                <li><a href="<?php echo $this->baseUrl("/campeonatos"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Campeonatos</span></a></li> 
+                                                -->
+                                                <li>
+							<a class="dropmenu" href="<?php echo $this->baseUrl("/campeonatos"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text"> <?php echo $t->_('campeonatos'); ?> </span> <span class="chevron closed"></span></a>
+							<ul style="display: none;">
+								<li><a class="submenu" href="<?php echo $this->baseUrl("/campeonatos"); ?>"><i class="fa fa-chevron-right"></i><span class="hidden-sm text"><?php echo $t->_('em.andamento'); ?> </span></a></li>
+								<li><a class="submenu" href="<?php echo $this->baseUrl("/penca/encerrados"); ?>"><i class="fa fa-chevron-right"></i><span class="hidden-sm text"><?php echo $t->_('encerrados'); ?> </span></a></li>
+							</ul>
+						
+						</li>
+                                                
                                                 <li><a href="<?php echo $this->baseUrl("/penca/ranking"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Ranking</span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/caixa/index"); ?>"><i class="fa fa-dollar"></i><span class="hidden-sm text">Caixa</span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/caixa/transacoes"); ?>"><i class="fa fa-dollar"></i><span class="hidden-sm text">Transacoes</span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/caixa/index"); ?>"><i class="fa fa-dollar"></i><span class="hidden-sm text"><?php echo $t->_('caixa'); ?> </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/caixa/transacoes"); ?>"><i class="fa fa-dollar"></i><span class="hidden-sm text"><?php echo $t->_('transacoes'); ?></span></a></li>
                                                 <!--<li><a href="<?php echo $this->baseUrl("/register/penca"); ?>"><i class="fa fa-legal"></i><span class="hidden-sm text"> Criar Balão </span></a></li>-->                                                
                                                 <li><a href="<?php echo $this->baseUrl("/admin/campeonato"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text">Add Campeonato</span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/campeonato/cerrar"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text">Fechar Campeonato</span></a></li>

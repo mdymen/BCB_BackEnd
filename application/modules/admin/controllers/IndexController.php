@@ -6,6 +6,7 @@ include APPLICATION_PATH.'/models/teams.php';
 include APPLICATION_PATH.'/models/matchs.php';
 
 include APPLICATION_PATH.'/helpers/data.php';
+include APPLICATION_PATH.'/helpers/translate.php';
 class Admin_IndexController extends Zend_Controller_Action
 {
 

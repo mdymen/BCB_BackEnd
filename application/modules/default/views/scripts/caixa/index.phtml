@@ -1,131 +1,31 @@
-<center><h1>Adicionar saldo</h1></center>
+<?php
+
+
+
+
+ $t = Zend_Registry::get('translate');   
+
+?>
+
+<center><h1><?php echo $t->_("adicionar.saldo"); ?></h1></center>
 
 <h2>Para adicionar saldo a sua conta e realizar palpites, clique em alguma plano abaixo para realizar o pagamento, toda transação será realizada pelo sistema do 
     PagSeguro, o site Craque de Bola não ira solicitar nenhuma informação contendo dados de cartões, confira nossos planos:</h2>
-
-<!--<div class="row">
-    <div class="col-lg-3" style="padding-left:0px !important; padding-right:0px !important">
-<div class="price-table-overlay">	
-
-					<div class="price-table type2 one">
-
-						<ul class="col-sm-8 col-lg-3 col-xs-12">
-							<li class="header">Plano Básico</li>
-							<li class="price"><span>R$</span>10</li>
-							
-							
-							
-							
-							
-							<li>Custo: R$ 10.80</li>
-                                                        <li>&nbsp;</li>
-							
-							<li class="select"><a href="/public/caixa/plano?p=1">selecionar</a></li>
-						</ul>
-
-						
-
-						
-
-						
-
-					</div>
-
-</div>
-        </div>
-    <div class="col-lg-3" style="padding-left:0px !important; padding-right:0px !important">
-<div class="price-table-overlay">	
-
-					<div class="price-table type2 one">
-
-						
-
-						<ul class="col-sm-8 col-lg-3 col-xs-12">
-							<li class="header">Plano Estándar</li>
-							<li class="price"><span>R$</span>20</li>
-							<li>Custo: R$ 21.20</li>
-                                                        <li>&nbsp;</li>
-							
-							
-							
-							
-							
-							
-							<li class="select"><a href="/public/caixa/plano?p=2">selecionar</a></li>
-						</ul>
-
-						
-
-						
-
-					</div>
-
-</div>
-        </div>
-    <div class="col-lg-3" style="padding-left:0px !important; padding-right:0px !important">
-<div class="price-table-overlay">	
-
-					<div class="price-table type2 one">
-
-						
-
-						
-
-						<ul class="best-option col-sm-8 col-lg-3 col-xs-12">
-							<li class="header">Plano Premium</li>
-							<li class="price"><span>R$</span>50</li>
-							<li>Custo: R$ 52.40</li>
-                                                        <li>1 palpite de brinde</li>
-							
-							
-							
-							
-							
-							
-							<li class="select"><a href="/public/caixa/plano?p=3">selecionar</a></li>
-						</ul>
-
-						
-
-					</div>
-
-</div>
-        </div>
-    <div class="col-lg-3" style="padding-left:0px !important; padding-right:0px !important">
-<div class="price-table-overlay">	
-
-					<div class="price-table type2 one">
-						<ul class="col-sm-8 col-lg-3 col-xs-12">
-							<li class="header">Plano Profissional</li>
-							<li class="price"><span>R$</span>100</li>
-							<li>Custo: R$ 104.40</li>
-                                                        <li>&nbsp;</li>
-							<li class="select"><a href="/public/caixa/plano?p=4">selecionar</a></li>
-						</ul>
-
-					</div>
-
-</div>
-        </div>
-    </div>-->
-
-
-
 
 <div class="row">
     <div class="col-sm-8 col-lg-3 col-xs-12">
 
         <div class="smallchart blue box">
 
-                <div class="title" style="background-color:gray !important">Plano Básico</div>
+                <div class="title" style="background-color:gray !important"><?php echo $t->_("plano.basico"); ?></div>
 
 
 
-                <div class="title" style="background-color:gray !important">Custo: R$ 10.80</div>
-                <div class="title" style="background-color:gray !important">Crédito: R$ 10.00</div>                
+                <div class="title" style="background-color:gray !important"><?php echo $t->_("custo"); ?>: <?php echo $t->_("moeda"); ?> 10.80</div>
+                <div class="title" style="background-color:gray !important"><?php echo $t->_("credito"); ?>: <?php echo $t->_("moeda"); ?> 10.00</div>                
 
                 
-                <div class="title" style="background-color:gray !important"><a href="<?php echo $this->baseUrl();?>/caixa/plano?p=1" class="btn btn-success">Selecionar</a></div>                
+                <div class="title" style="background-color:gray !important"><a href="<?php echo $this->baseUrl();?>/caixa/plano?p=1" class="btn btn-success"><?php echo $t->_("selecionar"); ?></a></div>                
         </div>
 
     </div>
@@ -134,12 +34,12 @@
 
         <div class="smallchart blue box">
 
-                <div class="title" style="background-color:gray !important">Plano Standar</div>
+                <div class="title" style="background-color:gray !important"><?php echo $t->_("plano.standar"); ?></div>
 
 
 
-                <div class="title" style="background-color:gray !important">Custo: R$ 21.20</div>
-                <div class="title" style="background-color:gray !important">Crédito: R$ 20.00</div>                
+                <div class="title" style="background-color:gray !important"><?php echo $t->_("custo"); ?>: <?php echo $t->_("moeda"); ?> 21.20</div>
+                <div class="title" style="background-color:gray !important"><?php echo $t->_("credito"); ?>: <?php echo $t->_("moeda"); ?> 20.00</div>                
 
                 
                 <div class="title" style="background-color:gray !important"><a href="<?php echo $this->baseUrl();?>/caixa/plano?p=2" class="btn btn-success">Selecionar</a></div>                
@@ -152,13 +52,13 @@
 
         <div class="smallchart blue box">
 
-<div class="title" style="background-color:gray !important">Plano Premium</div>
+<div class="title" style="background-color:gray !important"><?php echo $t->_("plano.premium"); ?></div>
 
 
 
-                <div class="title" style="background-color:gray !important">Custo: R$ 52.40</div>
-                <div class="title" style="background-color:gray !important">Crédito: R$ 50.00</div>    
-                <div class="title" style="background-color:gray !important">1 palpite de brinde</div>    
+                <div class="title" style="background-color:gray !important"><?php echo $t->_("custo"); ?>: <?php echo $t->_("moeda"); ?> 52.40</div>
+                <div class="title" style="background-color:gray !important"><?php echo $t->_("credito"); ?>: <?php echo $t->_("moeda"); ?> 50.00</div>    
+                <div class="title" style="background-color:gray !important">1 <?php echo $t->_("palpite.de.brinde"); ?></div>    
 
                 
                 <div class="title" style="background-color:gray !important"><a href="<?php echo $this->baseUrl();?>/caixa/plano?p=3" class="btn btn-success">Selecionar</a></div>                
@@ -171,13 +71,13 @@
 
         <div class="smallchart blue box">
 
-<div class="title" style="background-color:gray !important">Plano Profissional</div>
+<div class="title" style="background-color:gray !important"><?php echo $t->_("plano.profissional"); ?></div>
 
 
 
-                <div class="title" style="background-color:gray !important">Custo: R$ 104.40</div>
-                <div class="title" style="background-color:gray !important">Crédito: R$ 100.00</div>    
-                <div class="title" style="background-color:gray !important">3 palpites de brinde</div>  
+                <div class="title" style="background-color:gray !important"><?php echo $t->_("custo"); ?>: <?php echo $t->_("moeda"); ?> 104.40</div>
+                <div class="title" style="background-color:gray !important"><?php echo $t->_("credito"); ?>: <?php echo $t->_("moeda"); ?> 100.00</div>    
+                <div class="title" style="background-color:gray !important">3 <?php echo $t->_("palpites.de.brinde"); ?></div>  
                 
                 <div class="title" style="background-color:gray !important"><a href="<?php echo $this->baseUrl();?>/caixa/plano?p=4" class="btn btn-success">Selecionar</a></div>                
 

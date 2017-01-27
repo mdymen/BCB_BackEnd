@@ -8,6 +8,8 @@
     
     $config = new Zend_Config_Ini("config.ini");
     
+    $t = Zend_Registry::get('translate'); 
+    
 //    print_r($rondas);
 
 ?>
@@ -100,7 +102,7 @@ if (!empty($matchs)) {
         $box->tamanho_box = "col-lg-6 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
         $box->btn_minimize = true;
         $box->display_boxcontent = false;
-        $box->titulo_bigbox = "Jogos da rodada";
+        $box->titulo_bigbox = $t->_("jogos.da.rodada");
         $box->mas_info = false;
         $box->btn_palpitar_sem_ter_jugado = true;
         $box->base = $this->baseUrl();
@@ -130,7 +132,7 @@ if (!empty($matchs)) {
                     
                     $ranking_champ->vwranking = $r_champ;
                     $ranking_champ->acumulado = isset($r_champ[0]['ch_acumulado']) ? $r_champ[0]['ch_acumulado'] : '0.00';
-                    $ranking_champ->titulo="Campeonato";
+                    $ranking_champ->titulo=$t->_("campeonato");;
                     $ranking_champ->fechado = true;
                     echo $ranking_champ->ranking();
             

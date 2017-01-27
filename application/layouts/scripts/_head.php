@@ -148,7 +148,14 @@
                                                     <li><a href="<?php echo $this->baseUrl("/penca/meuspalpites"); ?>" ><i class="ttt fa fa-globe"></i><span class="hidden-sm text"> Meus Palpites </span></a></li>	
                                                     <li><a href="<?php echo $this->baseUrl("/penca/bolao"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Palpites </span></a></li>
                                                     <li><a href="<?php echo $this->baseUrl("/usuario"); ?>"><i class="fa fa-user"></i><span class="test hidden-sm text">Meu Perfil</span></a></li>
-                                                    <li><a href="<?php echo $this->baseUrl("/campeonatos"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Campeonatos</span></a></li> 
+                                                                                                   <li>
+							<a class="dropmenu" href="<?php echo $this->baseUrl("/campeonatos"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text"> Campeonatos</span> <span class="chevron closed"></span></a>
+							<ul style="display: none;">
+								<li><a class="submenu" href="<?php echo $this->baseUrl("/campeonatos"); ?>"><i class="fa fa-chevron-right"></i><span class="hidden-sm text"> Em andamento</span></a></li>
+								<li><a class="submenu" href="<?php echo $this->baseUrl("/penca/encerrados"); ?>"><i class="fa fa-chevron-right"></i><span class="hidden-sm text">Encerrados</span></a></li>
+							</ul>
+						
+						</li>
                                                     <li><a href="<?php echo $this->baseUrl("/penca/ranking"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text">Ranking</span></a></li>
                                                     <li><a href="<?php echo $this->baseUrl("/caixa/index"); ?>"><i class="fa fa-dollar"></i><span class="hidden-sm text">Caixa</span></a></li>
                                                     <li><a href="<?php echo $this->baseUrl("/caixa/transacoes"); ?>"><i class="fa fa-dollar"></i><span class="hidden-sm text">Transações</span></a></li>

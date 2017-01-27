@@ -30,6 +30,8 @@ class Helpers_Posicoes {
         
         $temGrupos = isset($teams[0]['tm_grupo']) ? true : false;
        
+        $t = Zend_Registry::get('translate');
+        
         echo '<script type="text/javascript"> 
                  $(function() {
                     $("#vchamp").bind("click", function() {
@@ -45,7 +47,7 @@ class Helpers_Posicoes {
         
         echo '<div class="box">
             <div class="box-header">
-                    <h2><a id="vchamp" href="javascript:void(0)"><i class="fa fa-question-circle"></i></a><span class="break"></span>Tabela de Posicoes</h2>
+                    <h2><a id="vchamp" href="javascript:void(0)"><i class="fa fa-question-circle"></i></a><span class="break"></span>'.$t->_("tabela.de.posicoes").'</h2>
 
                     <div class="box-icon">
                         <span><h2 style="margin-right: 30px !important" id="campeonato_total_palpitado">'.number_format((float)$champion['ch_acumulado'], 2, '.', '').'</h2></span>
@@ -55,24 +57,24 @@ class Helpers_Posicoes {
                 <div id="champ_prec_box" style="display:none" class="col-lg-12 col-sm-12 col-xs-12 col-xxs-12 col-xxs-12">
                     <div class="smallstat box">
                         <div class="box-header">
-                            <h2><a id="fecharvchamp" href="javascript:void(0)"><i class="fa fa-times"></i></a><span class="break"></span>Info dos palpites</h2>
+                            h2><a id="fecharvchamp" href="javascript:void(0)"><i class="fa fa-times"></i></a><span class="break"></span>'.$t->_("info.dos.palpites").'</h2>
                         </div>                    
                         <table width="100%">
                             <tbody>
                                 <tr>
-                                    <td width="55%" style="text-align:left">Custo do palpite</td>
+                                    <td width="55%" style="text-align:left">'.$t->_('custo.do.palpite').'</td>
                                     <td width="35%">R$ '.$champion['ch_dpalpite'].'</td>
                                 </tr>
                                 <tr>
-                                    <td width="55%" style="text-align:left">para o Campeonato</td>
+                                    <td width="55%" style="text-align:left">'.$t->_('para.o.campeonato ').'</td>
                                     <td width="35%">R$ '.$champion['ch_dchamp'].'</td>
                                 </tr>                                                        
                                 <tr>
-                                    <td width="55%" style="text-align:left">para a Rodada</td>
+                                    <td width="55%" style="text-align:left">'.$t->_('para.a.rodada').'</td>
                                     <td width="35%">R$ '.$champion['ch_drodada'].'</td>
                                 </tr>                    
                                 <tr>
-                                    <td width="55%" style="text-align:left">para o Jogo</td>
+                                    <td width="55%" style="text-align:left">'.$t->_('para.o.jogo').'</td>
                                     <td width="35%">R$ '.$champion['ch_djogo'].'</td>
                                 </tr>                                                        
                             </tbody>
@@ -86,8 +88,8 @@ class Helpers_Posicoes {
                                     $grupoInicial = "";
                                     if (!$temGrupos) {
                                       echo '<tr>
-                                        <th>Pos</th>
-                                        <th>Time</th>
+                                        <th>'.$t->_('pos').'</th>
+                                        <th>'.$t->_('time').'</th>
                                         <th>P</th>
                                         <th>J</th>
                                       </tr>';

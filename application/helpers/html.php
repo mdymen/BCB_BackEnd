@@ -14,7 +14,9 @@
 class Helpers_Html {
     
     public function puntuacoes($puntuacoes, $posicao, $acertados, $errados, $palpitados,$user_id, $url) {
-          return '<table class="table" id="tb_palpites_feitos">
+                $t = Zend_Registry::get('translate');  
+        
+        return '<table class="table" id="tb_palpites_feitos">
                     <thead>
 
                             <tr>
@@ -24,19 +26,19 @@ class Helpers_Html {
                     </thead>   
                     <tbody>
                       <tr>    
-                          <td><a href='.$url.'/usuario/puntuacao?usuario='.$user_id.' >Puntuacao</a></td> 
+                          <td><a href='.$url.'/usuario/puntuacao?usuario='.$user_id.' >'.$t->_('puntuacao').'</a></td> 
                           <td width="15%" id="td_puntuacao">'.$puntuacoes.'</td>  
                       </tr>                                                                                                      
                       <tr>
-                          <td><a href='.$url.'/usuario/acertados?usuario='.$user_id.' >Acertos</a></td> 
+                          <td><a href='.$url.'/usuario/acertados?usuario='.$user_id.' >'.$t->_('acertos').'</a></td> 
                           <td width="15%" id="td_acertados">'.$acertados.'</td>                                           
                       </tr>
                       <tr>
-                          <td><a href='.$url.'/usuario/errados?usuario='.$user_id.' >Erros</a></td> 
+                          <td><a href='.$url.'/usuario/errados?usuario='.$user_id.' >'.$t->_('erros').'</a></td> 
                           <td width="15%" id="td_errados">'.$errados.'</td>                                           
                       </tr>
                       <tr>
-                          <td><a href='.$url.'/usuario/palpitados?usuario='.$user_id.' >Palpitados</a></td> 
+                          <td><a href='.$url.'/usuario/palpitados?usuario='.$user_id.' >'.$t->_('palpitados').'</a></td> 
                           <td width="15%" id="td_errados">'.$palpitados.'</td>                                           
                       </tr>                                          
 

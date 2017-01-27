@@ -39,6 +39,23 @@ class Application_Model_Championships extends Application_Model_Bd_Adapter
         return $championships;
 	}
 	
+    public function load_encerrados() {
+        
+//        $db = Zend_Db_Table::getDefaultAdapter();
+        
+        $db = $this->db;
+        
+        $table = $this->_name;
+        
+        $select = $db->select($table)->from($table)->where("ch_ativo = ?", 0);
+        
+        $query = $select->query();
+        
+        $championships = $query->fetchAll();
+        
+        return $championships;
+    }        
+        
     public function load() {
         
 //        $db = Zend_Db_Table::getDefaultAdapter();
@@ -47,7 +64,7 @@ class Application_Model_Championships extends Application_Model_Bd_Adapter
         
         $table = $this->_name;
         
-        $select = $db->select($table)->from($table);
+        $select = $db->select($table)->from($table)->where("ch_ativo = ?", 1);
         
         $query = $select->query();
         

@@ -23,6 +23,13 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         
     }
     
+    public function cambiar_idioma($i, $id) {
+        $db = $this->db;
+        
+        $db->update("user",array("us_idioma" => $i), "us_id = ".$id);
+    }
+    
+    
     public function save_provisorio($params) {
         $db = $this->db;
         

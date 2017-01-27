@@ -34,7 +34,7 @@ class Helpers_Paginacao {
         $teams_coracao = $this->teams;
                  echo '<div class="box" id="teamcoracao_pick" style="display:none">
                         <div class="box-header">
-                            <h2><i class="fa fa-align-justify"></i><span class="break"></span>Time do coracao</h2>
+                            <h2><i class="fa fa-align-justify"></i><span class="break"></span>'.$t->_('time.do.coracao').'</h2>
                             <div class="box-icon">
                         </div>
                 </div>

@@ -37,6 +37,10 @@ class IndexController extends Zend_Controller_Action
 
             $this->view->matchs = $matchs;
             $this->view->email = $email;
+            
+         $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));        
+            
         }
         catch (Exception $e) {
             
@@ -68,6 +72,20 @@ class IndexController extends Zend_Controller_Action
 ////             $config = new Zend_Config_Ini("config.ini");
 ////            $this->redirect("/index/logout");
 //        }
+    }
+    
+    public function idiomaAction() {
+        $i = $this->_request->getParam("i");
+        
+        $u = new Application_Model_Users();
+        $u->cambiar_idioma($i, $this->getIdUser());
+        
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
+        $this->login1($data['us_username'], $data['us_password']);
+        
+        $this->redirect("/index");
     }
     
     public function puntuacaoAction() {

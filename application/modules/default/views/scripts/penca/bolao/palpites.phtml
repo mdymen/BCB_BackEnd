@@ -9,6 +9,8 @@
         $rodada = $palpites[0]['mt_idround'];   
     }
     
+    $t = Zend_Registry::get('translate'); 
+    
 //    print_r(count($palpites));
 
 //print_r($palpites);
@@ -31,9 +33,9 @@ if (!empty($palpites)) {
                             
                             <?php
                                 if ($this->porteam) { 
-                                    $titulo = "Palpites da Rodada: ".$palpites[0]['rd_round'];
+                                    $titulo = $t->_("palpites.da.rodada").": ".$palpites[0]['rd_round'];
                                 } else {
-                                    $titulo = "Palpites do Time: ".$this->teamusername;
+                                    $titulo = $t->_("palpites.do.time").":".$this->teamusername;
                                 }
                             ?>
                             

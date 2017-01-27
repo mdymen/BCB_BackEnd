@@ -4,7 +4,7 @@
 // $rodada = $this->rodada;
  $champ = $this->champ;
 
- $translate = Zend_Registry::get('translate');   
+ $t = Zend_Registry::get('translate');   
  
  $config = new Zend_Config_Ini("config.ini");
  
@@ -14,7 +14,7 @@
     <div class="col-lg-12">
             <div class="box">
                     <div class="box-content">
-                            <form id="frChamp" action="<?php echo $this->baseUrl()."/penca/bolao"; ?>" method="post">	
+                            <form id="frChamp" action="<?php echo $this->baseUrl()."/penca/encerrados"; ?>" method="post">	
                                     <div class="form-group">                                      
                                       <div class="controls">
                                             <div class="input-group date col-sm-12">
@@ -26,13 +26,11 @@
                                                         if (empty($pencas)) {
                                                             echo '<option value="Vazio"></option>';    
                                                         }
-                                                        $ch_selecionado = "";
+                                                        
                                                         for ($i = 0; $i < count($championship); $i = $i + 1) {
                                                             $selected="";
-                                                            
                                                             if ($champ == $championship[$i]['ch_id']) {
                                                                 $selected = "selected";
-                                                                $ch_selecionado = $championship[$i];
                                                             }
                                                             echo '<option '.$selected.' value="'.$championship[$i]['ch_id'].'">'.$championship[$i]['ch_nome'].'</option>';
                                                         }                                                        
@@ -42,27 +40,9 @@
                                       </div>
                                     </div>    
                             </form>   
-                        
-                        <?php
-                        
-                            if (!empty($champ) && !empty($ch_selecionado)) {
-                        
-                                echo '<a href="javascript:void(0)" m="true" id="mais" class="more box_palpite">
-                                    <center><span id="mais_text">Mais</span></center>
-                                </a>
-                                <div id="dados_campeonato" style="display:none">
-                                <span>'.$ch_selecionado['ch_descricao'].'</span><br>
-                                <span>Incio: '.Helpers_Data::day_semhour($ch_selecionado['ch_data_inicio']).'</span>'
-                                        . '</div>';
-                            }        
-                                
-                                        ?>
                     </div>
-
             </div>
-
         </div>
-
     </div>
 
 
@@ -95,20 +75,7 @@
            $("#championship").change(function() {
                $('#frChamp').submit();
              //  alert("TROCOU");
-           });
-           
-           $("#mais").bind("click", function() {
-               var v = $("#mais").attr("m");
-               if (v === 'true') {
-                    $("#dados_campeonato").show();
-                    $("#mais_text").html("Menos");
-                    $("#mais").attr("m","false");
-                } else {
-                    $("#dados_campeonato").hide();
-                    $("#mais_text").html("Mais");
-                    $("#mais").attr("m","true");
-                }
-           });
+           })
        }); 
          
     </script>
