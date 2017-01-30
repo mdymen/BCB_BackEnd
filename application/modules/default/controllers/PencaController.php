@@ -23,6 +23,7 @@ include APPLICATION_PATH.'/helpers/html.php';
 include APPLICATION_PATH.'/helpers/translate.php';
 include APPLICATION_PATH.'/helpers/box.php';
 include APPLICATION_PATH.'/helpers/posicoes.php';
+include APPLICATION_PATH.'/helpers/ranking.php';
 class PencaController extends Zend_Controller_Action {
     
     public function indexAction() {
@@ -435,6 +436,14 @@ class PencaController extends Zend_Controller_Action {
             
             //las rodadas del campeonato registradas en el sistema
             $this->view->rondas = $rondas;          
+            
+            
+            $ranking = new Application_Model_Result();
+            $rankings = $ranking->ranking_round($rodada_id, $champ_id);
+            $rankings_champ = $ranking->ranking_champ($champ_id);
+            
+            $this->view->rankings = $rankings;
+            $this->view->ranking_champ = $rankings_champ;
         }
     }
     

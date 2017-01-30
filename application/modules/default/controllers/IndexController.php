@@ -30,13 +30,23 @@ class IndexController extends Zend_Controller_Action
     public function indexAction() {
         try {
             
+            $params = $this->_request->getParams();
+            
+//            print_r($limit);
+            
+            $limit = 8;
+            if (!empty($params['limit'])) {
+                $limit = $params['limit'];
+            }
+            
             $email = $this->getEmailUser();                        
             
             $m = new Application_Model_Matchs();
-            $matchs = $m->proximos_jogos($this->getIdUser());
+            $matchs = $m->proximos_jogos($this->getIdUser(), $limit);
 
             $this->view->matchs = $matchs;
             $this->view->email = $email;
+            $this->view->limit = $limit;
             
          $storage = new Zend_Auth_Storage_Session();
         $data = (get_object_vars($storage->read()));        

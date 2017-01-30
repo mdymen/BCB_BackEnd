@@ -57,7 +57,7 @@ class Helpers_Posicoes {
                 <div id="champ_prec_box" style="display:none" class="col-lg-12 col-sm-12 col-xs-12 col-xxs-12 col-xxs-12">
                     <div class="smallstat box">
                         <div class="box-header">
-                            h2><a id="fecharvchamp" href="javascript:void(0)"><i class="fa fa-times"></i></a><span class="break"></span>'.$t->_("info.dos.palpites").'</h2>
+                            <h2><a id="fecharvchamp" href="javascript:void(0)"><i class="fa fa-times"></i></a><span class="break"></span>'.$t->_("info.dos.palpites").'</h2>
                         </div>                    
                         <table width="100%">
                             <tbody>

@@ -17,6 +17,7 @@ include APPLICATION_PATH.'/models/users.php';
 include APPLICATION_PATH."/helpers/data.php";
 include APPLICATION_PATH."/helpers/box.php";
 include APPLICATION_PATH."/helpers/html.php";
+include APPLICATION_PATH."/helpers/translate.php";
 class UsuarioController extends Zend_Controller_Action
 {
     public function indexAction() {

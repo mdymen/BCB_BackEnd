@@ -30,6 +30,7 @@ class Helpers_Paginacao {
     public $base;
         
     public function paginacao_aux() {
+                $t = Zend_Registry::get('translate');
         $teamuserid = $this->teamuserid;        
         $teams_coracao = $this->teams;
                  echo '<div class="box" id="teamcoracao_pick" style="display:none">

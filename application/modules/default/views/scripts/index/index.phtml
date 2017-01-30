@@ -10,7 +10,7 @@ $email = $data['us_email'];
 if (!empty($email)) {    
             
     
- $translate = Zend_Registry::get('translate');
+ $t = Zend_Registry::get('translate');
 
 $matchs = $this->matchs;
 
@@ -23,11 +23,19 @@ $box->show_titulo_rodada = true;
 $box->show_data_quadrado = true;
 $box->tamanho_box = "col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
 $box->mas_info = false;
-$box->titulo_bigbox =  $translate->_("proximos.jogos"); //"Próximos jogos";
+$box->titulo_bigbox =  $t->_("proximos.jogos"); //"Próximos jogos";
 $box->palpites_goal = true;
 $box->show_palpitar = true;
 
 $box->big_box();
+
+$limit = $this->limit;
+
+//print_r("limit ".$limit);
+
+$limit = $limit + 8;
+
+echo '<div><h2><center><a href="'.$this->baseUrl('/index/index?limit='.$limit).'">'.$t->_('mais').'</a></center></h2></div>';
 
 ?>
 

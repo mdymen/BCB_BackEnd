@@ -80,18 +80,38 @@ class Helpers_Data {
         $t = Zend_Registry::get('translate');
         
         
-        $dia = str_replace("January", "de ".$t->_("janeiro"), $dia);
-        $dia = str_replace("February", "de Fevreiro", $dia);
-        $dia = str_replace("March", "de Março", $dia);
-        $dia = str_replace("April", "de Abril", $dia);
-        $dia = str_replace("May", "de Maio", $dia);
-        $dia = str_replace("June", "de Junho", $dia);
-        $dia = str_replace("July", "de Julho", $dia);
-        $dia = str_replace("August", "de Agosto", $dia);
-        $dia = str_replace("September", "de Setembro", $dia);
-        $dia = str_replace("October", "de Otubro", $dia);
-        $dia = str_replace("November", "de Novembro", $dia);
-        $dia = str_replace("December", "de Dezembro", $dia);
+        $dia = str_replace("January","de ".$t->_("January"), $dia);
+        $dia = str_replace("February","de ".$t->_("February"), $dia);
+        $dia = str_replace("March","de ".$t->_("March"), $dia);
+        $dia = str_replace("April","de ".$t->_("April"), $dia);
+        $dia = str_replace("May","de ".$t->_("May"), $dia);
+        $dia = str_replace("June","de ".$t->_("June"), $dia);
+        $dia = str_replace("July","de ".$t->_("July"), $dia);
+        $dia = str_replace("August","de ".$t->_("August"), $dia);
+        $dia = str_replace("September","de ".$t->_("September"), $dia);
+        $dia = str_replace("October","de ".$t->_("October"), $dia);
+        $dia = str_replace("November","de ".$t->_("November"), $dia);
+        $dia = str_replace("December","de ".$t->_("December"), $dia);
+        
+        return $dia;
+    }
+    
+        public static function paramesred($dia) {
+        $t = Zend_Registry::get('translate');
+        
+        
+        $dia = str_replace("Jan", "de ".$t->_("Jan"), $dia);
+        $dia = str_replace("Feb", "de ".$t->_("Feb"), $dia);
+        $dia = str_replace("Mar", "de ".$t->_("Mar"), $dia);
+        $dia = str_replace("Apr", "de ".$t->_("Apr"), $dia);
+        $dia = str_replace("May", "de ".$t->_("May"), $dia);
+        $dia = str_replace("Jun", "de ".$t->_("Jun"), $dia);
+        $dia = str_replace("Jul", "de ".$t->_("Jul"), $dia);
+        $dia = str_replace("Aug", "de ".$t->_("Aug"), $dia);
+        $dia = str_replace("Sep", "de ".$t->_("Sep"), $dia);
+        $dia = str_replace("Oct", "de ".$t->_("Oct"), $dia);
+        $dia = str_replace("Nov", "de ".$t->_("Nov"), $dia);
+        $dia = str_replace("Dec", "de ".$t->_("Dec"), $dia);
         
         return $dia;
     }
@@ -100,6 +120,7 @@ class Helpers_Data {
         $time = strtotime($date);
         $newformat = date("l d M. H:i",$time)."hs";
         $newformat = Helpers_Data::paradia($newformat);
+        $newformat = Helpers_Data::paramesred($newformat);
         
         //print_r($newformat);
         return $newformat;

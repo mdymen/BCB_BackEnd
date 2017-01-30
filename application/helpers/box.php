@@ -165,6 +165,8 @@ class Helpers_Box {
     }
     
     public function box() {
+        $t = Zend_Registry::get('translate');
+        
         $matches = $this->matches;
         
         $config = new Zend_Config_Ini("config.ini");
@@ -180,7 +182,7 @@ class Helpers_Box {
             $habilitado = Helpers_Data::antesDeHoras($matches[$i]['mt_date']);
             if (!$habilitado) {
                 $this->infoescrita = true;
-                $this->infoescrita_msg = "Encerrado";
+                $this->infoescrita_msg = $t->_("encerrado");
             }   else {
                 $this->infoescrita = false;
                 $this->infoescrita_msg = "";
@@ -214,7 +216,7 @@ class Helpers_Box {
                             }
                 
                             if ($this->show_titulo_rodada) {
-                                echo $this->titulo("Rodada ".$matches[$i]['rd_round'], $this->base.$this->link_ronda."?rodada=".$matches[$i]['mt_idround']."&champ=".$matches[$i]['ch_id']);
+                                echo $this->titulo($t->_("rodada")." ".$matches[$i]['rd_round'], $this->base.$this->link_ronda."?rodada=".$matches[$i]['mt_idround']."&champ=".$matches[$i]['ch_id']);
                             }                          
                             
                             if (!isset($matches[$i]['rs_res1'])) {
@@ -250,7 +252,7 @@ class Helpers_Box {
                             
                             
                             if ($this->show_palpitar && !$this->infoescrita) {                                
-                                  echo '<a href="'.$this->base."/penca/bolao?rodada=".$matches[$i]['mt_idround']."&champ=".$matches[$i]['mt_idchampionship'].'"><span class="label label-success" style="margin-right:70px">Palpitar</span></a>';                                
+                                  echo '<a href="'.$this->base."/penca/bolao?rodada=".$matches[$i]['mt_idround']."&champ=".$matches[$i]['mt_idchampionship'].'"><span class="label label-success" style="margin-right:70px">'.$t->_("palpitar").'</span></a>';                                
                             }
                             
                             if ($this->infoescrita) {                                
