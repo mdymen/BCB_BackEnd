@@ -391,4 +391,76 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
 		
 		return $return;
     }
+	
+	public function add_pagseguro_ini($id_user, $id_transacion, $email, $plano) {
+		$db = $this->db;
+		
+		$db->insert("pagseguro",array("pg_iduser" => $id_user, 
+			"pg_idtransacao" => $id_transacion,
+			"pg_email" => $email,
+			"pg_plano" => $plano,
+			"pg_datahora" => date("Y-m-d H:i:s")));
+	}
+	
+	public function getPagSeguro($code) {
+		$db = $this->db;
+		
+		$query = $db->select()->from("pagseguro")->where("pg_code = ?", $code);
+		$result = $query->query()->fetch();
+		
+		return $result;
+	}
+	
+	public function getUserByEmail($email) {
+		$db = $this->db;
+		
+		$query = $db->select()->from("user")->where("us_email = ?", $email);
+		
+		$result = $query->query()->fetch();
+		
+		return $result;
+	}
+	
+	public function getPagSeguroByEmail($email, $plano) {
+		$db = $this->db;
+		
+		$query = $db->select()->from("pagseguro")
+		->where("pg_email = ?", $email)
+		->where("pg_transactionstatus < 3")
+		->where("pg_plano = ?", $plano)
+		->order("pg_datahora DESC");
+		
+		print_r($query->__toString());		
+		
+		$result = $query->query()->fetch();
+		
+	}
+	
+	public function update_pagseguro($email, $id_notificationcode, $id_transactionstatus, $plano, $code, $pg_foipago) {
+		$db = $this->db;
+
+	//	$query = $db->select()->from("pagseguro")
+		//	->where("pg_email = ?", $email)
+			//->where("pg_transactionstatus <> 3")
+			//->order("pg_datahora DESC");
+			
+		$sql = "SELECT * FROM pagseguro WHERE pg_email = '".$email."' 
+			AND pg_transactionstatus <> '3' ORDER BY pg_datahora DESC ";
+			
+			
+		$result = $db->query($sql)->fetch();
+		
+		//$pago = $result[0];
+		
+		//print_r($result);
+		//die("-");
+		
+		if (!empty($result)) {
+			$db->update("pagseguro",array("pg_notificactioncode" => $id_notificationcode, 
+				"pg_transactionstatus" => $id_transactionstatus,
+				"pg_datahora" => date("Y-m-d H:i:s"),
+				"pg_code" => $code,
+				"pg_foipago" => $pg_foipago), "pg_id = '".$result['pg_id']."'");
+		}
+	}
 }

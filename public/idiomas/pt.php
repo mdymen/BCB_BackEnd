@@ -73,7 +73,7 @@ return array(
     'meu.perfil'=>'Meu Perfil',
     'craque.de.bola' => 'Craque de Bola',
     'proximos.jogos' => 'Próximos Jogos',
-    'palpites' => 'Pronósticos',
+    'palpites' => 'Palpites',
     'meus.palpites' => 'Meus Palpites',
     'transacoes' => 'Transações',
     'Jan' => 'Jan',

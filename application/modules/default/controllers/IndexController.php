@@ -27,11 +27,26 @@ class IndexController extends Zend_Controller_Action
 		die(".");
 	}
     
+	public function pagamentoAction() {
+		
+		$storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
+        $this->login1($data['us_username'], $data['us_password']);
+		
+		        $this->redirect("/index");
+		
+	}
+	
     public function indexAction() {
         try {
             
             $params = $this->_request->getParams();
             
+			if (!empty($params['id_pagoseguro'])) {
+				$this->pagamentoAction();
+			}
+			
 //            print_r($limit);
             
             $limit = 8;

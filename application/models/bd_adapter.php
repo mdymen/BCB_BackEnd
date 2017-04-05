@@ -41,6 +41,14 @@ class Application_Model_Bd_Adapter extends Zend_Db_Table_Abstract
                 'charset' => 'UTF8'
             ));
             
+            /*           $this->db = new Zend_Db_Adapter_Pdo_Mysql(array(
+                'host'     => 'localhost',
+                'username' => 'wi061609_penca',
+                'password' => 'wi27fekoRE',
+                'dbname'   => $bd,
+                'charset' => 'UTF8'
+            ));*/
+            
         } else {
             $this->db = Zend_Db_Table::getDefaultAdapter();
         }

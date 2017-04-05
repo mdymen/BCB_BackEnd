@@ -88,8 +88,8 @@ class CaixaController extends Zend_Controller_Action
         
         $ch = curl_init();
 
-        $data = array('token'=>'C75869B3B0FC47E7B3B5B232EC412CD2',
-            'email'=>'riquerubim@yahoo.com.br',
+        $data = array('token'=>'5FCC6C3FA3694BFDB7DF5C2534A65562',
+            'email'=>'martin@dymenstein.com',
             'currency' => 'BRL',
             'itemId1' => 0001,
             'itemDescription1'=> $nome_plano,
@@ -98,7 +98,9 @@ class CaixaController extends Zend_Controller_Action
             'itemWeight1' => 1000
             );
  
-        curl_setopt($ch, CURLOPT_URL,"https://ws.pagseguro.uol.com.br/v2/checkout");
+ 
+ 
+        curl_setopt($ch, CURLOPT_URL,"https://ws.sandbox.pagseguro.uol.com.br/v2/checkout");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($data));        
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
@@ -107,17 +109,18 @@ class CaixaController extends Zend_Controller_Action
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         
         $server_output = curl_exec ($ch);
-        
-//        print_r($server_output);
-//        die(".");
+		
         curl_close ($ch);
         
         $return = new SimpleXMLElement($server_output);
         $my_array = (array)$return->code;
         
         $codigo = $my_array[0];
-        
-        $this->redirect("https://pagseguro.uol.com.br/v2/checkout/payment.html?code=".$codigo);
+		
+		$u = new Application_Model_Users();
+		$u->add_pagseguro_ini($this->getIdUser(), $codigo, $this->getUserEmail(), $nome_plano);
+		
+        $this->redirect("https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=".$codigo);
     }
     
    public function getIdUser() { 
@@ -127,4 +130,93 @@ class CaixaController extends Zend_Controller_Action
         return $data['us_id'];
     }
     
+   public function getUserEmail() { 
+        $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));
+        
+        return $data['us_email'];
+    }
+	
+	public function notificacaoAction() {
+		$params = $this->_request->getParams();
+		
+		$notificationCode = $params['notificationCode'];
+		
+		$ch = curl_init();
+
+        //$data = array('token'=>'6363C4111D064931A0CC0F0330849143',
+		$data = array('token'=>'5FCC6C3FA3694BFDB7DF5C2534A65562',
+            'email'=>'martin@dymenstein.com'
+            );
+ 
+        curl_setopt($ch, CURLOPT_URL,"https://ws.sandbox.pagseguro.uol.com.br/v3/transactions/notifications/".$notificationCode."?token=5FCC6C3FA3694BFDB7DF5C2534A65562&email=martin@dymenstein.com");
+    //    curl_setopt($ch, CURLOPT_POST, 1);
+    //    curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($data));        
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        $server_output = curl_exec ($ch);
+        
+        curl_close ($ch);
+        
+        $return = new SimpleXMLElement($server_output);
+        $my_array = (array)$return->code;
+		
+		$retorno = (array)$return;
+
+		$dados = (array)$retorno['sender'];
+		$email = (array)$dados['email'];
+		
+		$status = (array)$retorno['status'];
+		
+		$items = (array)$retorno['items'];
+		$item = (array)$items['item'];
+		$plano = (array)$item['description'];
+		
+		$r = new Application_Model_Users();
+		
+		//para acreditar pagamento;
+		
+		$pg_foipago = 0;
+		
+		if ($status[0] == 3) {
+			
+			$us = $r->getPagSeguroByEmail($email[0], $plano[0]);
+			
+			print_r($us);
+			
+			$usuario = $r->getUserByEmail($email[0]);
+			
+			if ($plano[0] == "Plano 1") {
+				$usuario['us_cash'] = $usuario['us_cash'] + 10;
+			}
+			if ($plano[0] == "Plano 2") {
+				$usuario['us_cash'] = $usuario['us_cash'] + 20;
+			}
+			if ($plano[0] == "Plano 3") {
+				$usuario['us_cash'] = $usuario['us_cash'] + 51;
+			}
+			if ($plano[0] == "Plano 4") {
+				$usuario['us_cash'] = $usuario['us_cash'] + 102;
+			}
+			
+			$pg_foipago = 1;
+			
+			$r->update_cash($usuario['us_id'], $usuario['us_cash']);
+		}
+		
+		
+		$r->update_pagseguro($email[0], $notificationCode, $status[0], $plano[0], $my_array[0], $pg_foipago  );
+		
+		        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($return);
+		
+	}
 }

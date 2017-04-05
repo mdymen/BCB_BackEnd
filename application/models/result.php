@@ -65,6 +65,16 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
                 ->query()
                 ->fetch();  
     }
+	
+	public function getResultByUserMatch($user_id, $match_id) {
+        $db = $this->db;
+        
+        return $db->select()->from("result")
+                ->where("rs_iduser = ?", $user_id)
+				->where("rs_idmatch = ?", $match_id)
+                ->query()
+                ->fetch();  
+    }
     
     public function palpites_em_acao($us_id) {
         $db = $this->db;
@@ -185,7 +195,7 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
         $result = $db->select()->from("vwranking_championship")
                 ->where("mt_idchampionship = ?", $championship)
                 ->order("points DESC");
-        
+
         $return = $result->query()->fetchAll();
         
         return $return;

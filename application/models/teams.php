@@ -97,6 +97,26 @@ class Application_Model_Teams extends Application_Model_Bd_Adapter
         
         $db->update("team", array('tm_played' => $result['tm_played'] + 1), "tm_id = ".$team);
     }
+	
+    public function load_palpites_simples_porteam($championship, $team_id, $usuario) {
+         $db = $this->db;
+        
+        $result = $db->select()->from("vwmatchsresult")
+                ->where("rs_iduser= ".$usuario." or rs_iduser is NULL ")
+                ->where("mt_idchampionship = ?", $championship)
+                ->where("tm1_id = ".$team_id." or tm2_id = ".$team_id)
+                ->order(array('mt_idround ASC','mt_date ASC'));
+        
+       // print_r($result->__toString());
+        // die(".");
+        
+        $return = $result
+                ->query()
+                ->fetchAll();
+        
+        
+        return $return;       
+    }	
     
     public function getJogosTeam($team, $champ) {
         $db = $this->db;

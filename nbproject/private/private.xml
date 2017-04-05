@@ -1,85 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
+        <file>
+            <url>application/modules/admin/controllers/JogosController.php</url>
+            <bookmark id="2">
+                <name/>
+                <line>102</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/register/team.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/configs/application.ini</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/register.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/bolao.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/ChampionshipController.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/FixtureController.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/penca/pencas.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/championship/index.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/index/caixa.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/inseriremailface.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/models/users.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/forms/Penca.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/index.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/configs/scriptsql.sql</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/index.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/bolao/palpites_feitos.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/layouts.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/index/info_geral.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/registerteams.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/decorators/Form.php</file>
             <file>file:/C:/xampp/htdocs/penca/application/helpers/data.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/models/fixtures.php</file>
-            <file>file:/C:/xampp/htdocs/penca/public/web.config</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/register/bolao/paso1.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/redirect.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/index/palpites.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/_adminhead.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/forms/Championship.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/admin/controllers/IndexController.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/register.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/decorators/Combobox.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/register/championship.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/forms/Team.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/layout.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/admin/views/scripts/index/index.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/IndexController.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/login.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/admin/controllers/TeamController.php.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/_head.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/meuspalpites.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/index_old.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/index/puntuacao.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/admin/views/scripts/resultados/index.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/models/teams.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/index/principal.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/bolao/posicoes.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/admin/controllers/ResultadosController.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/breadcrumb.php</file>
-            <file>file:/C:/xampp/htdocs/penca/public/index.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/alerts.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/meusbaloes.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/RegisterController.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/index/posiciones.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/admin.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/decorators/Decorator1.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/bolao/pesquisa_champ.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/Bootstrap.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/_footer.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/bolao/paginacao.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/register/penca.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/index/pencas.phtml</file>
             <file>file:/C:/xampp/htdocs/penca/application/models/matchs.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/helpers/paginacao.php</file>
+            <file>file:/C:/xampp/htdocs/penca/public/idiomas/es.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/admin/controllers/CampeonatoController.php</file>
             <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/bolao/palpites.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/forms/curso/Editar.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/penca/infopencasuperficial.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/models/pencas.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/index/emacao.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/models/result.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/forms/Fixture.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/TeamController.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/index/participantes.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/pencas.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/models/championships.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/helpers/box.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/_adminhead.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/usuario/index.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/team/team.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/encerrados.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/campeonatos/index.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/public/idiomas/pt.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/palpites.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/index/index.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/helpers/posicoes.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/IndexController.php</file>
             <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/PencaController.php</file>
-            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/login.phtml</file>
-            <file>file:/C:/xampp/htdocs/penca/application/layouts/scripts/_adminfooter.php</file>
-            <file>file:/C:/xampp/htdocs/penca/index.html</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/UsuarioController.php</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/views/scripts/penca/bolao/palpites_feitos.phtml</file>
+            <file>file:/C:/xampp/htdocs/penca/application/modules/default/controllers/CampeonatosController.php</file>
         </group>
     </open-files>
 </project-private>

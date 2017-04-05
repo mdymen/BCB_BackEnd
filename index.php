@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SHIELD - Free Bootstrap 3 Theme">
+    <meta name="description" content="Bolão Craque de Bola">
     <meta name="author" content="Martin Dymenstein">
     <link rel="shortcut icon" href="assets/ico/icone.gif">
         <link rel="icon" href="assets/ico/icone.gif">
@@ -357,4 +357,16 @@
 //    });
     
     
+</script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-90398320-1', 'auto');
+  ga('send', 'pageview');
+
 </script>

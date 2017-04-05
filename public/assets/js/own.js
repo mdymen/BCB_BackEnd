@@ -43,6 +43,7 @@ function fechar_alert() {
 
 function excluir(url) {
     $(".excluir").bind('click', function() {
+    
         var rs = $(this).attr("result");
         var match = $(this).attr("match");
         
@@ -52,13 +53,8 @@ function excluir(url) {
         $("#panel_palpites_palpites_feitos").attr("style","display:none");
         $("#gif").attr("style","display:yes");
         $.post(url,{ result : rs, champ : champ, round : round, match :match}, function(response) {
-//           $("#info_msg").html("Palpite excluido!");
-//           $("#append_info").html($("#info").html());
-//           $(".alert-info").show();
-//            fechar_info();
 
             console.log(response);
-                       
             $("#ronda_total_palpitado").html(parseFloat(response.total).toFixed(2));
             $("#cash_usuario").html(parseFloat(response.total_usuario).toFixed(2));
             $("#campeonato_total_palpitado").html(parseFloat(response.total_campeonato).toFixed(2));
@@ -70,7 +66,6 @@ function excluir(url) {
 
             $('#rs_dados_'+match).attr("style","display:none"); 
             $('#fila_'+match).attr("style","display:yes");
-            
             $("#panel_palpites_palpites_feitos").attr("style","display:yes");
             $("#gif").attr("style","display:none");
         }); 
@@ -96,8 +91,9 @@ function box_mais_info() {
 };
 
 
-function aceitar_teamusername(link, link_teamcoracao) {
+function aceitar_teamusername(link) {
     $("#aceitar_teamusername").bind("click", function() {
+        alert("Hola");
         var name = $('#team_coracao').find(":selected").text();
         var id = $('#team_coracao').find(":selected").val();   
         var champ = $('#champ').val();
@@ -127,6 +123,13 @@ function teamusername_click() {
         $("#teamcoracao_pick").css("display","block");
     });
 };
+
+function abrir_time() { 
+    $("#teamusername").bind("click", function() {
+        $("#teamcoracao_pick").show();    
+    });
+alert("hola");
+}
 
 function ganadores_jogo() {
     $(".ganadores").bind("click", function() {

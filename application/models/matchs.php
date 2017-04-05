@@ -157,7 +157,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
     public function load_rodada_com_palpites($championship, $rodada, $usuario) {
         $db = $this->db;
         
-        $sql = "SELECT vwpalpites.*, `match`.*, t1.tm_id as tm1_id, t1.tm_name as t1nome, t1.tm_logo as tm1_logo,  `t1`.*, t2.tm_id as tm2_id, 
+        $sql = "SELECT match.mt_idchampionship as ch_id, vwpalpites.*, `match`.*, t1.tm_id as tm1_id, t1.tm_name as t1nome, t1.tm_logo as tm1_logo,  `t1`.*, t2.tm_id as tm2_id, 
             t2.tm_name as t2nome, t2.tm_logo as tm2_logo,
             `t2`.*, r.*, round.*  FROM `match` 
   INNER JOIN `team` AS `t1` ON t1.tm_id = match.mt_idteam1 
@@ -304,6 +304,19 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         $db->insert("result", $dados);
         return $db->lastInsertId();
     }
+	
+	public function alterar_result($user_id, $result1, $result2, $match_id, $round) {
+		$db = $this->db;
+		
+		$dados = array();
+		
+		$db->update("result", array(
+			'rs_res1' => $result1,
+            'rs_res2' => $result2,
+            'rs_round' => $round), "rs_iduser = ".$user_id." and rs_idmatch = ".$match_id);
+		
+		
+	}
     
     public function load_resultados_palpitados($match) {
         $db = $this->db;
@@ -466,6 +479,21 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         $db->update("match", $info, "mt_id = ".$params['mt_id']);
         
     }
+	
+	public function match_ja_palpitado($id_match, $id_user) {
+		$db = $this->db;
+		
+		$result = $db->select()->from("result")
+			->where("rs_idmatch = ?", $id_match)
+			->where("rs_iduser = ?", $id_user);
+			
+		$return = $result->query()->fetch();
+		
+		if (empty($return)) {
+			return false;
+		}
+		return true;
+	}
     
     public function load_by_date($date_ini, $date_fim) {
         $db = $this->db;
