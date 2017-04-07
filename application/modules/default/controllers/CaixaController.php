@@ -100,7 +100,7 @@ class CaixaController extends Zend_Controller_Action
  
  
  
-        curl_setopt($ch, CURLOPT_URL,"https://ws.sandbox.pagseguro.uol.com.br/v2/checkout");
+        curl_setopt($ch, CURLOPT_URL,"https://ws.pagseguro.uol.com.br/v2/checkout");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($data));        
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
@@ -120,7 +120,7 @@ class CaixaController extends Zend_Controller_Action
 		$u = new Application_Model_Users();
 		$u->add_pagseguro_ini($this->getIdUser(), $codigo, $this->getUserEmail(), $nome_plano);
 		
-        $this->redirect("https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=".$codigo);
+        $this->redirect("https://pagseguro.uol.com.br/v2/checkout/payment.html?code=".$codigo);
     }
     
    public function getIdUser() { 
@@ -145,11 +145,11 @@ class CaixaController extends Zend_Controller_Action
 		$ch = curl_init();
 
         //$data = array('token'=>'6363C4111D064931A0CC0F0330849143',
-		$data = array('token'=>'5FCC6C3FA3694BFDB7DF5C2534A65562',
+		$data = array('token'=>'C6109FC822BD4E78845AE99356D37D9A',
             'email'=>'martin@dymenstein.com'
             );
  
-        curl_setopt($ch, CURLOPT_URL,"https://ws.sandbox.pagseguro.uol.com.br/v3/transactions/notifications/".$notificationCode."?token=5FCC6C3FA3694BFDB7DF5C2534A65562&email=martin@dymenstein.com");
+        curl_setopt($ch, CURLOPT_URL,"https://ws.pagseguro.uol.com.br/v3/transactions/notifications/".$notificationCode."?token=C6109FC822BD4E78845AE99356D37D9A&email=martin@dymenstein.com");
     //    curl_setopt($ch, CURLOPT_POST, 1);
     //    curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($data));        
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
