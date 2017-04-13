@@ -102,6 +102,13 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         return $result;
     }
     
+    public function adicionesgrana($id_user, $valor) {
+        $db = $this->db;
+        
+        $db->insert("adicionesgrana", array('ag_iduser' => $id_user, 'ag_date' => date("Y-m-d H:i:s"), 
+            'ag_valor' => $valor));
+    }
+    
     public function user_penca($penca) {
         $db = $this->db;
         
@@ -130,7 +137,7 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         
         $result = $db->select()->from("result", array("count(*) as wonmatches"))
                ->where("rs_iduser = ?",$id_user)
-               ->where("rs_date < " + date("m-d-Y"))
+               ->where("rs_date < ".date("m-d-Y"))
                ->where("rs_points = 1")
                 ->orWhere("rs_points = 5")
                 ->query()

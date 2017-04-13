@@ -90,6 +90,33 @@ class Admin_IndexController extends Zend_Controller_Action
         $this->view->users = $users;
         
     }
-           
+	
+    public function adicionargranaAction() {
+            $u = new Application_Model_Users();
+            $users = $u->users();
+
+            $this->view->users = $users;
+    }   
+    
+    public function adicionargranapostAction() {
+        $params = $this->_request->getParams();
+        
+        
+       // print_r($params);
+       // die(".");
+        
+        $u = new Application_Model_Users();
+        $user = $u->load_user($params['usuario']);
+        
+//            print_r($user);
+//        die(".");
+        
+        $cash = $user['us_cash'] + $params['valor'];
+        
+        $u->adicionesgrana($user['us_id'], $params['valor']);
+        $u->update_cash($user['us_id'], $cash);
+        
+        $this->redirect("admin/index/adicionargrana");
+    }
 }
 

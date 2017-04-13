@@ -88,7 +88,7 @@ class CaixaController extends Zend_Controller_Action
         
         $ch = curl_init();
 
-        $data = array('token'=>'5FCC6C3FA3694BFDB7DF5C2534A65562',
+        $data = array('token'=>'C6109FC822BD4E78845AE99356D37D9A',
             'email'=>'martin@dymenstein.com',
             'currency' => 'BRL',
             'itemId1' => 0001,
@@ -111,6 +111,9 @@ class CaixaController extends Zend_Controller_Action
         $server_output = curl_exec ($ch);
 		
         curl_close ($ch);
+		
+		//print_r($server_output);
+		//die(".");
         
         $return = new SimpleXMLElement($server_output);
         $my_array = (array)$return->code;
