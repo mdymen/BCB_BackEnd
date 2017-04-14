@@ -115,7 +115,17 @@ class MobileController extends Zend_Controller_Action
         $user['us_username'] = $data['username'];
         $user['us_password'] = $data['password'];
         $user['us_email'] = $data['email'];
- 
+        
+//        print_r($data['niver']);
+//        die(".");
+        
+        $niver = explode("-", $data['niver']);
+//        
+        $segundo = explode("T", $niver[2]);
+        $user['us_dia_niver'] = $segundo[0];
+        $user['us_mes_niver'] = $niver[1];
+        $user['us_anio_niver'] = $niver[0];
+        
         $u = new Application_Model_Users();
         $u->save_user($user);
         
