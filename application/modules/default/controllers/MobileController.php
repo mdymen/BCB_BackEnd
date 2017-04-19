@@ -127,7 +127,15 @@ class MobileController extends Zend_Controller_Action
         $user['us_anio_niver'] = $niver[0];
         
         $u = new Application_Model_Users();
-        $u->save_user($user);
+        
+        $return = 200;
+        if ($u->existUserName($user['us_username'])) {
+            $return = 401;
+        } else {
+            $u->save_user($user);
+        }
+        
+        
         
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
@@ -135,7 +143,7 @@ class MobileController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json(200);
+        $this->_helper->json($return);
     }
     
     public function celpalpitar() {
@@ -892,5 +900,30 @@ class MobileController extends Zend_Controller_Action
 			$this->_helper->json($result);
 
     }
+    
+    public function cellgetcampeonatoAction() {
+      	$body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+        
+        $c = new Application_Model_Championships();
+        
+        $rd_id = $params['rd_id'];
+        
+        $champ = $c->getChampByRound($rd_id);
+        
+        $m = new Application_Model_Matchs();
+        $palpites = $m->getpalpites($params['mt_id']);
+        
+        $result['palpites'] = $palpites;
+        $result['champ'] = $champ;
+        
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $this->_helper->json($result);
+    } 
 }
 

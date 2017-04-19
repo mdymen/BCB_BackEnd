@@ -154,6 +154,8 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         
     }
     
+   
+    
     public function load_rodada_com_palpites($championship, $rodada, $usuario) {
         $db = $this->db;
         
@@ -435,6 +437,15 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
                 ->query()->fetchAll();
         
         return $result;
+    }
+    
+    public function getpalpites($match) {
+        $db = $this->db;
+        
+        $result = $db->select()->from("vwpalpites")
+                ->where("rs_idmatch = ?", $match);
+        
+        return $result->query()->fetch();
     }
     
     public function get_quantidade_palpites($match) {

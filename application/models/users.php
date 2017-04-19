@@ -339,6 +339,21 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         return $result;
     }
     
+    
+    public function existUserName($user) {
+        $db = $this->db;       
+        
+        $result = $db->select()->from("user")
+                ->where("us_username = ?",$user)
+        
+//        print_r($result->__toString());
+//        die(".");
+            ->query()
+                ->fetch();
+        
+        return !empty($result);
+    }
+    
     public function registerUsernameFacebook($username, $id) {
         $db = $this->db;
         

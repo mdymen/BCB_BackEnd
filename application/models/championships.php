@@ -137,6 +137,18 @@ class Application_Model_Championships extends Application_Model_Bd_Adapter
         }
     }
     
+    public function getChampByRound($rd_id) {
+        $db = $this->db;
+        $result = $db->select()->from("round")
+                ->joinInner('championship', 'round.rd_idchampionship = championship.ch_id')
+                ->where("round.rd_id = ?", $rd_id)
+                ->query()
+                ->fetch();
+        
+        return $result;
+        
+    }    
+    
     public function getChamp($id) {
         $db = $this->db;
         $result = $db->select()->from("championship")

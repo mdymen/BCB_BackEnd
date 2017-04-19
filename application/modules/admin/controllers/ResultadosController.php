@@ -42,7 +42,7 @@ class Admin_ResultadosController extends Zend_Controller_Action
         
         
         $this->view->championships = $c->load();
-        
+        $this->view->champ = $params['champ'];
     }
     
     public function registerAction() {}
@@ -112,7 +112,7 @@ class Admin_ResultadosController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json($r);
+        $this->_helper->json(200);
     }
     
     private function puntuacao($match, $res1, $res2) {

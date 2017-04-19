@@ -32,12 +32,12 @@ class Application_Model_Bd_Adapter extends Zend_Db_Table_Abstract
         
         $bd = $this->getDb();
         
-        if (!empty($bd)) { 
+        if (strcmp()) { 
             $this->db = new Zend_Db_Adapter_Pdo_Mysql(array(
                 'host'     => 'localhost',
-                'username' => 'root',
-                'password' => '',
-                'dbname'   => $bd,
+                'username' => 'wi061609_teste',
+                'password' => 'mo80tiNUke',
+                'dbname'   => 'wi061609_teste',
                 'charset' => 'UTF8'
             ));
             
