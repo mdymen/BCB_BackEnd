@@ -193,6 +193,7 @@
                                                 <li><a href="<?php echo $this->baseUrl("/admin/resultados"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Resultados </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/index/usuarios"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Usuarios </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/index/adicionargrana"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Adicionar Grana </span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/admin/index/emails"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Emails </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/penca/selecionarbase"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Selecionar base </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/campeonato/backup"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Backup </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/index/logout"); ?>"><i class="fa fa-power-off"></i><span class="hidden-sm text">Logout</span></a></li>

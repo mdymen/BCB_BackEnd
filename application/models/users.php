@@ -354,6 +354,16 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         return !empty($result);
     }
     
+    public function getEmailsUsuario() {
+        $db = $this->db;
+        
+        $result = $db->select()->from("user", array('us_email'))
+                ->where("us_email <> ''")
+                ->query()->fetchAll();
+        
+        return $result;
+    }
+    
     public function registerUsernameFacebook($username, $id) {
         $db = $this->db;
         

@@ -118,5 +118,15 @@ class Admin_IndexController extends Zend_Controller_Action
         
         $this->redirect("admin/index/adicionargrana");
     }
+    
+    public function emailsAction() {
+        $params = $this->_request->getParams();
+        
+        $u = new Application_Model_Users();
+        $emails = $u->getEmailsUsuario();
+        
+        $this->view->emails = $emails;
+
+    }
 }
 

@@ -1,0 +1,14 @@
+<?php
+
+$emails = $this->emails;
+
+//print_r($emails[1]);
+//die(".");
+
+for ($i = 0; $i < count($emails); $i++) {
+    if (!empty($emails[$i]) && $emails[$i] != "") {
+        echo $emails[$i]['us_email'].",";
+    }
+}
+
+?>
