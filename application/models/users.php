@@ -364,6 +364,12 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         return $result;
     }
     
+    public function save_esqueceu($username, $email, $token) {
+        $db = $this->db;
+        
+        $db->insert("resetarsenha", array());
+    }
+    
     public function registerUsernameFacebook($username, $id) {
         $db = $this->db;
         

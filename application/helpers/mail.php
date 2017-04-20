@@ -22,7 +22,7 @@ class Helpers_Mail {
         $config = array(
             'auth' => 'login',
             'username' => 'bolaocraquedebola16@gmail.com',
-            'password' => 'Smd5yy00',
+            'password' => 'E3b3c4f5h5931',
             'ssl' => 'tls',
             'port' => 587
         );
