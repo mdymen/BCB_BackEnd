@@ -75,6 +75,23 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         return $result;
     }    
     
+    public function update_senha($user_id, $senha) {
+        $db = $this->db;
+        
+        $db->update("user", array('us_password' => $senha),'us_id = '.$user_id);
+        $db->update("resetarsenha", array('reset_ativa' => 0),'reset_iduser = '.$user_id);
+    }
+    
+    public function verificar_trocasenha($token) {
+        $db = $this->db;
+        
+        $result = $db->select()->from("resetarsenha")
+                ->where("reset_token = ?", $token)
+                ->where("reset_ativo = ?", 1);
+        
+        return $result->query()->fetch();
+    }
+    
     public function update_cash($user, $cash) {
         $db = $this->db;
         
@@ -364,10 +381,22 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         return $result;
     }
     
-    public function save_esqueceu($username, $email, $token) {
+    public function save_esqueceu($user_id, $email, $token) {
         $db = $this->db;
         
-        $db->insert("resetarsenha", array());
+        $db->insert("resetarsenha", array('reset_iduser' => $user_id,
+            'reset_email' => $email, 
+            'reset_token' => $token, 
+            'reset_data' => date("Y-m-d H:i:s"),
+            'reset_ativa' => 1));
+    }
+    
+    public function load_userbyemail($email) {
+        $db = $this->db;
+        
+        $return = $db->select()->from("user")->where("us_email = ?", $email);
+        
+        return $return->query()->fetch();
     }
     
     public function registerUsernameFacebook($username, $id) {

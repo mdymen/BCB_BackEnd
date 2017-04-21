@@ -9,7 +9,11 @@ $uri = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
 //    print_r($uri);
 //        die(".");
     
-if (strpos($uri, 'public/?linkreferencia&userlinked=')) {
+if (strpos($uri, 'public/?trocarsenha=')) {
+    echo $this->render('trocarsenha.phtml');
+}
+
+else if (strpos($uri, 'public/?linkreferencia&userlinked=')) {
     echo $this->render('register.phtml');
 }
 

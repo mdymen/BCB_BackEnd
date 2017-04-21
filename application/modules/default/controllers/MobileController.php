@@ -109,6 +109,20 @@ class MobileController extends Zend_Controller_Action
         $this->_helper->json($champs);
     }
     
+    public function cellgetcampeonatosabertosAction() {
+        $c = new Application_Model_Championships();
+        
+        $champs = $c->load();
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($champs);
+    }    
+    
     public function celcadastroAction() {
         $body = $this->getRequest()->getRawBody();
         $data = Zend_Json::decode($body);
@@ -931,51 +945,52 @@ class MobileController extends Zend_Controller_Action
       	$body = $this->getRequest()->getRawBody();
         $params = Zend_Json::decode($body);
         
+//        
+//        $params = $this->_request->getParams();
         $email = $params['email'];
-        $this->mail($email);
+        
+        $token = md5(uniqid(rand(), true));
+        
+        $u = new Application_Model_Users();
+        
+        $user = $u->load_userbyemail($email);
+        
+        $result = 400;
+        
+        if (!empty($user)) {
+        
+            $u->save_esqueceu($user['us_id'], $email, $token);
+
+            $body = '<a href="http://www.bolaocraquedebola.com.br/public/?trocarsenha='.$token.'">clique neste link para trocar a senha</a>';
+
+            $this->mail($body, $email, "Resetar senha");
+            
+            $result = 200;
+        
+        }
+                $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $this->_helper->json($result);
     }
     
-    public function mail($data) {
-            $config = array('ssl' => 'ssl',
-                'auth' => 'login',
-                'username' => 'bolaocraquedebola16@gmail.com',
-                'password' => 'E3b3c4f5h5931');
+    public function mail($body, $addTo, $subject) {
+        $config = array('ssl' => 'ssl',
+            'auth' => 'login',
+            'username' => 'bolaocraquedebola16@gmail.com',
+            'password' => 'E3b3c4f5h5931');
 
-    $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
+        $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
 
-    $mail = new Zend_Mail();
-    $mail->setBodyHtml("test");
-    $mail->setFrom('bolaocraquedebola16@gmail.com');
-    $mail->addTo("msn@dymenstein.com", "msn@dymenstein.com");
-    $mail->setSubject('Profile Activation');
-    $mail->send($transport);
-//	global $error;
-//	$mail = new PHPMailer();
-//	$mail->IsSMTP();		// Ativar SMTP
-//	$mail->SMTPDebug = 0;		// Debugar: 1 = erros e mensagens, 2 = mensagens apenas
-//	$mail->SMTPAuth = true;		// Autenticação ativada
-//	$mail->SMTPSecure = 'ssl';	// SSL REQUERIDO pelo GMail
-//	$mail->Host = 'smtp.gmail.com';	// SMTP utilizado
-//	$mail->Port = 587;  		// A porta 587 deverá estar aberta em seu servidor
-//	$mail->Username = "bolaocraquedebola16@gmail.com";
-//	$mail->Password = "E3b3c4f5h5931";
-//	$mail->SetFrom("bolaocraquedebola16@gmail.com", "bolaocraquedebola16@gmail.com");
-//	$mail->Subject = "bolaocraquedebola16@gmail.com";
-//	$mail->Body = "bolaocraquedebola16@gmail.com";
-//	$mail->AddAddress("msn@dymenstein.com");
-
-       
-        
-//        $config = new Zend_Config_Ini("config.ini");
-//        
-//        $mail = Helpers_Mail::getInstance();
-//        $mail->addTo('<'.$data.'>');
-//        $mail->setSubject('Resetear senha');
-//        $root = $config->hostpublic."/?confmail=";
-//        $string = 'Bolão Craque de Bola';
-//        $mail->setBodyHtml($string);
-//        $mail->setFrom('bolaocraquedebola16@gmail.com', 'Bolão Craque de Bola');
-//        $mail->send();
+        $mail = new Zend_Mail();
+        $mail->setBodyHtml($body);
+        $mail->setFrom('bolaocraquedebola16@gmail.com');
+        $mail->addTo($addTo, $addTo);
+        $mail->setSubject($subject);
+        $mail->send($transport);
     }
 }
 

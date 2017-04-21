@@ -1,0 +1,190 @@
+<?php
+
+    $token = Zend_Controller_Front::getInstance()->getRequest()->getParam('trocarsenha');
+
+
+?>
+
+<html lang="en"><head>
+	
+	<!-- start: Meta -->
+	<meta charset="utf-8">
+	<title>Bolão Craque de Bola</title>
+	<meta name="description" content="Bolão Craque de Bola.">
+	<meta name="author" content="Martin Dymenstein">
+	<meta name="keyword" content="Bolão, Futebol, Brasileirão, Campeonato">
+	<!-- end: Meta -->
+	
+	<!-- start: Mobile Specific -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- end: Mobile Specific -->
+	
+	<!-- start: CSS -->
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="assets/css/style.min.css" rel="stylesheet">
+	<link href="assets/css/retina.min.css" rel="stylesheet">
+	<link href="assets/css/print.css" rel="stylesheet" type="text/css" media="print">
+	<!-- end: CSS -->
+	
+
+	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+		
+	  	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+		
+	<![endif]-->
+	
+	<!-- start: Favicon and Touch Icons -->
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/ico/apple-touch-icon-57-precomposed.png">
+	<link rel="shortcut icon" href="<?php echo $this->baseUrl().'assets/ico/icone.gif'; ?>">
+        <link rel="icon" href="assets/ico/icone.gif">
+	<!-- end: Favicon and Touch Icons -->	
+		
+</head>
+
+<body>
+    
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.8&appId=327481340963843";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+    
+    
+		<div class="container">
+		<div class="row">
+					<div id="content" class="col-sm-12 full">
+			<div class="row">
+				<div class="login-box">
+					
+					<div class="header">
+						Trocar Senha Bolão Craque de Bola
+					</div>
+<!--                                    <span id="status"></span>
+					<p>      
+                                                <input type="hidden" id="idface">
+						<div class="fb-login-button" data-max-rows="1" data-size="icon" data-show-faces="true" data-auto-logout-link="false"></div>
+					</p>-->
+
+                                                
+					
+					<form class="form-horizontal login" action="<?php echo $this->baseUrl("/index/trocarsenha"); ?>" method="post">
+                                       <?php
+                                            echo '<input type="hidden" name="token" value="'.$token.'" />';
+
+					?>
+						<fieldset class="col-sm-12">
+							
+							<div class="form-group">
+							  	<div class="controls row">
+									<div class="input-group col-sm-12">	
+										<input type="password" class="form-control" name="password" placeholder="Senha ">
+										<span class="input-group-addon"><i class="fa fa-key"></i></span>
+									</div>	
+							  	</div>
+							</div>
+                                                    
+							<div class="form-group">
+							  	<div class="controls row">
+									<div class="input-group col-sm-12">	
+										<input type="password" class="form-control" name="confirmacao" placeholder="Confirmar senha">
+										<span class="input-group-addon"><i class="fa fa-key"></i></span>
+									</div>	
+							  	</div>
+							</div>                                                    
+
+							<div class="row">
+							
+								<button type="submit" class="btn btn-lg btn-primary col-xs-12">Trocar senha</button>
+							
+							</div>
+								
+						</fieldset>	
+
+					</form>
+					
+					<!--<a class="pull-right" href="<?php echo $this->baseUrl()."/?register&login=yes"; ?>">Cadastre-se!</a>-->
+					
+					<div class="clearfix"></div>				
+						
+				</div>
+			</div><!--/row-->
+		
+		</div>	
+
+			
+			
+				</div><!--/row-->		
+		
+	</div><!--/container-->
+	
+		
+	<!-- start: JavaScript-->
+	<!--[if !IE]>-->
+
+			<script src="assets/js/jquery-2.1.0.min.js"></script>
+
+	<!--<![endif]-->
+
+	<!--[if IE]>
+	
+		<script src="assets/js/jquery-1.11.0.min.js"></script>
+	
+	<![endif]-->
+
+	<!--[if !IE]>-->
+
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='assets/js/jquery-2.1.0.min.js'>"+"<"+"/script>");
+		</script>
+
+	<!--<![endif]-->
+
+	<!--[if IE]>
+	
+		<script type="text/javascript">
+	 	window.jQuery || document.write("<script src='assets/js/jquery-1.11.0.min.js'>"+"<"+"/script>");
+		</script>
+		
+	<![endif]-->
+	<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+	
+		
+	
+	
+	<!-- page scripts -->
+	<script src="assets/js/jquery.icheck.min.js"></script>
+	
+	<!-- theme scripts -->
+	<script src="assets/js/custom.min.js"></script>
+	<script src="assets/js/core.min.js"></script>
+	
+	<!-- inline scripts related to this page -->
+	<script src="assets/js/pages/login.js"></script>
+	
+	<!-- end: JavaScript-->
+	<!--<div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>-->
+
+</body></html>
+
+
+<script>
+  
+</script>
+
+<!--
+  Below we include the Login Button social plugin. This button uses
+  the JavaScript SDK to present a graphical Login button that triggers
+  the FB.login() function when clicked.
+-->
+
+<!--<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>-->

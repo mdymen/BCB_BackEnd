@@ -839,5 +839,23 @@ class IndexController extends Zend_Controller_Action
         
     }
     
+    public function trocarsenhaAction() {
+        $params = $this->_request->getParams();
+        
+        $senha = $params['password'];
+        
+        $u = new Application_Model_Users();
+        
+        $result = $u->verificar_trocasenha($params['token']);
+
+        if ($result) {
+            $u->update_senha($result['reset_iduser'], $senha);            
+            $config = new Zend_Config_Ini("config.ini");
+           $this->redirect($config->host.'/public');
+        }
+       
+        
+    }
+    
 }
 
