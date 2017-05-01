@@ -72,6 +72,19 @@ class MobileController extends Zend_Controller_Action
         }
 
     }
+    
+    public function celltestingAction() {
+     	
+        "error";
+        
+//		$this->getResponse()
+//				 ->setHeader('Content-Type', 'application/json');			
+//		
+//        $this->_helper->layout->disableLayout();
+//        $this->_helper->viewRenderer->setNoRender(TRUE);        
+//		
+//        $this->_helper->json("TESTING"); 
+    }    
    
     public function celloginAction() {
         $body = $this->getRequest()->getRawBody();
@@ -284,14 +297,46 @@ class MobileController extends Zend_Controller_Action
 //        $this->_redirect('/index');
     }
     
+    public function celproximojogoslimitAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);	
+        
+        $us_id = $params['us_id'];
+        
+        $limit = 0;
+        if (!empty($params['limit'])) {
+            $limit = $params['limit'];
+        }
+            
+        
+        $m = new Application_Model_Matchs();
+        $matchs = $m->proximos_jogos_offset($us_id, $limit, 12);
+
+        $this->view->matchs = $matchs;
+            
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($matchs);      
+    }
+    
     public function celproximojogosAction() {
         $body = $this->getRequest()->getRawBody();
         $params = Zend_Json::decode($body);	
         
         $us_id = $params['us_id'];
         
+        $limit = 0;
+        if (!empty($params['limit'])) {
+            $limit = $params['limit'];
+        }
+            
+        
         $m = new Application_Model_Matchs();
-        $matchs = $m->proximos_jogos($us_id, 8);
+        $matchs = $m->proximos_jogos($us_id, 12);
 
         $this->view->matchs = $matchs;
             

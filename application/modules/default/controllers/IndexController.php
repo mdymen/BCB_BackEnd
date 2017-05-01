@@ -164,7 +164,7 @@ class IndexController extends Zend_Controller_Action
            
             if (!empty($params['termos']) && strcmp($params['termos'], "on") == 0) {
                 
-                $info = array("us_username" => $username, "us_password" => $senha);
+                $info = array("us_username" => $username, "us_password" => $senha, "us_origen" => "WEB");
                 $user->save_user($info);
                 $this->login1($username, $senha);
                 $this->redirect("../public");
