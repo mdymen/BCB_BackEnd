@@ -1037,5 +1037,24 @@ class MobileController extends Zend_Controller_Action
         $mail->setSubject($subject);
         $mail->send($transport);
     }
+    
+    public function cellpalpitesusuarioAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+        
+        $user = $params['user'];
+        
+        $u = new Application_Model_Users();
+        $result = $u->getPalpitesUsuario($user);
+        
+                        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $this->_helper->json($result);
+        
+    }
 }
 

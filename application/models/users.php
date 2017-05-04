@@ -530,4 +530,22 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
 				"pg_foipago" => $pg_foipago), "pg_id = '".$result['pg_id']."'");
 		}
 	}
+        
+        public function getPalpitesUsuario($user) {
+            $db = $this->db;
+            
+            $sql = "SELECT (SELECT sum(rs_points) FROM result where rs_iduser = ".$user.") as pontos,
+            (SELECT count(*) FROM result inner join wi061609_penca.match m ON rs_idmatch = m.mt_id where rs_iduser = ".$user." and mt_played = 1) as palpitados,
+            (SELECT count(*) FROM result  where rs_iduser = ".$user." and rs_result = 1) as acertos,
+            (SELECT COUNT( * ) 
+            FROM result
+            INNER JOIN wi061609_penca.match m ON rs_idmatch = m.mt_id
+            WHERE rs_iduser = ".$user."
+            AND mt_played =1
+            AND rs_points =0) as erros";
+            
+            $result = $db->query($sql)->fetch();
+            
+            return $result;
+        }
 }

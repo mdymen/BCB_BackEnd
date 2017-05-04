@@ -323,7 +323,8 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
             'rs_res1' => $result1,
             'rs_res2' => $result2,
             'rs_iduser' => $user_id,
-            'rs_round' => $round
+            'rs_round' => $round,
+             'rs_date' => date("Y-m-d H:i:s")
                 
         );
         
@@ -338,6 +339,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
 		
 		$db->update("result", array(
 			'rs_res1' => $result1,
+                    'rs_date' => date("Y-m-d H:i:s"),
             'rs_res2' => $result2,
             'rs_round' => $round), "rs_iduser = ".$user_id." and rs_idmatch = ".$match_id);
 		
