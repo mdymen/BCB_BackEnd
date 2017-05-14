@@ -58,7 +58,7 @@ class CampeonatosController extends Zend_Controller_Action
             $p_obj = new Application_Model_Penca();
             
             if (empty($params['team'])) {
-                $rodadas = $matchs_obj->load_matchs($champ_id, $rodada_id, $data['us_id']);
+                $rodadas = $matchs_obj->load_rodada_com_palpites($champ_id, $rodada_id, $data['us_id']);
                 $this->view->porteam = true;
                 $this->view->porrodada = false;
             } else {

@@ -90,23 +90,30 @@
 
 //print_r($matchs);
 if (!empty($matchs)) {
-        $box = new Helpers_Box();
-        $box->disabled_input = true;
-        $box->mas_info = true;
-        $box->matches = $matchs;
-        $box->palpites_goal = false;
-        $box->show_final_result = false;
-        $box->show_jugados = true;
-        $box->show_titulo_campeonato = false;
-        $box->show_titulo_rodada = false;
-        $box->tamanho_box = "col-lg-6 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
-        $box->btn_minimize = true;
-        $box->display_boxcontent = false;
-        $box->titulo_bigbox = $t->_("jogos.da.rodada");
-        $box->mas_info = false;
-        $box->btn_palpitar_sem_ter_jugado = true;
-        $box->base = $this->baseUrl();
-        $box->big_box();
+                            $box = new Helpers_Box();
+                            $box->matches = $matchs;
+                            $box->base = $this->baseUrl();
+                            $box->disabled_input = true;
+                            $box->mas_info = false;
+                            $box->show_final_result = true;
+                            $box->palpites_goal = true;
+                            $box->show_solo_nopalpitados = false;
+                            $box->show_solo_palpitados = false;
+                            $box->show_titulo_rodada = false;
+                            $box->show_palpitar = true;
+                            $box->tamanho_box = "col-lg-5 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
+                            $box->btn_excluir = false;
+                            $box->btn_cantidad = true;
+                            $box->id_result_input1 = "result1pf_";
+                            $box->id_result_input2 = "result2pf_";
+                            $box->id_box = "rs_dados_";
+                            $box->ganadores = true;
+                            $box->titulo_bigbox = "Jogos";
+//                            $box->infoescrita = true;
+//                            $box->infoescrita_msg = "Encerrado";
+//                            $box->btn_cantidad = true;
+                            echo $box->big_box();
+
     }
 ?>
 <div class="col-lg-6" style="padding-left:0px !important; padding-right:0px !important">

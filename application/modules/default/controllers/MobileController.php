@@ -1056,5 +1056,24 @@ class MobileController extends Zend_Controller_Action
         $this->_helper->json($result);
         
     }
+    
+    public function celleditsenhaAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+
+        $novaSenha = $params['novasenha'];
+        $userId = $params['userId'];
+        
+        $u = new Application_Model_Users();
+        $result = $u->update_senha($userId, $novaSenha);
+        
+                        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $this->_helper->json(200);
+    }
 }
 

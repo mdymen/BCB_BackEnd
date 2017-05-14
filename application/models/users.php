@@ -548,4 +548,6 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
             
             return $result;
         }
+    
+    
 }

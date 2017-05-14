@@ -31,10 +31,12 @@ class UsuarioController extends Zend_Controller_Action
             $id_user = $params['usuario'];
         }
         
-        $this->view->lostMatches = $results->getLostMatches($id_user);
-        $this->view->winMatches = $results->getWonMatches($id_user);
-        $this->view->playedMatches = $results->getPlayedMatches($id_user);
-        $this->view->totalPoints = $results->getPoints($id_user);
+        $r = $results->getPalpitesUsuario($id_user);
+        
+        $this->view->lostMatches = $r['erros']; //$results->getLostMatches($id_user);
+        $this->view->winMatches = $r['acertos']; //$results->getWonMatches($id_user);
+        $this->view->playedMatches = $r['palpitados'];//$results->getPlayedMatches($id_user);
+        $this->view->totalPoints = $r['pontos']; //$results->getPoints($id_user);
         $this->view->usuario = $id_user;
 //        $this->view->position = $results->getPoisition($id_user);
 //        

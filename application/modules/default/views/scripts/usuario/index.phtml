@@ -6,7 +6,7 @@
     $storage = new Zend_Auth_Storage_Session();
     $data = (get_object_vars($storage->read())); 
 
-    $lostMaches = $this->lostMatches;
+    $lostMatches = $this->lostMatches;
     $winMatches = $this->winMatches;
     $playedMatches = $this->playedMatches;
     $totalPoints = $this->totalPoints;
@@ -43,7 +43,7 @@
 							
                 </div>
                 <div class="box-content">
-                    <?php echo $html->puntuacoes($totalPoints,0,$winMatches,$lostMaches,$playedMatches, $usuario,$this->baseUrl()); ?>
+                    <?php echo $html->puntuacoes($totalPoints,0,$winMatches,$lostMatches,$playedMatches, $usuario,$this->baseUrl()); ?>
                 </div>
 					
 				
