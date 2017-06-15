@@ -333,5 +333,29 @@ class Application_Model_Penca extends Application_Model_Bd_Adapter
         return $result;
     }
     
-
+    public function estaAsociadoALaPenca($idpenca, $iduser) {
+        $db = $this->db;
+        
+        $sql = $db->select()->from("user_penca")
+                ->where("up_idpenca = ?", $idpenca)
+                ->where("up_iduser = ?", $iduser);
+        
+        $result = $sql->query()->fetch();
+        
+        if (empty($result)) {
+            return false;
+        } else {
+            return true;
+        }
+        
+    }
+    
+    public function getPenca($idpenca) {
+        $db = $this->db;
+        
+        
+    }
+    
+    
+    
 }

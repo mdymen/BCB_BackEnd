@@ -179,6 +179,24 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         
     }    
    
+    public function load_rodada_com_palpites_penca($championship, $rodada, $usuario, $idpenca) {
+        $db = $this->db;
+        
+        $sql = "SELECT match.mt_idchampionship as ch_id, vwpalpites.*, `match`.*, t1.tm_id as tm1_id, t1.tm_name as t1nome, t1.tm_logo as tm1_logo,  `t1`.*, t2.tm_id as tm2_id, 
+            t2.tm_name as t2nome, t2.tm_logo as tm2_logo,
+            `t2`.*, r.*, round.*  FROM `match` 
+  INNER JOIN `team` AS `t1` ON t1.tm_id = match.mt_idteam1 
+  INNER JOIN `team` AS `t2` ON t2.tm_id = match.mt_idteam2   
+  LEFT JOIN vwpalpites ON vwpalpites.rs_idmatch = match.mt_id
+  LEFT JOIN round ON round.rd_id = match.mt_idround
+  LEFT JOIN (select * from result where rs_iduser = ".$usuario." and rs_idpenca = ".$idpenca.") r ON r.rs_idmatch = match.mt_id 
+  WHERE (match.mt_idchampionship = '".$championship."') AND (mt_idround = '".$rodada."') ORDER BY `mt_date` ASC";
+        
+        $result = $db->query($sql)->fetchAll();
+
+        return $result;
+        
+    }    
     
     public function load_rodada_com_palpites($championship, $rodada, $usuario) {
         $db = $this->db;

@@ -143,6 +143,7 @@ class MobileController extends Zend_Controller_Action
         $user['us_username'] = $data['username'];
         $user['us_password'] = $data['password'];
         $user['us_email'] = $data['email'];
+        $user['us_grito'] = $data['grito'];
         
 //        print_r($data['niver']);
 //        die(".");
@@ -488,6 +489,22 @@ class MobileController extends Zend_Controller_Action
         $this->_helper->json($result);
     } 
 	
+    public function getpencasdisponiveisAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+        
+        $u = new Application_Model_Users();
+        $pencas = $u->getPencasDisponiveis();
+        
+                $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($pencas);
+    }
+    
     public function getTimeUserId() {
         $storage = new Zend_Auth_Storage_Session();
         $data = (get_object_vars($storage->read())); 
@@ -501,6 +518,130 @@ class MobileController extends Zend_Controller_Action
         
         return $data['us_teamname'];
     }	
+    
+    
+    
+	public function cellbolaopencaAction() {
+		
+		// $params = $this->_request->getParams();
+		
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);	  
+	
+       // print_r($params);
+        
+        $champ = new Application_Model_Championships();
+        $result['championships']= $champ->load();
+		
+		$id = $params['id'];
+                
+           
+           
+           
+        $idpenca = $params['idpenca'];
+        $p_obj = new Application_Model_Penca();
+        
+        if ($p_obj->estaAsociadoALaPenca($idpenca, $id)) {
+            
+            if (!empty($params['champ'])) {                      
+
+             //   $result['teamuserid'] = $this->getTimeUserId();
+               // $result['teamusername'] = $this->getTimeUserName();
+
+                $champ_id = $params['champ'];
+
+                $result['champ'] = $champ_id;
+                $result['championship'] = $champ->getChamp($champ_id);
+
+                if (empty($params['rodada'])) {
+                    $rodada_id = $p_obj->getIdPrimeraRodadaDisponivel($champ_id);
+                } else {            
+                    $rodada_id = $params['rodada'];
+                }
+
+    //            print_r("Champ ".$params['champ']);
+    //            print_r("Rodada ".$rodada_id);
+
+                $storage = new Zend_Auth_Storage_Session();
+
+                $matchs_obj = new Application_Model_Matchs();
+                $rondas = $matchs_obj->getrondas($champ_id);
+
+                $tem_grupo = false;
+
+                if (empty($params['team'])) {
+                    $rodada = $matchs_obj->load_rodada_com_palpites_penca($champ_id, $rodada_id, $id, $params['idpenca']);
+                    $result['porteam'] = true;
+                    $result['porrodada'] = false;
+                } else {
+                    $result['porteam']  = false;
+                    $$result['porrodada'] = true;
+                    $team_id = $params['team'];
+                    $rodada = $matchs_obj->load_rodada_porteam($champ_id, $team_id, $id);
+                }
+
+                $teams_obj = new Application_Model_Teams();
+                $teams = $teams_obj->load_teams_championship($champ_id); 
+
+                            $novo_teams = array();
+
+
+                            if (!empty($teams[0]['tm_grupo'])) {
+                                    $tem_grupo = true;
+                                    $grupo = $teams[0]['tm_grupo'];
+                                    $j = 0;
+                                    $k = 0;
+                                    for ($i = 0; $i < sizeof($teams); $i = $i + 1) {
+                                            if (strcmp($grupo, $teams[$i]['tm_grupo']) != 0) {
+                                                    $grupo = $teams[$i]['tm_grupo'];
+                                                    $j = $j + 1;
+                                            } 
+                                            $teams[$i]['tem_grupo'] = true;
+                                            $novo_teams[$j]['tem_grupo'] = true;
+                                            $novo_teams[$j]['tm_grupo'] = $teams[$i]['tm_grupo'];
+                                            // $novo_teams[$j][$teams[$i]['tm_grupo']][$k] = $teams[$i];
+                                            $novo_teams[$j]["grupo"][$k] = $teams[$i];
+                                            $k = $k + 1;
+                                    }
+                                    $teams = $novo_teams;
+                            } else {
+                                    for ($i = 0; $i < sizeof($teams); $i = $i + 1) {
+                                            $teams[$i]['tem_grupo'] = false;
+                                    }
+                            }
+
+                $result['teams'] = $teams;
+
+                //los partidos de la rodada n_rodada
+                $result['rodada'] = $rodada;
+
+                //el numero de la rodada activa. La que siguiente inmediata que se va a jugar
+                $result['n_rodada'] = $rodada_id;
+
+                //las rodadas del campeonato registradas en el sistema
+                $result['rondas'] = $rondas;      
+
+                            $result['tem_grupo'] = $tem_grupo;			
+
+            }
+	
+        }
+        else {
+              
+            $result = "300";
+                        
+        }
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $this->_helper->json($result);
+    }
+
+    
 	
 	public function cellbolaoAction() {
 		
@@ -1057,6 +1198,25 @@ class MobileController extends Zend_Controller_Action
         
     }
     
+    public function celleditgritoAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+
+        $grito = $params['grito'];
+        $userId = $params['userId'];
+        
+        $u = new Application_Model_Users();
+        $result = $u->update_grito($userId, $grito);
+        
+                        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $this->_helper->json(200);
+    }    
+    
     public function celleditsenhaAction() {
         $body = $this->getRequest()->getRawBody();
         $params = Zend_Json::decode($body);
@@ -1074,6 +1234,133 @@ class MobileController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender(TRUE);
 
         $this->_helper->json(200);
+    }
+    
+    public function meusboloesAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);       
+        
+        $userid = $params['userid'];
+        
+        $u = new Application_Model_Users();
+        $boloes = $u->getBoloes($userid);
+        
+                                $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        if (empty($boloes)) {
+            $boloes = false;
+        }
+        
+        
+        $this->_helper->json($boloes);
+       
+    }
+    
+    public function criarbolaoAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+        
+        $iduser = $params['iduser'];
+        $nome = $params['nome'];
+        $valor = $params['valor'];
+        $privado = $params['privado'];
+        $idchamp = $params['idchamp'];
+        
+        $u = new Application_Model_Users();
+        $id = $u->criar_bolao($iduser, $nome, $valor, $privado, $idchamp);
+        
+        $p = new Application_Model_Penca();
+        $p->save_userpenca(array('up_idpenca' => $id,
+            'up_iduser' => $iduser));
+        
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $this->_helper->json(200);
+    }
+    
+    
+    public function cellverificardinheiroecadastrarAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+        
+        $u = new Application_Model_Users();
+        $d = $u->getDinheiro($params['iduser']);
+        
+        $custo = $params['custo'];
+        
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        if ($d >= $custo) {
+            
+            $p = new Application_Model_Penca();
+            $p->save_userpenca(
+                    array('up_idpenca' => $params['idpenca'],
+                          'up_iduser' => $params['iduser']));
+            
+             $this->_helper->json(true);   
+            
+        } else {
+            $this->_helper->json(false);            
+        }
+
+    }
+    
+    public function uploadAction() {
+    
+                $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+        
+        print_r($params);
+        die(".");
+        
+        //if they DID upload a file...
+//        if($_FILES['photo']['name'])
+//        {
+//                //if no errors...
+//                if(!$_FILES['photo']['error'])
+//                {
+//                        //now is the time to modify the future file name and validate the file
+//                        $new_file_name = strtolower($_FILES['photo']['tmp_name']); //rename file
+//                        if($_FILES['photo']['size'] > (1024000)) //can't be larger than 1 MB
+//                        {
+//                                $valid_file = false;
+//                                $message = 'Oops!  Your file\'s size is to large.';
+//                        }
+//
+//                        //if the file has passed the test
+//                        if($valid_file)
+//                        {
+//                                //move it to where we want it to be
+//                                move_uploaded_file($_FILES['photo']['tmp_name'], 'assets/'.$new_file_name);
+//                                $message = 'Congratulations!  Your file was accepted.';
+//                        }
+//                }
+//                //if there is an error...
+//                else
+//                {
+//                        //set that to be the returned message
+//                        $message = 'Ooops!  Your upload triggered the following error:  '.$_FILES['photo']['error'];
+//                }
+//        }
+//
+//        //you get the following information for each file:
+//        $_FILES['field_name']['name'];
+//        $_FILES['field_name']['size'];
+//        $_FILES['field_name']['type'];
+//        $_FILES['field_name']['tmp_name'];
+        
     }
 }
 

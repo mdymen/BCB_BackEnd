@@ -75,6 +75,12 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         return $result;
     }    
     
+    public function update_grito($user_id, $grito) {
+        $db = $this->db;
+        
+        $db->update("user", array('us_grito' => $grito),'us_id = '.$user_id);
+    }    
+    
     public function update_senha($user_id, $senha) {
         $db = $this->db;
         
@@ -502,6 +508,52 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
 		$result = $query->query()->fetch();
 		
 	}
+        
+        
+     public function criar_bolao($iduser, $nome, $valor, $privado, $idchamp) {
+         $db = $this->db;
+         
+         $db->insert("penca",array("pn_name" => $nome, 
+			"pn_value" => $valor,
+			"pn_iduser" => $iduser,
+			"pn_idchampionship" => $idchamp,
+			"pn_justfriends" => $privado));
+         
+         return $db->lastInsertId();
+     }
+        
+     public function getPencasDisponiveis() {
+                 $db = $this->db;
+        
+        $sql = "SELECT * FROM penca p"
+                . " INNER JOIN championship c ON p.pn_idchampionship = c.ch_id"
+                . " INNER JOIN user_penca up ON up.up_idpenca = p.pn_id "
+                . " LEFT JOIN participantespenca pa ON pa.up_idpenca = p.pn_id "
+                . " WHERE p.pn_justfriends = 0";
+        
+        $result = $db->query($sql)->fetchAll();
+        
+        return $result;
+     }
+     
+     public function getBoloes($userid) {
+        $db = $this->db;
+        
+        $sql = "SELECT * FROM penca p"
+                . " INNER JOIN championship c ON p.pn_idchampionship = c.ch_id"
+                . " INNER JOIN user_penca up ON up.up_idpenca = p.pn_id "
+                . " LEFT JOIN participantespenca pa ON pa.up_idpenca = p.pn_id "
+                . " WHERE p.pn_iduser = ".$userid;
+        
+//        $query = $db->select()->from("penca")
+//                ->joinInner("championship", "championship.ch_id = penca.pn_idchampionship")
+//                ->joinInner("user_penca", "user_penca.up_idpenca = penca.pn_id", array("count"))
+//                ->where("pn_iduser = ?", $userid);
+        
+        $result = $db->query($sql)->fetchAll();
+        
+        return $result;
+    }
 	
 	public function update_pagseguro($email, $id_notificationcode, $id_transactionstatus, $plano, $code, $pg_foipago) {
 		$db = $this->db;
@@ -549,5 +601,5 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
             return $result;
         }
     
-    
+
 }
