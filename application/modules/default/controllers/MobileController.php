@@ -432,52 +432,91 @@ class MobileController extends Zend_Controller_Action
         $match_id = $params['match'];
         $round = $params['round'];
         $champ = $params['champ'];
+        $penca = $params['pn_id'];
 //        
 //        print_r($round);
 //        die(".");
+        //Si esta palpitando un partido que no pertenece a una penca
+        if (empty($penca)) {
         
-        $champs = new Application_Model_Championships();
-        $champ_obj = $champs->getChamp($champ);
+            $champs = new Application_Model_Championships();
+            $champ_obj = $champs->getChamp($champ);
+
+            $temSaldo = $this->verificarsaldo($champ_obj, $user_id);
+            if ($temSaldo) {
+
+
+
+                $matchs_obj = new Application_Model_Matchs();     
+
+                            $match_ja_palpitado = $matchs_obj->match_ja_palpitado($match_id, $user_id);
+
+                            if (!$match_ja_palpitado) {
+
+                                    $id = $matchs_obj->submeter_result($user_id, $result1, $result2, $match_id, $round);
+
+                                    $penca = new Application_Model_Penca();
+                                    $transaction = $penca->setMatch((-1)*$champ_obj['ch_dpalpite'], $champ_obj['ch_dchamp'], 
+                                                    $champ, $user_id, $champ_obj['ch_drodada'], 
+                                                    $round, $champ_obj['ch_djogo'], $match_id, 'null');           
+
+                                    $result_obj = new Application_Model_Result();    
+                                    $result = $result_obj->getResult($id);
+
+                                    $result['sucesso'] = 200;
+                                    $result['total'] = $transaction['tr_res_rd_acumulado'];
+                                    $result['total_usuario'] = $transaction['tr_res_us_cash'];
+                                    $result['total_match'] = $transaction['tr_res_mt_acumulado'];
+                                    $result['total_campeonato'] = $transaction['tr_res_ch_acumulado'];
+
+                //$this->login();
+                            } else {
+
+                                    $matchs_obj->alterar_result($user_id, $result1, $result2, $match_id, $round);
+
+                                    $result_obj = new Application_Model_Result();    
+                                    $result = $result_obj->getResultByUserMatch($user_id, $match_id);
+
+                                    $result['sucesso'] = 402;
+                            }
+            } else {
+                $result['sucesso'] = 401;
+            }
         
-        $temSaldo = $this->verificarsaldo($champ_obj, $user_id);
-        if ($temSaldo) {
-
-            
-            
-            $matchs_obj = new Application_Model_Matchs();     
-			
-			$match_ja_palpitado = $matchs_obj->match_ja_palpitado($match_id, $user_id);
-
-			if (!$match_ja_palpitado) {
-			
-				$id = $matchs_obj->submeter_result($user_id, $result1, $result2, $match_id, $round);
-				
-				$penca = new Application_Model_Penca();
-				$transaction = $penca->setMatch((-1)*$champ_obj['ch_dpalpite'], $champ_obj['ch_dchamp'], 
-						$champ, $user_id, $champ_obj['ch_drodada'], 
-						$round, $champ_obj['ch_djogo'], $match_id, 'null');           
-	   
-				$result_obj = new Application_Model_Result();    
-				$result = $result_obj->getResult($id);
-
-				$result['sucesso'] = 200;
-				$result['total'] = $transaction['tr_res_rd_acumulado'];
-				$result['total_usuario'] = $transaction['tr_res_us_cash'];
-				$result['total_match'] = $transaction['tr_res_mt_acumulado'];
-				$result['total_campeonato'] = $transaction['tr_res_ch_acumulado'];
-	  
-            //$this->login();
-			} else {
-				
-				$matchs_obj->alterar_result($user_id, $result1, $result2, $match_id, $round);
-				
-				$result_obj = new Application_Model_Result();    
-				$result = $result_obj->getResultByUserMatch($user_id, $match_id);
-				
-				$result['sucesso'] = 402;
-			}
         } else {
-            $result['sucesso'] = 401;
+            $matchs_obj = new Application_Model_Matchs();
+            $result_obj = new Application_Model_Result();  
+                            
+            $match_ja_palpitado = $matchs_obj->match_ja_palpitado_penca($match_id, $user_id, $penca);                        
+                       
+            if (!$match_ja_palpitado) {
+                $dados = array(
+                    'rs_idmatch' => $match_id,
+                    'rs_idpenca' => $penca,
+                    'rs_iduser' => $user_id,
+                    'rs_res1' => $result1,
+                    'rs_res2' => $result2,
+                    'rs_date' => date("Y-m-d H:i:s"),
+                    'rs_round' => $round
+                );
+                
+                $id = $matchs_obj->save_penca_match($dados);
+
+                $result = $result_obj->getResult($id);
+
+                $result['sucesso'] = 200;
+            } else {
+                $dados = array(
+                    'rs_res1' => $result1,
+                    'rs_res2' => $result2,
+                    'rs_date' => date("Y-m-d H:i:s")
+                );
+                
+                $matchs_obj->update_penca_match($dados, $match_id, $user_id, $penca);
+                $result = $result_obj->get_result_by_match_user_penca($match_id, $user_id, $penca);
+                
+                $result['sucesso'] = 402;
+            }
         }
         
         $this->getResponse()
@@ -494,7 +533,7 @@ class MobileController extends Zend_Controller_Action
         $params = Zend_Json::decode($body);
         
         $u = new Application_Model_Users();
-        $pencas = $u->getPencasDisponiveis();
+        $pencas = $u->getPencasDisponiveis($params['iduser']);
         
                 $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
@@ -610,6 +649,10 @@ class MobileController extends Zend_Controller_Action
                                     }
                             }
 
+                $p = new Application_Model_Penca();
+                $us_penca = $p->load_penca_users($params['idpenca']);
+                            
+                            
                 $result['teams'] = $teams;
 
                 //los partidos de la rodada n_rodada
@@ -622,6 +665,8 @@ class MobileController extends Zend_Controller_Action
                 $result['rondas'] = $rondas;      
 
                             $result['tem_grupo'] = $tem_grupo;			
+                 
+                 $result['usuarios_penca'] = $us_penca;
 
             }
 	
@@ -1287,12 +1332,14 @@ class MobileController extends Zend_Controller_Action
     }
     
     
+    
+    
     public function cellverificardinheiroecadastrarAction() {
         $body = $this->getRequest()->getRawBody();
         $params = Zend_Json::decode($body);
         
         $u = new Application_Model_Users();
-        $d = $u->getDinheiro($params['iduser']);
+        $dinheiro = $u->getDinheiro($params['iduser']);
         
         $custo = $params['custo'];
         
@@ -1302,19 +1349,47 @@ class MobileController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
 
+        $d = $dinheiro['us_cash'];
+        
         if ($d >= $custo) {
             
             $p = new Application_Model_Penca();
             $p->save_userpenca(
                     array('up_idpenca' => $params['idpenca'],
-                          'up_iduser' => $params['iduser']));
+                          'up_iduser' => $params['iduser']), $custo);
+
+            //$new_cash = number_format((float)$d, 2, '.', '') - number_format((float)$custo, 2, '.', '');
             
-             $this->_helper->json(true);   
+            $new_cash = round($d, 2) - round($custo, 2);
+            
+            $u->update_cash($params['iduser'], $new_cash);
+            
+            
+             $this->_helper->json($new_cash);   
             
         } else {
             $this->_helper->json(false);            
         }
 
+    }
+    
+    public function cellsairbolaoAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);   
+        
+        $iduser = $params['iduser'];
+        $idpenca = $params['idpenca'];
+        
+        $p = new Application_Model_Penca();
+        $p->remove_penca_usuario($iduser, $idpenca);
+        
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json(200); 
     }
     
     public function uploadAction() {

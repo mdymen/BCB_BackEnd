@@ -13,13 +13,13 @@
  */
 class ErrorController extends Zend_Controller_Action
 {
-    public function errorAction() {
-        echo '<div>
-            <center>
-                <img src="/assets/img/page-not-found.png"  />
-            </center>
-        </div>';
-        die(".");
-    }
-    
+//    public function errorAction() {
+//        echo '<div>
+//            <center>
+//                <img src="/assets/img/page-not-found.png"  />
+//            </center>
+//        </div>';
+//        die(".");
+//    }
+//    
 }

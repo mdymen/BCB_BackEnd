@@ -67,6 +67,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
                 ->where("rs_iduser= ?", $usuario)
                 ->where("mt_idchampionship = ?", $championship)
                 ->where("mt_idround = ?", $rodada)
+                ->where("rs_idpenca = 0")
                 ->order(array('mt_idround ASC','mt_date ASC'));
         
 //        print_r($result->__toString());
@@ -208,8 +209,8 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
   INNER JOIN `team` AS `t2` ON t2.tm_id = match.mt_idteam2   
   LEFT JOIN vwpalpites ON vwpalpites.rs_idmatch = match.mt_id
   LEFT JOIN round ON round.rd_id = match.mt_idround
-  LEFT JOIN (select * from result where rs_iduser = ".$usuario.") r ON r.rs_idmatch = match.mt_id 
-  WHERE (match.mt_idchampionship = '".$championship."') AND (mt_idround = '".$rodada."') ORDER BY `mt_date` ASC";
+  LEFT JOIN (select * from result where rs_iduser = ".$usuario." AND rs_idpenca = 0) r ON r.rs_idmatch = match.mt_id 
+  WHERE  (match.mt_idchampionship = '".$championship."') AND (mt_idround = '".$rodada."') ORDER BY `mt_date` ASC";
         
 //        print_r($sql);
         
@@ -277,6 +278,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
 //                ->where("match.mt_idteam1 = ?", $team)
 //                ->orWhere("match.mt_idteam2 = ?",$team)
                 ->where("rs_iduser = ? ",$usuario)
+                ->where("rs_idpenca = 0")
                 ->where("mt_idchampionship = ?", $championship)
                 ->where("mt_idteam1 = ?", $team)
                 ->orWhere("mt_idteam2 = ?",$team)
@@ -321,16 +323,25 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
 //        die(".");
         
         $d = array(
-            'rs_idmatch' => $dados['idmatch'],
-            'rs_idpenca' => $dados['idpenca'],
-            'rs_iduser' => $dados['iduser'],
-            'rs_res1' => 0,
-            'rs_res2' => 0,
-            'rs_date' => $dados['date'],
-            'rs_round' => $dados['round']
+            'rs_idmatch' => $dados['rs_idmatch'],
+            'rs_idpenca' => $dados['rs_idpenca'],
+            'rs_iduser' => $dados['rs_iduser'],
+            'rs_res1' => $dados['rs_res1'],
+            'rs_res2' => $dados['rs_res2'],
+            'rs_date' => $dados['rs_date'],
+            'rs_round' => $dados['rs_round']
         );
         
         $db->insert("result", $d);
+        
+        return $db->lastInsertId();
+    }
+    
+    public function update_penca_match($dados, $rs_idmatch, $rs_iduser, $rs_idpenca ) {
+        $db = $this->db;
+        
+        $db->update("result", $dados, "rs_idmatch = ".$rs_idmatch.""
+                . " and rs_iduser = ".$rs_iduser." and rs_idpenca = ".$rs_idpenca);
     }
     
     public function submeter_result($user_id, $result1, $result2, $match_id, $round) {
@@ -534,6 +545,22 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         $db->update("match", $info, "mt_id = ".$params['mt_id']);
         
     }
+    
+    	public function match_ja_palpitado_penca($id_match, $id_user, $penca) {
+		$db = $this->db;
+		
+		$result = $db->select()->from("result")
+			->where("rs_idmatch = ?", $id_match)
+			->where("rs_iduser = ?", $id_user)
+                        ->where("rs_idpenca = ?", $penca);
+			
+		$return = $result->query()->fetch();
+		
+		if (empty($return)) {
+			return false;
+		}
+		return true;
+	}
 	
 	public function match_ja_palpitado($id_match, $id_user) {
 		$db = $this->db;

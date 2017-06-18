@@ -30,7 +30,7 @@ class Application_Model_Penca extends Application_Model_Bd_Adapter
         $this->insert($info);
     }
         
-    public function save_userpenca($params) {
+    public function save_userpenca($params, $custo) {
         $db = $this->db;
         
         $info = array(
@@ -39,6 +39,13 @@ class Application_Model_Penca extends Application_Model_Bd_Adapter
         );
         
         $db->insert("user_penca", $info);
+        
+        $ac = $db->select()->from("penca", array("pn_valueaccumulated"))
+                ->where("pn_id = ?", $params['up_idpenca'])
+                ->query()->fetch();
+        
+        $db->update("penca", array("pn_valueaccumulated" => round($ac["pn_valueaccumulated"],2) + round($custo,2)),
+                "pn_id = ".$params['up_idpenca']);
     }
     
     public function load_penca__puntagem_usuario($id_user) {
@@ -356,6 +363,13 @@ class Application_Model_Penca extends Application_Model_Bd_Adapter
         
     }
     
-    
+    public function remove_penca_usuario($iduser, $idpenca) {
+        $db = $this->db;
+        
+        $sql = "DELETE FROM user_penca WHERE up_idpenca = ".$idpenca." "
+                . " AND up_iduser = ".$iduser;
+        
+        $db->query($sql)->fetch();
+    }
     
 }

@@ -522,14 +522,19 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
          return $db->lastInsertId();
      }
         
-     public function getPencasDisponiveis() {
+     public function getPencasDisponiveis($iduser) {
                  $db = $this->db;
         
         $sql = "SELECT * FROM penca p"
                 . " INNER JOIN championship c ON p.pn_idchampionship = c.ch_id"
+                . " LEFT JOIN participantespenca pa ON pa.up_idpenca = p.pn_id "
+                . " WHERE p.pn_justfriends = 0 AND p.pn_id NOT IN ("
+                . " SELECT DISTINCT p.pn_id FROM penca p"
+                . " INNER JOIN championship c ON p.pn_idchampionship = c.ch_id"
                 . " INNER JOIN user_penca up ON up.up_idpenca = p.pn_id "
                 . " LEFT JOIN participantespenca pa ON pa.up_idpenca = p.pn_id "
-                . " WHERE p.pn_justfriends = 0";
+                . " WHERE up.up_iduser = ".$iduser.""
+                . ")";
         
         $result = $db->query($sql)->fetchAll();
         
@@ -539,11 +544,11 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
      public function getBoloes($userid) {
         $db = $this->db;
         
-        $sql = "SELECT * FROM penca p"
+        $sql = "SELECT DISTINCT p.*, c.*, pa.* FROM penca p"
                 . " INNER JOIN championship c ON p.pn_idchampionship = c.ch_id"
                 . " INNER JOIN user_penca up ON up.up_idpenca = p.pn_id "
                 . " LEFT JOIN participantespenca pa ON pa.up_idpenca = p.pn_id "
-                . " WHERE p.pn_iduser = ".$userid;
+                . " WHERE up.up_iduser = ".$userid;
         
 //        $query = $db->select()->from("penca")
 //                ->joinInner("championship", "championship.ch_id = penca.pn_idchampionship")

@@ -76,6 +76,17 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
                 ->fetch();  
     }
     
+    public function get_result_by_match_user_penca($match_id, $user_id, $penca) {
+        $db = $this->db;
+        
+        return $db->select()->from("result")
+                ->where("rs_iduser = ?", $user_id)
+                ->where("rs_idmatch = ?", $match_id)
+                ->where("rs_idpenca = ?", $penca)
+                ->query()
+                ->fetch();  
+    }
+    
     public function palpites_em_acao($us_id) {
         $db = $this->db;
         
