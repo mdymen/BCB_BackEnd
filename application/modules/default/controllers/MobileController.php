@@ -419,7 +419,7 @@ class MobileController extends Zend_Controller_Action
         
     } 
  
-	public function cellsubmeterpalpiteAction() {
+    public function cellsubmeterpalpiteAction() {
         $body = $this->getRequest()->getRawBody();
         $params = Zend_Json::decode($body);		
 
@@ -1352,20 +1352,24 @@ class MobileController extends Zend_Controller_Action
         $d = $dinheiro['us_cash'];
         
         if ($d >= $custo) {
-            
+                        
             $p = new Application_Model_Penca();
-            $p->save_userpenca(
-                    array('up_idpenca' => $params['idpenca'],
-                          'up_iduser' => $params['iduser']), $custo);
+            $p->save_userpenca($params['idpenca'],$params['iduser'], $custo);
 
-            //$new_cash = number_format((float)$d, 2, '.', '') - number_format((float)$custo, 2, '.', '');
-            
             $new_cash = round($d, 2) - round($custo, 2);
             
             $u->update_cash($params['iduser'], $new_cash);
+
+            $pencas = $u->getPencasDisponiveis($params['iduser']);
+                                
+            $boloes = $u->getBoloes($params['iduser']);
             
+            $result = array();
+            $result['cash'] = $new_cash;
+            $result['pencas_disponiveis'] = $pencas;
+            $result['boloes'] = $boloes;
             
-             $this->_helper->json($new_cash);   
+             $this->_helper->json($result);   
             
         } else {
             $this->_helper->json(false);            
@@ -1383,13 +1387,22 @@ class MobileController extends Zend_Controller_Action
         $p = new Application_Model_Penca();
         $p->remove_penca_usuario($iduser, $idpenca);
         
+        $u = new Application_Model_Users();
+        $pencas = $u->getPencasDisponiveis($params['iduser']);
+        $boloes = $u->getBoloes($params['iduser']);
+        
+        $result = array();
+        $result['boloes'] = $boloes;
+        $result['pencas_disponiveis'] = $pencas;
+        $result['result'] = 200;
+        
         $this->getResponse()
              ->setHeader('Content-Type', 'application/json');
 
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json(200); 
+        $this->_helper->json($result); 
     }
     
     public function uploadAction() {

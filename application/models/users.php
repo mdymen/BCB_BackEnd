@@ -95,7 +95,7 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
                 ->where("reset_token = ?", $token)
                 ->where("reset_ativo = ?", 1);
         
-        return $result->query()->fetch();
+        return $result->query();
     }
     
     public function update_cash($user, $cash) {

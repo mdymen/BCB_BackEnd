@@ -30,22 +30,34 @@ class Application_Model_Penca extends Application_Model_Bd_Adapter
         $this->insert($info);
     }
         
-    public function save_userpenca($params, $custo) {
+    public function save_userpenca($idpenca, $iduser, $custo) {
         $db = $this->db;
         
         $info = array(
-            'up_idpenca' => $params['up_idpenca'],
-            'up_iduser' => $params['up_iduser'],
+            'up_idpenca' => $idpenca,
+            'up_iduser' => $iduser,
         );
         
         $db->insert("user_penca", $info);
         
         $ac = $db->select()->from("penca", array("pn_valueaccumulated"))
-                ->where("pn_id = ?", $params['up_idpenca'])
+                ->where("pn_id = ?", $idpenca)
                 ->query()->fetch();
         
-        $db->update("penca", array("pn_valueaccumulated" => round($ac["pn_valueaccumulated"],2) + round($custo,2)),
-                "pn_id = ".$params['up_idpenca']);
+
+        
+        $valor = round($ac["pn_valueaccumulated"],2) + round($custo,2);
+
+//        $sql = "UPDATE penca SET pn_valueaccumulated = '".$valor."' WHERE pn_id = ".$idpenca;
+//        
+//        print_r($sql);
+//        die(".");
+        
+        $db->query("UPDATE penca SET pn_valueaccumulated = '".$valor."' WHERE pn_id = ".$idpenca);
+        
+//        
+//        $db->update("penca", array("pn_valueaccumulated" => $valor),
+//                "pn_id = ".$params['up_idpenca']);
     }
     
     public function load_penca__puntagem_usuario($id_user) {
@@ -369,7 +381,7 @@ class Application_Model_Penca extends Application_Model_Bd_Adapter
         $sql = "DELETE FROM user_penca WHERE up_idpenca = ".$idpenca." "
                 . " AND up_iduser = ".$iduser;
         
-        $db->query($sql)->fetch();
+        $db->query($sql);
     }
     
 }
