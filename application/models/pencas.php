@@ -29,6 +29,12 @@ class Application_Model_Penca extends Application_Model_Bd_Adapter
         
         $this->insert($info);
     }
+    
+    public function save_userpenca_inicial($array) {
+        $db = $this->db;
+        
+        $db->insert("user_penca", $array);
+    }
         
     public function save_userpenca($idpenca, $iduser, $custo) {
         $db = $this->db;
@@ -85,6 +91,7 @@ class Application_Model_Penca extends Application_Model_Bd_Adapter
         
         $return = $db->select()->from("penca")
                 ->joinInner("championship", "penca.pn_idchampionship = championship.ch_id")
+                ->where("pn_ativo = 1")
                 ->query()->fetchAll();
         
         return $return;
@@ -382,6 +389,16 @@ class Application_Model_Penca extends Application_Model_Bd_Adapter
                 . " AND up_iduser = ".$iduser;
         
         $db->query($sql);
+        
+        $sql = "SELECT count(*) as quantidade FROM user_penca WHERE up_idpenca = ".$idpenca;
+ 
+        $count = $db->query($sql)->fetch();
+        
+        if ($count['quantidade'] == 0) {
+            $sql = "UPDATE penca SET pn_ativo = 0 WHERE pn_id = ".$idpenca;
+            $db->query($sql);
+        }
+        
     }
     
 }

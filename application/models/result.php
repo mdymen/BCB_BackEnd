@@ -250,6 +250,31 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
         
     }
     
+    public function getResultsGanadoresPencas($idmatch) {
+        $db = $this->db;
+        
+        return $db->select()->from("result")
+                ->where("rs_result = 1")
+                ->where("rs_idmatch = ?", $idmatch)
+                ->where("rs_idpenca <> 0")
+                ->query()->fetchAll();
+    }
+    
+    public function update_penca_puntuation($iduser, $idpenca) {
+        $db = $this->db;
+        
+        $result = $db->select()->from("user_penca")
+                ->where("up_iduser = ?", $iduser)
+                ->where("up_idpenca = ?", $idpenca)
+                ->query()->fetch();
+        
+        $puntagem = $result["up_puntagem"] + 5;
+        
+        $db->update("user_penca", 
+                array("up_puntagem" => $puntagem), 
+                "up_iduser = ".$iduser." AND up_idpenca = ".$idpenca);
+    }
+    
     public function calcularmoney($match, $res1, $res2, $s_id_team1, $s_id_team2, $champ) {
         $db = $this->db;
         

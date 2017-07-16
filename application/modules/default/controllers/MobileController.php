@@ -1315,11 +1315,16 @@ class MobileController extends Zend_Controller_Action
         $privado = $params['privado'];
         $idchamp = $params['idchamp'];
         
+        $primer = $params['primer'];
+        $segundo = $params['segundo'];
+        $tercer = $params['tercer'];
+        
         $u = new Application_Model_Users();
-        $id = $u->criar_bolao($iduser, $nome, $valor, $privado, $idchamp);
+        $id = $u->criar_bolao($iduser, $nome, $valor, $privado, $idchamp,
+                $primer, $segundo, $tercer);
         
         $p = new Application_Model_Penca();
-        $p->save_userpenca(array('up_idpenca' => $id,
+        $p->save_userpenca_inicial(array('up_idpenca' => $id,
             'up_iduser' => $iduser));
         
         $this->getResponse()

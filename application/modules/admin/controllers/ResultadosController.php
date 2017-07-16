@@ -67,45 +67,19 @@ class Admin_ResultadosController extends Zend_Controller_Action
         $team2 = $params['team2'];
         $champ = $params['champ'];
         
-        
-        
         $result = new Application_Model_Result();   
+        
+        $ganadores = $result->getResultsGanadoresPencas($matchid);
+        for ($i = 0; $i < count($ganadores); $i = $i + 1) {
+            $result->update_penca_puntuation($ganadores[$i]['rs_iduser'], $ganadores[$i]['rs_idpenca']);
+        }
+
+        
         $r = $result->calcularmoney($matchid, $res1, $res2, $team1, $team2, $champ);
        
-//        $result->update_resultado($matchid, $res1, $res2);
-//        
-//        $teams = new Application_Model_Teams();
-//        
-//        if ($res1 > $res2) {
-//            $teams->sum_points($team1, 3);
-//            $teams->sum_match($team2);
-//        }
-//        if ($res1 < $res2) {            
-//            $teams->sum_match($team1);
-//            $teams->sum_points($team2, 3);
-//        }
-//
-//        if ($res1 == $res2) {
-//            $teams->sum_points($team1, 1);
-//            $teams->sum_points($team2, 1);
-//        }
-//        
-//        /* Retorna los RESULT con ID MATCH 
-//         *  [rs_id] => 11 [rs_idmatch] => 41 [rs_res1] => 9 [rs_res2] => 2 
-//            [rs_date] => 2004-09-16 00:00:00 [rs_idpenca] => 1 [rs_iduser] => 1 
-//            [rs_round] => 1 [rs_result] => [rs_points] => 0 ) )
-//         */
-//        $matchs = new Application_Model_Matchs();
-//        $match = $matchs->load_resultados_palpitados($matchid);
-//
-//        $x = "";                
-//        
-//        for ($j = 0; $j < count($match); $j = $j + 1) {
-//            $puntagem = $this->puntuacao($match[$j], $res1, $res2);
-//            $x = $puntagem;
-//            $result->update_puntagem($puntagem, $match[$j]['rs_id']);
-//        }
-//        
+        //calcular puntuacion de la penca
+
+        
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
         

@@ -510,14 +510,17 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
 	}
         
         
-     public function criar_bolao($iduser, $nome, $valor, $privado, $idchamp) {
+     public function criar_bolao($iduser, $nome, $valor, $privado, $idchamp, $primer, $segundo, $tercer) {
          $db = $this->db;
          
          $db->insert("penca",array("pn_name" => $nome, 
 			"pn_value" => $valor,
 			"pn_iduser" => $iduser,
 			"pn_idchampionship" => $idchamp,
-			"pn_justfriends" => $privado));
+			"pn_justfriends" => $privado,
+                        "pn_primerlugar" => $primer,
+                        "pn_segundolugar" => $segundo,
+                        "pn_tercerlugar" => $tercer));
          
          return $db->lastInsertId();
      }
@@ -528,7 +531,7 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         $sql = "SELECT * FROM penca p"
                 . " INNER JOIN championship c ON p.pn_idchampionship = c.ch_id"
                 . " LEFT JOIN participantespenca pa ON pa.up_idpenca = p.pn_id "
-                . " WHERE p.pn_justfriends = 0 AND p.pn_id NOT IN ("
+                . " WHERE p.pn_ativo = 1 AND p.pn_justfriends = 0 AND p.pn_id NOT IN ("
                 . " SELECT DISTINCT p.pn_id FROM penca p"
                 . " INNER JOIN championship c ON p.pn_idchampionship = c.ch_id"
                 . " INNER JOIN user_penca up ON up.up_idpenca = p.pn_id "
