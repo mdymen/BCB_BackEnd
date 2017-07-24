@@ -178,7 +178,11 @@ class PencaController extends Zend_Controller_Action {
         $this->view->championships = $champ->load();
         
         if (!empty($param['championship'])) {
-            $this->view->pencas = $pencas->load_pencas_byChamp($param['championship']);
+            $userid = $this->getIdUser();
+            $u = new Application_Model_Users();
+            $boloes = $u->getBoloes($userid);
+            $this->view->pencas = $boloes;
+          //  $this->view->pencas = $pencas->load_pencas_byChamp($param['championship']);
         }
     }
     
@@ -773,5 +777,215 @@ class PencaController extends Zend_Controller_Action {
         }
         
     }
+    
+    
+     
+    public function conviteAction() {
+        $params = $this->_request->getParams();
+        
+        	
+        $id = $this->getIdUser();
+        
+        if (empty($id)) {
+            $uri = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
+            $this->_redirect("/?url_go=".str_replace("public/","", $uri));
+        }
+        
+        $user_id = $id;
+        $u = new Application_Model_Users();
+                
+        $champ = new Application_Model_Championships();
+        $result['championships']= $champ->load();
+	    
+        $idpenca = $params['idpenca'];
+        $p_obj = new Application_Model_Penca();
+        $p = new Application_Model_Penca();
+        
+        
+        $penca = $p->load_penca($idpenca);
+        
+        $quisparticipar = false;
+        $temdinheiro = false;
+        
+        $custo = $penca[0]['pn_value'];
+        
+        if (!empty($params['participar']) &&
+                !$p_obj->estaAsociadoALaPenca($idpenca, $id) ) {
+            $quisparticipar = true;
+            $dinheiro = $u->getDinheiro($user_id);
+            $d = $dinheiro['us_cash'];
+        
+            if ($d >= $custo) {
+                $temdinheiro = true;
+                
+                $p = new Application_Model_Penca();
+                $p->save_userpenca($idpenca, $user_id, $custo);
+
+                $new_cash = round($d, 2) - round($custo, 2);
+
+                $u->update_cash($user_id, $new_cash); 
+
+            } 
+        }
+        
+        $us_penca = $p->load_penca_users($idpenca);
+        
+        $champ_id = $penca[0]['ch_id'];// $params['champ'];
+        
+        $this->view->champ = $champ_id;
+        $this->view->championship = $champ->getChamp($champ_id);
+        $this->view->penca = $penca;
+        
+        if ($p_obj->estaAsociadoALaPenca($idpenca, $id)) {
+            
+            if (!empty($champ_id)) {                      
+
+                if (empty($params['rodada'])) {
+                    $rodada_id = $p_obj->getIdPrimeraRodadaDisponivel($champ_id);
+                } else {            
+                    $rodada_id = $params['rodada'];
+                }
+
+    //            print_r("Champ ".$params['champ']);
+    //            print_r("Rodada ".$rodada_id);
+
+                $storage = new Zend_Auth_Storage_Session();
+
+                $matchs_obj = new Application_Model_Matchs();
+                $rondas = $matchs_obj->getrondas($champ_id);
+
+                $tem_grupo = false;
+
+                if (empty($params['team'])) {
+                    $rodada = $matchs_obj->load_rodada_com_palpites_penca($champ_id, $rodada_id, $id, $params['idpenca']);
+                    $result['porteam'] = true;
+                    $result['porrodada'] = false;
+                } else {
+                    $result['porteam']  = false;
+                    $$result['porrodada'] = true;
+                    $team_id = $params['team'];
+                    $rodada = $matchs_obj->load_rodada_porteam($champ_id, $team_id, $id);
+                }
+
+                $teams_obj = new Application_Model_Teams();
+                $teams = $teams_obj->load_teams_championship($champ_id); 
+
+                            $novo_teams = array();
+
+
+                            if (!empty($teams[0]['tm_grupo'])) {
+                                    $tem_grupo = true;
+                                    $grupo = $teams[0]['tm_grupo'];
+                                    $j = 0;
+                                    $k = 0;
+                                    for ($i = 0; $i < sizeof($teams); $i = $i + 1) {
+                                            if (strcmp($grupo, $teams[$i]['tm_grupo']) != 0) {
+                                                    $grupo = $teams[$i]['tm_grupo'];
+                                                    $j = $j + 1;
+                                            } 
+                                            $teams[$i]['tem_grupo'] = true;
+                                            $novo_teams[$j]['tem_grupo'] = true;
+                                            $novo_teams[$j]['tm_grupo'] = $teams[$i]['tm_grupo'];
+                                            // $novo_teams[$j][$teams[$i]['tm_grupo']][$k] = $teams[$i];
+                                            $novo_teams[$j]["grupo"][$k] = $teams[$i];
+                                            $k = $k + 1;
+                                    }
+                                    $teams = $novo_teams;
+                            } else {
+                                    for ($i = 0; $i < sizeof($teams); $i = $i + 1) {
+                                            $teams[$i]['tem_grupo'] = false;
+                                    }
+                            }
+                            
+                            
+//                $result['teams'] = $teams;
+//
+//                //los partidos de la rodada n_rodada
+//                $result['rodada'] = $rodada;
+//
+//                //el numero de la rodada activa. La que siguiente inmediata que se va a jugar
+//                $result['n_rodada'] = $rodada_id;
+//
+//                //las rodadas del campeonato registradas en el sistema
+//                $result['rondas'] = $rondas;      
+//
+//                            $result['tem_grupo'] = $tem_grupo;			
+//                 
+//                 $result['usuarios_penca'] = $us_penca;
+                 
+                $this->view->teams = $teams;
+            
+                //los partidos de la rodada n_rodada
+                $this->view->rodada = $rodada;
+
+                //el numero de la rodada activa. La que siguiente inmediata que se va a jugar
+                $this->view->n_rodada = $rodada_id;
+
+                //las rodadas del campeonato registradas en el sistema
+                $this->view->rondas = $rondas;     
+
+                $this->view->usuario_pencas = $us_penca;
+                
+                $this->view->penca_id = $idpenca;
+                
+                $this->view->minhaspencas = $p_obj->load_pencas_incripto_usuario($id);
+            
+            }
+	
+        }
+        else {
+              
+            $result = "300";
+                        
+        }
+        
+//        print_r($result);
+//        die(".");
+    }
+    
+    
+    public function verificardinheiroecadastrarAction() {
+        $params = $this->_request->getParams();
+        
+        $user_id = $this->getIdUser();
+        
+        $u = new Application_Model_Users();
+        $dinheiro = $u->getDinheiro($user_id);
+        
+        $custo = $params['custo'];
+        
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $d = $dinheiro['us_cash'];
+        
+        if ($d >= $custo) {
+                        
+            $p = new Application_Model_Penca();
+            $p->save_userpenca($params['idpenca'],$user_id, $custo);
+
+            $new_cash = round($d, 2) - round($custo, 2);
+            
+            $u->update_cash($user_id, $new_cash);
+
+            $pencas = $u->getPencasDisponiveis($user_id);
+                                
+            $boloes = $u->getBoloes($user_id);
+            
+            $result = array();
+            $result['cash'] = $new_cash;
+            $result['pencas_disponiveis'] = $pencas;
+            $result['boloes'] = $boloes;
+            
+             $this->_helper->json($result);   
+            
+        } else {
+            $this->_helper->json(false);            
+        }
+
+    }    
     
 }

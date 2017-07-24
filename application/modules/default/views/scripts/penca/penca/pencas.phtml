@@ -3,60 +3,67 @@
     $pencas = $this->pencas;
 
 ?>
-
-<div class="col-lg-12">
-            <div class="box">
-                    <div class="box-header">
-                            <h2><i class="fa fa-list"></i>Boloes</h2>
+<div class="box">
+                        <div class="box-header">
+                            <h2><i class="fa fa-align-justify"></i><span class="break"></span>Meus Bolões</h2>
+                        <div class="box-icon">
+                        <span><h2 style="margin-right: 30px !important"></h2></span>
+                        <a href="form-elements.html#" class="btn-minimize"><i class="fa fa-chevron-down"></i></a>
                     </div>
-                    <div class="box-content">
-                            <table class="table bootstrap-datatable datatable small-font">
-<!--                                    <thead>
-                                            <tr>
-                                                    <th>Status</th>
-                                                    <th>Date</th>
-                                                    <th>Description</th>
-                                                    <th>User</th>
-                                                    <th>Number</th>
-                                            </tr>
-                                    </thead>   -->
-                                    <tbody>
-                                        
-                                        <?php
+                        </div><div class="box-content">
+        <?php
+        
+            for ($i = 0; $i < count($pencas); $i = $i + 1) {
+                        echo ' <div class="row"><div style="" id="850" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
+                        <div class="smallstat box">
+                        <table width="100%">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center">
+                                        <b><a href="/public/campeonatos/index?champ=14">'.$pencas[$i]['pn_name'].'</a></b>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table width="100%"><tbody><tr><td style="text-align:center">
+                            <b><a href="/public/campeonatos/index?rodada=145&amp;champ=14">'.$pencas[$i]['ch_nome'].'</a></b></td></tr></tbody></table><table width="100%"><tbody><tr><td style="text-align:center">Ingresso R$ '.$pencas[$i]['pn_value'].'</td></tr></tbody>
+                                
 
-                                            for ($i = 0; $i < count($pencas); $i = $i + 1) {
-                                                $color_lock = 'success';
-                                                if ($pencas[$i]['pn_justfriends']) {
-                                                    $color_lock = 'important';
-                                                }    
-      
-                                                echo '<tr>
-                                                    <td width="10%"><span class="label label-'.$color_lock.'">';
-                                                        if ($pencas[$i]['pn_justfriends']) {
-                                                           echo ' <i class="fa fa-lock" title="Bolao fechado"></i>';
-                                                        } else {
-                                                            echo '<i class="fa fa-unlock" title="Bolao aberto"></i>';
-                                                        }   
+                        </table>
+                        <table width="100%">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center">
+                                        <b><a href="/public/campeonatos/index?champ=14">Participantes '.$pencas[$i]['users'].'</a></b>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                                                        echo '</span>
-                                                        <span class="label label-success">';
 
-                                                        $preco = 0;
-                                                        if ($pencas[$i]['pn_value'] > 0) {
-                                                            echo '<i class="fa fa-dollar" title="Premiacao"></i>';
-                                                        }
-
-                                                        echo '</span>
-                                                    </td>
-                                                    <td><a href="'.$this->baseUrl().'/penca/index?penca='.$pencas[$i]['pn_id'].'">'.$pencas[$i]['pn_name'].'</a></td>
-                                                </tr>';
-                                            }
-                                        ?>
-                                    </tbody>
-                            </table>
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="text-align:left"><span id="294"><i class="fa  fa-search" style="color: black !important">
+                            </i>
+                            </span>
+                        </td>
+                        <td>                  
+                             <a href="/public/team/team?team=294&amp;champ=14">Ganhador: '.$pencas[$i]['pn_primerlugar'].' %</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        <div id="924" style="margin: 15px 0 0 0; "><span class="label label-important" style="margin-right:70px">Encerrado</span><span style="padding-right:10px" class="ac_850">'.$pencas[$i]['pn_valueaccumulated'].'</span><div id="dvInfo_850" style="display:none"></div></div>    
+                        </div>
+                </div><div class="form-action">                              
                     </div>
-            </div>
-    </div>
-</div>
-    		
-    
+                    </div>';
+            }
+        
+        ?>
+
+                                
+                                
+                </div>
+        </div>

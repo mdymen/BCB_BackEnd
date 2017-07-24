@@ -1,0 +1,194 @@
+<?php
+
+$t = Zend_Registry::get('translate'); 
+
+    $rondas = $this->rondas;
+    
+    $rodadas = $this->rodada;
+    
+    $rodada_id = $this->n_rodada;
+    
+    if (isset($rodadas[0]['mt_idround'])) {
+        $rodada = $rodadas[0]['mt_idround'];
+        $champ = $rodadas[0]['mt_idchampionship']; 
+    } else {
+        $t->_("ainda.nao.tem.jogos");
+    }
+
+//    print_r($rodadas);
+    
+    
+      if (!empty($champ)) { 
+          
+          $championship = $this->championship;
+          
+          $teamuserid = $this->teamuserid;
+          $teamusername = $this->teamusername;
+          
+          if ($teamusername == "") {
+              $teamusername = "Time do coracao";
+          }
+?>
+
+<input type="hidden" value="<?php echo $champ ?>" id="champ">
+
+<div class="box">
+    <div class="box-header">
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo  "Palpite: R$ ". $championship['ch_dpalpite']; ?></h2>
+                                <div class="box-icon">
+                                    <span></span>
+                                </div>
+                        </div>
+    <div class="box-content">
+        <div class="pagination pagination-centered" style="margin: 0px !important">
+            <ul class="pagination">
+                    
+                    <?php
+//                    
+//                        print_r($rodada);
+//                        if ($rodada > 1) {
+//                            echo '<li><a href="'.$this->baseUrl('/penca/bolao?rodada='.$rondas[$i-1]['mt_round'].'&champ='.$champ).'">Prev</a></li>';
+//                        }
+                  
+                     ?>       
+                  <?php
+                        echo '<li><a id="teamusername" href="javascript:void(0)"><i class="fa fa-edit"></i></a></li><li><a href="'.$this->baseUrl('/penca/bolao?team='.$teamuserid.'&champ='.$champ).'" data-type="text" data-pk="1" data-original-title="Enter username" id="teamcoracao_nome" class="editable editable-click">'.$teamusername.'</a></li>';
+                        for ($i = 0; $i < count($rondas); $i = $i + 1) {
+                            $r = $i + 1;
+                            $active = "";
+                            if ($rondas[$i]['mt_idround'] == $this->n_rodada ) { 
+                                $active = 'class="active"';                                
+                            } 
+                            echo '<li '.$active.'><a href="'.$this->baseUrl('/penca/bolao?rodada='.$rondas[$i]['mt_idround'].'&champ='.$champ).'">'.$rondas[$i]['rd_round'].'</a></li>';
+                        }
+
+                  ?>    
+                
+                  <?php
+//                    if (!empty($rondas[$i+1]['mt_round'])) {
+//                        echo '<li><a href="'.$this->baseUrl('/penca/bolao?rodada='.$rondas[$i+1]['mt_round'].'&champ='.$champ).'">Next</a></li>';
+//                    }
+                          
+                   ?>
+            </ul>
+        </div>
+        <?php echo $this->render('componentes/timecoracao.phtml'); ?>
+    </div>
+</div>
+
+<?php
+
+    $teams_coracao = $this->teams;
+
+    $t = Zend_Registry::get('translate');   
+?>
+
+<div id="teamusername_popup" class="popover editable-container fade top in col-lg-4" style="display: none;">
+        <div></div>
+        <h3 class="popover-title"><?php echo $t->_("time.do.coracao"); ?></h3>
+        <div class="popover-content"> 
+
+            <div>
+                <div class="editableform-loading" style="display: none;"></div>
+
+                <form class="form-horizontal editableform" style="">
+                    <div class="form-group"><div>
+                            <div class="editable-input" style="position: relative;">
+                                <div class="controls">
+                                            <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa  fa-search"></i>
+                                                    </span>
+                                                    <div class="controls">
+                                                        <input type="hidden" value="<?php echo $champ; ?>" name="rodada" />
+                                                    <select id="team_coracao" name="team_coracao" class="form-control">
+                                                    <?php   
+//                                                        if (empty($pencas)) {
+//                                                            echo '<option value="Vazio"></option>';    
+//                                                        }
+                                                        
+                                                        for ($i = 0; $i < count($teams_coracao); $i = $i + 1) {
+                                                            $selected="";
+                                                            if ($teamuserid == $teams_coracao[$i]['tm_id']) {
+                                                                $selected = "selected";
+                                                            }
+                                                            echo '<option '.$selected.' value="'.$teams_coracao[$i]['tm_id'].'">'.$teams_coracao[$i]['tm_name'].'</option>';
+                                                        }                                                        
+                                                    ?>
+                                                    </select>
+                                                </div>
+                                            </div>	
+                                      </div>
+                             </div>
+
+                        </div>
+                        <div class="editable-error-block help-block" style="display: none;"></div>     
+                    </div>
+                       <div class="form-group">
+                                 <div class="controls">
+                            <div>
+                                <button id="aceitar_teamusername" type="button" class="btn btn-primary btn-sm editable-submit">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                </button>
+                                <button id="fechar_teamusername" type="button" class="btn btn-default btn-sm editable-cancel">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                            </div>
+                            </div></div>
+                </form>  
+            </div>  
+        </div>
+</div>
+
+<?php
+
+      }
+      
+      ?>
+
+<script type="text/javascript">
+//    
+//    function fechar_teamusername() {
+//        $("#fechar_teamusername").bind("click", function() {
+//            $("#teamusername_popup").css("display","none");       
+//        });
+//    }
+//    
+//    function aceitar_teamusername() {
+//        $("#aceitar_teamusername").bind("click", function() {
+//            var name = $('#team_coracao').find(":selected").text();
+//            var id = $('#team_coracao').find(":selected").val();   
+//            var champ = $('#champ').val();
+//            $("#teamusername_popup").css("display","none");
+//            
+//            $.post("edittimecoracao",{idteam : id, nameteam : name}, function(response) {
+//                if (response == 200) {
+//                    $("#teamcoracao_nome").html(name);
+//                    $("#teamcoracao_nome").attr("href","http://localhost/penca/public/penca/bolao?team="+id+"&champ="+champ);
+//                    $("#head_timecoracao").html(name);
+//                    
+//                }
+//                console.log(response);
+//            });
+//        });
+//    }
+//    
+//    $(function() {
+//        aceitar_teamusername();
+//        fechar_teamusername();
+//        $("#teamusername").bind("click", function() {
+//            $("#teamusername_popup").css("display","block");
+//            
+//        });  
+//        
+//        
+//            
+//        
+//        
+// 
+//    });
+
+        $("#teamusername").bind("click", function() {
+            $("#teamcoracao_pick").show();    
+        });
+</script>

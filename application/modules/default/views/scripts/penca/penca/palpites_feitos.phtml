@@ -1,0 +1,122 @@
+<?php
+
+$config = new Zend_Config_Ini("config.ini");
+
+$palpites_feitos = $this->rodada;
+ $champ = $this->champ;
+//print_r($palpites_feitos);
+ 
+// print_r(count($palpites_feitos));
+ 
+ $t = Zend_Registry::get('translate');
+
+if (!empty($palpites_feitos)) {
+
+    
+    
+   ?>
+
+<input type="hidden" value="<?php echo $palpites_feitos[0]['mt_idchampionship']; ?>" name="champ" id="champ" />
+<input type="hidden" value="<?php echo $palpites_feitos[0]['mt_idround']; ?>" name="rodada" id="round" />
+
+
+                                    <?php
+                                if ($this->porteam) { 
+                                    $titulo = $t->_("rodada").": ".$palpites_feitos[0]['rd_round'];
+                                } else {
+                                    $titulo = $t->_("time").": ".$this->teamusername;
+                                }
+                            ?>
+       
+                <div class="box">
+                    <!--<form action="<?php echo $this->baseUrl(); ?>/penca/processarpalpites" method="post" id="processarpalpites" >-->
+                        <div class="box-header">
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo $titulo; ?></h2>
+                                <div class="box-icon">
+                                    <span><h2 style="margin-right: 30px !important" id="ronda_total_palpitado"><?php echo number_format((float)$palpites_feitos[0]['rd_acumulado'], 2, '.', '');  ?></h2></span>
+                                </div>
+                        </div>
+                        <div class="box-content">
+                            
+                            <div class="row">
+                            
+                            <?php
+                                $box = new Helpers_Box();
+                                $box->matches = $palpites_feitos;
+                                $box->base = $this->baseUrl();
+                                $box->disabled_input = true;
+                                $box->mas_info = false;
+                                $box->palpites_goal = true;
+                                $box->show_final_result = true;
+                                $box->show_solo_nopalpitados = false;
+                                $box->show_solo_palpitados = true;
+                                $box->show_titulo_rodada = false;
+                                $box->tamanho_box = "col-lg-5 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
+                                $box->btn_excluir = true;
+                                $box->btn_cantidad = true;
+                                $box->id_result_input1 = "result1pf_";
+                                $box->id_result_input2 = "result2pf_";
+                                $box->id_box = "rs_dados_";
+                                $box->infoescrita = true;
+                                $box->infoescrita_msg = $t->_("encerrado");
+                                echo $box->box();
+
+                            ?>
+                            
+<!--                                <div>
+                                    HOLA
+                                </div>-->
+                               
+                            <div class="form-action">  
+                                
+                            </div>
+                            </div>
+                        </div>
+                                            <div class="box-header inline" style="height:50px !important">
+<!--                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <h2><span class="">Total: </span><span id="total_palpitado" style="padding-left:10px"><?php echo $palpites_feitos[0]['rd_acumulado'];  ?></span> </h2>
+                                                      <span style="padding-left:10px"><a id="btnConfPalpites" href="javascript:void(0)" class="btn btn-success">Confirmar</a></span>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                </table>-->
+                                           
+                                               
+                                                    
+                                                
+                                <div class="box-icon">
+                                    <!--<span><h2 style="margin-right: 30px !important"><?php echo $palpites_feitos[0]['rd_acumulado'];  ?></h2></span>-->
+                                </div>
+                        </div>
+                    <!--</form>-->
+                </div>
+         
+<?php
+}
+
+?>
+
+
+
+
+<script type="text/javascript">
+    
+    $(function() { 
+        excluir("excluirpalpite");
+        
+        $("#btnConfPalpites").bind("click", function() {
+            var total = $("#total_palpitado").html();
+            
+            $.post("verificarsaldo", { total : total}, function(response) {
+                if (response) {
+//                    $("#processarpalpites").submit();
+                }
+                alert(response);
+            });
+            
+        });
+    });
+    
+    </script>

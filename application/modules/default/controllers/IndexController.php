@@ -502,6 +502,7 @@ class IndexController extends Zend_Controller_Action
         
         $user = $params["username"];
         $password = $params["password"];
+        $url_go = $params['url_go'];
         
         $error = false;
         
@@ -518,7 +519,11 @@ class IndexController extends Zend_Controller_Action
         if ($result->isValid()) {         
             $storage = new Zend_Auth_Storage_Session();
             $storage->write($authAdapter->getResultRowObject());
-            $this->_redirect('/index');    
+            if (!empty($url_go)) {
+                $this->_redirect($url_go);
+            } else {            
+                $this->_redirect('/index/?');    
+            }
         } else {
             $error = true;
             $this->_redirect('/index?error=yes');
@@ -594,6 +599,24 @@ class IndexController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
         $this->_helper->json("loginok"); 
+    }
+    
+    public function tokepagamentoAction() {
+       $params = $this->_request->getParams();
+       
+       $explode = explode("-", $params['token']);
+       $usuario = $explode[1];
+       $token = $explode[0].$explode[2];
+       
+       $u = new Application_Model_Users();
+       $u->salvar_token($usuario, $token);
+       
+       $user_loaded = $u->load_user_by_token($usuario, $token); 
+       
+       $this->login1($user_loaded['us_username'], $user_loaded['us_password']);
+       
+       $this->_helper->redirector("index", "caixa", "default");
+       
     }
     
     public function login1($usuario, $pass) {
@@ -856,6 +879,6 @@ class IndexController extends Zend_Controller_Action
        
         
     }
-    
+   
 }
 

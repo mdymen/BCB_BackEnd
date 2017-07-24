@@ -1,0 +1,103 @@
+ <?php   
+
+    $config = new Zend_Config_Ini("config.ini");
+ 
+    $palpites = $this->results;
+    
+//    print_r($º
+    
+    
+//    print_r($palpites);
+    
+    if (!empty($palpites)) {
+        $rodada = $palpites[0]['mt_idround'];   
+    }
+    
+//    print_r(count($palpites));
+
+//print_r($palpites);
+//die(".");
+    
+if (!empty($palpites)) {
+
+   $box = new Helpers_Box();
+   $box->matches = $palpites;
+   $box->base = $this->baseUrl();
+   $box->disabled_input = true;
+   $box->mas_info = false;
+   $box->palpites_goal = true;
+//   $box->show_final_result = false;
+   $box->show_solo_nopalpitados = false;
+   $box->show_solo_palpitados = false;
+   $box->show_titulo_rodada = false;
+   $box->tamanho_box = "col-lg-5 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
+   $box->btn_palpitar = false;
+   $box->id_result_input1 = "result1p_";
+   $box->id_result_input2 = "result2p_";
+   $box->id_box = "fila_";
+   $box->id_html_team = "teamp_";
+   $box->show_total_palpites_desse_marcador = true;
+   $box->show_data_quadrado = false;
+   $box->show_final_result = true;
+   $box->titulo_bigbox = "Rodada ".$palpites[0]['rd_round']." - ".(Helpers_Data::day($palpites[0]['mt_date']));
+ 
+   $box->big_box();
+    
+    
+   ?>
+       
+<?php
+}
+
+?>
+
+<script type="text/javascript">
+
+    function submeter() {
+         $(".palpite").bind('click', function() {
+           var match = $(this).attr("match");
+           var data = $(this).attr("data");
+
+         //  alert("#result1p_" + it);
+           var r1 = $("#result1p_" + match).attr("value");
+           var r2 = $("#result2p_" + match).attr("value");
+           var round = $("#round").val();
+           var team1 = $("#team1p"+match).html();
+           var team2 = $("#team2p"+match).html();
+
+           if (parseInt(r1) >= 0 && parseInt(r2) >= 0 ) {
+               $('#fila_'+match).attr("style","display:none");
+                $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round  }, function(response) {
+                    if (response.sucesso === 200) {
+//                        console.log(response);
+                        $('[name=rs_'+match+'_dados]').attr("style","display:yes");
+
+                        $('[name="'+data+'"]').show();
+    //                    $('[name=rs_'+match+'_data]').attr("style","display:yes");
+    //
+                        $('[name="p_result2_'+match+'"]').val(r2);
+                        $('[name="p_result1_'+match+'"]').val(r1);
+
+                        $("#sucesso_msg").html("Palpite adicionado: " + team1 + " " + response.rs_res1 + " - " + response.rs_res2 + " " + team2);
+                        $("#append_success").html($("#success").html());
+                        $(".alert-success").show();
+                        fechar_sucesso();
+                    } else {
+                        $('#fila_'+match).attr("style","display:yes");
+                    }
+//                    excluir();
+               });
+           } else {
+               $("#alert_msg").html("Ao inserir o palpite do jogo.");
+               $("#append_danger").html($("#alert").html());
+               $(".alert-danger").show();
+               fechar_alert();
+           }
+        });
+    }
+
+    $(function() {
+       submeter();
+    });
+
+</script>

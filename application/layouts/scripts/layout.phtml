@@ -8,8 +8,21 @@ $uri = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
 //
 //    print_r($uri);
 //        die(".");
+
+if (strpos($uri,'/public/nologado')) {
+    die("erro");
+}
+
+if (strpos($uri, 'tokendepagamento=')) {
     
-if (strpos($uri, 'public/?trocarsenha=')) {
+    
+    $token = Zend_Controller_Front::getInstance()->getRequest()->getParam('token');
+        
+    $_redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+    $_redirector->gotoUrl('http://www.bolaocraquedebola.com.br/public/index/tokepagamento/?token='.$token); 
+    
+}
+else if (strpos($uri, 'public/?trocarsenha=')) {
     echo $this->render('trocarsenha.phtml');
 }
 
@@ -59,8 +72,6 @@ else {
                 $data = (get_object_vars($x));
             }
         }
-//        print_r($data);
-//        die(".");
         
         if (!empty($data) && !empty($data['us_codverificacion'])) {
             echo $this->render('_confirmemail.php');

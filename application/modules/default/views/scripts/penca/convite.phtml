@@ -1,0 +1,170 @@
+<?php
+
+ $championship = $this->championship;
+
+ $penca = $this->penca;
+ 
+ $champ = $this->champ;
+
+ $translate = Zend_Registry::get('translate');   
+ 
+ $config = new Zend_Config_Ini("config.ini");
+ 
+ $pencas = $this->usuario_pencas;
+ 
+ $penca_id = $this->penca_id;
+ $esta_inscripto_em_esta_penca = false;
+
+ $minhaspencas = $this->minhaspencas;
+ 
+// print_r($minhaspencas);
+// print_r(".......");
+ 
+ for ($i = 0; $i < count($minhaspencas); $i = $i + 1) {
+     if ($pencas[$i]['up_idpenca'] == $penca_id) {
+         $esta_inscripto_em_esta_penca = true;
+     }
+ }
+ 
+// print_r($pencas);
+// 
+// print_r($penca);
+ 
+ 
+ if (!$esta_inscripto_em_esta_penca) {
+ 
+     ?>
+   <div class="box">
+
+                            <div class="box-content">
+                    <div class="row">
+                    <div style="" id="862" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
+                       <?php echo ' <img class="profile-image" src="'.$championship['ch_logocampeonato'].'">';
+                       ?>
+                </div>
+<div style="" id="860" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
+    
+    
+                        <div class="smallstat box">
+                            
+                             <?php
+                             
+                             echo ' <div style="text-align:center">                                
+                                
+                                <h3>'.$penca[0]['pn_name'].'</h3>    
+                                <h2 style="margin: 0px !important">'.$penca[0]['ch_nome'].'</h2>   
+                                <h2 style="margin: 0px !important" >Ingresso: R$ '.$penca[0]['pn_value'].'</h2>   
+                                <h2 style="margin: 0px !important">Acumulado: R$ '.$penca[0]['pn_valueaccumulated'].'</h2>   
+                                    <br>
+
+                                <form action="'.$this->baseUrl("/penca/convite").'" method="post>
+                                    <input type="hidden" id="participar" name="participar" value="participar" />
+                                    <input type="hidden" name="idpenca" value="'.$penca[0]['pn_id'].'" />
+                                    <button name="participar" value="participar" class="btn btn-lg btn-success" style="width:150px">Participar</button>
+
+                                </form>
+
+                            </div>';
+                             
+                             ?>
+     
+                        </div>
+                </div>
+                        
+                        
+                        <div style="" id="861" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
+                        <div class="">
+                            <div class="todo">
+                                
+                                <?php
+                                                  echo ' 
+                            <div class="box">
+
+                                    <div class="box-content">
+                                            <div class="todo">
+                                                    <ul class="todo-list ui-sortable">
+                                                            <li>
+                                                                    <span class="todo-actions"></span>
+                                                                    <span class="desc"><p>Premiação</p></span> 
+                                                                    <span class="label label-success" style="font-size:12px"></span>			
+                                                            </li>                                                    
+                                                            <li>
+                                                                    <span class="todo-actions"><i class="fa fa-trophy"></i>
+                                                                    </span>
+                                                                    <span class="desc">Ganhador</span> 
+                                                                    <span class="label label-success" style="font-size:12px">'.$penca[0]['pn_primerlugar'].' %</span>
+                                                                    				
+                                                            </li>
+                                                            <li>
+                                                                    <span class="todo-actions"><i class="fa fa-star"></i>
+                                                                    </span>
+                                                                    <span class="desc">Segundo</span> 
+                                                                    <span class="label label-success" style="font-size:12px">'.$penca[0]['pn_segundolugar'].' %</span>
+                                                                    					
+                                                            </li>
+                                                            <li>
+                                                                    <span class="todo-actions"><i class="fa fa-globe"></i>
+                                                                    </span>
+                                                                    <span class="desc">Terceiro</span> 
+                                                                    <span class="label label-success" style="font-size:12px">'.$penca[0]['pn_tercerlugar'].' %</span>
+                                                                    				
+                                                            </li>                                                            
+
+
+
+
+
+
+                                                    </ul>
+                                            </div>	
+                                    </div>
+                            </div>
+';
+                                                  
+                                                  ?>
+                            
+                        </div></div>
+                </div>
+                </div>
+                    </div>
+        </div>
+<?php
+
+    } else {
+        
+        
+       ?>
+
+<div class="box">
+
+                            <div class="box-content">
+                    <div class="row">
+                    <div style="" id="862" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
+                       <?php echo ' <img class="profile-image" src="'.$championship['ch_logocampeonato'].'">';
+                       ?>
+                </div>
+<div style="" id="860" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
+    
+     <div class="box-content" style="height:200px">
+                    
+
+                            <h1>Você já está participando do Bolão</h1>
+                            <h2>De momento...funcionalidade disponível só para a versão Mobile</h2>
+                      
+
+                       
+                        </div>
+                     
+    
+     
+                        </div>
+                </div>
+                        
+                     
+                    </div>
+        </div>
+        
+    <?php
+    }
+ 
+    

@@ -197,6 +197,7 @@
                                                 <li><a href="<?php echo $this->baseUrl("/penca/selecionarbase"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Selecionar base </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/campeonato/backup"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Backup </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/index/logout"); ?>"><i class="fa fa-power-off"></i><span class="hidden-sm text">Logout</span></a></li>
+                                                <li><a href="<?php echo $this->baseUrl("/penca/pencas"); ?>"><i class="fa fa-power-off"></i><span class="hidden-sm text">Boloes</span></a></li>
                                                 
 					</ul>
 				</div>

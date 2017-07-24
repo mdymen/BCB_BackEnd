@@ -1,0 +1,170 @@
+ <?php   
+
+    
+    $config = new Zend_Config_Ini("config.ini");
+ 
+    $palpites = $this->rodada;
+    
+    if (!empty($palpites)) {
+        $rodada = $palpites[0]['mt_idround'];   
+    }
+    
+    $t = Zend_Registry::get('translate'); 
+    
+//    print_r(count($palpites));
+
+//print_r($palpites);
+//die(".");
+    
+if (!empty($palpites)) {
+
+   ?>
+
+<input type="hidden" value="<?php echo $palpites[0]['mt_idchampionship']; ?>" name="champ" id="champ" />
+<input type="hidden" value="<?php echo $palpites[0]['mt_idround']; ?>" name="rodada" id="round" />
+
+
+        <?php echo $this->render('penca/bolao/alerts.phtml'); ?>  
+        
+                <div class="box">
+                        <div class="box-header">
+                            
+                            
+                            
+                            <?php
+                                if ($this->porteam) { 
+                                    $titulo = $t->_("palpites.da.rodada").": ".$palpites[0]['rd_round'];
+                                } else {
+                                    $titulo = $t->_("palpites.do.time").":".$this->teamusername;
+                                }
+                            ?>
+                            
+                            
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo $titulo; ?></h2>
+                                <div class="box-icon">
+
+                                </div>
+                        </div>
+                        <div class="box-content">
+                            
+                            <?php
+                                echo '<div class="row">';
+                                
+                                $box = new Helpers_Box();
+                                $box->matches = $palpites;
+                                $box->base = $this->baseUrl();
+                                $box->disabled_input = false;
+                                $box->mas_info = false;
+                                $box->palpites_goal = true;
+                                $box->show_final_result = true;
+                                $box->show_solo_nopalpitados = true;
+                                $box->show_solo_palpitados = false;
+                                $box->show_titulo_rodada = false;
+                                $box->btn_cantidad = true;
+                                $box->tamanho_box = "col-lg-5 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6";
+                                $box->btn_palpitar = true;
+                                $box->id_result_input1 = "result1p_";
+                                $box->id_result_input2 = "result2p_";
+                                $box->id_box = "fila_";
+                                $box->id_html_team = "teamp_";
+//                                $box->show
+                                echo $box->box();
+                                
+                                echo '</div>';
+                            ?>
+                    
+                            <div class="form-action">                              
+                            </div>
+                        </div>
+                </div>
+       
+<?php
+}
+
+?>
+
+<script type="text/javascript">
+
+    function submeter() {
+         $(".palpite").bind('click', function() {
+           var match = $(this).attr("match");
+           var data = $(this).attr("data");
+
+         //  alert("#result1p_" + it);
+           var r1 = $("#result1p_" + match).val();
+           var r2 = $("#result2p_" + match).val();
+           var round = $("#round").val();
+          
+          var id_team1 = $(this).attr("team1");
+          var id_team2 = $(this).attr("team2");
+           
+           var team1 = $("#teamp_"+id_team1).html();
+           var team2 = $("#teamp_"+id_team2).html();
+
+//           alert($("#champ").val());
+
+           if (parseInt(r1) >= 0 && parseInt(r2) >= 0 ) {
+               $('#fila_'+match).attr("style","display:none");
+               $("#panel_palpites_palpites_feitos").attr("style","display:none");
+               $("#gif").attr("style","display:yes");
+                $.post("submeterpalpite",{ match : match, result1 : r1, result2 : r2, round : round, champ : $("#champ").val()  }, function(response) {
+                    console.log(response);
+                    if (response.sucesso === 200) {
+                                                
+                        
+
+                        $("#btn_excluir_"+match).attr("result",response.rs_id);
+
+//                        var total = parseFloat(2.50)+parseFloat($("#total_palpitado").html());
+//                        $("#total_palpitado").html(response.total);
+
+                        $("#ronda_total_palpitado").html(parseFloat(response.total).toFixed(2));
+
+                        $("#cash_usuario").html(parseFloat(response.total_usuario).toFixed(2));
+//                        alert(response.total_match);
+                        $("#campeonato_total_palpitado").html(parseFloat(response.total_campeonato).toFixed(2));
+                        
+                        $(".ac_"+match).html(parseFloat(response.total_match).toFixed(2));
+
+                        $('#rs_dados_'+match).show(); 
+
+                        $('#result1pf_'+match).val(r1);
+                        $('#result2pf_'+match).val(r2);
+
+                        $("#sucesso_msg").html("Palpite adicionado: " + team1 + " " + response.rs_res1 + " - " + response.rs_res2 + " " + team2);
+                        $("#append_success").html($("#success").html());
+                        $(".alert-success").show();
+                        
+                        $("#panel_palpites_palpites_feitos").attr("style","display:yes");
+                        $("#gif").attr("style","display:none");
+                        
+                        fechar_sucesso();
+                    } else {
+                        if (response.sucesso === 401) {
+                            $("#alert_msg").html("Saldo insuficente.");
+                            $("#append_danger").html($("#alert").html());
+                            $(".alert-danger").show();
+                            fechar_alert();
+                        }                         
+                        $('#fila_'+match).attr("style","display:yes");
+                        $("#panel_palpites_palpites_feitos").attr("style","display:yes");
+                        $("#gif").attr("style","display:none");
+                    }
+//                    excluir();
+               });
+           } else {
+               $("#alert_msg").html("Ao inserir o palpite do jogo.");
+               $("#append_danger").html($("#alert").html());
+               $(".alert-danger").show();
+               fechar_alert();
+           }
+        });
+    }
+
+    $(function() {
+       
+       //$('.numeros').on('keydown', '.numeros_input', function(e){-1!==$.inArray(e.keyCode,[46,8,9,27,13,110,190])||/65|67|86|88/.test(e.keyCode)&&(!0===e.ctrlKey||!0===e.metaKey)||35<=e.keyCode&&40>=e.keyCode||(e.shiftKey||48>e.keyCode||57<e.keyCode)&&(96>e.keyCode||105<e.keyCode)&&e.preventDefault()});
+       submeter();
+    });
+
+</script>

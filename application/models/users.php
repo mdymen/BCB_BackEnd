@@ -125,6 +125,24 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         return $result;
     }
     
+    public function salvar_token($usuario, $token) {
+        $db = $this->db;
+        
+        $db->update("user", array("us_token" => $token), "us_id = ".$usuario);
+    }
+    
+    public function load_user_by_token($usuario, $token) {
+        $db = $this->db;
+        
+        return $db->select()->from("user")
+                ->where("us_id = ?", $usuario)
+                ->where("us_token = ?", $token)
+                ->query()
+                ->fetch();
+        
+        
+    }
+    
     public function adicionesgrana($id_user, $valor) {
         $db = $this->db;
         
@@ -552,6 +570,8 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
                 . " INNER JOIN user_penca up ON up.up_idpenca = p.pn_id "
                 . " LEFT JOIN participantespenca pa ON pa.up_idpenca = p.pn_id "
                 . " WHERE up.up_iduser = ".$userid;
+        
+        //print_r($sql);
         
 //        $query = $db->select()->from("penca")
 //                ->joinInner("championship", "championship.ch_id = penca.pn_idchampionship")

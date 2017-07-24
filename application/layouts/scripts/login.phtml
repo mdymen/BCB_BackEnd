@@ -1,7 +1,7 @@
 <?php
 
     $e = Zend_Controller_Front::getInstance()->getRequest()->getParam('error');
-
+    $url_go = Zend_Controller_Front::getInstance()->getRequest()->getParam('url_go');
 
 ?>
 
@@ -88,7 +88,7 @@
 					</div>
 					
 					<form class="form-horizontal login" action="<?php echo $this->baseUrl("/index/login"); ?>" method="post">
-                                            
+                                                <input type="hidden" value="<?php echo $url_go; ?>" name="url_go" />
 						<fieldset class="col-sm-12">
 							<div class="form-group">
 							  	<div class="controls row">
