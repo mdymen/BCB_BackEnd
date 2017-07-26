@@ -1410,6 +1410,31 @@ class MobileController extends Zend_Controller_Action
         $this->_helper->json($result); 
     }
     
+    public function cellcompartilharbolaoAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body); 
+        
+        $email = $params['email'];
+        $nomepenca = $params['nomepenca'];
+        $idpenca = $params['idpenca'];
+        $nomeusuarioemisor = $params['nomeusuarioemisor'];
+        $nomecampeonato = $params['nomecampeonato'];
+        
+        $body = "Ola!<br><br> ".$nomeusuarioemisor." convidou voce para participar do Bolao: "
+                . "<a href='http://www.bolaocraquedebola.com.br/public/penca/convite/?idpenca=".$idpenca."'>"
+                . "".$nomepenca."</a> do campeonato: ".$nomecampeonato."<br><br> Boa sorte!!!";
+        
+        $this->mail($body, $email, "Convite para participar do Bolao");
+        
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json(200);         
+    }
+    
     public function uploadAction() {
     
                 $body = $this->getRequest()->getRawBody();
