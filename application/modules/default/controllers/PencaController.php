@@ -809,6 +809,8 @@ class PencaController extends Zend_Controller_Action {
         
         $custo = $penca[0]['pn_value'];
         
+        $this->view->temdinheiro = true;
+        
         if (!empty($params['participar']) &&
                 !$p_obj->estaAsociadoALaPenca($idpenca, $id) ) {
             $quisparticipar = true;
@@ -825,7 +827,9 @@ class PencaController extends Zend_Controller_Action {
 
                 $u->update_cash($user_id, $new_cash); 
 
-            } 
+            } else {
+                $this->view->temdinheiro = false;
+            }
         }
         
         $us_penca = $p->load_penca_users($idpenca);
@@ -988,4 +992,51 @@ class PencaController extends Zend_Controller_Action {
 
     }    
     
+    public function boloesdisponiveisAction() {
+        $u = new Application_Model_Users();
+        $pencas = $u->getPencasDisponiveis($this->getIdUser());
+        
+        $this->view->pencas = $pencas;
+    }
+    
+    
+    public function pencabolaoAction() {
+        
+    }
+    
+    public function criarAction() {
+        $champ = new Application_Model_Championships();
+        $this->view->champs = $champ->load();
+        
+    }
+    
+      public function criarbolaoAction() {
+        $params = $this->_request->getParams();
+        
+        $iduser = $this->getIdUser();
+        $nome = $params['nome'];
+        $valor = $params['valor'];
+        $privado = $params['privado'];
+        $idchamp = $params['idchamp'];
+        
+        $primer = $params['primer'];
+        $segundo = $params['segundo'];
+        $tercer = $params['tercer'];
+        
+        $u = new Application_Model_Users();
+        $id = $u->criar_bolao($iduser, $nome, $valor, $privado, $idchamp,
+                $primer, $segundo, $tercer);
+        
+        $p = new Application_Model_Penca();
+        $p->save_userpenca_inicial(array('up_idpenca' => $id,
+            'up_iduser' => $iduser));
+        
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $this->_helper->json(200);
+    }
 }

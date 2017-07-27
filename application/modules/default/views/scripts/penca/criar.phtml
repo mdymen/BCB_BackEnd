@@ -1,0 +1,83 @@
+
+<?php
+
+$champs = $this->champs;
+
+
+?>
+
+
+<div class="row">
+        <div class="col-lg-12">
+                <div class="box">
+                        <div class="box-header">
+                                <h2><i class="fa fa-edit"></i>Criar Bolão</h2>
+
+                        </div>
+                        <div class="box-content">
+                                <form class="form-horizontal" method="post" action="<?php echo $this->baseUrl("/penca/criarbolao"); ?>">	
+                                          <div class="form-group">
+                                                <div class="controls">
+                                                  <input class="form-control focused" id="nome" name="nome" type="text" placeholder="Nome do Bolão">
+                                                </div>
+                                          </div>
+                                          <div class="form-group">
+                                                <div class="controls">
+                                                  <input class="form-control focused" id="valor" name="nome" type="number" placeholder="Valor ingresso (pode ser 0)">
+                                                </div>
+                                          </div>
+                                          <div class="form-group has-success">
+                                          <label class="control-label" for="inputSuccess">Input with success</label>
+                                          <input type="text" class="form-control" id="inputSuccess">
+                                        </div>
+                                        <div class="form-group has-warning">
+                                          <label class="control-label" for="inputWarning">Input with warning</label>
+                                          <input type="text" class="form-control" id="inputWarning">
+                                        </div>
+                                        <div class="form-group has-error">
+                                          <label class="control-label" for="inputError">Input with error</label>
+                                          <input type="text" class="form-control" id="inputError">
+                                        </div>	
+
+                                          <div class="form-group">
+                                                <label class="control-label" for="selectError3">Campeonato</label>
+                                                <div class="controls">
+                                                     <select name="champ" class="form-control">
+                                                    <?php
+                                                        for ($i = 0; $i < count($champs); $i = $i + 1) {
+                                                            echo '<option value="'.$champs[$i]['ch_id'].'">'.$champs[$i]['ch_nome'].'</option>';
+                                                        }
+                                                    ?>
+                                                  </select>
+                                                </div>
+                                          </div>
+                                          <div class="form-group">
+                                                <div class="controls">
+                                                  <input class="form-control focused" id="primer" name="primer" type="number" placeholder="% primer lugar">
+                                                </div>
+                                          </div>
+                                          <div class="form-group">
+                                                <div class="controls">
+                                                  <input class="form-control focused" id="segundo" name="segundo" type="number" placeholder="% segundo lugar">
+                                                </div>
+                                          </div>
+                                          <div class="form-group">
+                                                <div class="controls">
+                                                  <input class="form-control focused" id="tercer" name="tercer" type="number" placeholder="% tercer lugar">
+                                                </div>
+                                          </div>                                    
+                                          <div class="form-actions">
+                                                <a href="javascript(0);" class="btn btn-primary">Criar Bolão</a>
+                                          </div>
+                                  </form>
+
+                        </div>
+                </div>
+        </div><!--/col-->
+
+</div>
+
+
+<script type="text/javascript"> 
+
+</script>

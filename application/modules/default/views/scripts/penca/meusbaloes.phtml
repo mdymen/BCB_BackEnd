@@ -1,3 +1,5 @@
+
+
 <?php
 
 
@@ -30,7 +32,7 @@ $p_carregada = 0;
 <input type="hidden" value="<?php echo $p_carregada; ?>" name="p_carregada">
 
 <?php 
-
+/*
 for ($i = 0; $i < count($penca); $i = $i + 1) {
 
  echo '<div class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12">
@@ -71,6 +73,51 @@ if ($p_carregada != 0) {
     $this->render('penca/penca/infopencasuperficial.phtml');
 }
 
+*/
 
 
 
+$pencas = $this->pencas;
+
+print_r($pencas);
+?>
+
+
+
+<div class="box">
+                        <div class="box-header">
+                            <h2><i class="fa fa-align-justify"></i><span class="break"></span>Bolões Disponiveis</h2></div><div class="box-content">
+                    <div class="row">
+                        
+                        <?php
+                        
+                            for ($i = 0; $i < count($pencas); $i++) {
+                        
+                                ?>
+                            
+                        <div style="" id="760" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
+                        <div class="smallstat box"><table width="100%"><tbody><tr><td style="text-align:center"><b><a href="<?php echo $this->baseUrl("penca/pencabolao/?idpenca=".$pencas[$i]['pn_id']); ?>"><?php echo $pencas[$i]['pn_name']; ?></a></b></td>
+                                    </tr></tbody></table><table width="100%">
+                                        <tbody><tr><td style="text-align:center"><b>
+            <?php echo $pencas[$i]['ch_nome']; ?></b>
+                                                </td></tr>
+                                        </tbody></table>
+                            
+                            <table width="100%"><tbody><tr><td style="text-align:center">Ingresso: R$<?php echo $pencas[$i]['pn_value'];  ?></td></tr></tbody></table>
+                            <table width="100%"><tbody><tr><td style="text-align:center">Usuarios <?php echo $pencas[$i]['users'];  ?></td></tr></tbody></table>
+                            
+                          <div id="427" style="margin: 15px 0 0 0; ">
+                              <a href="<?php echo $this->baseUrl("penca/convite/?participar=paticipar&idpenca=".$pencas[$i]['pn_id']); ?>"><span class="label label-success" style="margin-right:70px">Participar</span></a><span style="padding-right:10px" class="ac_760">R$ <?php echo $pencas[$i]['pn_valueaccumulated']; ?></span><div id="dvInfo_760" style="display:none"></div></div>    
+                        </div>
+                </div>
+                        
+                        <?php
+                        
+                            }
+                        ?>
+                        
+                        <div class="form-action">                              
+                    </div>
+                    </div>
+                </div>
+        </div>

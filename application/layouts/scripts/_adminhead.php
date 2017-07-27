@@ -197,8 +197,15 @@
                                                 <li><a href="<?php echo $this->baseUrl("/penca/selecionarbase"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Selecionar base </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/admin/campeonato/backup"); ?>"><i class="fa fa-male"></i><span class="hidden-sm text"> Backup </span></a></li>
                                                 <li><a href="<?php echo $this->baseUrl("/index/logout"); ?>"><i class="fa fa-power-off"></i><span class="hidden-sm text">Logout</span></a></li>
-                                                <li><a href="<?php echo $this->baseUrl("/penca/pencas"); ?>"><i class="fa fa-power-off"></i><span class="hidden-sm text">Boloes</span></a></li>
-                                                
+                                                <li>
+							<a class="dropmenu"><i class="fa fa-users"></i><span class="hidden-sm text">Bolões</span> <span class="chevron closed"></span></a>
+							<ul style="display: none;">
+								<li><a class="submenu" href="<?php echo $this->baseUrl("/penca/boloesdisponiveis"); ?>"><i class="fa fa-users"></i><span class="hidden-sm text">Bolões Disponiveis</span></a></li>
+						 		<li><a class="submenu" href="<?php echo $this->baseUrl("/penca/meusbaloes"); ?>"><i class="fa fa-users"></i><span class="hidden-sm text">Meus Bolões</span></a></li>
+                                                                <li><a class="submenu" href="<?php echo $this->baseUrl("/penca/criar"); ?>"><i class="fa fa-users"></i><span class="hidden-sm text">Criar Bolão</span></a></li>
+							</ul>
+						
+						</li>
 					</ul>
 				</div>
 									<a href="javascript:void(0)" id="main-menu-min" class="full visible-md visible-lg"><i class="fa fa-angle-double-left"></i></a>
