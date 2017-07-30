@@ -1,0 +1,174 @@
+<?php
+
+ $championship = $this->championships;
+// $rodada = $this->rodada;
+ $champ = $this->champ;
+
+ $translate = Zend_Registry::get('translate');   
+ 
+ $config = new Zend_Config_Ini("config.ini");
+ 
+ $penca = $this->penca;
+ $penca = $penca[0];
+ 
+ 
+// print_r($penca)
+ 
+?>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        
+<input type="hidden" value="7" id="champ">
+
+<div class="box">
+    <div class="box-header">
+                                <h2><i class="fa fa-align-justify"></i><span class="break"><?php echo $penca['pn_name']; ?> (<?php echo $penca['ch_nome']; ?> )</span></h2>
+                                <div class="box-icon">
+                                    <span></span>
+                                </div>
+                        </div>
+    <div class="box-content">
+        
+
+        <div class="box-content">
+                            
+            <div class="row">
+                <div style="" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
+                     <div class="smallstat box">
+                         <table width="100%">
+                             <tbody>
+                                 <tr>
+                                     <td style="text-align:center"><b>Ingresso: R$<?php echo $penca['pn_value']; ?></b></td>
+                                 </tr>
+                             </tbody>
+                         </table>    
+                     </div>
+                </div>
+                <div style="" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
+                     <div class="smallstat box">
+                         <table width="100%">
+                             <tbody>
+                                 <tr>
+                                     <td style="text-align:center"><b>Acumulado: R$<?php echo $penca['pn_valueaccumulated']; ?></b></td>
+                                 </tr>
+                             </tbody>
+                         </table>    
+                     </div>
+                </div>   
+                <div style="" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
+                     <div class="smallstat box">
+                         <table width="100%">
+                             <tbody>
+                                 <tr>
+                                     <td style="text-align:center"><b>Ganhador: <?php echo $penca['pn_primerlugar']; ?>%</b></td>
+                                 </tr>
+                             </tbody>
+                         </table>    
+                     </div>
+                </div>  
+                <div style="" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
+                     <div class="smallstat box">
+                         <table width="100%">
+                             <tbody>
+                                 <tr>
+                                     <td style="text-align:center"><b>Segundo: <?php echo $penca['pn_segundolugar']; ?>%</b></td>
+                                 </tr>
+                             </tbody>
+                         </table>    
+                     </div>
+                </div>  
+                <div style="" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
+                     <div class="smallstat box">
+                         <table width="100%">
+                             <tbody>
+                                 <tr>
+                                     <td style="text-align:center"><b>Tercer: <?php echo $penca['pn_tercerlugar']; ?>%</b></td>
+                                 </tr>
+                             </tbody>
+                         </table>    
+                     </div>
+                </div>                  
+            </div>                    
+            <div class="form-action">                              
+            </div>
+            
+        </div>
+        
+  </div>
+</div>
+
+
+<div id="teamusername_popup" class="popover editable-container fade top in col-lg-4" style="display: none;">
+        <div></div>
+        <h3 class="popover-title">Time do coração</h3>
+        <div class="popover-content"> 
+
+            <div>
+                <div class="editableform-loading" style="display: none;"></div>
+
+                <form class="form-horizontal editableform" style="">
+                    <div class="form-group"><div>
+                            <div class="editable-input" style="position: relative;">
+
+                             </div>
+
+                        </div>
+                        <div class="editable-error-block help-block" style="display: none;"></div>     
+                    </div>
+
+                </form>  
+            </div>  
+        </div>
+</div>
+   </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <?php echo $this->render('penca/penca/paginacao.phtml'); ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div id="gif" style="display:none"><img class="col-sm-offset-5" width="100px" hight="100px" src="<?php echo $config->host."/assets/img/pendente.gif"; ?>" /></div>
+        <div id="panel_palpites_palpites_feitos">
+
+            <?php echo $this->render('penca/penca/palpites.phtml'); ?>
+                        
+       </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <?php echo $this->render('penca/penca/posicoes.phtml'); ?>
+    </div>
+    
+</div>
+
+    <script type="text/javascript">
+       $(function() {
+           $("#championship").change(function() {
+               $('#frChamp').submit();
+             //  alert("TROCOU");
+           });
+           
+           $("#mais").bind("click", function() {
+               var v = $("#mais").attr("m");
+               if (v === 'true') {
+                    $("#dados_campeonato").show();
+                    $("#mais_text").html("Menos");
+                    $("#mais").attr("m","false");
+                } else {
+                    $("#dados_campeonato").hide();
+                    $("#mais_text").html("Mais");
+                    $("#mais").attr("m","true");
+                }
+           });
+       }); 
+         
+    </script><script language="JavaScript" src="http://www.feedbucket.com/js.php?src=http%3A%2F%2Fgloboesporte.globo.com%2Fservico%2Fsemantica%2Feditorias%2Fplantao%2Ffutebol%2Fcopa-do-brasil%2Ffeed.rss&chan=y&desc=1&date=y" type="text/javascript"></script>
+<noscript>
+<a href="http://www.feedbucket.com/">Web RSS</a> by FeedBucket.
+</noscript>

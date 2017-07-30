@@ -324,6 +324,7 @@ class Helpers_Html {
     }
     
     public static function getTeamLinkLeft($baseUrl, $id_team, $nome_team, $logo_team, $champ) {
+//        print_r($baseUrl."-".$id_team."-".$nome_team."-".$logo_team."-".$champ);
         return '<img width="25px;" height="21px;" src="'.$logo_team.'" /><a href="'.$baseUrl."/team/team?team=".$id_team."&champ=".$champ.'">'.$nome_team.'</a>';
     }
     

@@ -1017,7 +1017,7 @@ class PencaController extends Zend_Controller_Action {
         $nome = $params['nome'];
         $valor = $params['valor'];
         $privado = $params['privado'];
-        $idchamp = $params['idchamp'];
+        $idchamp = $params['champ'];
         
         $primer = $params['primer'];
         $segundo = $params['segundo'];
@@ -1030,13 +1030,188 @@ class PencaController extends Zend_Controller_Action {
         $p = new Application_Model_Penca();
         $p->save_userpenca_inicial(array('up_idpenca' => $id,
             'up_iduser' => $iduser));
-        
-        $this->getResponse()
-             ->setHeader('Content-Type', 'application/json');
 
+        $this->_forward("meusbaloes", "penca");
+    }
+    
+    
+    
+    public function meubolaoAction() {
+        $params = $this->_request->getParams();
+        
+        	
+        $id = $this->getIdUser();
+        
+        if (empty($id)) {
+            $uri = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
+            $this->_redirect("/?url_go=".str_replace("public/","", $uri));
+        }
+        
+        $user_id = $id;
+        $u = new Application_Model_Users();
+                
+        $champ = new Application_Model_Championships();
+        $result['championships']= $champ->load();
+	    
+        $idpenca = $params['idpenca'];
+        $p_obj = new Application_Model_Penca();
+        $p = new Application_Model_Penca();
+        
+        
+        $penca = $p->load_penca($idpenca);
+        
+        $quisparticipar = false;
+        $temdinheiro = false;
+        
+        $custo = $penca[0]['pn_value'];
+        
+        $this->view->temdinheiro = true;
+        
+        if (!empty($params['participar']) &&
+                !$p_obj->estaAsociadoALaPenca($idpenca, $id) ) {
+            $quisparticipar = true;
+            $dinheiro = $u->getDinheiro($user_id);
+            $d = $dinheiro['us_cash'];
+        
+            if ($d >= $custo) {
+                $temdinheiro = true;
+                
+                $p = new Application_Model_Penca();
+                $p->save_userpenca($idpenca, $user_id, $custo);
+
+                $new_cash = round($d, 2) - round($custo, 2);
+
+                $u->update_cash($user_id, $new_cash); 
+
+            } else {
+                $this->view->temdinheiro = false;
+            }
+        }
+        
+        $us_penca = $p->load_penca_users($idpenca);
+        
+        $champ_id = $penca[0]['ch_id'];// $params['champ'];
+        
+        $this->view->champ = $champ_id;
+        $this->view->championship = $champ->getChamp($champ_id);
+        $this->view->penca = $penca;
+        
+        if ($p_obj->estaAsociadoALaPenca($idpenca, $id)) {
+            
+            if (!empty($champ_id)) {                      
+
+                if (empty($params['rodada'])) {
+                    $rodada_id = $p_obj->getIdPrimeraRodadaDisponivel($champ_id);
+                } else {            
+                    $rodada_id = $params['rodada'];
+                }
+
+    //            print_r("Champ ".$params['champ']);
+    //            print_r("Rodada ".$rodada_id);
+
+                $storage = new Zend_Auth_Storage_Session();
+
+                $matchs_obj = new Application_Model_Matchs();
+                $rondas = $matchs_obj->getrondas($champ_id);
+
+                $tem_grupo = false;
+
+                if (empty($params['team'])) {
+                    $rodada = $matchs_obj->load_rodada_com_palpites_penca($champ_id, $rodada_id, $id, $params['idpenca']);
+                    $result['porteam'] = true;
+                    $result['porrodada'] = false;
+                } else {
+                    $result['porteam']  = false;
+                    $$result['porrodada'] = true;
+                    $team_id = $params['team'];
+                    $rodada = $matchs_obj->load_rodada_porteam($champ_id, $team_id, $id);
+                }
+
+                $teams_obj = new Application_Model_Teams();
+                $teams = $teams_obj->load_teams_championship($champ_id); 
+                 
+                $this->view->teams = $teams;
+                
+                //los partidos de la rodada n_rodada
+                $this->view->rodada = $rodada;
+
+                //el numero de la rodada activa. La que siguiente inmediata que se va a jugar
+                $this->view->n_rodada = $rodada_id;
+
+                //las rodadas del campeonato registradas en el sistema
+                $this->view->rondas = $rondas;     
+
+                $this->view->usuario_pencas = $us_penca;
+                
+                $this->view->penca_id = $idpenca;
+                
+                $this->view->minhaspencas = $p_obj->load_pencas_incripto_usuario($id);
+            
+            }
+	
+        }
+        else {
+              
+            $result = "300";
+                        
+        }
+        
+//        print_r($result);
+//        die(".");
+    }
+    
+    
+    public function submeterpalpiteempencaAction() {
+        $params = $this->_request->getParams();
+
+        $result1 = $params['result1'];
+        $result2 = $params['result2'];
+        $user_id = $this->getIdUser();
+        $match_id = $params['match'];
+        $round = $params['round'];
+        $penca = $params['idpenca'];
+        
+        $matchs_obj = new Application_Model_Matchs();
+        $result_obj = new Application_Model_Result();  
+
+        $match_ja_palpitado = $matchs_obj->match_ja_palpitado_penca($match_id, $user_id, $penca);                        
+
+        if (!$match_ja_palpitado) {
+            $dados = array(
+                'rs_idmatch' => $match_id,
+                'rs_idpenca' => $penca,
+                'rs_iduser' => $user_id,
+                'rs_res1' => $result1,
+                'rs_res2' => $result2,
+                'rs_date' => date("Y-m-d H:i:s"),
+                'rs_round' => $round
+            );
+
+            $id = $matchs_obj->save_penca_match($dados);
+
+            $result = $result_obj->getResult($id);
+
+            $result['sucesso'] = 200;
+            
+        } else {
+            $dados = array(
+                'rs_res1' => $result1,
+                'rs_res2' => $result2,
+                'rs_date' => date("Y-m-d H:i:s")
+            );
+
+            $matchs_obj->update_penca_match($dados, $match_id, $user_id, $penca);
+            $result = $result_obj->get_result_by_match_user_penca($match_id, $user_id, $penca);
+
+            $result['sucesso'] = 402;
+        }
+
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
-
-        $this->_helper->json(200);
+        
+        $this->_helper->json($result);
     }
 }

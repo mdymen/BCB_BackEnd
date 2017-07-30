@@ -147,6 +147,15 @@
                                                     <!--<li><a href="<?php echo $this->baseUrl("/penca/meusbaloes"); ?>" ><i class="fa fa-globe"></i><span class="hidden-sm text"> Meus Baloes </span></a></li>-->	
                                                     <li><a href="<?php echo $this->baseUrl("/penca/meuspalpites"); ?>" ><i class="ttt fa fa-globe"></i><span class="hidden-sm text"> Meus Palpites </span></a></li>	
                                                     <li><a href="<?php echo $this->baseUrl("/penca/bolao"); ?>"><i class="fa fa-globe"></i><span class="hidden-sm text"> Palpites </span></a></li>
+                                                    <li>
+							<a class="dropmenu"><i class="fa fa-users"></i><span class="hidden-sm text">Bolões</span> <span class="chevron closed"></span></a>
+							<ul style="display: none;">
+							<li><a class="submenu" href="<?php echo $this->baseUrl("/penca/meusbaloes"); ?>"><i class="fa fa-sign-in"></i><span class="hidden-sm text">Meus Bolões</span></a></li>	
+                                                            <li><a class="submenu" href="<?php echo $this->baseUrl("/penca/boloesdisponiveis"); ?>"><i class="fa  fa-search"></i><span class="hidden-sm text">Bolões Disponiveis</span></a></li>						 		
+                                                                <li><a class="submenu" href="<?php echo $this->baseUrl("/penca/criar"); ?>"><i class="fa fa-money"></i><span class="hidden-sm text">Criar Bolão</span></a></li>
+							</ul>
+						
+						</li>
                                                     <li><a href="<?php echo $this->baseUrl("/usuario"); ?>"><i class="fa fa-user"></i><span class="test hidden-sm text">Meu Perfil</span></a></li>
                                                                                                    <li>
 							<a class="dropmenu" href="<?php echo $this->baseUrl("/campeonatos"); ?>"><i class="fa fa-star-o"></i><span class="hidden-sm text"> Campeonatos</span> <span class="chevron closed"></span></a>

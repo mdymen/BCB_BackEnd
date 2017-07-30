@@ -100,6 +100,8 @@ class Helpers_Posicoes {
                                     $k = 0;
                                     for ($i = 0; $i < count($teams); $i = $i + 1) {
 
+//                                        print_r($teams[$i]);
+                                        
                                         $torneo = "";
                                         $k = $k + 1;                                       
 //                                        print_r("k ".$k." - ");

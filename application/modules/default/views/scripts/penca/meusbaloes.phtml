@@ -86,7 +86,7 @@ print_r($pencas);
 
 <div class="box">
                         <div class="box-header">
-                            <h2><i class="fa fa-align-justify"></i><span class="break"></span>Bolões Disponiveis</h2></div><div class="box-content">
+                            <h2><i class="fa fa-align-justify"></i><span class="break"></span>Mues Bolões</h2></div><div class="box-content">
                     <div class="row">
                         
                         <?php
@@ -107,7 +107,7 @@ print_r($pencas);
                             <table width="100%"><tbody><tr><td style="text-align:center">Usuarios <?php echo $pencas[$i]['users'];  ?></td></tr></tbody></table>
                             
                           <div id="427" style="margin: 15px 0 0 0; ">
-                              <a href="<?php echo $this->baseUrl("penca/convite/?participar=paticipar&idpenca=".$pencas[$i]['pn_id']); ?>"><span class="label label-success" style="margin-right:70px">Participar</span></a><span style="padding-right:10px" class="ac_760">R$ <?php echo $pencas[$i]['pn_valueaccumulated']; ?></span><div id="dvInfo_760" style="display:none"></div></div>    
+                              <a href="<?php echo $this->baseUrl("penca/meubolao/?idpenca=".$pencas[$i]['pn_id']); ?>"><span class="label label-success" style="margin-right:70px">Palpitar</span></a><span style="padding-right:10px" class="ac_760">R$ <?php echo $pencas[$i]['pn_valueaccumulated']; ?></span><div id="dvInfo_760" style="display:none"></div></div>    
                         </div>
                 </div>
                         

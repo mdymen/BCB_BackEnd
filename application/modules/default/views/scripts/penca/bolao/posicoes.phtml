@@ -2,13 +2,14 @@
     $teams = $this->teams;
     $champ = $this->champ;
 
+    
     $champion = $this->championship;
 
     $t = Zend_Registry::get('translate');
 //    print_r($champion['ch_sec1_fim']);
     
     if (isset($teams)) {
-        
+
         $p = new Helpers_Posicoes();
         $p->champion = $champion;
         $p->champ = $champ;

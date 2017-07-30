@@ -1,5 +1,4 @@
 <?php
-
 $t = Zend_Registry::get('translate'); 
 
     $rondas = $this->rondas;
@@ -34,7 +33,7 @@ $t = Zend_Registry::get('translate');
 
 <div class="box">
     <div class="box-header">
-                                <h2><i class="fa fa-align-justify"></i><span class="break"></span><?php echo  "Palpite: R$ ". $championship['ch_dpalpite']; ?></h2>
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span></h2>
                                 <div class="box-icon">
                                     <span></span>
                                 </div>
@@ -51,8 +50,7 @@ $t = Zend_Registry::get('translate');
 //                        }
                   
                      ?>       
-                  <?php
-                        echo '<li><a id="teamusername" href="javascript:void(0)"><i class="fa fa-edit"></i></a></li><li><a href="'.$this->baseUrl('/penca/bolao?team='.$teamuserid.'&champ='.$champ).'" data-type="text" data-pk="1" data-original-title="Enter username" id="teamcoracao_nome" class="editable editable-click">'.$teamusername.'</a></li>';
+                  <?php                        
                         for ($i = 0; $i < count($rondas); $i = $i + 1) {
                             $r = $i + 1;
                             $active = "";
@@ -147,46 +145,6 @@ $t = Zend_Registry::get('translate');
       ?>
 
 <script type="text/javascript">
-//    
-//    function fechar_teamusername() {
-//        $("#fechar_teamusername").bind("click", function() {
-//            $("#teamusername_popup").css("display","none");       
-//        });
-//    }
-//    
-//    function aceitar_teamusername() {
-//        $("#aceitar_teamusername").bind("click", function() {
-//            var name = $('#team_coracao').find(":selected").text();
-//            var id = $('#team_coracao').find(":selected").val();   
-//            var champ = $('#champ').val();
-//            $("#teamusername_popup").css("display","none");
-//            
-//            $.post("edittimecoracao",{idteam : id, nameteam : name}, function(response) {
-//                if (response == 200) {
-//                    $("#teamcoracao_nome").html(name);
-//                    $("#teamcoracao_nome").attr("href","http://localhost/penca/public/penca/bolao?team="+id+"&champ="+champ);
-//                    $("#head_timecoracao").html(name);
-//                    
-//                }
-//                console.log(response);
-//            });
-//        });
-//    }
-//    
-//    $(function() {
-//        aceitar_teamusername();
-//        fechar_teamusername();
-//        $("#teamusername").bind("click", function() {
-//            $("#teamusername_popup").css("display","block");
-//            
-//        });  
-//        
-//        
-//            
-//        
-//        
-// 
-//    });
 
         $("#teamusername").bind("click", function() {
             $("#teamcoracao_pick").show();    
