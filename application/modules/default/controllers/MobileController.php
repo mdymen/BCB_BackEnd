@@ -711,6 +711,9 @@ class MobileController extends Zend_Controller_Action
             
             $champ_id = $params['champ'];
 
+            $ranking = new Application_Model_Result();
+            $result['rankings_champ'] = $ranking->ranking_champ($champ_id);
+            
             $result['champ'] = $champ_id;
             $result['championship'] = $champ->getChamp($champ_id);
             

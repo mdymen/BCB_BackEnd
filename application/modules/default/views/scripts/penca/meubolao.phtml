@@ -137,6 +137,8 @@
         <div id="panel_palpites_palpites_feitos">
 
             <?php echo $this->render('penca/penca/palpites.phtml'); ?>
+            
+            <?php echo $this->render('penca/penca/usuarios.phtml'); ?>
                         
        </div>
     </div>
@@ -146,6 +148,12 @@
     </div>
     
 </div>
+
+<?php
+
+//print_r($this->usuario_pencas);
+
+?>
 
     <script type="text/javascript">
        $(function() {
@@ -168,7 +176,3 @@
            });
        }); 
          
-    </script><script language="JavaScript" src="http://www.feedbucket.com/js.php?src=http%3A%2F%2Fgloboesporte.globo.com%2Fservico%2Fsemantica%2Feditorias%2Fplantao%2Ffutebol%2Fcopa-do-brasil%2Ffeed.rss&chan=y&desc=1&date=y" type="text/javascript"></script>
-<noscript>
-<a href="http://www.feedbucket.com/">Web RSS</a> by FeedBucket.
-</noscript>

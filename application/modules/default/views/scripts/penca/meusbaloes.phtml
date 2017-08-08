@@ -79,7 +79,10 @@ if ($p_carregada != 0) {
 
 $pencas = $this->pencas;
 
-print_r($pencas);
+//print_r($pencas);
+
+
+if (count($pencas) > 0) {
 ?>
 
 
@@ -96,7 +99,7 @@ print_r($pencas);
                                 ?>
                             
                         <div style="" id="760" class="col-lg-3 col-sm-6 col-xs-6 col-xxs-12 col-xxs-6">
-                        <div class="smallstat box"><table width="100%"><tbody><tr><td style="text-align:center"><b><a href="<?php echo $this->baseUrl("penca/pencabolao/?idpenca=".$pencas[$i]['pn_id']); ?>"><?php echo $pencas[$i]['pn_name']; ?></a></b></td>
+                        <div class="smallstat box"><table width="100%"><tbody><tr><td style="text-align:center"><b><a href="<?php echo $this->baseUrl("penca/meubolao/?idpenca=".$pencas[$i]['pn_id']); ?>"><?php echo $pencas[$i]['pn_name']; ?></a></b></td>
                                     </tr></tbody></table><table width="100%">
                                         <tbody><tr><td style="text-align:center"><b>
             <?php echo $pencas[$i]['ch_nome']; ?></b>
@@ -121,3 +124,15 @@ print_r($pencas);
                     </div>
                 </div>
         </div>
+
+<?php
+
+} else {
+
+?>
+
+    <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Atenção! </strong> Você não está cadastrado em nenhum bolão ainda. <a href="/public/penca/boloesdisponiveis">Procure um bolão e participe!</a>
+    </div>
+<?php } 

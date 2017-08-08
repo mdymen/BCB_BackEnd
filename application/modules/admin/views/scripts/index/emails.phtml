@@ -5,10 +5,17 @@ $emails = $this->emails;
 //print_r($emails[1]);
 //die(".");
 
+$it = 0;
 for ($i = 0; $i < count($emails); $i++) {
-    if (!empty($emails[$i]) && $emails[$i] != "") {
-        echo $emails[$i]['us_email'].";";
+    if ($it == 10) {
+        echo '<br><br>';
+        $it = 0;
     }
+    if (!empty($emails[$i]) && $emails[$i] != "") {
+        echo $emails[$i]['us_email']."; ";
+        $it = $it + 1;
+    }
+    
 }
 
 ?>

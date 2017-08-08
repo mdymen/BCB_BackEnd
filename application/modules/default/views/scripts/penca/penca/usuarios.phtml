@@ -1,0 +1,53 @@
+<?php
+
+$usuarios = $this->usuario_pencas;
+
+?>
+
+
+					<div class="box">
+						<div class="box-header">
+							<h2><i class="fa fa-align-justify"></i><span class="break"></span>Ranking</h2>
+							
+						</div>
+						<div class="box-content">
+							<table class="table">
+								  <thead>
+									  <tr>                               
+									  </tr>
+								  </thead>   
+								  <tbody>
+                                                                      
+                                                                   <?php   
+                                                                   
+                                                                        for ($i = 0; $i < count($usuarios); $i = $i + 1) {
+                                                                   
+                                                                            $star = "";
+                                                                            if ($i == 0) {
+                                                                                $star = '<i class="fa fa-star yellow"></i>';
+                                                                            }
+                                                                            
+                                                                            echo '<tr>
+                                                                                    <td>'.($i+1).$star.'</td>
+                                                                                    <td>'.$usuarios[$i]['up_puntagem'].'</td>
+                                                                                    <td><a href="'.$this->baseUrl().'/usuario/index?usuario='.$usuarios[$i]['us_id'].'">'.$usuarios[$i]['us_username'].'</a></td>
+                                                                                                                         
+                                                                            </tr>';
+                                                                        
+                                                                        }
+                                                                        
+                                                                    ?>    
+                                                                                                          
+								  </tbody>
+							 </table>  
+							 <div class="pagination pagination-centered">
+							  <ul class="pagination" id="ul_positions">
+
+                                                                
+                                                                
+							  </ul>
+							</div>     
+						</div>
+					</div>
+    
+    
