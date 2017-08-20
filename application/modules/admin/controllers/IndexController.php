@@ -90,6 +90,26 @@ class Admin_IndexController extends Zend_Controller_Action
         $this->view->users = $users;
         
     }
+    
+        public function usuarios2Action() {
+        
+        $u = new Application_Model_Users();
+        
+        $users = $u->users();
+        
+        $this->view->users = $users;
+        
+    }
+    
+    public function usuariospalpitaronAction() {
+        
+        $u = new Application_Model_Users();
+        
+        $users = $u->userspalpitaron();
+        
+        $this->view->users = $users;
+        
+    }
 	
     public function adicionargranaAction() {
             $u = new Application_Model_Users();

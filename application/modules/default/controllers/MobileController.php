@@ -544,6 +544,22 @@ class MobileController extends Zend_Controller_Action
         $this->_helper->json($pencas);
     }
     
+    public function getpencasdisponiveiscampeonatoAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+        
+        $u = new Application_Model_Users();
+        $pencas = $u->getPencasDisponiveisCampeonato($params['iduser'], $params['campeonato']);
+        
+                $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($pencas);
+    }    
+    
     public function getTimeUserId() {
         $storage = new Zend_Auth_Storage_Session();
         $data = (get_object_vars($storage->read())); 

@@ -23,6 +23,19 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         
     }
     
+    public function userspalpitaron() {
+        $db = $this->db;
+        
+        return $db->select()->from("user")->distinct()
+                ->joinInner("result", "result.rs_iduser = user.us_id")
+                ->joinInner("match", "result.rs_idmatch = match.mt_id")
+                ->joinInner("championship", "championship.ch_id = match.mt_idchampionship")
+                ->joinInner("penca", "penca.pn_id = rs_idpenca")
+                ->where("user.us_email <> ''")
+                ->query()->fetchAll();
+        
+    }
+    
     public function cambiar_idioma($i, $id) {
         $db = $this->db;
         
@@ -542,6 +555,33 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
          
          return $db->lastInsertId();
      }
+     
+     public function getPencasDisponiveisCampeonato($iduser, $campeonato) {
+                 $db = $this->db;
+        
+        $sql = "SELECT * FROM penca p"
+                . " INNER JOIN championship c ON p.pn_idchampionship = c.ch_id"
+                . " LEFT JOIN participantespenca pa ON pa.up_idpenca = p.pn_id "
+                . " WHERE p.pn_ativo = 1 AND (p.pn_justfriends = 0 OR p.pn_justfriends is null) AND p.pn_id NOT IN ("
+                . " SELECT DISTINCT p.pn_id FROM penca p"
+                . " INNER JOIN championship c ON p.pn_idchampionship = c.ch_id"
+                . " INNER JOIN user_penca up ON up.up_idpenca = p.pn_id "
+                . " LEFT JOIN participantespenca pa ON pa.up_idpenca = p.pn_id "
+                . " WHERE up.up_iduser = ".$iduser." AND c.ch_id = ".$campeonato."" 
+                . ")";
+        
+        $result = $db->query($sql)->fetchAll();
+        
+        return $result;
+        /*
+                   SELECT DISTINCT p.pn_id FROM penca p
+               INNER JOIN championship c ON p.pn_idchampionship = c.ch_id
+                INNER JOIN user_penca up ON up.up_idpenca = p.pn_id 
+                LEFT JOIN participantespenca pa ON pa.up_idpenca = p.pn_id 
+                WHERE up.up_iduser =
+                                "
+                                    . "*/
+     }     
         
      public function getPencasDisponiveis($iduser) {
                  $db = $this->db;
