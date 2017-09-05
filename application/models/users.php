@@ -23,6 +23,8 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         
     }
     
+    
+    
     public function userspalpitaron() {
         $db = $this->db;
         
@@ -677,5 +679,36 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
             return $result;
         }
     
+        public function getUsuariosPalpitaronJogo($idmatch) {
+            $db = $this->db;
+            
+            $sql = $db->select()->from("match")
+                    ->joinInner("result", "result.rs_idmatch = match.mt_id")
+                    ->joinInner("user", "user.us_id = result.rs_iduser")
+                    ->joinLeft("penca", "penca.pn_id = result.rs_idpenca")
+                    ->where("match.mt_id = ?", $idmatch)
+                    ->where("result.rs_result = 1")
+                    ->query()->fetchAll();
+            
+            return $sql;
+        }
+        
+        public function usersPalpitaronJogo($idmatch) {
+            $db = $this->db;
+            
+            $sql = $db->select()->from("match")
+                    ->joinInner("result", "result.rs_idmatch = match.mt_id")
+                    ->joinInner("user", "user.us_id = result.rs_iduser")
+                    ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('t1nome' => 't1.tm_name'))
+                    ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('t2nome' => 't2.tm_name'))                    
+                    ->joinLeft("penca", "penca.pn_id = result.rs_idpenca")
+                    ->where("match.mt_id = ?", $idmatch)
+                    ->where("result.rs_result is null")
+                    ->query()->fetchAll();
+            
+            return $sql;
+        }
 
+        
+        
 }

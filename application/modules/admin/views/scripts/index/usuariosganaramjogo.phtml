@@ -1,0 +1,110 @@
+<?php
+
+$users = $this->users;
+
+//die(".");
+$users_palpitaran = $this->users_palpitaran;
+//print_r($users_palpitaran);
+?>
+
+<h1><?php echo $users_palpitaran[0]['t1nome']." ".$users_palpitaran[0]['mt_goal1']." vs ".$users_palpitaran[0]['mt_goal2']." ".$users_palpitaran[0]['t2nome']; ?></h1>
+
+<div class="row">
+        <div class="col-lg-12">
+                <div class="box">
+                        <div class="box-header">
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Acertaron</h2>
+                                <div class="box-icon">
+                                        <a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
+                                        <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                                        <a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>
+                                </div>
+                        </div>
+                        <div class="box-content">
+                                <table class="table">
+                                          <thead>
+                                                  <tr>
+                                                          <th></th>
+                                                          <th></th>
+                                                          <th></th>
+                                                  </tr>
+                                          </thead>   
+                                          <tbody>
+                                          <?php
+                                          
+                                                for ($i = 0; $i < count($users); $i = $i + 1) { 
+                                                    $user = $users[$i];
+                                                    echo ' <tr>
+                                                            <td>'.$user['us_id'].'</td>
+                                                            <td>'.$user['us_email'].'</td>
+                                                            <td>'.$user['us_username'].'</td>
+                                                            <td>'.$user['pn_name'].'</td>
+                                                            </tr>    ';
+                                                }
+
+                                          ?>
+                                                            
+                                          </tbody>
+                                 </table>  
+
+                            <div class="form-actions">
+                                
+                            </div>
+
+                        </div>
+                </div>
+        </div><!--/col-->
+
+        <!--/col-->
+</div>
+
+
+<div class="row">
+        <div class="col-lg-12">
+                <div class="box">
+                        <div class="box-header">
+                                <h2><i class="fa fa-align-justify"></i><span class="break"></span>Palpitaron y no acertaron</h2>
+                                <div class="box-icon">
+                                        <a href="table.html#" class="btn-setting"><i class="fa fa-wrench"></i></a>
+                                        <a href="table.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                                        <a href="table.html#" class="btn-close"><i class="fa fa-times"></i></a>
+                                </div>
+                        </div>
+                        <div class="box-content">
+                                <table class="table">
+                                          <thead>
+                                                  <tr>
+                                                          <th></th>
+                                                          <th></th>
+                                                          <th></th>
+                                                  </tr>
+                                          </thead>   
+                                          <tbody>
+                                          <?php
+                                          
+                                                for ($i = 0; $i < count($users_palpitaran); $i = $i + 1) { 
+                                                    $user = $users_palpitaran[$i];
+                                                    echo ' <tr>
+                                                            <td>'.$user['us_id'].'</td>
+                                                            <td>'.$user['us_email'].'</td>
+                                                            <td>'.$user['us_username'].'</td>
+                                                            <td>'.$user['pn_name'].'</td>
+                                                            <td>'.$user['rs_res1'].' x '.$user['rs_res2'].'</td>
+                                                            </tr>    ';
+                                                }
+
+                                          ?>
+                                                            
+                                          </tbody>
+                                 </table>  
+
+                            <div class="form-actions">
+                                
+                            </div>
+
+                        </div>
+                </div>
+        </div><!--/col-->
+
+        <!--/col-->
+</div>
