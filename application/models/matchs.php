@@ -437,7 +437,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         
         $return = $db->select()->from("vwmatchsresult","")
                 ->distinct()
-                ->joinInner("user","user.us_id = vwmatchsresult.rs_iduser",array("us_id","us_username"))
+                ->joinInner("user","user.us_id = vwmatchsresult.rs_iduser",array("us_id","us_username","us_email"))
                 ->where("vwmatchsresult.mt_idchampionship = ?", $champ);
         
         $result = $return->query()->fetchAll();
@@ -449,8 +449,10 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         $db = $this->db;
         
         $result = $db->select()->from("match")
-            ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('t1nome' => 't1.tm_name'))
-            ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('t2nome' => 't2.tm_name'))
+            ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('t1nome' => 't1.tm_name', 't1logo' => 't1.tm_logo'))
+            ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('t2nome' => 't2.tm_name', 't2logo' => 't2.tm_logo'))
+            ->joinInner('round', 'round.rd_id = match.mt_idround')
+            ->joinInner('championship', 'championship.ch_id = match.mt_idchampionship')
             ->where('mt_idchampionship = ?', $champ)
             ->where("mt_idround = ?",$rodada)
             ->query()

@@ -133,6 +133,7 @@ $ronda = $this->ronda;
 
                             <div class="form-actions">
                                 <button id="btnFecharRodada" type="button" class="btn btn-primary">Fechar Rodada</button> <span><b>LEMBRAR TESTAR PRIMERO COM BASE DE TESTE</b></span>
+                                <button id="btnEnviarEmails" type="button" class="btn btn-primary">Enviar emails</button>
                             </div>
 
                         </div>
@@ -171,6 +172,15 @@ $ronda = $this->ronda;
                 //<span class="label label-success">Complete</span>
            });
         });
+        
+        $("#btnEnviarEmails").bind("click", function() {
+                    var rodada = $("#rodada").val();     
+            var champ = $("#championship").val();  
+            $.post("index/testemailresultados", {champ : champ, rodada: rodada}, function(response) {
+                alert("ok");
+                console.log(response);
+            });
+    });
         
        $("#btnFecharRodada").bind("click", function() {
             var rodada = $("#rodada").val();     
