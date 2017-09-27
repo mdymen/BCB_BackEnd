@@ -198,8 +198,8 @@ class Admin_IndexController extends Zend_Controller_Action
             
         }
         
-        print_r($emails);
-        die(".");
+//        print_r($emails);
+//        die(".");
 //        
 //
 //        
@@ -471,7 +471,7 @@ $x = $x. '
         $config = array('ssl' => 'ssl',
             'auth' => 'login',
             'username' => 'bolaocraquedebola16@gmail.com',
-            'password' => 'E3b3c4f5h5931',
+            'password' => 'Ebcfh94785',
             'encoding' => 'UTF-8',
             'charset' => 'UTF-8');
 
@@ -486,6 +486,15 @@ $x = $x. '
 
         $mail->setSubject($subject);
         $mail->send($transport);
+    }
+    
+    public function usuariosquefizerambolaoAction() {
+        
+        $p = new Application_Model_Penca();
+        $us = $p->load_usuarios_donos_bolao();
+        
+        $this->view->users = $us;
+        
     }
 }
 

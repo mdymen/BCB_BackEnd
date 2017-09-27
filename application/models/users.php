@@ -709,6 +709,24 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
             return $sql;
         }
 
+    public function email_donosboloes() {
+        $sql = $this->db;
         
+        $return = $sql->select()->from("penca")
+                ->joinInner("user", "user.us_id = penca.pn_iduser")
+                ->query()->fetchAll();
+        
+        return $return;
+    }    
+    
+    public function email_quemtemsaldo() {
+        $sql = $this->db;
+        
+        $return = $sql->select()->from("user")
+                ->where("us_cash <> 0")
+                ->query()->fetchAll();
+        
+        return $return;        
+    }
         
 }

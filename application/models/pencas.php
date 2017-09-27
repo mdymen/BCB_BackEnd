@@ -52,7 +52,7 @@ class Application_Model_Penca extends Application_Model_Bd_Adapter
         
 
         
-        $valor = round($ac["pn_valueaccumulated"],2) + round($custo,2);
+        $valor = round($ac["pn_valueaccumulated"],2) + round($custo,2) - ( round($custo * 0.20, 2)  );
 
 //        $sql = "UPDATE penca SET pn_valueaccumulated = '".$valor."' WHERE pn_id = ".$idpenca;
 //        
@@ -401,4 +401,14 @@ class Application_Model_Penca extends Application_Model_Bd_Adapter
         
     }
     
+    
+    public function load_usuarios_donos_bolao() {
+        $sql = $this->db;
+        
+        $return = $sql->select()->from("penca")
+                ->joinInner("user", "user.us_id = penca.pn_iduser")
+                ->query()->fetchAll();
+        
+        return $return;
+    }
 }

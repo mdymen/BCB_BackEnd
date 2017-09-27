@@ -1,0 +1,57 @@
+<?php
+
+$opcoes = $this->opcoes;
+
+?>
+
+
+<div class="form-group">
+    <label class="control-label">Opcoes de envio de email</label>
+    <div class="controls">
+        
+        <?php
+            
+            for ($i = 0; $i < count($opcoes); $i = $i + 1) {
+                echo '      
+                <label class="radio">
+                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="'.$i.'" checked="">
+                    '.$opcoes[$i].'
+                </label>';
+            }
+        
+        
+        ?>
+        
+
+      <div style="clear:both"></div>
+      
+      <div class="form-actions">
+            <button type="button" id="btnEnviar" class="btn btn-primary">Enviar</button>
+      </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    
+    $(function() {
+        
+        $("#btnEnviar").bind("click", function() {
+            var opcao = $('input[name=optionsRadios]:checked').val();
+            
+             $.post("enviaremail", {opcao : opcao}, function(response) {
+                
+                console.log(response);
+                
+                if (response === '200') {
+                    alert("ok");
+                } else {
+                    alert("error");
+                }
+                
+             });
+        });
+        
+    });
+    
+</script>
