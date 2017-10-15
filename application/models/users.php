@@ -79,6 +79,11 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         return $db->lastInsertId();
     }
     
+    public function update_codeverification($user, $code) {
+        $db = $this->db;
+        $db->update("user", array('us_codverificacion' => $code),'us_username = '.$user);
+    }
+    
     public function load_userbyid($user) {
         $db = $this->db;
         
@@ -460,7 +465,7 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
     public function confirmaremail($data) {
         $db = $this->db;
         
-        $db->update("user", array("us_codverificacion" => ""), "us_id = ".$data);
+        $db->update("user", array("us_emailconfirmado" => true, 'us_codverificacion' => ""), "us_id = ".$data);
     }
     
     public function getDinheiro($user_id) {

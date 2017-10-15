@@ -136,6 +136,34 @@ class MobileController extends Zend_Controller_Action
         $this->_helper->json($champs);
     }    
     
+    public function reenviaremailcadastroAction() {
+        $params = $this->_request->getParams();
+        
+        print_r($params);
+        die(".");
+        
+        $user['us_codverificacion'] = md5(uniqid(""));                 
+        $user['us_emailconfirmado'] = false;
+        
+        $u = new Application_Model_Users();
+        $user = $u->load_user($params['usuario']);
+        $u->update_codeverification($params['usuario'], $user['us_codverificacion']);
+
+        $addTo = $user['us_email'];
+        $subject = "Confirme seu email";
+        $body = 'Já quasi!! faça <a href="http://www.bolaocraquedebola.com.br/public?confmail='.$user['us_codverificacion'].'"> click </a> e confirme seu email';
+
+        $this->mail($body, $addTo, $subject);
+            
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json(200);
+    }
+    
     public function celcadastroAction() {
         $body = $this->getRequest()->getRawBody();
         $data = Zend_Json::decode($body);
@@ -161,7 +189,15 @@ class MobileController extends Zend_Controller_Action
         if ($u->existUserName($user['us_username'])) {
             $return = 401;
         } else {
+            $user['us_codverificacion'] = md5(uniqid(""));                 
+            $user['us_emailconfirmado'] = false;
             $u->save_user($user);
+            
+            $addTo = $user['us_email'];
+            $subject = "Confirme seu email";
+            $body = 'Já quasi!! faça <a href="http://www.bolaocraquedebola.com.br/public?confmail='.$user['us_codverificacion'].'"> click </a> e confirme seu email';
+            
+            $this->mail($body, $addTo, $subject);
         }
         
         
@@ -1231,16 +1267,36 @@ class MobileController extends Zend_Controller_Action
         $config = array('ssl' => 'ssl',
             'auth' => 'login',
             'username' => 'bolaocraquedebola16@gmail.com',
-            'password' => 'E3b3c4f5h5931');
+            'password' => 'Ebcfh94785',
+            'encoding' => 'UTF-8',
+            'charset' => 'UTF-8');
 
         $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
 
-        $mail = new Zend_Mail();
+        $mail = new Zend_Mail('UTF-8');
         $mail->setBodyHtml($body);
-        $mail->setFrom('bolaocraquedebola16@gmail.com');
+        $mail->setFrom('bolaocraquedebola16@gmail.com', 'Bolão Craque de Bola');
+        
         $mail->addTo($addTo, $addTo);
+        
+
         $mail->setSubject($subject);
         $mail->send($transport);
+        
+        
+//        $config = array('ssl' => 'ssl',
+//            'auth' => 'login',
+//            'username' => 'bolaocraquedebola16@gmail.com',
+//            'password' => 'Ebcfh94785');
+//
+//        $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
+//
+//        $mail = new Zend_Mail();
+//        $mail->setBodyHtml($body);
+//        $mail->setFrom('bolaocraquedebola16@gmail.com');
+//        $mail->addTo($addTo, $addTo);
+//        $mail->setSubject($subject);
+//        $mail->send($transport);
     }
     
     public function cellpalpitesusuarioAction() {

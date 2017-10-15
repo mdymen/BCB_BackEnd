@@ -70,7 +70,7 @@
                                             
                                         </div> 
                                         <br>
-                                        <center> <button class="btn btn-primary">Re-enviar e-mal</button> </center>
+                                        <center> <button class="btn btn-primary">Re-enviar e-mail</button> </center>
                                         <br>
                                         <br>
                                         <center> <a href="<?php echo $this->baseUrl(); ?>/index/logout">Fechar</a> </center>

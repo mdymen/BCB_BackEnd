@@ -496,5 +496,35 @@ $x = $x. '
         $this->view->users = $us;
         
     }
+    
+    
+    public function verrodadaAction() {
+        $params = $this->_request->getParams();
+        
+        $c = new Application_Model_Championships();
+        if (!empty($params['champ'])) {
+            $this->view->rounds = $c->getrondas($params['champ']);
+            $this->view->champ = $params['champ'];
+            
+            if (!empty($params['ronda'])) {
+                
+//                print_r($params);
+//                die(".");
+                
+                $ronda = $params['ronda'];
+                $champ = $params['champ'];
+                $m_obj = new Application_Model_Matchs();
+                $matchs = $m_obj->load_matchs_byrodada2($champ, $ronda);
+                $matchs = $m_obj->setDatas($matchs);
+                $this->view->matchs = $matchs;      
+                $this->view->ronda = $ronda;
+            }
+        }
+        
+        
+        $this->view->championships = $c->load();
+        $this->view->champ = $params['champ'];
+    }
+        
 }
 

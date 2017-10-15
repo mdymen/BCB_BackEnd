@@ -29,6 +29,7 @@ class Admin_JogosController extends Zend_Controller_Action
         }       
     }
     
+
     public function excluirjogoAction() {
         $params = $this->_request->getParams();
         

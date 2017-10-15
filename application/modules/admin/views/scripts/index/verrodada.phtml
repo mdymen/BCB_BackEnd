@@ -1,0 +1,199 @@
+<?php
+
+$champs = $this->championships;
+
+$matchs = $this->matchs;
+
+$champ = $this->champ;
+
+$rounds = $this->rounds;
+$ronda = $this->ronda;
+
+//print_r($matchs);
+
+?>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box">
+            <div class="box-content">
+                <form id="frChamp_palpites" action="<?php echo $this->baseUrl('/admin/index/verrodada'); ?>" method="post">	
+                    <div class="form-group">                                      
+                                      <div class="controls">
+                                            <div class="input-group date col-sm-4">
+                                                    <span class="input-group-addon"><i class="fa  fa-search"></i></span>
+                                                    <div class="controls">
+                                                    <input type="hidden" value="<?php echo isset($matchs[0]['mt_idround']) ? $matchs[0]['mt_idround'] : ""; ?>" name="rodada" id="rodada" />
+                                                    <select id="championship" name="champ" class="form-control">
+                                                    <?php   
+                                                        if (empty($pencas)) {
+                                                            echo '<option value="Vazio"></option>';    
+                                                        }
+                                                        
+                                                        for ($i = 0; $i < count($champs); $i = $i + 1) {
+                                                            $selected = "";
+                                                            if (!empty($champ) && $champs[$i]['ch_id'] == $champ) {
+                                                                $selected = "selected";    
+                                                            }
+                                                            echo '<option '.$selected.' value="'.$champs[$i]['ch_id'].'">'.$champs[$i]['ch_nome'].'</option>';
+                                                        }                                                        
+                                                    ?>
+                                                    </select></div>
+                                            </div>	
+                                      </div>
+                                    </div>    
+                    <div class="form-group">                                        
+                        <div class="controls">
+                              <div class="input-group col-sm-4">
+                                  <select id="ronda" name="ronda" class="form-control">
+                                        <?php   
+                                            for ($i = 0; $i < count($rounds); $i = $i + 1) {
+                                                $selected = "";
+                                                if (!empty($rounds) && $rounds[$i]['rd_id'] == $ronda) {
+                                                    $selected = "selected";    
+                                                }
+                                                echo '<option '.$selected.' value="'.$rounds[$i]['rd_id'].'">'.$rounds[$i]['rd_round'].'</option>';
+                                            }                                                        
+                                        ?>
+                                   </select>                                                                  
+                              </div>                                              
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Cargar Partidos</button>
+                      </div>
+                </form>   
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Untitled Document</title>
+</head>
+<body>
+
+<div style="width:100%;" align="center">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody><tr>
+    <td align="center" valign="top" style="background-color:#53636e;" bgcolor="#53636e;">
+    
+    <br>
+    <br>
+    <table width="583" border="0" cellspacing="0" cellpadding="0">
+      <tbody><tr>
+        <td align="left" valign="top" bgcolor="#FFFFFF" style="background-color:#FFFFFF;"><a href="http://www.bolaocraquedebola.com.br/public" TARGET="_blank"><img src="http://www.bolaocraquedebola.com.br/public/assets/img/banneremail.jpg" width="583" height="118"></a></td>
+      </tr>
+      <tr>
+        <td align="left" valign="top" bgcolor="#FFFFFF" style="background-color:#FFFFFF;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tbody><tr>
+            <td width="35" align="left" valign="top">&nbsp;</td>
+            <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tbody><tr>
+                <td align="center" valign="top">
+                	<div style="color:#245da5; font-family:Times New Roman, Times, serif; font-size:48px;"><?php echo $matchs[0]['ch_nome']; ?></div>
+        <div style="font-family: Verdana, Geneva, sans-serif; color:#898989; font-size:12px;">Rodada: <?php echo $matchs[0]['rd_round']; ?></div></td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#525252;">
+                
+                <div style="color:#3482ad; font-size:19px;">
+                
+</div>
+                <br>
+
+<div class="box">
+<div class="box-content">
+                    <div class="row">
+					
+					
+					<div style="" id="958" class="col-lg-12 col-sm-12 col-xs-12 col-xxs-12 col-xxs-12">
+                        <div class="smallstat box">
+	
+                            
+                            <?php
+                            
+            for ($j = 0; $j < count($matchs); $j = $j + 1) {
+      
+                $match = $matchs[$j];
+                
+                $d = str_replace("/17","", $match['mt_date']);
+                
+                $d1 = str_replace("hs","", $d);
+                
+                echo '<table width="100%">
+                    <tbody>
+                            <tr>
+                                    <td style="text-align:center;width:16%"><b>'.$d1.'</b></td>
+                                    <td style="text-align:center;width:5%"><b><img width="25px;" height="21px;" src="http://www.bolaocraquedebola.com.br/'.$match['t1logo'].'"></b></td>
+                                    <td style="text-align:center;width:20%"><b>'.$match['t1nome'].'</b></td>
+                                    <td style="text-align:center;width:7%"><b>'.$match['mt_goal1'].'</b></td>
+                                    <td style="text-align:center;width:5%"><b>x</b></td>
+                                    <td style="text-align:center;width:7%"><b>'.$match['mt_goal2'].'</b></td>
+                                    <td style="text-align:center;width:20%"><b>'.$match['t2nome'].'</b></td>			
+                                    <td style="text-align:center;width:5%"><b><img width="25px;" height="21px;" src="http://www.bolaocraquedebola.com.br//'.$match['t2logo'].'"></b></td>			
+                            </tr>
+                    </tbody>
+                </table>';
+                        
+
+
+                }
+            
+?>
+
+                        </div>
+                </div>
+				
+				
+			<div class="form-action">                              
+                    </div>
+                    </div>
+                </div>
+        </div>
+
+<br>
+
+
+	</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#525252;">&nbsp;</td>
+              </tr>
+            </tbody></table></td>
+            <td width="35" align="left" valign="top">&nbsp;</td>
+          </tr>
+        </tbody></table></td>
+      </tr>
+      <tr>
+        <td align="left" valign="top" bgcolor="#3d90bd" style="background-color:#3d90bd;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tbody><tr>
+            <td width="35">&nbsp;</td>
+            <td height="50" valign="middle" style="color:#FFFFFF; font-size:11px; font-family:Arial, Helvetica, sans-serif;">Cadastre-se e participe em: <b>http://www.bolaocraquedebola.com.br</b>, ou baixe nosso aplicativo na Play Store<br>
+            <td width="35">&nbsp;</td>
+          </tr>
+        </tbody></table></td>
+      </tr>
+  </tbody></table>
+    <br>
+    <br></td>
+  </tr>
+</tbody></table>
+
+</div>
+
+
+
+</body></html>
+
+<script type="text/javascript">
+        $(function() { 
+            $("#championship").change(function() {
+                $("#frChamp_palpites").submit();
+            });
+        });
+</script>
