@@ -361,6 +361,12 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         return $db->lastInsertId();
     }
 	
+	public function teste($teste) {
+		$db = $this->db;
+		
+		$db->insert("teste", array('teste' => $teste));
+	}
+	
 	public function alterar_result($user_id, $result1, $result2, $match_id, $round) {
 		$db = $this->db;
 		
@@ -619,6 +625,6 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         return $return;
                 
     }
-   
+
     
 }

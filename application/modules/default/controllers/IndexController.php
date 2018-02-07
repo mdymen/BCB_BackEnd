@@ -38,6 +38,67 @@ class IndexController extends Zend_Controller_Action
 		
 	}
 	
+            public function index2Action() {
+        try {
+            
+            $params = $this->_request->getParams();
+            
+			if (!empty($params['id_pagoseguro'])) {
+				$this->pagamentoAction();
+			}
+			
+//            print_r($limit);
+            
+            $limit = 8;
+            if (!empty($params['limit'])) {
+                $limit = $params['limit'];
+            }
+            
+            $email = $this->getEmailUser();                        
+            
+            $m = new Application_Model_Matchs();
+            $matchs = $m->proximos_jogos(3, $limit);
+
+            $this->view->matchs = $matchs;
+            $this->view->email = $email;
+            $this->view->limit = $limit;
+            
+         $storage = new Zend_Auth_Storage_Session();
+        $data = (get_object_vars($storage->read()));        
+            
+        }
+        catch (Exception $e) {
+            
+        }
+//        print_r($matchs);
+        
+//        try {
+//            $params = $this->_request->getParams();
+//            //$this->view->error = $params['error'];
+//            
+//            $ordem = "";
+//            if (!empty($params['ordem'])) {
+//                $ordem = $params['ordem'];
+//            }
+//
+//            $storage = new Zend_Auth_Storage_Session();
+//            $data = (get_object_vars($storage->read()));
+//
+//            $result = new Application_Model_Result();
+//            $em_acao_group = $result->palpites_em_acao_group($data['us_id'], $ordem);
+//
+//            $config = new Zend_Config_Ini('config.ini');
+//
+//            $h_date = new Helpers_Data();
+//            $this->view->palpites = $em_acao_group;
+//
+//        }
+//        catch (Exception $e) {
+////             $config = new Zend_Config_Ini("config.ini");
+////            $this->redirect("/index/logout");
+//        }
+    }
+        
     public function indexAction() {
         try {
             

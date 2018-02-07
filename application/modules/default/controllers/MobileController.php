@@ -211,6 +211,54 @@ class MobileController extends Zend_Controller_Action
         $this->_helper->json($return);
     }
     
+    /**
+     * Palpita toda la rodada.
+     * Envia todos los partidos de una rododa con sus resultados.
+     * Crea la tupla del nuevo partido o actualiza si ya fue palpitado el partido.
+     * 
+     * En formato de array recibe
+     * @param palpites son todos los palpites realizados
+     * @param usuario es el id del usuario que realizo los palpites
+     */
+	public function palpitarrodadatodaAction() {
+        try {
+
+            $body = $this->getRequest()->getRawBody();
+            $data = Zend_Json::decode($body);
+                        
+            $jogos = $data['palpites'];
+            $usuario = $data['usuario'];
+
+            $results = new Application_Model_Result();
+            for ($i = 0; $i < sizeof($jogos); $i = $i + 1) {
+                $jogo = $jogos[$i];
+
+                $jogo['rs_res1'] = strcmp($jogo['rs_res1'],"") == 0 ? null : $jogo['rs_res1'];
+                $jogo['rs_res2'] = strcmp($jogo['rs_res2'],"") == 0 ? null : $jogo['rs_res2'];        
+
+                $results->palpitar($jogo, $usuario);
+            }
+
+            $this->json();
+
+            $this->_helper->json(200);
+        
+        } catch(Zend_Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
+    }
+    
+    /**
+     * Seta os parametros para retornar un json via API
+     */
+    private function json() {
+        $this->getResponse()
+            ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+    }
+    
     public function celpalpitar() {
         $body = $this->getRequest()->getRawBody();
         $data = Zend_Json::decode($body);

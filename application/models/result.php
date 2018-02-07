@@ -286,4 +286,39 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
         
         $db->query($sql)->fetch();
     }
+
+    /**
+     * $jogo es un de match con los resultados para palpitar.
+     * Crea la tupla del palpite si ya no fue creada o altera la tupla 
+     * que ya previamente fue palpitada.
+     * 
+     * @param $jogo es el partido
+     * @param $usuario es el id del usuario que palpito
+     */
+    public function palpitar($jogo, $usuario) {
+        
+        $db = $this->db;
+        
+        $dados = array(
+            'rs_idmatch' => $jogo['mt_id'],
+            'rs_res1' => $jogo['rs_res1'],
+            'rs_res2' => $jogo['rs_res2'],
+            'rs_iduser' => $usuario,
+            'rs_round' => $jogo['rd_id'],
+            'rs_date' => date("Y-m-d H:i:s")
+        );
+
+        $result = $db->select()->from("result")
+            ->where("rs_idmatch = ?",$jogo['mt_id'])
+            ->where("rs_iduser = ?", $usuario)
+            ->query()->fetch();
+
+        //significa que el partido nunca fue palpitado
+        if (empty($result)) {
+            $db->insert("result", $dados);
+        } else {
+            $where = "rs_iduser = ".$result["rs_iduser"]." AND rs_idmatch = ".$result["rs_idmatch"];
+            $db->update("result",  $dados, $where);
+        }
+    }
 }
