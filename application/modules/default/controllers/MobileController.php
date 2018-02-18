@@ -44,6 +44,10 @@ class MobileController extends Zend_Controller_Action
         $this->_redirect();
     }           
     
+    /**
+     * @param username
+     * @param password
+     */
     public function loginAction() {
         $params = $this->_request->getParams();
         
@@ -72,20 +76,11 @@ class MobileController extends Zend_Controller_Action
         }
 
     }
-    
-    public function celltestingAction() {
-     	
-        "error";
-        
-//		$this->getResponse()
-//				 ->setHeader('Content-Type', 'application/json');			
-//		
-//        $this->_helper->layout->disableLayout();
-//        $this->_helper->viewRenderer->setNoRender(TRUE);        
-//		
-//        $this->_helper->json("TESTING"); 
-    }    
    
+    /**
+     * @param us
+     * @param pass
+     */
     public function celloginAction() {
         $body = $this->getRequest()->getRawBody();
         $data = Zend_Json::decode($body);
@@ -162,6 +157,49 @@ class MobileController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
         $this->_helper->json(200);
+    }
+
+    /**
+     * Cadastra o usuario e envia o email solicitando confirmacion.
+     * @param username
+     * @param password
+     * @param email;
+     * @param grito;
+     */
+    public function cadastrowebAction() {
+        $body = $this->getRequest()->getRawBody();
+        $data = Zend_Json::decode($body);
+        
+        $user['us_username'] = $data['username'];
+        $user['us_password'] = $data['password'];
+        $user['us_email'] = $data['email'];
+        $user['us_grito'] = $data['grito'];
+        
+        $u = new Application_Model_Users();
+        
+        $return = 200;
+        if ($u->existUserName($user['us_username'])) {
+            $return = 401;
+        } else {
+            $user['us_codverificacion'] = md5(uniqid(""));                 
+            $user['us_emailconfirmado'] = false;
+            $u->save_user($user);
+            
+            $addTo = $user['us_email'];
+            $subject = "Confirme seu email";
+            $body = 'Já quasi!! faça <a href="http://www.bolaocraquedebola.com.br/public?confmail='.$user['us_codverificacion'].'"> click </a> e confirme seu email';
+            
+            $this->mail($body, $addTo, $subject);
+        }
+        
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($return);
     }
     
     public function celcadastroAction() {

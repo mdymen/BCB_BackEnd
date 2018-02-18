@@ -525,6 +525,47 @@ $x = $x. '
         $this->view->championships = $c->load();
         $this->view->champ = $params['champ'];
     }
+
+    /**
+     * Carga los datos necesarios para adicionar un partido
+     * a un campeonato.
+     * 
+     * Carga la lista de campeonatos, y si el campeonato ya fue 
+     * seleccionado y es pasado por parametro, entonces carga
+     * la lista de rodadas y los equipos que participan
+     * @param champ
+     */
+    public function adicionarpartidoAction()
+    {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);	  
+        
+        $penca = new Application_Model_Championships();
+        
+        $champs = $penca->load();
+        
+        if (!empty($params['champ'])) {            
+            $t_obj = new Application_Model_Teams();
+            $teams = $t_obj->load_teams_para_jogo($params['champ']);
+            
+            $c = new Application_Model_Championships();
+            
+            $result['rondas'] = $c->getrondas($params['champ']);        
+            
+            $result['teams'] = $teams;
+            $result['champ'] = $params['champ'];
+        }
+        
+        $result['champs'] = $champs;
+
+        $this->getResponse()
+        ->setHeader('Content-Type', 'application/json');
+
+       $this->_helper->layout->disableLayout();
+       $this->_helper->viewRenderer->setNoRender(TRUE);
+
+       $this->_helper->json($result);
+    }
         
 }
 
