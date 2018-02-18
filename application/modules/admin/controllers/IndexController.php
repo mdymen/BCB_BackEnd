@@ -566,6 +566,53 @@ $x = $x. '
 
        $this->_helper->json($result);
     }
+
+    /**
+     * guarda los partidos (match) adicionados al campeonato y rodada seleccionados
+     * 
+     * @param partidos la lista de partidos para guardar.
+     * Cada partido tiene @param ronda, @param date, @param hora, @param team1, @param team2,
+     * @param champ.
+     */
+    public function salvarpartidos() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);	  
+
+        $partidos = $params['partidos'];
+
+     /*   $helper = new Helpers_Data();
+        for ($i = 0; $i < count($partidos); $i = $i + 1) {
+            $partido = $partidos[$i];
+
+            $ronda = $partido['ronda'];
+            $date = $partido['date'];
+            $hora = $partido['hora'];
+            $team1 = $partido['team1'];
+            $team2 = $partido['team2'];
+            $champ = $partido['champ'];              
+            
+            $date = $helper->for_save($date);
+            
+            $info = array(
+                'round' => $ronda, 
+                'team1' => $team1,
+                'team2' => $team2,
+                'date' => $date.' '.$hora,
+                'championship' => $champ);
+            
+            $m = new Application_Model_Matchs();
+            $m->save($info);
+        }        */
+
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($partidos);
+    }
         
 }
 
