@@ -288,6 +288,98 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
     }
 
     /**
+     * Verifica los resultados del partido y coloca los puntos correspondientes
+     * y actualiza los partidos jugados
+     * @param id_team1
+     * @param id_team2
+     * @param res1
+     * @param res2
+     */
+    public function verificarGanadores($id_team1, $id_team2, $res1, $res2) {
+        if ($res1 > $res2) {
+            $this->sumarPuntosGanador($id_team1);
+            $this->sumarPartidoJugado($id_team2);
+        }
+
+        if ($res1 == $res2) {
+            $this->sumarEmpate($id_team1);
+            $this->sumarEmpate($id_team2);
+        }
+
+        if ($res2 > $res1) {
+            $this->sumarPuntosGanador($id_team2);
+            $this->sumarPartidoJugado($id_team1);
+        }
+    }
+
+    /**
+     * Se le suma 3 puntos al equipo ganador y mas un partido jugado.
+     * @param $id_team es el ID de un equipo para sumarle 3 puntos
+     */
+    public function sumarPuntosGanador($id_team) {
+        $db = $this->db;
+
+        $return = $db->select()->from("team")
+            ->where("tm_id = ?", $id_team)
+            ->query()
+            ->fetch();
+
+        $return['tm_points'] = $return['tm_points'] + 3;
+        $return['tm_played'] = $return['tm_played'] + 1;
+        
+        $db->update("team", 
+            array(
+                'tm_points' => $return['tm_points'],
+                'tm_played' => $return['tm_played']
+            ), 
+            "tm_id = ".$id_team);
+    }
+
+    /**
+     * Suma un partido jugado
+     * @param $id_team
+     */
+    public function sumarPartidoJugado($id_team) {
+        $db = $this->db;
+
+        $return = $db->select()->from("team")
+            ->where("tm_id = ?", $id_team)
+            ->query()
+            ->fetch();
+
+        $return['tm_played'] = $return['tm_played'] + 1;            
+
+        $db->update("team", 
+            array(
+                'tm_played' => $return['tm_played']
+            ), 
+            "tm_id = ".$id_team);        
+    }
+
+    /**
+     *  Suma 1 punto a un equipo y 1 partido mas jugado
+     * @param $id_team1
+     */
+    public function sumarEmpate($id_team) {
+        $db = $this->db;
+
+        $return = $db->select()->from("team")
+            ->where("tm_id = ?", $id_team)
+            ->query()
+            ->fetch();
+
+        $return['tm_points'] = $return['tm_points'] + 1;
+        $return['tm_played'] = $return['tm_played'] + 1;
+        
+        $db->update("team", 
+            array(
+                'tm_points' => $return['tm_points'],
+                'tm_played' => $return['tm_played']
+            ), 
+            "tm_id = ".$id_team);
+    }
+
+    /**
      * $jogo es un de match con los resultados para palpitar.
      * Crea la tupla del palpite si ya no fue creada o altera la tupla 
      * que ya previamente fue palpitada.
@@ -298,7 +390,7 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
     public function palpitar($jogo, $usuario) {
         
         $db = $this->db;
-        
+
         $dados = array(
             'rs_idmatch' => $jogo['mt_id'],
             'rs_res1' => $jogo['rs_res1'],

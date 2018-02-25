@@ -193,7 +193,7 @@ class Admin_ResultadosController extends Zend_Controller_Action
 
     /**
      * Envia los resultados de una rodada para procesar.
-     * @param resultados, donde es una lista de resultados con 
+     * @param results, donde es una lista de resultados con 
      * los siguientes parametros @param match, @param res1, @param res2,
      * @param team1, @param team2, @param champ
      */
@@ -201,7 +201,7 @@ class Admin_ResultadosController extends Zend_Controller_Action
         $body = $this->getRequest()->getRawBody();
         $params = Zend_Json::decode($body);
 
-        $resultados = $params['resultados'];
+        $resultados = $params['results'];
 
         $result = new Application_Model_Result();  
         for ($i = 0; $i < count($resultados); $i = $i + 1) {
@@ -216,23 +216,27 @@ class Admin_ResultadosController extends Zend_Controller_Action
             
             
             $ganadores = $result->getResultsGanadoresPencas($matchid);
-            for ($i = 0; $i < count($ganadores); $i = $i + 1) {
-                
-             //   $result->update_penca_puntuation($ganadores[$i]['rs_iduser'], $ganadores[$i]['rs_idpenca']);
+
+            //verifica los ganadores y setea los puntos
+            $result->verificarGanadores($team1, $team2, $res1, $res2);
+            
+            for ($j = 0; $j < count($ganadores); $j = $j + 1) {
+
+                $result->update_penca_puntuation($ganadores[$i]['rs_iduser'], $ganadores[$i]['rs_idpenca']);                
             }
-    
-            /*
-            $r = $result->calcularmoney($matchid, $res1, $res2, $team1, $team2, $champ);*/
+
+
+            //$r = $result->calcularmoney($matchid, $res1, $res2, $team1, $team2, $champ);
+
         }
         
-
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
         
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json($ganadores);
+        $this->_helper->json(200);
     }
 }
 
