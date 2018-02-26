@@ -195,7 +195,7 @@ class Admin_ResultadosController extends Zend_Controller_Action
      * Envia los resultados de una rodada para procesar.
      * @param results, donde es una lista de resultados con 
      * los siguientes parametros @param match, @param res1, @param res2,
-     * @param team1, @param team2, @param champ
+     * @param team1, @param team2, @param champ, @param played
      */
     public function grabarresultadosAction() {
         $body = $this->getRequest()->getRawBody();
@@ -212,22 +212,22 @@ class Admin_ResultadosController extends Zend_Controller_Action
             $res2 = $resultado['res2'];
             $team1 = $resultado['team1'];
             $team2 = $resultado['team2'];
-            $champ = $resultado['champ'];                         
+            $champ = $resultado['champ'];   
+            $played = $resultado['played'];                      
             
             
             $ganadores = $result->getResultsGanadoresPencas($matchid);
 
-            //verifica los ganadores y setea los puntos
-            $result->verificarGanadores($team1, $team2, $res1, $res2);
             
-            for ($j = 0; $j < count($ganadores); $j = $j + 1) {
+            if ($played == 0) {
 
-                $result->update_penca_puntuation($ganadores[$i]['rs_iduser'], $ganadores[$i]['rs_idpenca']);                
+                //verifica el resultado del partido y setea los puntos
+                $result->verificarGanadores($team1, $team2, $res1, $res2);
+                
+                //verifica los usuarios ganadores y setea los puntos
+                $this->usuariosGanadores($res1, $res2, $matchid);
+
             }
-
-
-            //$r = $result->calcularmoney($matchid, $res1, $res2, $team1, $team2, $champ);
-
         }
         
         $this->getResponse()
@@ -237,6 +237,20 @@ class Admin_ResultadosController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
         $this->_helper->json(200);
+    }
+
+    /**
+     * Busca los ganadores del partido y luego les coloca 5 puntos.
+     * @param res1
+     * @param res2
+     * @param idmatch
+     */
+    private function usuariosGanadores($res1, $res2, $idmatch) {
+        $result = new Application_Model_Result();
+        $ganadores = $result->obtenerUsuariosGanadores($res1, $res2, $idmatch);
+        for ($i = $i + 1; $i < count($ganadores); $i = $i + 1) {
+            $result->puntosAlGanador($ganadores['rs_iduser'], $idmatch);
+        }
     }
 }
 

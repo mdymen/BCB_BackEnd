@@ -260,6 +260,10 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
                 ->query()->fetchAll();
     }
     
+    /**
+     * 
+     * 
+     */
     public function update_penca_puntuation($iduser, $idpenca) {
         $db = $this->db;
         
@@ -275,6 +279,7 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
                 "up_iduser = ".$iduser." AND up_idpenca = ".$idpenca);
     }
     
+    
     public function calcularmoney($match, $res1, $res2, $s_id_team1, $s_id_team2, $champ) {
         $db = $this->db;
         
@@ -285,6 +290,37 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
         //die(".");
         
         $db->query($sql)->fetch();
+    }
+
+    /**
+     * Retorna una lista de usuarios que acertaron el resultado en el partido
+     * pasado por parametros
+     * @param res1
+     * @param res2
+     * @param idmatch
+     */
+    public function obtenerUsuariosGanadores($res1, $res2, $idmatch) {
+        $db = $this->db;
+
+        return $db->select()->from("result")
+            ->where("rs_res1 = ?", $res1)
+            ->where("rs_res2 = ?", $res2)
+            ->where("rs_idmatch = ?", $idmatch)
+            ->query()->fetchAll();
+    }
+
+    /**
+     * Coloca 5 puntos al usuario enviado por parametro
+     * 
+     * @param iduser
+     * @param idmatch
+     */
+    public function puntosAlGanador($iduser, $idmatch) {
+        $db = $this->db;
+
+        $db->update("result", 
+            array('rs_points' => 5), 
+            "rs_iduser = ".$iduser." AND rs_idmatch = ".$idmatch);
     }
 
     /**
@@ -314,7 +350,7 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
 
     /**
      * Se le suma 3 puntos al equipo ganador y mas un partido jugado.
-     * @param $id_team es el ID de un equipo para sumarle 3 puntos
+     * @param id_team es el ID de un equipo para sumarle 3 puntos
      */
     public function sumarPuntosGanador($id_team) {
         $db = $this->db;
@@ -337,7 +373,7 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
 
     /**
      * Suma un partido jugado
-     * @param $id_team
+     * @param id_team
      */
     public function sumarPartidoJugado($id_team) {
         $db = $this->db;
@@ -358,7 +394,7 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
 
     /**
      *  Suma 1 punto a un equipo y 1 partido mas jugado
-     * @param $id_team1
+     * @param id_team1
      */
     public function sumarEmpate($id_team) {
         $db = $this->db;
@@ -384,8 +420,8 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
      * Crea la tupla del palpite si ya no fue creada o altera la tupla 
      * que ya previamente fue palpitada.
      * 
-     * @param $jogo es el partido
-     * @param $usuario es el id del usuario que palpito
+     * @param jogo es el partido
+     * @param usuario es el id del usuario que palpito
      */
     public function palpitar($jogo, $usuario) {
         
