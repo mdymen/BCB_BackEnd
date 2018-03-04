@@ -318,6 +318,8 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
     public function puntosAlGanador($iduser, $idmatch) {
         $db = $this->db;
 
+        $sql = "UPDATE result SET rs_points = 5 WHERE rs_iduser = ".$iduser." AND rs_idmatch = ".$idmatch;
+
         $db->update("result", 
             array('rs_points' => 5), 
             "rs_iduser = ".$iduser." AND rs_idmatch = ".$idmatch);
@@ -331,7 +333,7 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
      * @param res1
      * @param res2
      */
-    public function verificarGanadores($id_team1, $id_team2, $res1, $res2) {
+    public function verificarGanadores($id_team1, $id_team2, $res1, $res2, $id_match) {
         if ($res1 > $res2) {
             $this->sumarPuntosGanador($id_team1);
             $this->sumarPartidoJugado($id_team2);
@@ -346,6 +348,17 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
             $this->sumarPuntosGanador($id_team2);
             $this->sumarPartidoJugado($id_team1);
         }
+
+        $this->setearPartidoJugado($id_match);
+    }
+
+    /**
+     * Seta al partido @param id_match como jugado
+     */
+    public function setearPartidoJugado($id_match) {
+        $db = $this->db;
+
+        $db->update("match", array('mt_played' => 1), "mt_id = ".$id_match);
     }
 
     /**
@@ -413,6 +426,18 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
                 'tm_played' => $return['tm_played']
             ), 
             "tm_id = ".$id_team);
+    }
+
+    /**
+     * Set el resultado del partido
+     * @param id_match
+     * @param goal1
+     * @param goal2
+     */
+    public function setResultado($id_match, $goal1, $goal2) {
+        $db = $this->db;
+
+        $db->update("match", array('mt_goal1' => $goal1, 'mt_goal2' => $goal2), "mt_id = ".$id_match);
     }
 
     /**

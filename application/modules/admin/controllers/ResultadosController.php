@@ -222,10 +222,14 @@ class Admin_ResultadosController extends Zend_Controller_Action
             if ($played == 0) {
 
                 //verifica el resultado del partido y setea los puntos
-                $result->verificarGanadores($team1, $team2, $res1, $res2);
+                //y setea al partido como jugado
+                $result->verificarGanadores($team1, $team2, $res1, $res2, $matchid);
                 
                 //verifica los usuarios ganadores y setea los puntos
                 $this->usuariosGanadores($res1, $res2, $matchid);
+
+                //seta el resultado al partido
+                $result->setResultado($matchid, $res1, $res2);
 
             }
         }
@@ -240,6 +244,30 @@ class Admin_ResultadosController extends Zend_Controller_Action
     }
 
     /**
+     * para teste
+     */
+    private function usuariosganadoresAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+
+        $res1 = $params['res1'];
+        $res2 = $params['res2'];
+        $idmatch = $params['idmatch'];
+
+        $result = new Application_Model_Result();
+        $ganadores = $result->obtenerUsuariosGanadores($res1, $res2, $idmatch);
+
+        for ($i =0; $i < count($ganadores); $i = $i + 1) {
+            $result->puntosAlGanador($ganadores[$i]['rs_iduser'], $idmatch);
+        }
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($ganadores);
+    }
+
+    /**
      * Busca los ganadores del partido y luego les coloca 5 puntos.
      * @param res1
      * @param res2
@@ -248,8 +276,8 @@ class Admin_ResultadosController extends Zend_Controller_Action
     private function usuariosGanadores($res1, $res2, $idmatch) {
         $result = new Application_Model_Result();
         $ganadores = $result->obtenerUsuariosGanadores($res1, $res2, $idmatch);
-        for ($i = $i + 1; $i < count($ganadores); $i = $i + 1) {
-            $result->puntosAlGanador($ganadores['rs_iduser'], $idmatch);
+        for ($i = 0; $i < count($ganadores); $i = $i + 1) {
+            $result->puntosAlGanador($ganadores[$i]['rs_iduser'], $idmatch);
         }
     }
 }
