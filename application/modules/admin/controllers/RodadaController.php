@@ -67,6 +67,25 @@ class Admin_RodadaController extends Zend_Controller_Action
         
         $this->render("rodadaatual");
     }
+
+    /**
+     * Seta la rodada como actual en el campeonato
+     * 
+     * @param champ_selected
+     * @param ronda
+     */
+    public function setrodadaAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+         
+        $campeonato = new Application_Model_Championships();        
+        $campeonato->setRondaAtual($params['champ_selected'], $params['ronda']);
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json(200);
+    }
     
 }
 

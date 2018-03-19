@@ -25,17 +25,34 @@ class Admin_TimeController extends Zend_Controller_Action
        
     }
     
+    /**
+     * Graba la lista de equipos
+     * @param equipos es la lista de equipos para grabar,
+     * esta lista tiene como atributos:
+     * @param tm_name
+     * @param tm_logo
+     * @param tm_idchampionship
+     * @param tm_grupo
+     * 
+     */
     public function salvartimeAction() {
-        $params = $this->_request->getParams();
-        
-        $nome = $params['time'];
-        $logo = $params['logo'];
-        $champ = $params['championship'];
-        $grupo = $params['grupo'];
-        
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+     
         $time = new Application_Model_Teams();
-        $time->save(array('tm_name' => $nome, 'tm_logo' => $logo, 'tm_idchampionship' => $champ, 'tm_grupo' => $grupo));
-
+        
+        $equipos = $params['equipos'];
+        for ($i = 0; $i < count($equipos); $i = $i + 1) {
+            $time->save(
+                array(
+                    'tm_name' => $nome, 
+                    'tm_logo' => $logo, 
+                    'tm_idchampionship' => $champ, 
+                    'tm_grupo' => $grupo
+                )
+            );
+        }    
+     
         $this->getResponse()
          ->setHeader('Content-Type', 'application/json');
         

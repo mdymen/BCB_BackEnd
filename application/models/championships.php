@@ -201,14 +201,14 @@ class Application_Model_Championships extends Application_Model_Bd_Adapter
         $db->insert("round",array("rd_idchampionship" => $id_champ, "rd_round" => $nome_rodada));
     }
     
-    
+    /**
+     * Cuando o usuario va a palpitar un campeonato ya aparece seleccionado por default
+     * a rodada seteada en este metodo
+     * @param id_champ
+     * @param id_ronda
+     */
     public function setRondaAtual($id_champ, $id_ronda) {
         $db = $this->db;
-        
-//        print_r($id_champ);
-//        print_r($id_ronda);
-//        die(".");
-        
         $db->update("championship", array("ch_atualround" => $id_ronda), "ch_id = ".$id_champ);
     }
 }
