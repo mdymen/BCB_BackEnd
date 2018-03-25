@@ -26,9 +26,15 @@ class Admin_RodadaController extends Zend_Controller_Action
        
     }
     
+    /**
+     * Salva la rodada
+     * 
+     * @param champ
+     * @param rodada
+     */
     public function salvarrodadaAction() {
-        $params = $this->_request->getParams();
-        
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);        
         
        if ($this->getRequest()->isPost()) {  
            $penca = new Application_Model_Championships();
@@ -36,7 +42,13 @@ class Admin_RodadaController extends Zend_Controller_Action
            
        }
        
-       $this->render("index");
+       $this->getResponse()
+            ->setHeader('Content-Type', 'application/json');
+      
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($params);
     }
     
     public function rodadaatualAction() { 

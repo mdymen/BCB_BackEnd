@@ -43,12 +43,13 @@ class Admin_TimeController extends Zend_Controller_Action
         
         $equipos = $params['equipos'];
         for ($i = 0; $i < count($equipos); $i = $i + 1) {
+            $equipo = $equipos[$i];
             $time->save(
                 array(
-                    'tm_name' => $nome, 
-                    'tm_logo' => $logo, 
-                    'tm_idchampionship' => $champ, 
-                    'tm_grupo' => $grupo
+                    'tm_name' => $equipo['tm_name'], 
+                    'tm_logo' => $equipo['tm_logo'], 
+                    'tm_idchampionship' => $equipo['tm_idchampionship'], 
+                    'tm_grupo' => $equipo['tm_grupo']
                 )
             );
         }    
@@ -59,7 +60,7 @@ class Admin_TimeController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->_helper->json(200);
+        $this->_helper->json($params);
     }
 
     public function getIdUser() { 
