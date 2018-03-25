@@ -27,18 +27,24 @@ class Admin_CampeonatoController extends Zend_Controller_Action
         }
     }
 
+    /**
+     * Recibe todas las variables del campeonato
+     * y manda grabar en la base de datos
+     */
     public function indexAction()
     {
-       $params = $this->_request->getParams();
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+     
+        $request = $params["form"];
+        $request['ch_atualround'] = 1;
+        $champ = new Application_Model_Championships();
+        $champ->save($request);
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);        
        
-       if ($this->getRequest()->isPost()) {
-           unset($params['module']);
-           unset($params['controller']);
-           unset($params['action']);
-           $params['ch_atualround'] = 1;
-           $champ = new Application_Model_Championships();
-           $champ->save($params);
-       }
+       $this->_helper->json($request); 
     }
     
     public function registerAction() {}

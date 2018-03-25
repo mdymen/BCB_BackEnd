@@ -82,6 +82,8 @@ class MobileController extends Zend_Controller_Action
      * @param pass
      */
     public function celloginAction() {
+        //header("Access-Control-Allow-Origin: *");
+
         $body = $this->getRequest()->getRawBody();
         $data = Zend_Json::decode($body);
         
@@ -881,36 +883,6 @@ class MobileController extends Zend_Controller_Action
                 $team_id = $params['team'];
                 $rodada = $matchs_obj->load_rodada_porteam($champ_id, $team_id, $id);
             }
-
-            $teams_obj = new Application_Model_Teams();
-            $teams = $teams_obj->load_teams_championship($champ_id); 
-
-			$novo_teams = array();
-			
-			
-			if (!empty($teams[0]['tm_grupo'])) {
-				$tem_grupo = true;
-				$grupo = $teams[0]['tm_grupo'];
-				$j = 0;
-				$k = 0;
-				for ($i = 0; $i < sizeof($teams); $i = $i + 1) {
-					if (strcmp($grupo, $teams[$i]['tm_grupo']) != 0) {
-						$grupo = $teams[$i]['tm_grupo'];
-						$j = $j + 1;
-					} 
-					$teams[$i]['tem_grupo'] = true;
-					$novo_teams[$j]['tem_grupo'] = true;
-					$novo_teams[$j]['tm_grupo'] = $teams[$i]['tm_grupo'];
-					// $novo_teams[$j][$teams[$i]['tm_grupo']][$k] = $teams[$i];
-					$novo_teams[$j]["grupo"][$k] = $teams[$i];
-					$k = $k + 1;
-				}
-				$teams = $novo_teams;
-			} else {
-				for ($i = 0; $i < sizeof($teams); $i = $i + 1) {
-					$teams[$i]['tem_grupo'] = false;
-				}
-			}
 			
             $result['teams'] = $teams;
             
@@ -921,9 +893,7 @@ class MobileController extends Zend_Controller_Action
             $result['n_rodada'] = $rodada_id;
             
             //las rodadas del campeonato registradas en el sistema
-            $result['rondas'] = $rondas;      
-
-			$result['tem_grupo'] = $tem_grupo;			
+            $result['rondas'] = $rondas;      		
 						
         }
 		
@@ -934,6 +904,58 @@ class MobileController extends Zend_Controller_Action
 			$this->_helper->viewRenderer->setNoRender(TRUE);
 			
 			$this->_helper->json($result);
+    }
+
+    /**
+     * Retorna la tabla de posicion del campeonato.
+     * La lista de equipos ordenada por posicion y/o grupo
+     * 
+     * @param champ
+     */
+    public function equiposAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);	  
+
+        $champ_id = $params['champ'];
+
+        $teams_obj = new Application_Model_Teams();
+        $teams = $teams_obj->load_teams_championship($champ_id); 
+
+        $novo_teams = array();
+
+        if (!empty($teams[0]['tm_grupo'])) {
+            $tem_grupo = true;
+            $grupo = $teams[0]['tm_grupo'];
+            $j = 0;
+            $k = 0;
+            for ($i = 0; $i < sizeof($teams); $i = $i + 1) {
+                if (strcmp($grupo, $teams[$i]['tm_grupo']) != 0) {
+                    $grupo = $teams[$i]['tm_grupo'];
+                    $j = $j + 1;
+                    $k = 0;
+                } 
+                $teams[$i]['tem_grupo'] = true;
+                $novo_teams[$j]['tem_grupo'] = true;
+                $novo_teams[$j]['tm_grupo'] = $teams[$i]['tm_grupo'];
+                $novo_teams[$j]["grupo"][$k] = $teams[$i];
+                $k = $k + 1;
+            }
+            $teams = $novo_teams;
+        } else {
+            for ($i = 0; $i < sizeof($teams); $i = $i + 1) {
+                $teams[$i]['tem_grupo'] = false;
+            }
+        }
+
+        $result['teams'] = $teams;
+
+        $this->getResponse()
+        ->setHeader('Content-Type', 'application/json');
+       
+       $this->_helper->layout->disableLayout();
+       $this->_helper->viewRenderer->setNoRender(TRUE);
+       
+       $this->_helper->json($result);
     }
 
 	public function cellrankingcampeonatoAction() {
@@ -1036,7 +1058,31 @@ class MobileController extends Zend_Controller_Action
 			
 			$this->_helper->json($result);
     }
-	
+    
+    /**
+     * Retorna el ranking del campeonato
+     * @param ranking
+     */
+    public function rankingAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);	
+        
+        $champ = new Application_Model_Championships();
+        
+        $ranking = array();
+
+        if (!empty($params['champ'])) {
+            $ranking['ranking'] = $champ->ranking($params['champ']);
+        }
+
+        $this->getResponse()
+        ->setHeader('Content-Type', 'application/json');        
+       $this->_helper->layout->disableLayout();
+       $this->_helper->viewRenderer->setNoRender(TRUE);
+       
+       $this->_helper->json($ranking);
+
+    }
 	
 	 public function cellexcluirpalpiteAction() {
         $body = $this->getRequest()->getRawBody();

@@ -145,6 +145,140 @@ class Admin_ResultadosController extends Zend_Controller_Action
         $this->_helper->json(200);
         
     }
+
+    /**
+     * Pasando @param champ carga las rodadas del campeonato.
+     * Luego pasando @param ronda, carga las rodadas del campeonato.
+     * Pasando @param champ y @param ronda 
+     * @return resultado['rounds'];
+     * @return resultado['champ'];
+     * @return resultado['championships'];
+     * @return resultado['matchs'];
+     * @return resultado['ronda'];
+     */
+    public function cargarpartidosAction()
+    {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);	  
+        
+        $c = new Application_Model_Championships();
+        if (!empty($params['champ'])) {
+            $resultado['rounds'] = $c->getrondas($params['champ']);
+            
+            if (!empty($params['ronda'])) {
+
+                $ronda = $params['ronda'];
+                $champ = $params['champ'];
+                $m_obj = new Application_Model_Matchs();
+                $matchs = $m_obj->load_matchs_byrodada($champ, $ronda);
+                $matchs = $m_obj->setDatas($matchs);
+                $resultado['matchs'] = $matchs;      
+                $resultado['ronda'] = $ronda;
+            }
+        }
+        
+        
+        $resultado['championships'] = $c->load();
+        $resultado['champ'] = $params['champ'];
+
+        $this->getResponse()
+            ->setHeader('Content-Type', 'application/json');
+       
+       $this->_helper->layout->disableLayout();
+       $this->_helper->viewRenderer->setNoRender(TRUE);
+       
+       $this->_helper->json($resultado);
+    }
     
+
+    /**
+     * Envia los resultados de una rodada para procesar.
+     * @param results, donde es una lista de resultados con 
+     * los siguientes parametros @param match, @param res1, @param res2,
+     * @param team1, @param team2, @param champ, @param played
+     */
+    public function grabarresultadosAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+
+        $resultados = $params['results'];
+
+        $result = new Application_Model_Result();  
+        for ($i = 0; $i < count($resultados); $i = $i + 1) {
+            $resultado = $resultados[$i];
+
+            $matchid = $resultado['match'];
+            $res1 = $resultado['res1'];
+            $res2 = $resultado['res2'];
+            $team1 = $resultado['team1'];
+            $team2 = $resultado['team2'];
+            $champ = $resultado['champ'];   
+            $played = $resultado['played'];                      
+            
+            
+            $ganadores = $result->getResultsGanadoresPencas($matchid);
+
+            
+            if ($played == 0) {
+
+                //verifica el resultado del partido y setea los puntos
+                //y setea al partido como jugado
+                $result->verificarGanadores($team1, $team2, $res1, $res2, $matchid);
+                
+                //verifica los usuarios ganadores y setea los puntos
+                $this->usuariosGanadores($res1, $res2, $matchid);
+
+                //seta el resultado al partido
+                $result->setResultado($matchid, $res1, $res2);
+
+            }
+        }
+        
+        $this->getResponse()
+         ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json(200);
+    }
+
+    /**
+     * para teste
+     */
+    private function usuariosganadoresAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+
+        $res1 = $params['res1'];
+        $res2 = $params['res2'];
+        $idmatch = $params['idmatch'];
+
+        $result = new Application_Model_Result();
+        $ganadores = $result->obtenerUsuariosGanadores($res1, $res2, $idmatch);
+
+        for ($i =0; $i < count($ganadores); $i = $i + 1) {
+            $result->puntosAlGanador($ganadores[$i]['rs_iduser'], $idmatch);
+        }
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($ganadores);
+    }
+
+    /**
+     * Busca los ganadores del partido y luego les coloca 5 puntos.
+     * @param res1
+     * @param res2
+     * @param idmatch
+     */
+    private function usuariosGanadores($res1, $res2, $idmatch) {
+        $result = new Application_Model_Result();
+        $ganadores = $result->obtenerUsuariosGanadores($res1, $res2, $idmatch);
+        for ($i = 0; $i < count($ganadores); $i = $i + 1) {
+            $result->puntosAlGanador($ganadores[$i]['rs_iduser'], $idmatch);
+        }
+    }
 }
 

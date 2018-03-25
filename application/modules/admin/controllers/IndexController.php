@@ -574,13 +574,13 @@ $x = $x. '
      * Cada partido tiene @param ronda, @param date, @param hora, @param team1, @param team2,
      * @param champ.
      */
-    public function salvarpartidos() {
+    public function salvarpartidosAction() {
         $body = $this->getRequest()->getRawBody();
         $params = Zend_Json::decode($body);	  
 
         $partidos = $params['partidos'];
 
-     /*   $helper = new Helpers_Data();
+       $helper = new Helpers_Data();
         for ($i = 0; $i < count($partidos); $i = $i + 1) {
             $partido = $partidos[$i];
 
@@ -602,7 +602,7 @@ $x = $x. '
             
             $m = new Application_Model_Matchs();
             $m->save($info);
-        }        */
+        }
 
         
         $this->getResponse()
