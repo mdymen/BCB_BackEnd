@@ -43,6 +43,49 @@ class UsuarioController extends Zend_Controller_Action
 //        print_r($this->view->position);
 //        die(".");
     }
+
+    /**
+     * Devuelve la informacion de palpites del usuario
+     * total de palpites errados, total de palpites acertados, total de palpites 
+     * y total de puntos realizados
+     * @param usuario
+     */
+    public function infopalpitesusuarioAction() {
+        
+        $this->getResponse()
+        ->setHeader('Content-Type', 'application/json');
+       
+       $this->_helper->layout->disableLayout();
+       $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        try {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body); 
+
+        $results = new Application_Model_Users();
+        
+        if (empty($params['usuario'])) {
+            $id_user = $this->getIdUser();
+        } else {
+            $id_user = $params['usuario'];
+        }
+        
+        $r = $results->getPalpitesUsuario($id_user);
+        
+        $result['erros'] = $r['erros']; //$results->getLostMatches($id_user);
+        $result['acertos'] = $r['acertos']; //$results->getWonMatches($id_user);
+        $result['palpitados'] = $r['palpitados'];//$results->getPlayedMatches($id_user);
+        $result['pontos'] = $r['pontos']; //$results->getPoints($id_user);
+        //$result = $id_user;
+
+        $this->_helper->json($result);
+       
+    } catch (Exception $e) {
+        $this->_helper->json($e->getMessage());
+    }
+
+
+    }
     
     public function getIdUser() { 
         $storage = new Zend_Auth_Storage_Session();
@@ -186,5 +229,51 @@ class UsuarioController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender(TRUE);
         
         $this->_helper->json(200);
+    }
+
+    /**
+     * Guarda la informacion del usuario correspondiente al recibimiento de emails
+     * @param params tiene @param res_pal, @param res_rod_pal, @param info_rod_pal
+     * @param iduser
+     */
+    public function emailconfiguracionAction() {
+        try {
+            $body = $this->getRequest()->getRawBody();
+            $params = Zend_Json::decode($body);    
+            
+            $u = new Application_Model_Users();
+            $u->emailConfiguracion($params);
+
+            $this->getResponse()
+            ->setHeader('Content-Type', 'application/json');
+        
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+            $this->_helper->json($params);
+        } catch (Exception $e) {
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
+
+            $this->_helper->json($e);
+        }
+
+    }
+
+    public function uploadfileAction() {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        try {
+            /*$body = $this->getRequest()->getRawBody();
+            $params = Zend_Json::decode($body);
+        */
+            print_r($_FILES['file']);
+            die(".");
+
+            $this->_helper->json($this->getRequest()->getContent());
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
     }
 }

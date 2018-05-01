@@ -66,7 +66,8 @@ class CaixaController extends Zend_Controller_Action
     }
     
     public function planoAction() {
-        $params = $this->_request->getParams();
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);   
         
         $plano = $params['p'];
         
@@ -121,9 +122,15 @@ class CaixaController extends Zend_Controller_Action
         $codigo = $my_array[0];
 		
 		$u = new Application_Model_Users();
-		$u->add_pagseguro_ini($this->getIdUser(), $codigo, $this->getUserEmail(), $nome_plano);
-		
-        $this->redirect("https://pagseguro.uol.com.br/v2/checkout/payment.html?code=".$codigo);
+		$u->add_pagseguro_ini($params['user'], $codigo, $params['email'], $nome_plano);
+
+        $this->getResponse()
+        ->setHeader('Content-Type', 'application/json');
+       
+       $this->_helper->layout->disableLayout();
+       $this->_helper->viewRenderer->setNoRender(TRUE);
+       
+       $this->_helper->json($codigo);
     }
     
    public function getIdUser() { 

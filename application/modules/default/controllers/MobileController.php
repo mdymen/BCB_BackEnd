@@ -184,13 +184,19 @@ class MobileController extends Zend_Controller_Action
             $return = 401;
         } else {
             $user['us_codverificacion'] = md5(uniqid(""));                 
-            $user['us_emailconfirmado'] = false;
+            $user['us_emailconfirmado'] = true;
+            $user['us_data'] = date("Y-m-d H:i:s");
             $u->save_user($user);
             
-            $addTo = $user['us_email'];
+          /*  $addTo = $user['us_email'];
             $subject = "Confirme seu email";
             $body = 'Já quasi!! faça <a href="http://www.bolaocraquedebola.com.br/public?confmail='.$user['us_codverificacion'].'"> click </a> e confirme seu email';
-            
+            */
+
+            $addTo = "martin@dymenstein.com";
+            $subject = "Novo Usuario ".date("d/m/Y - H:i");
+            $body = json_encode($user);
+
             $this->mail($body, $addTo, $subject);
         }
         
@@ -829,7 +835,14 @@ class MobileController extends Zend_Controller_Action
     
 	
 	public function cellbolaoAction() {
-		
+        
+        $this->getResponse()
+        ->setHeader('Content-Type', 'application/json');
+       
+       $this->_helper->layout->disableLayout();
+       $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        try {
 		// $params = $this->_request->getParams();
 		
         $body = $this->getRequest()->getRawBody();
@@ -883,7 +896,9 @@ class MobileController extends Zend_Controller_Action
                 $team_id = $params['team'];
                 $rodada = $matchs_obj->load_rodada_porteam($champ_id, $team_id, $id);
             }
-			
+            
+            $rodadaAtual = $matchs_obj->getRodada($rodada_id, $id);
+
             $result['teams'] = $teams;
             
             //los partidos de la rodada n_rodada
@@ -891,19 +906,25 @@ class MobileController extends Zend_Controller_Action
             
             //el numero de la rodada activa. La que siguiente inmediata que se va a jugar
             $result['n_rodada'] = $rodada_id;
-            
+
+            //toda la informacion de la rodada actual
+            $result['rodadaAtual'] = $rodadaAtual;            
+
             //las rodadas del campeonato registradas en el sistema
             $result['rondas'] = $rondas;      		
+
+            $result['status'] = 200;
 						
         }
-		
-		$this->getResponse()
-			 ->setHeader('Content-Type', 'application/json');
-			
-			$this->_helper->layout->disableLayout();
-			$this->_helper->viewRenderer->setNoRender(TRUE);
-			
-			$this->_helper->json($result);
+				
+            $this->_helper->json($result);
+            
+        }
+        catch (Exception $e) {
+            $result['status'] = 400;
+            $result['error'] = $e->getMessage();
+            $this->_helper->json($result);
+        }
     }
 
     /**
@@ -1686,6 +1707,47 @@ class MobileController extends Zend_Controller_Action
 //        $_FILES['field_name']['type'];
 //        $_FILES['field_name']['tmp_name'];
         
+    }
+
+    /**
+     * Comprar la rodada para palpitar
+     * 
+     * @param usuario
+     * @param rodada
+     */
+    public function comprarrodadaAction() {
+                
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        try {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+
+            $usuario = $params['usuario'];
+            $rodada = $params['rodada'];
+
+        //verificar dinero de usuario
+        $u = new Application_Model_Users();
+        $hasMoney = $u->suficienteDinero($usuario, $rodada);
+
+        $result['status'] = 400;
+        if ($hasMoney['hasMoney']) {
+            $u->comprarRodada($usuario, $rodada);          
+            $result['status'] = 200;
+        }
+
+        
+
+        
+        $this->_helper->json($result);     
+
+    } catch (Exception $e) {
+        $result['error'] = $e->getMessage();
+
+        $this->_helper->json($result); 
+    }
+
     }
 }
 

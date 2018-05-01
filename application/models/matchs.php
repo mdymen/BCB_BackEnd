@@ -12,7 +12,6 @@
  * @author Martin Dymenstein
  */
 //include APPLICATION_PATH."/helpers/data.php";
-
 class Application_Model_Matchs extends Application_Model_Bd_Adapter
 {
 
@@ -189,7 +188,7 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
   INNER JOIN `team` AS `t1` ON t1.tm_id = match.mt_idteam1 
   INNER JOIN `team` AS `t2` ON t2.tm_id = match.mt_idteam2   
   LEFT JOIN vwpalpites ON vwpalpites.rs_idmatch = match.mt_id
-  LEFT JOIN round ON round.rd_id = match.mt_idround
+  LEFT JOIN round ON round.rd_id = match.mt_idround  
   LEFT JOIN (select * from result where rs_iduser = ".$usuario." and rs_idpenca = ".$idpenca.") r ON r.rs_idmatch = match.mt_id 
   WHERE (match.mt_idchampionship = '".$championship."') AND (mt_idround = '".$rodada."') ORDER BY `mt_date` ASC";
         
@@ -198,6 +197,23 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         return $result;
         
     }    
+
+    /**
+     * Devuelve toda la informacion de la rodada y del usuario relacionado con la rodada
+     * @param idrodada
+     * @param iduser
+     */
+    public function getRodada($idrodada, $iduser) {
+        $db = $this->db;
+
+        $sql = "SELECT * FROM round LEFT JOIN 
+            (SELECT * FROM rodadausuario WHERE rodadausuario.ru_iduser = ".$iduser.") ru
+            ON ru.ru_idrodada = round.rd_id WHERE round.rd_id = ".$idrodada;
+
+        return $db->query($sql)->fetchAll();
+
+        
+    }
     
     public function load_rodada_com_palpites($championship, $rodada, $usuario) {
         $db = $this->db;
@@ -271,19 +287,11 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         $db = $this->db;
         
         $result = $db->select()->from("vwmatchsresult")
-//                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
-//                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
-//                ->joinLeft("result", "match.mt_id = result.rs_idmatch and result.rs_iduser = ".$usuario)
-//                ->where("match.mt_idchampionship = ?", $championship)
-//                ->where("match.mt_idteam1 = ?", $team)
-//                ->orWhere("match.mt_idteam2 = ?",$team)
                 ->where("rs_iduser = ? ",$usuario)
                 ->where("rs_idpenca = 0")
                 ->where("mt_idchampionship = ?", $championship)
                 ->where("mt_idteam1 = ?", $team)
                 ->orWhere("mt_idteam2 = ?",$team)
-                //->where("result.rs_id is null " )
-                //->where("result.rs_iduser = ?", $usuario)
                 ->query()
                 ->fetchAll();
         
@@ -299,29 +307,14 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
                 ->where("mt_idchampionship = ?", $championship)
                 ->where("mt_idteam1 = ?", $team)
                 ->orWhere("mt_idteam2 = ?", $team)
-//                ->joinInner(array('t1' => 'team'), 'match.mt_idteam1 = t1.tm_id', array('t1nome' => 't1.tm_name'))
-//                ->joinInner(array('t2' => 'team'), 'match.mt_idteam2 = t2.tm_id', array('t2nome' => 't2.tm_name'))
-//                ->joinInner("result", "match.mt_id = result.rs_idmatch and result.rs_iduser =".$usuario)
-//                ->where("match.mt_idchampionship = ?", $championship)
-//                ->where("match.mt_idteam1 = ?", $team)
-//                ->orWhere("match.mt_idteam2 = ?", $team)
                  ->query()
                 ->fetchAll();
-        
-//        print_r($result->__toString());
-//        die(".");
-               
-        
         return $result;
         
     }
     
     public function save_penca_match($dados) {
         $db = $this->db;
-        
-//        print_r($dados);
-//        die(".");
-        
         $d = array(
             'rs_idmatch' => $dados['rs_idmatch'],
             'rs_idpenca' => $dados['rs_idpenca'],
@@ -624,6 +617,24 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         
         return $return;
                 
+    }
+
+    /**
+     * Devuelve la cantidad de partidos no jugados
+     * @param cantidad
+     */
+    public function partidosNoJugados($cantidad) {
+        $db = $this->db;
+
+        return $db->select()->from("match")
+            ->joinInner("championship", "championship.ch_id = match.mt_idchampionship")
+            ->joinInner("round","round.rd_id = match.mt_idround")
+            ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('tm1_id' =>'t1.tm_id', 'tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
+            ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('tm2_id' =>'t2.tm_id','tm2_logo' => 't2.tm_logo', 't2nome' => 't2.tm_name'))   
+            ->where("championship.ch_ativo = 1")
+            ->where("match.mt_played = 0")
+            ->order("match.mt_date ASC")
+            ->limit($cantidad,0)->query()->fetchAll();
     }
 
     

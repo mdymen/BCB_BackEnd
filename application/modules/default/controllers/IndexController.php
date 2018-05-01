@@ -46,8 +46,6 @@ class IndexController extends Zend_Controller_Action
 			if (!empty($params['id_pagoseguro'])) {
 				$this->pagamentoAction();
 			}
-			
-//            print_r($limit);
             
             $limit = 8;
             if (!empty($params['limit'])) {
@@ -70,33 +68,6 @@ class IndexController extends Zend_Controller_Action
         catch (Exception $e) {
             
         }
-//        print_r($matchs);
-        
-//        try {
-//            $params = $this->_request->getParams();
-//            //$this->view->error = $params['error'];
-//            
-//            $ordem = "";
-//            if (!empty($params['ordem'])) {
-//                $ordem = $params['ordem'];
-//            }
-//
-//            $storage = new Zend_Auth_Storage_Session();
-//            $data = (get_object_vars($storage->read()));
-//
-//            $result = new Application_Model_Result();
-//            $em_acao_group = $result->palpites_em_acao_group($data['us_id'], $ordem);
-//
-//            $config = new Zend_Config_Ini('config.ini');
-//
-//            $h_date = new Helpers_Data();
-//            $this->view->palpites = $em_acao_group;
-//
-//        }
-//        catch (Exception $e) {
-////             $config = new Zend_Config_Ini("config.ini");
-////            $this->redirect("/index/logout");
-//        }
     }
         
     public function indexAction() {
@@ -131,33 +102,6 @@ class IndexController extends Zend_Controller_Action
         catch (Exception $e) {
             
         }
-//        print_r($matchs);
-        
-//        try {
-//            $params = $this->_request->getParams();
-//            //$this->view->error = $params['error'];
-//            
-//            $ordem = "";
-//            if (!empty($params['ordem'])) {
-//                $ordem = $params['ordem'];
-//            }
-//
-//            $storage = new Zend_Auth_Storage_Session();
-//            $data = (get_object_vars($storage->read()));
-//
-//            $result = new Application_Model_Result();
-//            $em_acao_group = $result->palpites_em_acao_group($data['us_id'], $ordem);
-//
-//            $config = new Zend_Config_Ini('config.ini');
-//
-//            $h_date = new Helpers_Data();
-//            $this->view->palpites = $em_acao_group;
-//
-//        }
-//        catch (Exception $e) {
-////             $config = new Zend_Config_Ini("config.ini");
-////            $this->redirect("/index/logout");
-//        }
     }
     
     public function idiomaAction() {
@@ -940,6 +884,23 @@ class IndexController extends Zend_Controller_Action
        
         
     }
-   
+ 
+    /**
+     * Devuelve los diez proximos partidos
+     */
+    public function dezproximosjogosAction() {
+        $m = new Application_Model_Matchs();
+        $matchs = $m->partidosNoJugados(12);
+        
+        $result['body'] = $matchs;
+
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($result); 
+    }
 }
 

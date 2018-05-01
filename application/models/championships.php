@@ -211,4 +211,18 @@ class Application_Model_Championships extends Application_Model_Bd_Adapter
         $db = $this->db;
         $db->update("championship", array("ch_atualround" => $id_ronda), "ch_id = ".$id_champ);
     }
+
+    /**
+     * Devuelve los usuarios que palpitaron un determinado campeonato
+     * @param id_champ
+     */
+    public function getUsuariosQuePalpitaron($id_champ) {
+        $db = $this->db;
+        $query = $db->select()->distinct()->from("user","user.us_email")
+            ->joinInner("result","result.rs_iduser = user.us_id","")
+            ->joinInner("match","match.mt_id = result.rs_idmatch","")
+            ->where("match.mt_idchampionship = ?", $id_champ);
+
+        return $query->query()->fetchAll();
+    }
 }

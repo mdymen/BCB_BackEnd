@@ -670,11 +670,11 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
             $db = $this->db;
             
             $sql = "SELECT (SELECT sum(rs_points) FROM result where rs_iduser = ".$user.") as pontos,
-            (SELECT count(*) FROM result inner join wi061609_penca.match m ON rs_idmatch = m.mt_id where rs_iduser = ".$user." and mt_played = 1) as palpitados,
+            (SELECT count(*) FROM result inner join wi490700_penca.match m ON rs_idmatch = m.mt_id where rs_iduser = ".$user." and mt_played = 1) as palpitados,
             (SELECT count(*) FROM result  where rs_iduser = ".$user." and rs_result = 1) as acertos,
             (SELECT COUNT( * ) 
             FROM result
-            INNER JOIN wi061609_penca.match m ON rs_idmatch = m.mt_id
+            INNER JOIN wi490700_penca.match m ON rs_idmatch = m.mt_id
             WHERE rs_iduser = ".$user."
             AND mt_played =1
             AND rs_points =0) as erros";
@@ -684,15 +684,20 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
             return $result;
         }
     
+        /**
+         * Obtiene todos los usuarios que ya palpitaron un partido determinado
+         * @param idmatch
+         */
         public function getUsuariosPalpitaronJogo($idmatch) {
             $db = $this->db;
             
             $sql = $db->select()->from("match")
                     ->joinInner("result", "result.rs_idmatch = match.mt_id")
                     ->joinInner("user", "user.us_id = result.rs_iduser")
+                    ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('tm1_id' => 't1.tm_id', 'tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
+                    ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('tm2_id' => 't2.tm_id', 'tm2_logo' => 't2.tm_logo', 't2nome' => 't2.tm_name'))
                     ->joinLeft("penca", "penca.pn_id = result.rs_idpenca")
                     ->where("match.mt_id = ?", $idmatch)
-                    ->where("result.rs_result = 1")
                     ->query()->fetchAll();
             
             return $sql;
@@ -733,5 +738,68 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         
         return $return;        
     }
-        
+
+    /**
+     * Guarda la informacion del usuario correspondiente al recibimiento de emails
+     * @param params tiene @param res_pal, @param res_rod_pal, @param info_rod
+     * @param iduser
+     */
+    public function emailConfiguracion($params) {
+        $db = $this->db;
+        $db->update("user", 
+            array(
+                "res_pal" =>$params['res_pal'],
+                "res_rod_pal" => $params['res_rod_pal'],
+                "info_rod" => $params['info_rod']
+            )
+            , "us_id = ".$params['iduser']);
+    }
+
+    /**
+     * Retorna los emails de todos los usuarios con configuracion para recibir emails
+     * de informacion de una rodada
+     */
+    public function emailsUsuariosInformacionRodada() {
+        return $this->db->select()
+            ->from("user", array('us_email'))
+            ->where("info_rod = 1")
+            ->where("us_email <> 'null'")
+            ->query()
+            ->fetchAll();
+    }
+
+    /**
+     * Verifica que o usuario tiene dinero suficiente
+     * @param usuario es el id del usuario
+     * @param rodada es el id de la rodada
+     * @return true si tiene o @return false si no tiene
+     */
+    public function suficienteDinero($usuario, $rodada) {
+        return $this->db->query("SELECT CASE WHEN 
+            (u.us_cash > 
+                (SELECT r.rd_custo FROM round r WHERE r.rd_id = ".$rodada.") 
+            ) 
+            THEN true ELSE false END as hasMoney FROM user u WHERE u.us_id = ".$usuario)
+            ->fetch();
+    }
+
+    /**
+     * Marca como comprada la rodada y actualiza el dinero del usuario
+     * y actualiza el dinero acumulado del campeonato
+     * @param usuario
+     * @param rodada
+     */
+    public function comprarRodada($usuario, $rodada) {
+        $dados = array("ru_idrodada" => $rodada, "ru_iduser" => $usuario, "ru_pago" => 1, "ru_datahora" =>  date("Y-m-d H:i:s"));
+        $this->db->insert("rodadausuario", $dados);
+        $this->db->query("UPDATE user 
+            SET us_cash = us_cash - (SELECT r.rd_custo FROM round r WHERE r.rd_id = ".$rodada.") 
+            WHERE us_id =".$usuario);
+
+        //$dados = $this->db->select()->from("round", array("rd_idchampionship", "rd_custo"))
+        //    ->where("rd_id = ?", $rodada)->query()->fetch();
+
+        //$this->db->query("UPDATE championship SET ch_acumulado = ch_acumulado + ".$dados['rd_custo']
+        //    ." WHERE ch_id = ".$dados['rd_idchampionship']);
+    }
 }

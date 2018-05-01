@@ -174,9 +174,19 @@ class Admin_IndexController extends Zend_Controller_Action
 
     }
     
-    public function testemailresultadosAction() {
-        
-      $params = $this->_request->getParams();
+    /**
+     * Envia email a todos los usuarios configurados para recibir emails
+     * de una rodada de un campeonato especifico con los resultados
+     * @param champ
+     * @param rodada
+     */
+    public function emailrodadaAction() {
+
+        try {
+
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);  
+
         $champ = $params['champ'];
         $ronda = $params['rodada'];
 
@@ -184,34 +194,14 @@ class Admin_IndexController extends Zend_Controller_Action
         $matchs = $m_obj->load_matchs_byrodada($champ, $ronda);
         $matchs = $m_obj->setDatas($matchs);
 
-        $users = $m_obj->getusuarios_do_campeonato($champ);
-        
-                 $emails = array();
-        
-        $e = 0;
-        for ($i = 0; $i < count($users); $i = $i + 1) {
-            
-            if (!empty($users[$i]['us_email'])) {
-                $emails[$e] = $users[$i]['us_email'];
-                $e = $e + 1;
-            }
-            
-        }
-        
-//        print_r($emails);
-//        die(".");
-//        
-//
-//        
-//        $emails[0] = "msn@dymenstein.com";
-//        $emails[1] = "martin@dymenstein.com";
-
-//        print_r(count($matchs));
-//        die(".");
-        
+        $u = new Application_Model_Users();
+        $emails = $u->emailsUsuariosInformacionRodada();     
         
         for ($i = 0; $i < count($emails); $i = $i + 1) {
-            $x = '<html xmlns="http://www.w3.org/1999/xhtml"><head>
+            $email = $emails[$i];
+
+ 
+            $html = '<html xmlns="http://www.w3.org/1999/xhtml"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Untitled Document</title>
 </head>
@@ -260,7 +250,7 @@ class Admin_IndexController extends Zend_Controller_Action
       
                 $match = $matchs[$j];
                 
-                $x = $x. '<table width="100%">
+                $html = $html. '<table width="100%">
                     <tbody>
                             <tr>
                                     <td style="text-align:center;width:5%"><b><img width="25px;" height="21px;" src="http://www.bolaocraquedebola.com.br/'.$match['t1logo'].'"></b></td>
@@ -278,7 +268,7 @@ class Admin_IndexController extends Zend_Controller_Action
             
 
                                                         
-$x = $x. '
+                $html = $html. '
                         </div>
                 </div>
 				
@@ -325,7 +315,20 @@ $x = $x. '
 </body></html>';
 
 
-            $this->mail($x, $emails[$i], "Rodada ".$matchs[0]['rd_round'].' '.$matchs[0]['ch_nome']);
+            $this->mail($html, $email, "Rodada ".$matchs[0]['rd_round'].' '.$matchs[0]['ch_nome']);
+        
+            }
+
+            $this->getResponse()
+            ->setHeader('Content-Type', 'application/json');
+           
+           $this->_helper->layout->disableLayout();
+           $this->_helper->viewRenderer->setNoRender(TRUE);
+           
+           $this->_helper->json($emails);
+
+        } catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
         }
     }
     
