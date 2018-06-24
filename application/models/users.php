@@ -331,6 +331,10 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
         return $result;
     }
     
+    /**
+     * Retorna un usuario registrado pelo facebook id
+     * @param facebookid
+     */
     public function isUserRegistered($facebookid) {
         $db = $this->db;
         
@@ -435,6 +439,10 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
             'reset_ativa' => 1));
     }
     
+    /**
+     * Retorna un usuario pelo email
+     * @param email
+     */
     public function load_userbyemail($email) {
         $db = $this->db;
         
@@ -540,8 +548,6 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
 		->where("pg_transactionstatus < 3")
 		->where("pg_plano = ?", $plano)
 		->order("pg_datahora DESC");
-		
-		print_r($query->__toString());		
 		
 		$result = $query->query()->fetch();
 		
@@ -671,7 +677,7 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
             
             $sql = "SELECT (SELECT sum(rs_points) FROM result where rs_iduser = ".$user.") as pontos,
             (SELECT count(*) FROM result inner join wi490700_penca.match m ON rs_idmatch = m.mt_id where rs_iduser = ".$user." and mt_played = 1) as palpitados,
-            (SELECT count(*) FROM result  where rs_iduser = ".$user." and rs_result = 1) as acertos,
+            (SELECT count(*) FROM result  where rs_iduser = ".$user." and rs_points <> 0) as acertos,
             (SELECT COUNT( * ) 
             FROM result
             INNER JOIN wi490700_penca.match m ON rs_idmatch = m.mt_id
@@ -801,5 +807,50 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
 
         //$this->db->query("UPDATE championship SET ch_acumulado = ch_acumulado + ".$dados['rd_custo']
         //    ." WHERE ch_id = ".$dados['rd_idchampionship']);
+    }
+
+    public function guardarfoto($dir, $usuario) {
+        $this->db->update("user",array("us_foto" => $dir), "us_id = ".$usuario);
+    }
+    
+
+    /**
+     * Devuelve toda la informacion del usuario
+     * @param usuario
+     */
+    public function getUsuario($usuario) {
+        return $this->db->select()->from("user", 
+            array("us_id", "us_cash","us_grito", "us_username", "us_teamname", "us_foto")
+            )->where("us_id = ?",$usuario)->query()->fetch();
+    }
+    
+    /**
+     * Cuando una persona que no estaba registrada se loga desde facebook
+     * llama a este metodo para registraro
+     * @param idFacebook
+     * @param email
+     * @param nome
+     */
+    public function salvarUsuarioFacebookId($idFacebook, $email, $nome) {
+        $dados = array(
+            'us_idfacebook'=> $idFacebook,
+            'us_email' => $email,
+            'us_nome' => $nome,
+            'us_origen' => "FACEBOOK",
+            'us_username' => $nome,
+            'us_password' => "qwertyytrewq"
+        );
+        $this->db->insert("user",$dados);
+    }
+
+    /**
+     * Cuando un usuario se loga desde facebook pero su email ya estaba registrado
+     * entonces actualiza el facebook id
+     * @param idFacebook
+     * @param email
+     */
+    public function atualizarUsuarioFacebookId($idFacebook, $email) {
+        $this->db
+            ->update("user", array("us_idfacebook" => $idFacebook), 'us_email = ?'.$email);
     }
 }

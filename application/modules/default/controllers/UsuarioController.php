@@ -160,26 +160,52 @@ class UsuarioController extends Zend_Controller_Action
         
     }
     
+    public function subirfotoAction() {
+        try {
+
+        } catch (Exception $e) {
+            print_r($e->getMessage());
+            die("-");
+        }
+    }
+
     public function uploadimageAction() {
+
+        $this->getResponse()
+        ->setHeader('Content-Type', 'application/json');
+    
+         $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
         include_once APPLICATION_PATH.'/forms/FotoPerfil.php';
         $form = new Forms_FotoPerfil();
         
-        $base = APPLICATION_PATH."/../public/img/perfil/";
+        $base = APPLICATION_PATH."/../public/assets/img/perfil/";
         
         if ($this->_request->isPost()) {
             $formData = $this->_request->getPost();
-            
+
             if ($form->isValid($formData)) {
                 $name = $form->getValues();
                 $ext = explode('.',$name['imgPerfil']);
-                $data = $this->data;
-                $new_name = $data['ST_USUARIO_USU'].'.'.$ext[1];
+                $new_name = $name['id'].".".$ext[1];
+                if (file_exists($base.$new_name)) {
+                    unlink($base.$new_name);
+                }
                 // success - do something with the uploaded file
                 rename($base.$name['imgPerfil'], $base.$new_name);
-                $this->redirect('usuario/index');
+
+                $u = new Application_Model_Users();
+                $u->guardarfoto($new_name, $name['id']);
+
+                $result['status'] = 200;
+                $result['foto'] = $new_name;
+
+                $this->_helper->json($result);
                     
             }
         }
+    
     }
     
     public function salvaropcoesAction() {
@@ -260,20 +286,90 @@ class UsuarioController extends Zend_Controller_Action
 
     }
 
-    public function uploadfileAction() {
+   /**
+    * devuelve la cantidad de palpites del usuario
+    * @param id del usuario que se desea ver
+    * @param limit limite para ver
+    */
+    public function palpitesusuarioAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);    
+
+        $m = new Application_Model_Matchs();
+        $matchs['partidos'] = $m->palpites_usuario($params['id'], $params['limit']);
+        
+        $this->getResponse()
+        ->setHeader('Content-Type', 'application/json');
+        
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
-        try {
-            /*$body = $this->getRequest()->getRawBody();
-            $params = Zend_Json::decode($body);
-        */
-            print_r($_FILES['file']);
-            die(".");
+    
+        $this->_helper->json($matchs);
+   }
 
-            $this->_helper->json($this->getRequest()->getContent());
+   /**
+    * Retorna la informacion de un usuario
+    * @param usuario
+    */
+   public function usuarioAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);    
+
+        $u = new Application_Model_Users();
+        $palpites = $u->getPalpitesUsuario($params['usuario']);
+        $usuario = $u->getUsuario($params['usuario']);
+
+        $result = $usuario;
+        $result['palpites'] = $palpites;
+
+        $this->getResponse()
+        ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+    
+        $this->_helper->json($result);
+   }
+
+   /**
+    * Dado un facebookID o email procura si el usuario existe
+    * @param email
+    * @param facebookid
+    */
+   public function usuariobyfacebookidoremailAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body); 
+
+        $u = new Application_Model_Users();
+        $usuario = $u->isUserRegistered($params['idFacebook']);
+
+        //No existe un usuario con ese facebook id, entonces tiene que
+        //buscar si existe con el email del facebook
+        if (empty($usuario)) {
+
+            $usuario = $u->load_userbyemail($params['email']);
+
+            //No existe ese usuario por el facebook id ni por
+            //email, entonces hay que registrarlo
+            if (empty($usuario)) {
+
+                //cria el usuario
+                $u->salvarUsuarioFacebookId($params['idFacebook'], $params['email'], $params['nome']);
+                $usuario = $u->isUserRegistered($params['idFacebook']);
+            }
+
+            //atualiza el usuario
+            $u->atualizarUsuarioFacebookId($params['idFacebook'], $params['email']);
+            $usuario = $u->isUserRegistered($params['idFacebook']);
+
         }
-        catch (Exception $e) {
-            $this->_helper->json($e->getMessage());
-        }
-    }
+
+        $this->getResponse()->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+    
+        $this->_helper->json($usuario);
+   }
+    
 }

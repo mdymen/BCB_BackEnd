@@ -902,5 +902,71 @@ class IndexController extends Zend_Controller_Action
         
         $this->_helper->json($result); 
     }
+
+    /**
+     * Devuelve la cantidad de partidos no jugados enviadas por parametro
+     * del campeonato
+     */
+    public function proximosjogosAction() {
+        $body = $this->getRequest()->getRawBody();
+        $params = Zend_Json::decode($body);
+
+        $m = new Application_Model_Matchs();
+        $matchs = $m->partidos($params['cantidad'], $params['idcampeonato']);
+        
+        $result['body'] = $matchs;
+
+        $this->getResponse()
+             ->setHeader('Content-Type', 'application/json');
+        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($result); 
+    }
+
+    public function noticiasAction() {
+
+        
+        $ch = curl_init();
+ 
+        curl_setopt($ch, CURLOPT_URL,"https://esportes.r7.com/futebol/feed.xml");   
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $server_output = curl_exec($ch);          
+        curl_close($ch);
+
+        $return = new SimpleXMLElement($server_output);
+        $noticias = (array)$return;
+        $noticias = $noticias['entry'];
+        $r = array();
+
+        for ($i = 0; $i < count($noticias); $i = $i + 1) {
+            $r[$i] = (array)$noticias[$i];
+        }
+
+        $result['noticias'] = $r;
+
+        $this->getResponse()
+        ->setHeader('Content-Type', 'application/json');
+   
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $this->_helper->json($result); 
+
+        //$return = new SimpleXMLElement($server_output);
+      /*  $my_array = (array)$return->code;
+        
+        $codigo = $my_array[0];
+		
+		$u = new Application_Model_Users();
+		$u->add_pagseguro_ini($params['user'], $codigo, $params['email'], $nome_plano);
+*/
+       
+
+    }
 }
 

@@ -156,6 +156,29 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         
     }
     
+    public function palpites_usuario($us_id, $limit) { 
+        
+        $db = $this->db;
+        
+        $sql = "SELECT `match`.*, t1.tm_id as tm1_id, t1.tm_name as t1nome, t1.tm_logo as tm1_logo,  `t1`.*, t2.tm_id as tm2_id, 
+            t2.tm_name as t2nome, t2.tm_logo as tm2_logo,
+            `t2`.*, r.*, round.*,c.* FROM `match` 
+  INNER JOIN `team` AS `t1` ON t1.tm_id = match.mt_idteam1 
+  INNER JOIN `team` AS `t2` ON t2.tm_id = match.mt_idteam2   
+  INNER JOIN championship c ON c.ch_id = mt_idchampionship
+  INNER JOIN round ON round.rd_id = match.mt_idround
+  INNER JOIN (select * from result where rs_iduser = ".$us_id.") r ON r.rs_idmatch = match.mt_id ORDER BY `mt_id` DESC limit ".$limit;
+        
+
+        
+//        print_r($sql);
+        
+        $result = $db->query($sql)->fetchAll();
+        
+        return $result;
+        
+    }
+
     public function proximos_jogos_offset($us_id, $offset, $limit) { 
         
         $db = $this->db;
@@ -633,6 +656,25 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
             ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('tm2_id' =>'t2.tm_id','tm2_logo' => 't2.tm_logo', 't2nome' => 't2.tm_name'))   
             ->where("championship.ch_ativo = 1")
             ->where("match.mt_played = 0")
+            ->order("match.mt_date ASC")
+            ->limit($cantidad,0)->query()->fetchAll();
+    }
+
+        /**
+     * Devuelve la cantidad de partidos no jugados
+     * @param cantidad
+     */
+    public function partidos($cantidad, $campeonato) {
+        $db = $this->db;
+
+        return $db->select()->from("match")
+            ->joinInner("championship", "championship.ch_id = match.mt_idchampionship")
+            ->joinInner("round","round.rd_id = match.mt_idround")
+            ->joinInner(array('t1' => 'team'), 't1.tm_id = match.mt_idteam1', array('tm1_id' =>'t1.tm_id', 'tm1_logo' => 't1.tm_logo', 't1nome' => 't1.tm_name'))
+            ->joinInner(array('t2' => 'team'), 't2.tm_id = match.mt_idteam2', array('tm2_id' =>'t2.tm_id','tm2_logo' => 't2.tm_logo', 't2nome' => 't2.tm_name'))   
+            ->where("championship.ch_ativo = 1")
+            ->where("match.mt_played = 0")
+            ->where("championship.ch_id = ?", $campeonato)
             ->order("match.mt_date ASC")
             ->limit($cantidad,0)->query()->fetchAll();
     }
