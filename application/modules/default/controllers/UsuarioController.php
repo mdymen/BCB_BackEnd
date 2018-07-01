@@ -334,42 +334,47 @@ class UsuarioController extends Zend_Controller_Action
    /**
     * Dado un facebookID o email procura si el usuario existe
     * @param email
-    * @param facebookid
+    * @param idFacebook
+    * @param nome
     */
    public function usuariobyfacebookidoremailAction() {
-        $body = $this->getRequest()->getRawBody();
-        $params = Zend_Json::decode($body); 
-
-        $u = new Application_Model_Users();
-        $usuario = $u->isUserRegistered($params['idFacebook']);
-
-        //No existe un usuario con ese facebook id, entonces tiene que
-        //buscar si existe con el email del facebook
-        if (empty($usuario)) {
-
-            $usuario = $u->load_userbyemail($params['email']);
-
-            //No existe ese usuario por el facebook id ni por
-            //email, entonces hay que registrarlo
-            if (empty($usuario)) {
-
-                //cria el usuario
-                $u->salvarUsuarioFacebookId($params['idFacebook'], $params['email'], $params['nome']);
-                $usuario = $u->isUserRegistered($params['idFacebook']);
-            }
-
-            //atualiza el usuario
-            $u->atualizarUsuarioFacebookId($params['idFacebook'], $params['email']);
-            $usuario = $u->isUserRegistered($params['idFacebook']);
-
-        }
-
         $this->getResponse()->setHeader('Content-Type', 'application/json');
-        
+                
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
-    
-        $this->_helper->json($usuario);
+        
+       try {
+            $body = $this->getRequest()->getRawBody();
+            $params = Zend_Json::decode($body); 
+
+            $u = new Application_Model_Users();
+            $usuario = $u->isUserRegistered($params['idFacebook']);
+
+            //No existe un usuario con ese facebook id, entonces tiene que
+            //buscar si existe con el email del facebook
+            if (empty($usuario)) {
+
+                $usuario = $u->load_userbyemail($params['email']);
+
+                //No existe ese usuario por el facebook id ni por
+                //email, entonces hay que registrarlo
+                if (empty($usuario)) {
+
+                    //cria el usuario
+                    $u->salvarUsuarioFacebookId($params['idFacebook'], $params['email'], $params['nome']);
+                    $usuario = $u->isUserRegistered($params['idFacebook']);
+                }
+
+                //atualiza el usuario
+                $u->atualizarUsuarioFacebookId($params['idFacebook'], $params['email']);
+                $usuario = $u->isUserRegistered($params['idFacebook']);
+
+            }
+        
+            $this->_helper->json($usuario);
+        } catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
    }
     
 }

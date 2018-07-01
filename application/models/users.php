@@ -851,6 +851,8 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
      */
     public function atualizarUsuarioFacebookId($idFacebook, $email) {
         $this->db
-            ->update("user", array("us_idfacebook" => $idFacebook), 'us_email = ?'.$email);
+            ->update("user", 
+                array("us_idfacebook" => $idFacebook), 
+                array('us_email = ?' => $email));
     }
 }
