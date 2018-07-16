@@ -48,6 +48,9 @@ class PaisController extends Zend_Controller_Action
 
     public function putAction() {}
 
+    /**
+     * Carga todos los paises cadastrados en el sistema
+     */
     public function getAction() {
     
         $this->_helper->layout->disableLayout();
@@ -64,5 +67,7 @@ class PaisController extends Zend_Controller_Action
     }
 
     public function deleteAction() {}
+
+
 
 }

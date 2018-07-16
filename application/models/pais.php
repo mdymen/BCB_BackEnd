@@ -32,4 +32,6 @@ class Application_Model_Pais extends Application_Model_Bd_Adapter
             ->fetchAll();
     }
 
+
+
 }

@@ -58,12 +58,13 @@ class Application_Model_Teams extends Application_Model_Bd_Adapter
     public function load_teams_championship($champ) {
         $db = $this->db;
         
-        $result = $db->select()->from('team')
-                ->where('team.tm_idchampionship = ?', $champ)
-                ->order(array("team.tm_grupo", "team.tm_points DESC"))    
-                ->query()
+        $result = $db->select()->from('equipo')
+                ->joinInner("equipocampeonato", "equipocampeonato.ec_idequipo = equipo.eq_id")
+                ->where('equipocampeonato.ec_idchampionship = ?', $champ)
+                ->order(array("equipocampeonato.ec_grupo", "equipocampeonato.ec_pontos DESC")) 
+               ->query()
                 ->fetchAll();
-
+                
         return $result;  
     }
     

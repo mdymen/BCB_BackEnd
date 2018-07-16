@@ -855,4 +855,15 @@ class Application_Model_Users extends Application_Model_Bd_Adapter
                 array("us_idfacebook" => $idFacebook), 
                 array('us_email = ?' => $email));
     }
+
+    /**
+     * Actualiza el equipo del corazon del usuario
+     * @param idEquipo
+     * @param idUsuario
+     */
+    public function updateEquipoCorazon($idEquipo, $idUsuario) {
+        $this->db->update("user", 
+            array("us_team" => $idEquipo), 
+            "us_id = ".$idUsuario);
+    }
 }

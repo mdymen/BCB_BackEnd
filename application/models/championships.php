@@ -225,4 +225,53 @@ class Application_Model_Championships extends Application_Model_Bd_Adapter
 
         return $query->query()->fetchAll();
     }
+
+    /**
+     * Adiciona un equipo al campeonato
+     * @param equipo seria equipocampeonato asociados
+     */
+    public function saveEquipoCampeonato($equipo) {
+        $this->db->insert("equipocampeonato", $equipo);
+    }
+
+    /**
+     * Retorna la lista de equipos del campeonato
+     * @param idCampeoanto
+     */
+    public function loadByCampeonato($idCampeonato) {
+        return $this->db->select()->from("equipocampeonato")
+            ->joinInner("equipo","equipo.eq_id = equipocampeonato.ec_idequipo")
+            ->joinInner("pais","pais.ps_id = equipo.eq_idpais")
+            ->where("equipocampeonato.ec_idchampionship = ?", $idCampeonato)
+            ->query()
+            ->fetchAll();
+    }
+
+    /**
+     * Retorna todas las rodadas del campeonato
+     * @param idCampeonato
+     */
+    public function loadRodadasByCampeonato($idCampeonato) {
+        return $this->db->select()->from("round")
+            ->joinInner("championship", "championship.ch_id = round.rd_idchampionship")
+            ->where("championship.ch_id = ?", $idCampeonato)
+            ->query()
+            ->fetchAll();
+    }
+
+    /**
+     * Retorna todos los campeonatos abiertos
+     * 
+     * @return ch_id
+     * @return ch_acumulado
+     * @return ch_nome
+     * @return ch_logocampeonato
+     * @return ch_id
+     */
+    public function get() {
+        return $this->db->select()->from("championship", array("ch_id","ch_acumulado","ch_nome","ch_logocampeonato","ch_id"))
+            ->where("championship.ch_ativo =?", 1)
+            ->query()
+            ->fetchAll();
+    }
 }

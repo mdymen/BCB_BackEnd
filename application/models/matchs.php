@@ -679,5 +679,52 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
             ->limit($cantidad,0)->query()->fetchAll();
     }
 
+    /**
+     * Retorna informacion de la rodada con los palpites del usuario
+     * de un campeonato especificado
+     * @param championship
+     * @param rodada
+     * @param usuario
+     */
+    public function loadRodadaPalpitada($championship, $rodada, $usuario) {
+        $db = $this->db;
+        
+        $sql = "
+            SELECT match.mt_idchampionship as ch_id, vwpalpites.*, `match`.*, t1.eq_id as tm1_id, t1.eq_nome as t1nome, t1.eq_logo as tm1_logo,  
+            `t1`.*, t2.eq_id as tm2_id, 
+            t2.eq_nome as t2nome, t2.eq_logo as tm2_logo,
+            `t2`.*, r.*, round.*  
+            FROM `match` 
+            INNER JOIN `equipo` AS `t1` ON t1.eq_id = match.mt_idteam1 
+            INNER JOIN `equipo` AS `t2` ON t2.eq_id = match.mt_idteam2   
+            LEFT JOIN vwpalpites ON vwpalpites.rs_idmatch = match.mt_id
+            LEFT JOIN round ON round.rd_id = match.mt_idround
+            LEFT JOIN (select * from result where rs_iduser = ".$usuario." AND rs_idpenca = 0) r ON r.rs_idmatch = match.mt_id 
+            WHERE  (match.mt_idchampionship = '".$championship."') AND (mt_idround = '".$rodada."') ORDER BY `mt_date` ASC";
+        
+        $result = $db->query($sql)->fetchAll();
+        return $result;
+        
+    }
+
+    /**
+     * Devuelve los partidos del campeonato y de la rodada especificada
+     * 
+     * @param idCampeonato
+     * @param idRodada
+     */
+    public function get($idCampeonato, $idRodada) {
+        $db = $this->db;
+
+        return $this->db->select()
+            ->from("match")
+            ->joinInner("championship", "championship.ch_id = match.mt_idchampionship", array("ch_id" => "championship.ch_id","ch_nome" => "championship.ch_nome"))
+            ->joinInner(array('t1' => 'equipo'), 't1.eq_id = match.mt_idteam1', array('tm1_id' => 't1.eq_id', 't1nome' => 't1.eq_nome', 'tm1_logo' => 't1.eq_logo'))
+            ->joinInner(array('t2' => 'equipo'), 't2.eq_id = match.mt_idteam2', array('tm2_id' => 't2.eq_id', 't2nome' => 't2.eq_nome', 'tm2_logo' => 't2.eq_logo'))
+            ->where("championship.ch_idchampionship = ?", $idChampionship)
+            ->where("match.mt_idround = ?", $idRodada)
+            ->query()
+            ->fetchAll();
+    }
     
 }

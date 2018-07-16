@@ -106,6 +106,7 @@ class TeamController extends Zend_Controller_Action
     }
 
     /**
+     * GET
      * Retorna todos los equipos cadastrados de ese pais
      * @param idPais
      */
@@ -127,5 +128,17 @@ class TeamController extends Zend_Controller_Action
             $this->_helper->json($e); 
         }
     }
+
+    public function getAction() {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $e = new Application_Model_Equipo();
+        $body = array();
+        $body['body'] = $e->load();
+
+        $this->_helper->json($body);
+    }
+
     
 }

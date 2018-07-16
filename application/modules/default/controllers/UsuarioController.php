@@ -18,6 +18,7 @@ include APPLICATION_PATH."/helpers/data.php";
 include APPLICATION_PATH."/helpers/box.php";
 include APPLICATION_PATH."/helpers/html.php";
 include APPLICATION_PATH."/helpers/translate.php";
+include APPLICATION_PATH.'/models/teams.php';
 class UsuarioController extends Zend_Controller_Action
 {
     public function indexAction() {
@@ -288,23 +289,24 @@ class UsuarioController extends Zend_Controller_Action
 
    /**
     * devuelve la cantidad de palpites del usuario
-    * @param id del usuario que se desea ver
+    * @param idUsuario del usuario que se desea ver
     * @param limit limite para ver
     */
-    public function palpitesusuarioAction() {
-        $body = $this->getRequest()->getRawBody();
-        $params = Zend_Json::decode($body);    
+    public function getpalpitesAction() {
+        try {
+            $params = $this->getRequest()->getParams();   
 
-        $m = new Application_Model_Matchs();
-        $matchs['partidos'] = $m->palpites_usuario($params['id'], $params['limit']);
+            $m = new Application_Model_Matchs();
+            $matchs['body'] = $m->palpites_usuario($params['idUsuario'], $params['limit']);
+            
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $this->getResponse()
-        ->setHeader('Content-Type', 'application/json');
-        
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(TRUE);
-    
-        $this->_helper->json($matchs);
+            $this->_helper->json($matchs);
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
    }
 
    /**
@@ -373,6 +375,27 @@ class UsuarioController extends Zend_Controller_Action
         
             $this->_helper->json($usuario);
         } catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
+   }
+   
+   /**
+    * POST
+    * Seta el equipo al equipo del corazon del usuario
+    * @param idEquipo
+    * @param idUsuario
+    */
+    public function posttimecoracaoAction() {
+        try {
+            $body = $this->getRequest()->getRawBody();
+            $params = Zend_Json::decode($body); 
+
+            $t = new Application_Model_Users();
+            $t->updateEquipoCorazon($params['idEquipo'], $params['idUsuario']);
+
+            $this->_helper->json(200);
+        }
+        catch (Exception $e) {
             $this->_helper->json($e->getMessage());
         }
    }
