@@ -195,7 +195,7 @@ class Admin_ResultadosController extends Zend_Controller_Action
      * Envia los resultados de una rodada para procesar.
      * @param results, donde es una lista de resultados con 
      * los siguientes parametros @param match, @param res1, @param res2,
-     * @param team1, @param team2, @param champ, @param played
+     * @param team1, @param team2, @param champ, @param played, @param date
      */
     public function grabarresultadosAction() {
         $body = $this->getRequest()->getRawBody();
@@ -208,28 +208,50 @@ class Admin_ResultadosController extends Zend_Controller_Action
             $resultado = $resultados[$i];
 
             $matchid = $resultado['match'];
-            $res1 = $resultado['res1'];
-            $res2 = $resultado['res2'];
-            $team1 = $resultado['team1'];
-            $team2 = $resultado['team2'];
-            $champ = $resultado['champ'];   
-            $played = $resultado['played'];                      
-            
-            
-            $ganadores = $result->getResultsGanadoresPencas($matchid);
 
-            
-            if ($played == 0) {
+            if (empty($matchid)) {
+                $m = new Application_Model_Matchs();  
+                $m->save(
+                        array(
+                            'team1'=>$params['team1'],
+                            'team2'=>$params['team2'],
+                            'date'=>$params['date'],
+                            'championship' => $params['champ'],
+                            'round' => $params['round'],
+                            'res1' => $params['res1'],
+                            'res2' => $params['res2'] ,
+                            'played' => $params['played']
+                        )   
+                    );
 
-                //verifica el resultado del partido y setea los puntos
-                //y setea al partido como jugado
-                $result->verificarGanadores($team1, $team2, $res1, $res2, $matchid);
+
+
+            } else {
+
+                $res1 = $resultado['res1'];
+                $res2 = $resultado['res2'];
+                $team1 = $resultado['team1'];
+                $team2 = $resultado['team2'];
+                $champ = $resultado['champ'];   
+                $played = $resultado['played'];                      
                 
-                //verifica los usuarios ganadores y setea los puntos
-                $this->usuariosGanadores($res1, $res2, $matchid);
+                
+                $ganadores = $result->getResultsGanadoresPencas($matchid);
 
-                //seta el resultado al partido
-                $result->setResultado($matchid, $res1, $res2);
+                
+                if ($played == 0) {
+
+                    //verifica el resultado del partido y setea los puntos
+                    //y setea al partido como jugado
+                    $result->verificarGanadores($team1, $team2, $res1, $res2, $matchid);
+                    
+                    //verifica los usuarios ganadores y setea los puntos
+                    $this->usuariosGanadores($res1, $res2, $matchid);
+
+                    //seta el resultado al partido
+                    $result->setResultado($matchid, $res1, $res2);
+
+                }
 
             }
         }

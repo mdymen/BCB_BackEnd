@@ -1,37 +1,44 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of matchs
+ * Es el modelo con todas las responsabilidades
+ * de la tabla de partidos (match) del sistema
  *
  * @author Martin Dymenstein
  */
-//include APPLICATION_PATH."/helpers/data.php";
 class Application_Model_Matchs extends Application_Model_Bd_Adapter
 {
 
     protected $_name = 'match';
     
-    public function save($params) {
-        
-        $info = array(
-            'mt_idteam1'=>$params['team1'],
-            'mt_idteam2'=>$params['team2'],
-            'mt_date'=>$params['date'],
-            'mt_idchampionship' => $params['championship'],
-            'mt_idround' => $params['round']
-        );       
+    /**
+     * Actualiza el partido con los datos,
+     * si el partido no existe, entonces lo crea.
+     * @param mt_id Es el id del partido. Si es nulo entonces el partido es creado como nuevo
+     * @param mt_idteam1
+     * @param mt_idteam2
+     * @param mt_date
+     * @param mt_idchampionship
+     * @param mt_goal1 Si es nulo entonces el partido aun no fue jugado
+     * @param mt_goal2 Si es nulo entonces el partido aun no fue jugado
+     * @param mt_played 0 si el partido no fue jugado. 1 si el partido ya fue jugado
+     * 
+     * @return id del partido
+     */
+    public function save($match) {
         
         $db = $this->db;       
+
+        if(empty($match['mt_id'])) {
+            $db->insert("match", $match);
+            return $db->lastInsertId();
+        } else {
+            $db->update("match", $match, "mt_id = ".$match['mt_id']);
+            return $match['mt_id'];
+        }
                   
-        $db->insert("match",$info);        
+        
     }
-    
+
     public function update_acumulado_match($match_id, $valor) {
         $db = $this->db;
         
@@ -719,12 +726,24 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         return $this->db->select()
             ->from("match")
             ->joinInner("championship", "championship.ch_id = match.mt_idchampionship", array("ch_id" => "championship.ch_id","ch_nome" => "championship.ch_nome"))
-            ->joinInner(array('t1' => 'equipo'), 't1.eq_id = match.mt_idteam1', array('tm1_id' => 't1.eq_id', 't1nome' => 't1.eq_nome', 'tm1_logo' => 't1.eq_logo'))
-            ->joinInner(array('t2' => 'equipo'), 't2.eq_id = match.mt_idteam2', array('tm2_id' => 't2.eq_id', 't2nome' => 't2.eq_nome', 'tm2_logo' => 't2.eq_logo'))
-            ->where("championship.ch_idchampionship = ?", $idChampionship)
+            ->joinInner(array('t1' => 'equipo'), 't1.eq_id = match.mt_idteam1', array('tm1_id' => 't1.eq_id', 't1nome' => 't1.eq_nome', 'tm1_logo' => 't1.eq_logo', 'tm1_sigla' => 't1.eq_sigla'))
+            ->joinInner(array('t2' => 'equipo'), 't2.eq_id = match.mt_idteam2', array('tm2_id' => 't2.eq_id', 't2nome' => 't2.eq_nome', 'tm2_logo' => 't2.eq_logo', 'tm2_sigla' => 't2.eq_sigla'))
+            ->where("championship.ch_id = ?", $idCampeonato)
             ->where("match.mt_idround = ?", $idRodada)
             ->query()
             ->fetchAll();
+    }
+
+    /**
+     * Retorna la url para buscar los partidos del campeonato
+     * @param idCampeonato
+     */
+    public function getGlobo($idCampeonato) {
+        return $this->db->select()
+            ->from("urlcampeonatos")
+            ->where("dr_idchampionship = ?", $idCampeonato)
+            ->query()
+            ->fetch();
     }
     
 }

@@ -377,84 +377,56 @@ class CampeonatosController extends Zend_Controller_Action
         }
     }
 
-    public function tojsonAction() {
+    public function htmlToArray($html) {
 
-        error_reporting(E_ERROR | E_PARSE);
+        $object = $this->html_to_obj($html);
 
-
-        $html = '
-        <li class="lista-de-jogos-item"><div class="placar-jogo" itemscope itemtype="http://schema.org/SportsEvent"><meta itemprop="name" content="São Paulo x Vitória"><meta itemprop="startDate" content="2018-06-12"><a class="placar-jogo-link placar-jogo-link-confronto-js" href="https://globoesporte.globo.com/sp/futebol/brasileirao-serie-a/jogo/12-06-2018/sao-paulo-vitoria.ghtml"><div class="placar-jogo-informacoes">Ter 12/06/2018 <span class="placar-jogo-informacoes-local">Morumbi</span> 21:30</div><div class="placar-jogo-equipes"><span class="placar-jogo-equipes-item placar-jogo-equipes-mandante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="São Paulo"><span class="placar-jogo-equipes-sigla" title="São Paulo">SAO</span><span class="placar-jogo-equipes-nome">São Paulo</span><img class="placar-jogo-equipes-escudo-mandante" itemprop="image" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2014/04/14/sao_paulo_60x60.png" width="30" height="30" title="São Paulo" ></span><span class="placar-jogo-equipes-item placar-jogo-equipes-placar"><span class="placar-jogo-equipes-placar-mandante">3</span><span class="tabela-icone tabela-icone-versus"></span><span class="placar-jogo-equipes-placar-visitante">0</span></span><span class="placar-jogo-equipes-item placar-jogo-equipes-visitante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Vitória"><img class="placar-jogo-equipes-escudo-visitante" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2014/04/14/vitoria_60x60.png" width="30" height="30" title="Vitória"><span class="placar-jogo-equipes-sigla" title="Vitória">VIT</span><span class="placar-jogo-equipes-nome">Vitória</span></span></div><p class="placar-jogo-complemento">veja como foi</p></a></div></li><li class="lista-de-jogos-item"><div class="placar-jogo" itemscope itemtype="http://schema.org/SportsEvent"><meta itemprop="name" content="América-MG x Chapecoense"><meta itemprop="startDate" content="2018-06-13"><a class="placar-jogo-link placar-jogo-link-confronto-js" href="https://globoesporte.globo.com/mg/futebol/brasileirao-serie-a/jogo/13-06-2018/america-mg-chapecoense.ghtml"><div class="placar-jogo-informacoes">Qua 13/06/2018 <span class="placar-jogo-informacoes-local">Independência</span> 16:00</div><div class="placar-jogo-equipes"><span class="placar-jogo-equipes-item placar-jogo-equipes-mandante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="América-MG"><span class="placar-jogo-equipes-sigla" title="América-MG">AME</span><span class="placar-jogo-equipes-nome">América-MG</span><img class="placar-jogo-equipes-escudo-mandante" itemprop="image" itemprop="image" src="https://s.glbimg.com/es/sde/f/organizacoes/2018/01/24/AmericaMG-65.png" width="30" height="30" title="América-MG" ></span><span class="placar-jogo-equipes-item placar-jogo-equipes-placar"><span class="placar-jogo-equipes-placar-mandante">0</span><span class="tabela-icone tabela-icone-versus"></span><span class="placar-jogo-equipes-placar-visitante">0</span></span><span class="placar-jogo-equipes-item placar-jogo-equipes-visitante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Chapecoense"><img class="placar-jogo-equipes-escudo-visitante" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2015/08/03/Escudo-Chape-165.png" width="30" height="30" title="Chapecoense"><span class="placar-jogo-equipes-sigla" title="Chapecoense">CHA</span><span class="placar-jogo-equipes-nome">Chapecoense</span></span></div><p class="placar-jogo-complemento">veja como foi</p></a></div></li><li class="lista-de-jogos-item"><div class="placar-jogo" itemscope itemtype="http://schema.org/SportsEvent"><meta itemprop="name" content="Fluminense x Santos"><meta itemprop="startDate" content="2018-06-13"><a class="placar-jogo-link placar-jogo-link-confronto-js" href="https://globoesporte.globo.com/rj/futebol/brasileirao-serie-a/jogo/13-06-2018/fluminense-santos.ghtml"><div class="placar-jogo-informacoes">Qua 13/06/2018 <span class="placar-jogo-informacoes-local">Maracanã</span> 19:00</div><div class="placar-jogo-equipes"><span class="placar-jogo-equipes-item placar-jogo-equipes-mandante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Fluminense"><span class="placar-jogo-equipes-sigla" title="Fluminense">FLU</span><span class="placar-jogo-equipes-nome">Fluminense</span><img class="placar-jogo-equipes-escudo-mandante" itemprop="image" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2015/07/21/fluminense_60x60.png" width="30" height="30" title="Fluminense" ></span><span class="placar-jogo-equipes-item placar-jogo-equipes-placar"><span class="placar-jogo-equipes-placar-mandante">0</span><span class="tabela-icone tabela-icone-versus"></span><span class="placar-jogo-equipes-placar-visitante">1</span></span><span class="placar-jogo-equipes-item placar-jogo-equipes-visitante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Santos"><img class="placar-jogo-equipes-escudo-visitante" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2014/04/14/santos_60x60.png" width="30" height="30" title="Santos"><span class="placar-jogo-equipes-sigla" title="Santos">SAN</span><span class="placar-jogo-equipes-nome">Santos</span></span></div><p class="placar-jogo-complemento">veja como foi</p></a></div></li><li class="lista-de-jogos-item"><div class="placar-jogo" itemscope itemtype="http://schema.org/SportsEvent"><meta itemprop="name" content="Paraná x Cruzeiro"><meta itemprop="startDate" content="2018-06-13"><a class="placar-jogo-link placar-jogo-link-confronto-js" href="https://globoesporte.globo.com/pr/futebol/brasileirao-serie-a/jogo/13-06-2018/parana-cruzeiro.ghtml"><div class="placar-jogo-informacoes">Qua 13/06/2018 <span class="placar-jogo-informacoes-local">Durival Britto</span> 19:30</div><div class="placar-jogo-equipes"><span class="placar-jogo-equipes-item placar-jogo-equipes-mandante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Paraná"><span class="placar-jogo-equipes-sigla" title="Paraná">PAR</span><span class="placar-jogo-equipes-nome">Paraná</span><img class="placar-jogo-equipes-escudo-mandante" itemprop="image" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2014/04/13/parana_60x60.png" width="30" height="30" title="Paraná" ></span><span class="placar-jogo-equipes-item placar-jogo-equipes-placar"><span class="placar-jogo-equipes-placar-mandante">1</span><span class="tabela-icone tabela-icone-versus"></span><span class="placar-jogo-equipes-placar-visitante">1</span></span><span class="placar-jogo-equipes-item placar-jogo-equipes-visitante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Cruzeiro"><img class="placar-jogo-equipes-escudo-visitante" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2015/04/29/cruzeiro_65.png" width="30" height="30" title="Cruzeiro"><span class="placar-jogo-equipes-sigla" title="Cruzeiro">CRU</span><span class="placar-jogo-equipes-nome">Cruzeiro</span></span></div><p class="placar-jogo-complemento">veja como foi</p></a></div></li><li class="lista-de-jogos-item"><div class="placar-jogo" itemscope itemtype="http://schema.org/SportsEvent"><meta itemprop="name" content="Sport x Grêmio"><meta itemprop="startDate" content="2018-06-13"><a class="placar-jogo-link placar-jogo-link-confronto-js" href="https://globoesporte.globo.com/pe/futebol/brasileirao-serie-a/jogo/13-06-2018/sport-gremio.ghtml"><div class="placar-jogo-informacoes">Qua 13/06/2018 <span class="placar-jogo-informacoes-local">Ilha do Retiro</span> 19:30</div><div class="placar-jogo-equipes"><span class="placar-jogo-equipes-item placar-jogo-equipes-mandante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Sport"><span class="placar-jogo-equipes-sigla" title="Sport">SPO</span><span class="placar-jogo-equipes-nome">Sport</span><img class="placar-jogo-equipes-escudo-mandante" itemprop="image" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2015/07/21/sport65.png" width="30" height="30" title="Sport" ></span><span class="placar-jogo-equipes-item placar-jogo-equipes-placar"><span class="placar-jogo-equipes-placar-mandante">0</span><span class="tabela-icone tabela-icone-versus"></span><span class="placar-jogo-equipes-placar-visitante">0</span></span><span class="placar-jogo-equipes-item placar-jogo-equipes-visitante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Grêmio"><img class="placar-jogo-equipes-escudo-visitante" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2014/04/14/gremio_60x60.png" width="30" height="30" title="Grêmio"><span class="placar-jogo-equipes-sigla" title="Grêmio">GRE</span><span class="placar-jogo-equipes-nome">Grêmio</span></span></div><p class="placar-jogo-complemento">veja como foi</p></a></div></li><li class="lista-de-jogos-item"><div class="placar-jogo" itemscope itemtype="http://schema.org/SportsEvent"><meta itemprop="name" content="Botafogo x Atlético-PR"><meta itemprop="startDate" content="2018-06-13"><a class="placar-jogo-link placar-jogo-link-confronto-js" href="https://globoesporte.globo.com/rj/futebol/brasileirao-serie-a/jogo/13-06-2018/botafogo-atletico-pr.ghtml"><div class="placar-jogo-informacoes">Qua 13/06/2018 <span class="placar-jogo-informacoes-local">Engenhão</span> 21:00</div><div class="placar-jogo-equipes"><span class="placar-jogo-equipes-item placar-jogo-equipes-mandante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Botafogo"><span class="placar-jogo-equipes-sigla" title="Botafogo">BOT</span><span class="placar-jogo-equipes-nome">Botafogo</span><img class="placar-jogo-equipes-escudo-mandante" itemprop="image" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2014/04/14/botafogo_60x60.png" width="30" height="30" title="Botafogo" ></span><span class="placar-jogo-equipes-item placar-jogo-equipes-placar"><span class="placar-jogo-equipes-placar-mandante">2</span><span class="tabela-icone tabela-icone-versus"></span><span class="placar-jogo-equipes-placar-visitante">0</span></span><span class="placar-jogo-equipes-item placar-jogo-equipes-visitante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Atlético-PR"><img class="placar-jogo-equipes-escudo-visitante" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2015/06/24/atletico-pr_2015_65.png" width="30" height="30" title="Atlético-PR"><span class="placar-jogo-equipes-sigla" title="Atlético-PR">CAP</span><span class="placar-jogo-equipes-nome">Atlético-PR</span></span></div><p class="placar-jogo-complemento">veja como foi</p></a></div></li><li class="lista-de-jogos-item"><div class="placar-jogo" itemscope itemtype="http://schema.org/SportsEvent"><meta itemprop="name" content="Palmeiras x Flamengo"><meta itemprop="startDate" content="2018-06-13"><a class="placar-jogo-link placar-jogo-link-confronto-js" href="https://globoesporte.globo.com/sp/futebol/brasileirao-serie-a/jogo/13-06-2018/palmeiras-flamengo.ghtml"><div class="placar-jogo-informacoes">Qua 13/06/2018 <span class="placar-jogo-informacoes-local">Arena Palmeiras</span> 21:00</div><div class="placar-jogo-equipes"><span class="placar-jogo-equipes-item placar-jogo-equipes-mandante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Palmeiras"><span class="placar-jogo-equipes-sigla" title="Palmeiras">PAL</span><span class="placar-jogo-equipes-nome">Palmeiras</span><img class="placar-jogo-equipes-escudo-mandante" itemprop="image" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2014/04/14/palmeiras_60x60.png" width="30" height="30" title="Palmeiras" ></span><span class="placar-jogo-equipes-item placar-jogo-equipes-placar"><span class="placar-jogo-equipes-placar-mandante">1</span><span class="tabela-icone tabela-icone-versus"></span><span class="placar-jogo-equipes-placar-visitante">1</span></span><span class="placar-jogo-equipes-item placar-jogo-equipes-visitante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Flamengo"><img class="placar-jogo-equipes-escudo-visitante" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2018/04/09/Flamengo-65.png" width="30" height="30" title="Flamengo"><span class="placar-jogo-equipes-sigla" title="Flamengo">FLA</span><span class="placar-jogo-equipes-nome">Flamengo</span></span></div><p class="placar-jogo-complemento">veja como foi</p></a></div></li><li class="lista-de-jogos-item"><div class="placar-jogo" itemscope itemtype="http://schema.org/SportsEvent"><meta itemprop="name" content="Atlético-MG x Ceará"><meta itemprop="startDate" content="2018-06-13"><a class="placar-jogo-link placar-jogo-link-confronto-js" href="https://globoesporte.globo.com/mg/futebol/brasileirao-serie-a/jogo/13-06-2018/atletico-mg-ceara.ghtml"><div class="placar-jogo-informacoes">Qua 13/06/2018 <span class="placar-jogo-informacoes-local">Independência</span> 21:45</div><div class="placar-jogo-equipes"><span class="placar-jogo-equipes-item placar-jogo-equipes-mandante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Atlético-MG"><span class="placar-jogo-equipes-sigla" title="Atlético-MG">CAM</span><span class="placar-jogo-equipes-nome">Atlético-MG</span><img class="placar-jogo-equipes-escudo-mandante" itemprop="image" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2017/11/23/Atletico-Mineiro-escudo65px.png" width="30" height="30" title="Atlético-MG" ></span><span class="placar-jogo-equipes-item placar-jogo-equipes-placar"><span class="placar-jogo-equipes-placar-mandante">2</span><span class="tabela-icone tabela-icone-versus"></span><span class="placar-jogo-equipes-placar-visitante">1</span></span><span class="placar-jogo-equipes-item placar-jogo-equipes-visitante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Ceará"><img class="placar-jogo-equipes-escudo-visitante" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2018/05/11/ceara-65x65.png" width="30" height="30" title="Ceará"><span class="placar-jogo-equipes-sigla" title="Ceará">CEA</span><span class="placar-jogo-equipes-nome">Ceará</span></span></div><p class="placar-jogo-complemento">veja como foi</p></a></div></li><li class="lista-de-jogos-item"><div class="placar-jogo" itemscope itemtype="http://schema.org/SportsEvent"><meta itemprop="name" content="Bahia x Corinthians"><meta itemprop="startDate" content="2018-06-13"><a class="placar-jogo-link placar-jogo-link-confronto-js" href="https://globoesporte.globo.com/ba/futebol/brasileirao-serie-a/jogo/13-06-2018/bahia-corinthians.ghtml"><div class="placar-jogo-informacoes">Qua 13/06/2018 <span class="placar-jogo-informacoes-local">Fonte Nova</span> 21:45</div><div class="placar-jogo-equipes"><span class="placar-jogo-equipes-item placar-jogo-equipes-mandante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Bahia"><span class="placar-jogo-equipes-sigla" title="Bahia">BAH</span><span class="placar-jogo-equipes-nome">Bahia</span><img class="placar-jogo-equipes-escudo-mandante" itemprop="image" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2014/04/14/bahia_60x60.png" width="30" height="30" title="Bahia" ></span><span class="placar-jogo-equipes-item placar-jogo-equipes-placar"><span class="placar-jogo-equipes-placar-mandante">1</span><span class="tabela-icone tabela-icone-versus"></span><span class="placar-jogo-equipes-placar-visitante">0</span></span><span class="placar-jogo-equipes-item placar-jogo-equipes-visitante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Corinthians"><img class="placar-jogo-equipes-escudo-visitante" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2014/04/14/corinthians_60x60.png" width="30" height="30" title="Corinthians"><span class="placar-jogo-equipes-sigla" title="Corinthians">COR</span><span class="placar-jogo-equipes-nome">Corinthians</span></span></div><p class="placar-jogo-complemento">veja como foi</p></a></div></li><li class="lista-de-jogos-item"><div class="placar-jogo" itemscope itemtype="http://schema.org/SportsEvent"><meta itemprop="name" content="Internacional x Vasco"><meta itemprop="startDate" content="2018-06-13"><a class="placar-jogo-link placar-jogo-link-confronto-js" href="https://globoesporte.globo.com/rs/futebol/brasileirao-serie-a/jogo/13-06-2018/internacional-vasco.ghtml"><div class="placar-jogo-informacoes">Qua 13/06/2018 <span class="placar-jogo-informacoes-local">Beira-Rio</span> 21:45</div><div class="placar-jogo-equipes"><span class="placar-jogo-equipes-item placar-jogo-equipes-mandante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Internacional"><span class="placar-jogo-equipes-sigla" title="Internacional">INT</span><span class="placar-jogo-equipes-nome">Internacional</span><img class="placar-jogo-equipes-escudo-mandante" itemprop="image" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2016/05/03/inter65.png" width="30" height="30" title="Internacional" ></span><span class="placar-jogo-equipes-item placar-jogo-equipes-placar"><span class="placar-jogo-equipes-placar-mandante">3</span><span class="tabela-icone tabela-icone-versus"></span><span class="placar-jogo-equipes-placar-visitante">1</span></span><span class="placar-jogo-equipes-item placar-jogo-equipes-visitante" itemprop="performer" itemscope itemtype="http://schema.org/SportsTeam"><meta itemprop="name" content="Vasco"><img class="placar-jogo-equipes-escudo-visitante" itemprop="image" src="https://s.glbimg.com/es/sde/f/equipes/2016/07/29/Vasco-65.png" width="30" height="30" title="Vasco"><span class="placar-jogo-equipes-sigla" title="Vasco">VAS</span><span class="placar-jogo-equipes-nome">Vasco</span></span></div><p class="placar-jogo-complemento">veja como foi</p></a></div></li>
-
-            ';
-        
-        $x2= $this->html_to_obj($html);
-                               //   echo $doc->saveHTML();
-
-         // class=(["'])(?:(?=(\\?))\2.)*?\1  $x1 = preg_replace("class=([\"'])(?:(?=(\\?))\2.)*?\1",$x,"");
-
-       //  $x1 = preg_replace('class="',$x," ");
-
-            $this->_helper->layout->disableLayout();
-            $this->_helper->viewRenderer->setNoRender(TRUE);
-
-            $lista = $x2['children'][0]['children'];
-
-            $partidos = array();
-            $result = array();
-
-            $p = array();
-
-            for ($i = 0; $i < count($lista); $i = $i + 1) {
-                $partido = $lista[$i];
-
-                $partidos[$i] = $partido['children'][0]['children'][2]['children'][1]['children'];
-
-                $result['equipo1']['nome'] = $partidos[$i][0]['children'][1]['html'];
-                $result['equipo1']['resultado'] = $partidos[$i][1]['children'][0]['html'];
-                $result['equipo2']['resultado'] = $partidos[$i][1]['children'][2]['html'];
-                $result['equipo2']['nome'] = $partidos[$i][2]['children'][2]['html'];
-
-                $p['partidos'][$i] = $result;
-
-            }
-
-
-
-//$res = $x2->children->children;///['children']['children'];
-
-            $this->_helper->json($p);
-
-    }
-
-    public function globores($html) {
-
-        $x2= $this->html_to_obj($html);
-
-        $lista = $x2['children'][0]['children'];
+        $lista = $object['children'][0]['children'];
 
         $partidos = array();
         $result = array();
 
-        $p = array();
-
         for ($i = 0; $i < count($lista); $i = $i + 1) {
-            $partido = $lista[$i];
 
-            $partidos[$i] = $partido['children'][0]['children'][2]['children'][1]['children'];
+            $partidos[$i] = $this->algoritmoPartidoJugado($lista[$i]);
 
-            $result['data'] = $partido['children'][0]['children'][1]['content'];
-            $result['hora'] = $partido['children'][0]['children'][2]['children']['html'];
-            $result['equipo1']['nome'] = $partidos[$i][0]['children'][1]['html'];
-            $result['equipo1']['resultado'] = $partidos[$i][1]['children'][0]['html'];
-            $result['equipo2']['resultado'] = $partidos[$i][1]['children'][2]['html'];
-            $result['equipo2']['nome'] = $partidos[$i][2]['children'][2]['html'];
-
-            $p['body'][$i] = $result;
+            if ($partidos[$i]['equipo1']['nome'] == null) {
+                $partidos[$i] = $this->algoritmoPartidoNoJugado($lista[$i]);
+            }
 
         }
 
-        return $p;
+        $result['body'] = $partidos;
 
+        return $result;
+
+
+    }
+
+    function algoritmoPartidoJugado($partido) {
+        $partidos = $partido['children'][0]['children'][2]['children'][1]['children'];
+
+        $result['data'] = $partido['children'][0]['children'][1]['content'];
+        $result['hora'] = $partido['children'][0]['children'][2]['children'][0]['html'];
+        $result['equipo1']['nome'] = $partidos[0]['children'][1]['html'];
+        $result['equipo1']['resultado'] = $partidos[1]['children'][0]['html'];
+        $result['equipo2']['resultado'] = $partidos[1]['children'][2]['html'];
+        $result['equipo2']['nome'] = $partidos[2]['children'][2]['html'];
+        $result['played'] = strcmp($partido['children'][0]['children'][2]['children'][2]['html'], "veja como foi") == 0 ? 1 : 0 ;
+
+        return $result;
+    }
+
+    function algoritmoPartidoNoJugado($partido) {
+        $result['data'] = $partido['children'][0]['children'][1]['content'];
+        $result['hora'] = $partido['children'][0]['children'][2]['html'];
+        $result['equipo1']['nome'] = $partido['children'][0]['children'][3]['children'][0]['children'][1]['html'];
+        $result['equipo2']['nome'] = $partido['children'][0]['children'][3]['children'][2]['children'][2]['html'];
+        $result['equipo1']['resultado'] = null;
+        $result['equipo2']['resultado'] = null;
+        $result['played'] = 0;
+
+        return $result;
 
     }
 
@@ -476,19 +448,49 @@ class CampeonatosController extends Zend_Controller_Action
             $server_output = curl_exec ($ch);
 
             curl_close ($ch);        
-            
-            $this->getResponse()->setHeader('Content-Type', 'application/json');
 
-            $this->_helper->layout->disableLayout();
-            $this->_helper->viewRenderer->setNoRender(TRUE);
+            $result = $this->htmlToArray($server_output);
 
-            $res = $this->html_to_obj($server_output);
+            $this->_helper->json($result);
 
-            $this->_helper->json($res);
         }
         catch (Exception $e) {
             $this->_helper->json($e->getMessage());
         }
+    }
+
+    public function getjsonhtmlgloboAction() {
+        error_reporting(E_ERROR | E_PARSE);
+
+        try {
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
+            
+            $body = $this->getRequest()->getRawBody();
+            $data = Zend_Json::decode($body);
+            $ch = curl_init();
+            
+            curl_setopt($ch, CURLOPT_URL, $data['dir']);
+        
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            
+            $server_output = curl_exec ($ch);
+
+            curl_close ($ch);        
+
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
+
+            $result = $this->html_to_obj($server_output);
+
+            print_r($result);
+            die(".");
+
+            $this->_helper->json($result);
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }        
     }
 
     public function html_to_obj($html) {
@@ -513,40 +515,140 @@ class CampeonatosController extends Zend_Controller_Action
         return $obj;
     }
 
-
-
+    /**
+     * POST
+     * Busca los resultados en la globo y retorna todos los partidos cadastrados con los resultados 
+     * encontrados en la globo     
+     * @param rodada es lo que se va a utilizar para sustituir algo referente a la rodada en la url de request
+     * @param idCampeonato id campeonato del bolao 
+     * @param idRodada id de la rodada perteneciente al bolao
+     */
     function globoAction() { 
         error_reporting(E_ERROR | E_PARSE);
+        $this->getResponse()->setHeader('Content-Type', 'application/json');
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
 
         try {
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(TRUE);
-        
-        $body = $this->getRequest()->getRawBody();
-        $data = Zend_Json::decode($body);
-        $ch = curl_init();
-        
-        curl_setopt($ch, CURLOPT_URL, $data['dir']);
-     
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        
-        $server_output = curl_exec ($ch);
+            
+            $body = $this->getRequest()->getRawBody();
+            $data = Zend_Json::decode($body);
 
-        curl_close ($ch);        
-        
-        $this->getResponse()->setHeader('Content-Type', 'application/json');
+            $existsRodada = true;
 
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(TRUE);
+            //No existe rodada entonces hay que crearla
+            if (empty($data['idRodada'])) {
+                $existsRodada = false;
+                $c = new Application_Model_Championships();
+                $data['idRodada'] = $c->salvar_rodada($data['idCampeonato'], $data['rodada']);
+            }
 
-           $res =  $this->globores($server_output);
 
-        $this->_helper->json($res);
+            $c = new Application_Model_Matchs();
+            $urlcampeonatos = $c->getGlobo($data['idCampeonato']);
+
+            $urlcampeonatos['dr_url'] = str_replace("###",$data['rodada'], $urlcampeonatos['dr_url']);
+            
+            $server_output = $this->getGlobo($urlcampeonatos['dr_url']); curl_exec ($ch);
+              
+            $res =  $this->htmlToArray($server_output);
+
+            $partidosGlobo = $res['body'];
+
+            if (!$existsRodada) {
+                $partidosBolao = array();
+                for ($i = 0; $i < count($partidosGlobo); $i = $i + 1) {
+
+                    $pGlobo = $partidosGlobo[$i];
+
+                    $e = new Application_Model_Equipo();                    
+                    $equipo1 = $e->getBySigla($pGlobo['equipo1']['nome']);
+                    $equipo2 = $e->getBySigla($pGlobo['equipo2']['nome']);
+                
+                    $partido = array();
+                    $partido['tm1_id'] = $equipo1['eq_id'];
+                    $partido['tm2_id'] = $equipo2['eq_id'];
+
+                    $partido['t1nome'] = $equipo1['eq_nome'];
+                    $partido['t2nome'] = $equipo2['eq_nome'];
+
+                    $partido['tm1_logo'] = $equipo1['eq_logo'];
+                    $partido['tm2_logo'] = $equipo2['eq_logo'];
+
+                    $partido['tm1_sigla'] = $equipo1['eq_sigla'];
+                    $partido['tm2_sigla'] = $equipo2['eq_sigla'];
+
+                    $partido['mt_date'] = $pGlobo['data'].$pGlobo['hora'];
+                    $partido['mt_goal1'] = $pGlobo['equipo1']['resultado'];
+                    $partido['mt_goal2'] = $pGlobo['equipo2']['resultado'];;
+                    $partido['mt_idchampionship'] = $data['idCampeonato'];
+                    $partido['mt_played'] = 0;
+                    $partido['mt_acumulado'] = 0;
+                    $partido['mt_idround'] = $data['idRodada'];
+
+                    $partido['mt_idteam1'] = $equipo1['eq_id'];
+                    $partido['mt_idteam2'] = $equipo2['eq_id'];
+
+                    $partido['mt_goal2'] = $pGlobo['equipo2']['resultado'];;
+                    $partido['ch_id'] = $data['idCampeonato'];
+
+                    $partido['played'] = $pGlobo['played'];
+
+                    $partidosBolao[$i] = $partido;
+
+
+                }
+            } else {
+                $partidosBolao = $this->getPartidos($data['idCampeonato'], $data['idRodada']);
+
+                for ($i = 0; $i < count($partidosGlobo); $i = $i + 1) {
+                    for ($j = 0; $j < count($partidosBolao); $j = $j + 1) {
+                        $pGlobo = $partidosGlobo[$i];
+                        $pBolao = $partidosBolao[$j];
+    
+                        if (strcmp($pGlobo['equipo1']['nome'], $pBolao['tm1_sigla']) == 0 
+                            && strcmp($pGlobo['equipo2']['nome'], $pBolao['tm2_sigla']) == 0) {
+    
+                            $partidosBolao[$j]['mt_goal1'] = $pGlobo['equipo1']['resultado'];
+                            $partidosBolao[$j]['mt_goal2'] = $pGlobo['equipo2']['resultado'];
+                            $partidosBolao[$j]['played'] = $pGlobo['played'];
+                        }
+                    }
+                }
+            }
+            $result['body'] = $partidosBolao;
+
+            $this->_helper->json($result);
         }
         catch (Exception $e) {
             $this->_helper->json($e->getMessage());
         }
 
+    }
+
+    public function getPartidos($idCampeonato, $idRodada) {
+        try {
+            $c = new Application_Model_Matchs();
+
+            return $c->get($idCampeonato, $idRodada);
+        }
+        catch (Exception $e) {
+
+        }        
+    }
+
+    function getGlobo($url) {
+        $ch = curl_init();
+            
+        curl_setopt($ch, CURLOPT_URL, $url);
+    
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        $server_output = curl_exec ($ch);
+
+        curl_close ($ch); 
+
+        return $server_output;
     }
 
 }

@@ -91,8 +91,9 @@ class TeamController extends Zend_Controller_Action
                 $nome = $equipo['nome'];
                 $pais = $equipo['idPais'];
                 $logo = $equipo['logo'];
+                $sigla = $equipo['sigla'];
 
-                $result = $e->save($nome, $pais, $logo);
+                $result = $e->save($nome, $pais, $logo, $sigla);
             }
 
 

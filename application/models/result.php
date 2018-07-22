@@ -368,20 +368,20 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
     public function sumarPuntosGanador($id_team) {
         $db = $this->db;
 
-        $return = $db->select()->from("team")
-            ->where("tm_id = ?", $id_team)
+        $return = $db->select()->from("equipocampeonato")
+            ->where("ec_idequipo = ?", $id_team)
             ->query()
             ->fetch();
 
-        $return['tm_points'] = $return['tm_points'] + 3;
-        $return['tm_played'] = $return['tm_played'] + 1;
+        $return['ec_pontos'] = $return['ec_pontos'] + 3;
+        $return['ec_jugados'] = $return['ec_jugados'] + 1;
         
-        $db->update("team", 
+        $db->update("equipocampeonato", 
             array(
-                'tm_points' => $return['tm_points'],
-                'tm_played' => $return['tm_played']
+                'ec_pontos' => $return['ec_pontos'],
+                'ec_jugados' => $return['ec_jugados']
             ), 
-            "tm_id = ".$id_team);
+            "ec_idequipo = ".$id_team);
     }
 
     /**
@@ -391,18 +391,18 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
     public function sumarPartidoJugado($id_team) {
         $db = $this->db;
 
-        $return = $db->select()->from("team")
-            ->where("tm_id = ?", $id_team)
+        $return = $db->select()->from("equipocampeonato")
+            ->where("ec_idequipo = ?", $id_team)
             ->query()
             ->fetch();
 
-        $return['tm_played'] = $return['tm_played'] + 1;            
+        $return['ec_jugados'] = $return['ec_jugados'] + 1;            
 
-        $db->update("team", 
+        $db->update("equipocampeonato", 
             array(
-                'tm_played' => $return['tm_played']
+                'ec_jugados' => $return['ec_jugados']
             ), 
-            "tm_id = ".$id_team);        
+            "ec_idequipo = ".$id_team);        
     }
 
     /**
@@ -412,20 +412,20 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
     public function sumarEmpate($id_team) {
         $db = $this->db;
 
-        $return = $db->select()->from("team")
-            ->where("tm_id = ?", $id_team)
+        $return = $db->select()->from("equipocampeonato")
+            ->where("ec_idequipo = ?", $id_team)
             ->query()
             ->fetch();
 
-        $return['tm_points'] = $return['tm_points'] + 1;
-        $return['tm_played'] = $return['tm_played'] + 1;
+        $return['ec_pontos'] = $return['ec_pontos'] + 1;
+        $return['ec_jugados'] = $return['ec_jugados'] + 1;
         
-        $db->update("team", 
+        $db->update("equipocampeonato", 
             array(
-                'tm_points' => $return['tm_points'],
-                'tm_played' => $return['tm_played']
+                'ec_pontos' => $return['ec_pontos'],
+                'ec_jugados' => $return['ec_jugados']
             ), 
-            "tm_id = ".$id_team);
+            "ec_idequipo = ".$id_team);
     }
 
     /**

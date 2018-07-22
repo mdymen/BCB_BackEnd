@@ -16,12 +16,13 @@ class Application_Model_Equipo extends Application_Model_Bd_Adapter
 
     protected $_name = 'equipo';
     
-    public function save($equipo, $pais, $logo) {
+    public function save($equipo, $pais, $logo, $sigla) {
         $db = $this->db;
         $info = array(
             'eq_nome'=>$equipo,
             'eq_idpais' => $pais,
-            'eq_logo' => $logo
+            'eq_logo' => $logo,
+            'eq_sigla' => $sigla
         );       
         $db->insert("equipo", $info);
         return $db->lastInsertId();
@@ -100,5 +101,17 @@ class Application_Model_Equipo extends Application_Model_Bd_Adapter
             ->where("eq_idpais = ?", $idPais)
             ->query()
             ->fetchAll();
+    }
+
+    /**
+     * Retorna el equipo mediante la sigla
+     * @param sigla
+     */
+    public function getBySigla($sigla) {
+        return $this->db->select()
+            ->from("equipo")
+            ->where("eq_sigla = ?", $sigla)
+            ->query()
+            ->fetch();
     }
 }
