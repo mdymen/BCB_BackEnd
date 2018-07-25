@@ -21,6 +21,7 @@ include APPLICATION_PATH.'/helpers/translate.php';
 include APPLICATION_PATH.'/helpers/paginacao.php';
 include APPLICATION_PATH.'/helpers/posicoes.php';
 include APPLICATION_PATH.'/helpers/ranking.php';
+include APPLICATION_PATH.'/helpers/partidos.php';
 class PartidosController extends Zend_Controller_Action
 {
     /**
@@ -77,22 +78,14 @@ class PartidosController extends Zend_Controller_Action
             $m = new Application_Model_Matchs();        
             $r = new Application_Model_Result();  
 
+            $p = new Helpers_Partidos();
+
             for ($i = 0; $i < count($resultados); $i = $i + 1) {
                 $resultado = $resultados[$i];
 
-                $match = array(
-                    "mt_id" => $resultado['mt_id'],
-                    "mt_goal1" => $resultado['mt_goal1'],
-                    "mt_goal2" => $resultado['mt_goal2'],
-                    "mt_idteam1" => $resultado['mt_idteam1'],
-                    "mt_idteam2" => $resultado['mt_idteam2'],
-                    "mt_idchampionship" => $resultado['mt_idchampionship'],
-                    "mt_played" => $resultado['mt_played'],
-                    "mt_date" => $resultado['mt_date'],
-                    "mt_idround" => $resultado['mt_idround']
-                );
+                $p->save($resultado, ($resultado['played']); 
 
-                $idMatch = $m->save($match);
+            /*    $idMatch = $m->save($match);
 
                 //Si el partido está marcado como NO JUGADO pero se están pasando los goles
                 //quiere decir que se tiene que procesar como NUEVO PARTIDO JUGADO
@@ -108,7 +101,7 @@ class PartidosController extends Zend_Controller_Action
                     //verifica los usuarios ganadores y setea los puntos
                     $this->usuariosGanadores($resultado['mt_goal1'], $resultado['mt_goal2'], $idMatch);
 
-                }
+                }*/
             }
                     
             $this->_helper->layout->disableLayout();

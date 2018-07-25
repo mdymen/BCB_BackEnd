@@ -745,5 +745,44 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
             ->query()
             ->fetch();
     }
+
+    /**
+     * Devuelve el partido especificado
+     * 
+     * @param idMatch
+     */
+    public function getPartido($idMatch) {
+        $db = $this->db;
+
+        return $this->db->select()
+            ->from("match")
+            ->joinInner("championship", "championship.ch_id = match.mt_idchampionship", array("ch_id" => "championship.ch_id","ch_nome" => "championship.ch_nome"))
+            ->joinInner("round", "round.rd_id = match.mt_idround")
+            ->joinInner(array('t1' => 'equipo'), 't1.eq_id = match.mt_idteam1', array('tm1_id' => 't1.eq_id', 't1nome' => 't1.eq_nome', 'tm1_logo' => 't1.eq_logo', 'tm1_sigla' => 't1.eq_sigla'))
+            ->joinInner(array('t2' => 'equipo'), 't2.eq_id = match.mt_idteam2', array('tm2_id' => 't2.eq_id', 't2nome' => 't2.eq_nome', 'tm2_logo' => 't2.eq_logo', 'tm2_sigla' => 't2.eq_sigla'))
+            ->where("match.mt_id = ?", $idMatch)
+            ->query()
+            ->fetch();
+    }
+
+    /**
+     * Retorna todos los partidos marcados como NO JUGADOS antes 
+     * que la fecha pasada por parametro
+     * @param data
+     */
+    public function loadPartidosNoJugados($data) {
+        $db = $this->db;
+
+        return $this->db->select()
+            ->from("match")
+            ->joinInner("championship", "championship.ch_id = match.mt_idchampionship", array("ch_id" => "championship.ch_id","ch_nome" => "championship.ch_nome","ch_atualround" => "championship.ch_atualround"))
+            ->joinInner("round", "round.rd_id = match.mt_idround")
+            ->joinInner(array('t1' => 'equipo'), 't1.eq_id = match.mt_idteam1', array('tm1_id' => 't1.eq_id', 't1nome' => 't1.eq_nome', 'tm1_logo' => 't1.eq_logo', 'tm1_sigla' => 't1.eq_sigla'))
+            ->joinInner(array('t2' => 'equipo'), 't2.eq_id = match.mt_idteam2', array('tm2_id' => 't2.eq_id', 't2nome' => 't2.eq_nome', 'tm2_logo' => 't2.eq_logo', 'tm2_sigla' => 't2.eq_sigla'))
+            ->where("match.mt_date < ?", $data)
+            ->where("match.mt_played = 0")
+            ->query()
+            ->fetchAll();
+    }
     
 }

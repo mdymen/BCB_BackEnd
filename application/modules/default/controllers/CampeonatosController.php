@@ -21,7 +21,10 @@ include APPLICATION_PATH.'/helpers/translate.php';
 include APPLICATION_PATH.'/helpers/paginacao.php';
 include APPLICATION_PATH.'/helpers/posicoes.php';
 include APPLICATION_PATH.'/helpers/ranking.php';
-class CampeonatosController extends Zend_Controller_Action
+include APPLICATION_PATH.'/helpers/globo.php';
+include APPLICATION_PATH.'/helpers/partidos.php';
+include APPLICATION_PATH.'/modules/default/controllers/BolaoController.php';
+class CampeonatosController extends BolaoController
 {
     public function indexAction() {
         $params = $this->_request->getParams();
@@ -483,9 +486,6 @@ class CampeonatosController extends Zend_Controller_Action
 
             $result = $this->html_to_obj($server_output);
 
-            print_r($result);
-            die(".");
-
             $this->_helper->json($result);
         }
         catch (Exception $e) {
@@ -649,6 +649,156 @@ class CampeonatosController extends Zend_Controller_Action
         curl_close ($ch); 
 
         return $server_output;
+    }
+
+    function verificarglobopartidoAction() {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        try {
+            $body = $this->getRequest()->getRawBody();
+            $data = Zend_Json::decode($body);
+
+            $idMatch = $data['id'];
+
+            $m = new Application_Model_Matchs();
+            $partido = $m->getPartido($idMatch);
+
+            $this->findResultado($partido);
+
+            $this->_helper->json(200);
+        }       
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
+
+    }
+
+    /**
+     * Dado un partido con todos sus datos.
+     * Pega el resultado de la globo y actualiza su estado.
+     * @param partido;
+     */
+    function findResultado($partido) {
+        error_reporting(E_ERROR | E_PARSE);
+
+        $this->info("Buscando el partido en la Globo:".print_r($partido, true));
+
+        $m = new Application_Model_Matchs();
+        $urlcampeonatos = $m->getGlobo($partido['mt_idchampionship']);
+        $urlcampeonatos['dr_url'] = str_replace("###",$partido['rd_round'], $urlcampeonatos['dr_url']);
+
+        $server_output = $this->getGlobo($urlcampeonatos['dr_url']); curl_exec ($ch);
+          
+        $res =  $this->htmlToArray($server_output);
+        $pGlobo = $res['body'];
+
+        for ($j = 0; $j < count($pGlobo); $j = $j + 1) {
+            if (strcmp($pGlobo[$j]['equipo1']['nome'], $partido['tm1_sigla'] == 0)
+                && strcmp($pGlobo[$j]['equipo2']['nome'], $partido['tm2_sigla']) == 0) {
+
+                    $partido['mt_goal1'] = $pGlobo[$j]['equipo1']['resultado'];
+                    $partido['mt_goal2'] = $pGlobo[$j]['equipo2']['resultado'];
+
+                    $p = new Helpers_Partidos();
+                    $p->save($partido, $pGlobo[$j]['played']); 
+                }
+        }
+
+    }
+
+    /**
+     * Verifica los partidos que ya fueron jugados y actualiza los resultados
+     */
+    function verificarpartidosAction() {
+        try {
+            $m = new Application_Model_Matchs();
+            
+            $hoy = date('Y-m-d');
+            $this->info("[VERIFICAR PARTIDOS] Busca todos los partidos de hoy: ".$hoy);
+
+            //Carga los partidos que no han sido jugados hasta el dia de hoy
+            //tambien carga los datos del campeonato y los datos de la rodada que 
+            //sirven para saber si esa rodada del partido es la rodada actual del campeonato
+            //sin hacer un nuevo select
+            $partidos = $m->loadPartidosNoJugados($hoy); 
+            $this->info("[VERIFICAR PARTIDOS] Partidos no actualizados hasta ahora: ".json_encode($partidos));       
+
+            $p = new Helpers_Partidos();
+
+            for ($i = 0; $i < count($partidos); $i = $i + 1) {
+                $partido = $partidos[$i];
+                $rodada = $partido['rd_round'];
+                $campeonato = $partido['mt_idchampionship'];
+
+                $this->info("[VERIFICAR PARTIDOS] Verificando resultado del partido con ID: ".$partido['mt_id']);
+                $this->info("[VERIFICAR PARTIDOS] Rodada: ".$rodada);
+                $this->info("[VERIFICAR PARTIDOS] Campeonato: ".$campeonato);
+
+                if (empty($pGlobo[$rodada][$campeonato])) {
+                    $urlcampeonatos = $m->getGlobo($partido['mt_idchampionship']);
+
+                    $this->info("[VERIFICAR PARTIDOS] Conectando con la Globo en: ".$urlcampeonatos['dr_url']);
+                    $this->info("[VERIFICAR PARTIDOS] Reemplazando los ### con: ".$partido['rd_round']);
+                    
+                    $urlcampeonatos['dr_url'] = str_replace("###",$partido['rd_round'], $urlcampeonatos['dr_url']);
+
+                    $server_output = $this->getGlobo($urlcampeonatos['dr_url']); curl_exec ($ch);
+                    
+                    $res =  $this->htmlToArray($server_output);
+                    $pGlobo[$rodada][$campeonato] = $res['body'];
+                    $this->info("[VERIFICAR PARTIDOS] Resultado de la GLOBO: ".json_encode($pGlobo[$rodada][$campeonato]));
+                }
+
+                for ($j = 0; $j < count($pGlobo[$rodada][$campeonato]); $j = $j + 1) {
+                    $partidoGlobo = $pGlobo[$rodada][$campeonato][$j];
+                    
+                    if (strcmp($partidoGlobo['equipo1']['nome'], $partido['tm1_sigla']) == 0
+                        && strcmp($partidoGlobo['equipo2']['nome'], $partido['tm2_sigla']) == 0) {
+                            $this->info("[VERIFICAR PARTIDOS] El siguiente partido sera actualizado: ".json_encode($partidoGlobo));
+
+                            if ($partido['rd_id'] > $partido['ch_atualround'] ) {
+                                $this->info("[VERIFICAR PARTIDOS] Hay que actualizar la rodada del campeonato para: ".$partido['rd_round']);
+                                $ch = new Application_Model_Championships();
+                                $ch->setRondaAtual($campeonato, $partido['rd_id']);
+                            }
+
+                            $partido['mt_goal1'] = $partidoGlobo['equipo1']['resultado'];
+                            $partido['mt_goal2'] = $partidoGlobo['equipo2']['resultado'];
+
+                            $this->info("[VERIFICAR PARTIDO] Partido: ".$partido['mt_id']." actualizando resultados para ".$partido['mt_goal1']." x ".$partido['mt_goal2']);
+
+
+                            $p->save($partido, $partidoGlobo['played']);
+                            $this->info("[VERIFICAR PARTIDOS] Ha finalizado la actualizacion del partido: ".json_encode($partidoGlobo));
+                        }
+                }
+            }
+
+            print_r(date('Y-m-d H:i'));
+            die(".");
+        }
+        catch (Exception $e) {
+            $this->error("[VERIFICAR PARTIDOS] ".$e->getMessage());
+        }
+    }
+
+    public function testAction() {
+        $body = $this->getRequest()->getRawBody();
+        $data = Zend_Json::decode($body);
+
+        $h = new Helpers_Globo();
+        $result = $h->get($data['dir']);
+
+        print_r($result);
+        die(".");
+    }
+
+    public function testlogAction() {
+
+        $this->info("mensage de error");
+
+        die(";");
     }
 
 }
