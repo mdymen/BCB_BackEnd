@@ -20,7 +20,7 @@ class BolaoController extends Zend_Controller_Action
 
     public function init() {
         $this->logger = new Zend_Log();
-        $writer = new Zend_Log_Writer_Stream(APPLICATION_PATH."../bolaoLog.txt");
+        $writer = new Zend_Log_Writer_Stream(APPLICATION_PATH."../bolaoLog_".date("Y_m_d").".txt");
         $this->logger->addWriter($writer);
 
         $this->_helper->layout->disableLayout();
@@ -36,7 +36,9 @@ class BolaoController extends Zend_Controller_Action
     }
 
     public function logAction() {
-        $file1 = APPLICATION_PATH."../bolaoLog.txt";
+        $params = $this->_request->getParams();
+
+        $file1 = APPLICATION_PATH."../bolaoLog_".$params["fecha"].".txt";
         $lines = file($file1);
         foreach($lines as $line_num => $line)
         {

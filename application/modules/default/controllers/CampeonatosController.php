@@ -433,6 +433,95 @@ class CampeonatosController extends BolaoController
 
     }
 
+    public function htmlToArraySudamericanaPartido($partido) {
+
+        $result['data'] = $partido['children'][1]['content'];
+        $result['hora'] = $partido['children'][2]['children'][0]['html'];
+
+        $result['equipo1']['nome'] = $partido['children'][2]['children'][1]['children'][0]['children'][1]['html'];
+        $result['equipo1']['resultado'] = $partido['children'][2]['children'][1]['children'][1]['children'][0]['html'];
+
+        $result['equipo2']['nome'] = $partido['children'][2]['children'][1]['children'][2]['children'][2]['html'];
+        $result['equipo2']['resultado'] = $partido['children'][2]['children'][1]['children'][1]['children'][2]['html'];
+
+        return $result;
+    }
+
+    public function htmlToArraySudamericanaJugados($html) {
+        $object = $this->html_to_obj($html);
+
+        $lista = $object['children'][0]['children'][0]['children'][1]['children'];
+
+        $partidos = array();
+        $return = array();
+        $result = array();
+
+        print_r($lista[15]['children'][0]['children']);
+        die(".");
+
+
+        $p = 0;
+        for ($i = 3; $i < count($lista); $i = $i + 1) {
+            $partido = $lista[$i]['children'][0]['children'];
+
+            $result[$p] = $this->htmlToArraySudamericanaPartido($partido[0]);
+            $p = $p + 1;
+            
+            $result[$p] = $this->htmlToArraySudamericanaPartido($partido[2]);
+            $p = $p + 1;
+
+        }
+
+        $return['body'] = $result;
+
+        return $return;
+    }
+
+    public function htmlToArrayLibertadoresPartido($partido) {
+
+        $result['data'] = $partido['children'][1]['content'];
+        $result['hora'] = $partido['children'][2]['html'];
+
+        $result['equipo1']['nome'] = $partido['children'][3]['children'][0]['children'][1]['html'];
+        $result['equipo1']['resultado'] = null;
+
+        $result['equipo2']['nome'] = $partido['children'][3]['children'][2]['children'][2]['html'];
+        $result['equipo2']['resultado'] = null;
+
+        return $result;
+    }
+
+    public function htmlToArrayLibertadores($html) {
+
+        $object = $this->html_to_obj($html);
+
+        $lista = $object['children'][0]['children'][0]['children'][1]['children'];
+
+        $partidos = array();
+        $return = array();
+        $result = array();
+
+        $p = 0;
+        for ($i = 3; $i < count($lista); $i = $i + 1) {
+            $partido = $lista[$i]['children'][1]['children'];
+            $result[$p] = $this->htmlToArrayLibertadoresPartido($partido[0]);
+            $p = $p + 1;
+            
+            $result[$p] = $this->htmlToArrayLibertadoresPartido($partido[2]);
+            $p = $p + 1;
+        }
+
+        $return['body'] = $result;
+
+        return $return;
+
+
+    }
+
+    function algoritmoEliminatoriasLibertadores($partido) {
+
+    }
+
     public function getjsongloboAction() {
         error_reporting(E_ERROR | E_PARSE);
 
@@ -484,7 +573,7 @@ class CampeonatosController extends BolaoController
             $this->_helper->layout->disableLayout();
             $this->_helper->viewRenderer->setNoRender(TRUE);
 
-            $result = $this->html_to_obj($server_output);
+            $result = $this->htmlToArraySudamericanaJugados($server_output);
 
             $this->_helper->json($result);
         }
@@ -710,7 +799,7 @@ class CampeonatosController extends BolaoController
     /**
      * Verifica los partidos que ya fueron jugados y actualiza los resultados
      */
-    function verificarpartidosAction() {
+    function updateAction() {
         try {
             $m = new Application_Model_Matchs();
             
@@ -775,11 +864,11 @@ class CampeonatosController extends BolaoController
                 }
             }
 
-            print_r(date('Y-m-d H:i'));
-            die(".");
+            $this->_helper->json(200);
         }
         catch (Exception $e) {
             $this->error("[VERIFICAR PARTIDOS] ".$e->getMessage());
+            $this->_helper->json($e->getMessage());
         }
     }
 
