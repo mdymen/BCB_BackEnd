@@ -112,6 +112,6 @@ class Application_Model_Equipo extends Application_Model_Bd_Adapter
             ->from("equipo")
             ->where("eq_sigla = ?", $sigla)
             ->query()
-            ->fetch();
+            ->fetchAll();
     }
 }

@@ -31,14 +31,15 @@ class Admin_RodadaController extends Zend_Controller_Action
      * 
      * @param champ
      * @param rodada
+     * @param suma
      */
-    public function salvarrodadaAction() {
+    public function postAction() {
         $body = $this->getRequest()->getRawBody();
         $params = Zend_Json::decode($body);        
         
        if ($this->getRequest()->isPost()) {  
            $penca = new Application_Model_Championships();
-           $penca->salvar_rodada($params['champ'], $params['rodada']);
+           $penca->salvar_rodada($params['champ'], $params['rodada'], $params['suma']);
            
        }
        

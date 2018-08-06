@@ -784,5 +784,25 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
             ->query()
             ->fetchAll();
     }
+
+    /**
+     * Retorna el partido con las siglas de los equipos pasados por parametros
+     * y la rodada y del campeonato
+     * @param equipo1
+     * @param equipo2
+     * @param idCampeonato
+     * @param idRodada
+     */
+    public function loadBySiglaAndCampeoantoAndRodada($equipo1, $equipo2, $idCampeonato, $idRodada) {
+        return $this->db->select()
+            ->from("match", array("match.mt_id"))
+            ->joinInner(array('t1' => 'equipo'),'t1.eq_id = match.mt_idteam1', array())
+            ->joinInner(array('t2' => 'equipo'),'t2.eq_id = match.mt_idteam2', array())
+            ->where("match.mt_idchampionship = ?", $idCampeonato)
+            ->where("match.mt_idround =?", $idRodada)
+            ->where("t1.eq_sigla = ?", $equipo1)
+            ->where("t2.eq_sigla = ?", $equipo2)
+            ->query()->fetch();
+    }
     
 }

@@ -23,6 +23,10 @@ include APPLICATION_PATH.'/helpers/posicoes.php';
 include APPLICATION_PATH.'/helpers/ranking.php';
 include APPLICATION_PATH.'/helpers/globo.php';
 include APPLICATION_PATH.'/helpers/partidos.php';
+include APPLICATION_PATH.'/helpers/parsers/Parsers.php';
+include APPLICATION_PATH.'/helpers/parsers/Sudamericana.php';
+include APPLICATION_PATH.'/helpers/parsers/BraSerieA.php';
+include APPLICATION_PATH.'/exceptions/VerificaPartidosParserException.php';
 include APPLICATION_PATH.'/modules/default/controllers/BolaoController.php';
 class CampeonatosController extends BolaoController
 {
@@ -151,21 +155,6 @@ class CampeonatosController extends BolaoController
             $this->view->ranking_champ = $rankings_champ;
         }
     }    
-    
-    public function getTimeUserId() {
-        $storage = new Zend_Auth_Storage_Session();
-        $data = (get_object_vars($storage->read())); 
-        
-        return $data['us_team'];
-    }
-    
-    public function getTimeUserName() {
-        $storage = new Zend_Auth_Storage_Session();
-        $data = (get_object_vars($storage->read())); 
-        
-        return $data['us_teamname'];
-    }
-
 
     /**
      * GET
@@ -380,148 +369,6 @@ class CampeonatosController extends BolaoController
         }
     }
 
-    public function htmlToArray($html) {
-
-        $object = $this->html_to_obj($html);
-
-        $lista = $object['children'][0]['children'];
-
-        $partidos = array();
-        $result = array();
-
-        for ($i = 0; $i < count($lista); $i = $i + 1) {
-
-            $partidos[$i] = $this->algoritmoPartidoJugado($lista[$i]);
-
-            if ($partidos[$i]['equipo1']['nome'] == null) {
-                $partidos[$i] = $this->algoritmoPartidoNoJugado($lista[$i]);
-            }
-
-        }
-
-        $result['body'] = $partidos;
-
-        return $result;
-
-
-    }
-
-    function algoritmoPartidoJugado($partido) {
-        $partidos = $partido['children'][0]['children'][2]['children'][1]['children'];
-
-        $result['data'] = $partido['children'][0]['children'][1]['content'];
-        $result['hora'] = $partido['children'][0]['children'][2]['children'][0]['html'];
-        $result['equipo1']['nome'] = $partidos[0]['children'][1]['html'];
-        $result['equipo1']['resultado'] = $partidos[1]['children'][0]['html'];
-        $result['equipo2']['resultado'] = $partidos[1]['children'][2]['html'];
-        $result['equipo2']['nome'] = $partidos[2]['children'][2]['html'];
-        $result['played'] = strcmp($partido['children'][0]['children'][2]['children'][2]['html'], "veja como foi") == 0 ? 1 : 0 ;
-
-        return $result;
-    }
-
-    function algoritmoPartidoNoJugado($partido) {
-        $result['data'] = $partido['children'][0]['children'][1]['content'];
-        $result['hora'] = $partido['children'][0]['children'][2]['html'];
-        $result['equipo1']['nome'] = $partido['children'][0]['children'][3]['children'][0]['children'][1]['html'];
-        $result['equipo2']['nome'] = $partido['children'][0]['children'][3]['children'][2]['children'][2]['html'];
-        $result['equipo1']['resultado'] = null;
-        $result['equipo2']['resultado'] = null;
-        $result['played'] = 0;
-
-        return $result;
-
-    }
-
-    public function htmlToArraySudamericanaPartido($partido) {
-
-        $result['data'] = $partido['children'][1]['content'];
-        $result['hora'] = $partido['children'][2]['children'][0]['html'];
-
-        $result['equipo1']['nome'] = $partido['children'][2]['children'][1]['children'][0]['children'][1]['html'];
-        $result['equipo1']['resultado'] = $partido['children'][2]['children'][1]['children'][1]['children'][0]['html'];
-
-        $result['equipo2']['nome'] = $partido['children'][2]['children'][1]['children'][2]['children'][2]['html'];
-        $result['equipo2']['resultado'] = $partido['children'][2]['children'][1]['children'][1]['children'][2]['html'];
-
-        return $result;
-    }
-
-    public function htmlToArraySudamericanaJugados($html) {
-        $object = $this->html_to_obj($html);
-
-        $lista = $object['children'][0]['children'][0]['children'][1]['children'];
-
-        $partidos = array();
-        $return = array();
-        $result = array();
-
-        print_r($lista[15]['children'][0]['children']);
-        die(".");
-
-
-        $p = 0;
-        for ($i = 3; $i < count($lista); $i = $i + 1) {
-            $partido = $lista[$i]['children'][0]['children'];
-
-            $result[$p] = $this->htmlToArraySudamericanaPartido($partido[0]);
-            $p = $p + 1;
-            
-            $result[$p] = $this->htmlToArraySudamericanaPartido($partido[2]);
-            $p = $p + 1;
-
-        }
-
-        $return['body'] = $result;
-
-        return $return;
-    }
-
-    public function htmlToArrayLibertadoresPartido($partido) {
-
-        $result['data'] = $partido['children'][1]['content'];
-        $result['hora'] = $partido['children'][2]['html'];
-
-        $result['equipo1']['nome'] = $partido['children'][3]['children'][0]['children'][1]['html'];
-        $result['equipo1']['resultado'] = null;
-
-        $result['equipo2']['nome'] = $partido['children'][3]['children'][2]['children'][2]['html'];
-        $result['equipo2']['resultado'] = null;
-
-        return $result;
-    }
-
-    public function htmlToArrayLibertadores($html) {
-
-        $object = $this->html_to_obj($html);
-
-        $lista = $object['children'][0]['children'][0]['children'][1]['children'];
-
-        $partidos = array();
-        $return = array();
-        $result = array();
-
-        $p = 0;
-        for ($i = 3; $i < count($lista); $i = $i + 1) {
-            $partido = $lista[$i]['children'][1]['children'];
-            $result[$p] = $this->htmlToArrayLibertadoresPartido($partido[0]);
-            $p = $p + 1;
-            
-            $result[$p] = $this->htmlToArrayLibertadoresPartido($partido[2]);
-            $p = $p + 1;
-        }
-
-        $return['body'] = $result;
-
-        return $return;
-
-
-    }
-
-    function algoritmoEliminatoriasLibertadores($partido) {
-
-    }
-
     public function getjsongloboAction() {
         error_reporting(E_ERROR | E_PARSE);
 
@@ -555,25 +402,15 @@ class CampeonatosController extends BolaoController
         error_reporting(E_ERROR | E_PARSE);
 
         try {
-            $this->_helper->layout->disableLayout();
-            $this->_helper->viewRenderer->setNoRender(TRUE);
+
+            $ps = new Helpers_Parsers_Sudamericana();
             
             $body = $this->getRequest()->getRawBody();
             $data = Zend_Json::decode($body);
-            $ch = curl_init();
             
-            curl_setopt($ch, CURLOPT_URL, $data['dir']);
-        
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            
-            $server_output = curl_exec ($ch);
+            $server_output = $this->get($data['dir']);
 
-            curl_close ($ch);        
-
-            $this->_helper->layout->disableLayout();
-            $this->_helper->viewRenderer->setNoRender(TRUE);
-
-            $result = $this->htmlToArraySudamericanaJugados($server_output);
+            $result = $ps->html_to_obj($server_output);
 
             $this->_helper->json($result);
         }
@@ -585,6 +422,7 @@ class CampeonatosController extends BolaoController
     public function html_to_obj($html) {
         $dom = new DOMDocument();
         $dom->loadHTML($html);
+
         return $this->element_to_obj($dom->documentElement);
     }
 
@@ -604,107 +442,99 @@ class CampeonatosController extends BolaoController
         return $obj;
     }
 
+
     /**
+     * Carga la rodada
+     * @param id
+     */
+    private function loadRodada($id) {
+        $c = new Application_Model_Rodada();
+        $rodada = $c->loadById($id);
+        $this->info("[GLOBO] Rodada cargada con éxito: ".print_r($rodada, true));
+        return $rodada;
+    }
+
+    /**
+     * Retorna todos los partidos del campeonato y del alias de la rodada 
+     * @param idCampeonato
+     * @param nomeRodada
+     */
+    private function procesarPartido($idCampeonato, $nomeRodada) {
+        $c = new Application_Model_Matchs();
+        $g = new Helpers_Globo();
+
+        $this->info("[GLOBO] Verifica idCampeonato: ".$idCampeonato);
+        $this->info("[GLOBO] Verifica nomeRodada: ".$nomeRodada);
+
+        //Busco la url para buscar los partidos en la globo
+        $urlcampeonatos = $c->getGlobo($idCampeonato);
+        $this->info("[GLOBO] Datos para actualizar los partidos: ".print_r($urlcampeonatos, true));
+        //Sustituyo la parte de la url que es particular para cada campeonato
+        $urlcampeonatos['dr_url'] = str_replace("###",$nomeRodada, $urlcampeonatos['dr_url']);            
+        $server_output = $g->get($urlcampeonatos['dr_url']);
+
+        $this->info("[GLOBO] va a utilizar el algoritmo ".$urlcampeonatos['dr_algoritmo']);
+
+        //Utilizo el algoritmo especifico de ese campeonato para conseguir los partidos
+        if (strcmp($urlcampeonatos['dr_algoritmo'], ALGORITMO_COPA_SUDAMERICANA) == 0) {
+
+            $parser = new Helpers_Parsers_Sudamericana();
+            $res = $parser->htmlToArray($server_output);
+            $this->info("[GLOBO] el algoritmo retornó: ".print_r($res, true));
+        }    
+        if (strcmp($urlcampeonatos['dr_algoritmo'], ALGORITMO_BRASILEIRAO_SERIE_A) == 0) {
+            $parser = new Helpers_Parsers_BraSerieA();
+            $res = $parser->htmlToArray($server_output);
+            $this->info("[GLOBO] el algoritmo retornó: ".print_r($res, true));
+        }
+
+        return $res['body'];
+    }
+
+
+    /**
+     * Nuevos partidos, son procesados por acá....para actualizar partidos y resultados, es actualizado 
+     * mediante otra forma.
+     * 
      * POST
      * Busca los resultados en la globo y retorna todos los partidos cadastrados con los resultados 
-     * encontrados en la globo     
-     * @param rodada es lo que se va a utilizar para sustituir algo referente a la rodada en la url de request
+     * encontrados en la globo   
+     * 
+     * La rodada precisa ya haber sido creada.
+     *   
+     * @param idRodada es lo que se va a utilizar para sustituir algo referente a la rodada en la url de request
      * @param idCampeonato id campeonato del bolao 
-     * @param idRodada id de la rodada perteneciente al bolao
      */
     function globoAction() { 
         error_reporting(E_ERROR | E_PARSE);
-        $this->getResponse()->setHeader('Content-Type', 'application/json');
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $this->getResponse()
+        ->setHeader('Content-Type', 'application/json');
 
         try {
-            
             $body = $this->getRequest()->getRawBody();
             $data = Zend_Json::decode($body);
 
-            $existsRodada = true;
+           $this->info("[GLOBO] Iniciando ver partidos de la rodada y del campeonato: ".print_r($data, true));
 
             //No existe rodada entonces hay que crearla
-            if (empty($data['idRodada'])) {
-                $existsRodada = false;
-                $c = new Application_Model_Championships();
-                $data['idRodada'] = $c->salvar_rodada($data['idCampeonato'], $data['rodada']);
+            $rodada = $this->loadRodada($data['idRodada']);
+
+            //Partidos de la globo
+            $partidosGlobo = $this->procesarPartido($data['idCampeonato'], $rodada['rd_cambio']);
+
+            $this->info("[GLOBO] Va a comenzar a procesar el campeonato: ".$data['idCampeonato']." y cambiar la url por el nombre: ".$rodada['rd_cambio']);
+
+            $partidosBolao = array();
+            for ($i = 0; $i < count($partidosGlobo); $i = $i + 1) {
+
+                $pGlobo = $partidosGlobo[$i];
+                $p = new Helpers_Partidos();                    
+                $partidosBolao[$i] = $p->getPartido($pGlobo, $data['idCampeonato'], $data['idRodada']);
+
+
             }
 
-
-            $c = new Application_Model_Matchs();
-            $urlcampeonatos = $c->getGlobo($data['idCampeonato']);
-
-            $urlcampeonatos['dr_url'] = str_replace("###",$data['rodada'], $urlcampeonatos['dr_url']);
-            
-            $server_output = $this->getGlobo($urlcampeonatos['dr_url']); curl_exec ($ch);
-              
-            $res =  $this->htmlToArray($server_output);
-
-            $partidosGlobo = $res['body'];
-
-            if (!$existsRodada) {
-                $partidosBolao = array();
-                for ($i = 0; $i < count($partidosGlobo); $i = $i + 1) {
-
-                    $pGlobo = $partidosGlobo[$i];
-
-                    $e = new Application_Model_Equipo();                    
-                    $equipo1 = $e->getBySigla($pGlobo['equipo1']['nome']);
-                    $equipo2 = $e->getBySigla($pGlobo['equipo2']['nome']);
-                
-                    $partido = array();
-                    $partido['tm1_id'] = $equipo1['eq_id'];
-                    $partido['tm2_id'] = $equipo2['eq_id'];
-
-                    $partido['t1nome'] = $equipo1['eq_nome'];
-                    $partido['t2nome'] = $equipo2['eq_nome'];
-
-                    $partido['tm1_logo'] = $equipo1['eq_logo'];
-                    $partido['tm2_logo'] = $equipo2['eq_logo'];
-
-                    $partido['tm1_sigla'] = $equipo1['eq_sigla'];
-                    $partido['tm2_sigla'] = $equipo2['eq_sigla'];
-
-                    $partido['mt_date'] = $pGlobo['data'].$pGlobo['hora'];
-                    $partido['mt_goal1'] = $pGlobo['equipo1']['resultado'];
-                    $partido['mt_goal2'] = $pGlobo['equipo2']['resultado'];;
-                    $partido['mt_idchampionship'] = $data['idCampeonato'];
-                    $partido['mt_played'] = 0;
-                    $partido['mt_acumulado'] = 0;
-                    $partido['mt_idround'] = $data['idRodada'];
-
-                    $partido['mt_idteam1'] = $equipo1['eq_id'];
-                    $partido['mt_idteam2'] = $equipo2['eq_id'];
-
-                    $partido['mt_goal2'] = $pGlobo['equipo2']['resultado'];;
-                    $partido['ch_id'] = $data['idCampeonato'];
-
-                    $partido['played'] = $pGlobo['played'];
-
-                    $partidosBolao[$i] = $partido;
-
-
-                }
-            } else {
-                $partidosBolao = $this->getPartidos($data['idCampeonato'], $data['idRodada']);
-
-                for ($i = 0; $i < count($partidosGlobo); $i = $i + 1) {
-                    for ($j = 0; $j < count($partidosBolao); $j = $j + 1) {
-                        $pGlobo = $partidosGlobo[$i];
-                        $pBolao = $partidosBolao[$j];
-    
-                        if (strcmp($pGlobo['equipo1']['nome'], $pBolao['tm1_sigla']) == 0 
-                            && strcmp($pGlobo['equipo2']['nome'], $pBolao['tm2_sigla']) == 0) {
-    
-                            $partidosBolao[$j]['mt_goal1'] = $pGlobo['equipo1']['resultado'];
-                            $partidosBolao[$j]['mt_goal2'] = $pGlobo['equipo2']['resultado'];
-                            $partidosBolao[$j]['played'] = $pGlobo['played'];
-                        }
-                    }
-                }
-            }
             $result['body'] = $partidosBolao;
 
             $this->_helper->json($result);
@@ -724,20 +554,6 @@ class CampeonatosController extends BolaoController
         catch (Exception $e) {
 
         }        
-    }
-
-    function getGlobo($url) {
-        $ch = curl_init();
-            
-        curl_setopt($ch, CURLOPT_URL, $url);
-    
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        
-        $server_output = curl_exec ($ch);
-
-        curl_close ($ch); 
-
-        return $server_output;
     }
 
     function verificarglobopartidoAction() {
@@ -777,7 +593,7 @@ class CampeonatosController extends BolaoController
         $urlcampeonatos = $m->getGlobo($partido['mt_idchampionship']);
         $urlcampeonatos['dr_url'] = str_replace("###",$partido['rd_round'], $urlcampeonatos['dr_url']);
 
-        $server_output = $this->getGlobo($urlcampeonatos['dr_url']); curl_exec ($ch);
+        $server_output = $this->get($urlcampeonatos['dr_url']);
           
         $res =  $this->htmlToArray($server_output);
         $pGlobo = $res['body'];
@@ -832,7 +648,7 @@ class CampeonatosController extends BolaoController
                     
                     $urlcampeonatos['dr_url'] = str_replace("###",$partido['rd_round'], $urlcampeonatos['dr_url']);
 
-                    $server_output = $this->getGlobo($urlcampeonatos['dr_url']); curl_exec ($ch);
+                    $server_output = $this->get($urlcampeonatos['dr_url']);
                     
                     $res =  $this->htmlToArray($server_output);
                     $pGlobo[$rodada][$campeonato] = $res['body'];

@@ -1,9 +1,14 @@
 <?php
 
+    define("ALGORITMO_COPA_SUDAMERICANA", "copa_sulamericana");
+    define("ALGORITMO_BRASILEIRAO_SERIE_A","bra_serie_a");
+    define("ALGORITMO_BRASILEIRAO_SERIE_B","bra_serie_b");
+    
 include_once(APPLICATION_PATH."/../library/Zend/Log.php");
 include_once(APPLICATION_PATH."/../library/Zend/Log/Writer/Stream.php");
 class BolaoController extends Zend_Controller_Action
 {
+
 
     /*
     EMERG   = 0;  // Emergency: system is unusable
@@ -18,7 +23,8 @@ class BolaoController extends Zend_Controller_Action
 
     public $logger;
 
-    public function init() {
+    public function preDispatch() {
+
         $this->logger = new Zend_Log();
         $writer = new Zend_Log_Writer_Stream(APPLICATION_PATH."../bolaoLog_".date("Y_m_d").".txt");
         $this->logger->addWriter($writer);
@@ -46,6 +52,20 @@ class BolaoController extends Zend_Controller_Action
             echo "<br>";
         }
         die(".");
+    }
+    
+    public function get($url) {
+        $ch = curl_init();
+            
+        curl_setopt($ch, CURLOPT_URL, $url);
+    
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        $server_output = curl_exec ($ch);
+
+        curl_close ($ch); 
+
+        return $server_output;
     }
 
 }
