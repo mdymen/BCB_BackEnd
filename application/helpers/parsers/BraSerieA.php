@@ -21,7 +21,7 @@ class Helpers_Parsers_BraSerieA extends Helpers_Parsers_Parsers {
                 }
 
             }
-
+            
             $this->verify($partidos);
             $return['body'] = $partidos;
 

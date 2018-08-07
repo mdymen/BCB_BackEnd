@@ -475,20 +475,35 @@ class CampeonatosController extends BolaoController
 
         $this->info("[GLOBO] va a utilizar el algoritmo ".$urlcampeonatos['dr_algoritmo']);
 
+        return $this->getPartidosAlgoritmo($server_output, $urlcampeonatos['dr_algoritmo']);
+    }
+
+    /**
+     * Retorna todos los partidos
+     * @param server_output es el retorno de la globo
+     * @param algoritmo es el algoritmo que tiene que usar
+     */
+    private function getPartidosAlgoritmo($server_output, $algoritmo) {
+        $res = array();
         //Utilizo el algoritmo especifico de ese campeonato para conseguir los partidos
-        if (strcmp($urlcampeonatos['dr_algoritmo'], ALGORITMO_COPA_SUDAMERICANA) == 0) {
+        if (strcmp($algoritmo, ALGORITMO_COPA_SUDAMERICANA) == 0) {
 
             $parser = new Helpers_Parsers_Sudamericana();
             $res = $parser->htmlToArray($server_output);
             $this->info("[GLOBO] el algoritmo retornó: ".print_r($res, true));
         }    
-        if (strcmp($urlcampeonatos['dr_algoritmo'], ALGORITMO_BRASILEIRAO_SERIE_A) == 0) {
+        if (strcmp($algoritmo, ALGORITMO_BRASILEIRAO_SERIE_A) == 0) {
             $parser = new Helpers_Parsers_BraSerieA();
             $res = $parser->htmlToArray($server_output);
             $this->info("[GLOBO] el algoritmo retornó: ".print_r($res, true));
         }
+        if (strcmp($algoritmo, ALGORITMO_BRASILEIRAO_SERIE_B) == 0) {
+            $parser = new Helpers_Parsers_BraSerieA();
+            $res = $parser->htmlToArray($server_output);
+            $this->info("[GLOBO] el algoritmo retornó: ".print_r($res, true));
+        }        
 
-        return $res['body'];
+        return $res['body'];   
     }
 
 
@@ -650,8 +665,9 @@ class CampeonatosController extends BolaoController
 
                     $server_output = $this->get($urlcampeonatos['dr_url']);
                     
-                    $res =  $this->htmlToArray($server_output);
-                    $pGlobo[$rodada][$campeonato] = $res['body'];
+                    $res =  $this->getPartidosAlgoritmo($server_output, $urlcampeonatos['dr_algoritmo']) ;
+
+                    $pGlobo[$rodada][$campeonato] = $res;
                     $this->info("[VERIFICAR PARTIDOS] Resultado de la GLOBO: ".json_encode($pGlobo[$rodada][$campeonato]));
                 }
 
