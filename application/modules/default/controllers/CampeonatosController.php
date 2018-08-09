@@ -24,8 +24,8 @@ include APPLICATION_PATH.'/helpers/ranking.php';
 include APPLICATION_PATH.'/helpers/globo.php';
 include APPLICATION_PATH.'/helpers/partidos.php';
 include APPLICATION_PATH.'/helpers/parsers/Parsers.php';
-include APPLICATION_PATH.'/helpers/parsers/Sudamericana.php';
-include APPLICATION_PATH.'/helpers/parsers/BraSerieA.php';
+include APPLICATION_PATH.'/helpers/parsers/Eliminatorias.php';
+include APPLICATION_PATH.'/helpers/parsers/Liga.php';
 include APPLICATION_PATH.'/exceptions/VerificaPartidosParserException.php';
 include APPLICATION_PATH.'/modules/default/controllers/BolaoController.php';
 class CampeonatosController extends BolaoController
@@ -486,22 +486,16 @@ class CampeonatosController extends BolaoController
     private function getPartidosAlgoritmo($server_output, $algoritmo) {
         $res = array();
         //Utilizo el algoritmo especifico de ese campeonato para conseguir los partidos
-        if (strcmp($algoritmo, ALGORITMO_COPA_SUDAMERICANA) == 0) {
-
-            $parser = new Helpers_Parsers_Sudamericana();
+        if (strcmp($algoritmo, ALGORITMO_ELIMINATORIAS) == 0) {
+            $parser = new Helpers_Parsers_Eliminatorias();
             $res = $parser->htmlToArray($server_output);
             $this->info("[GLOBO] el algoritmo retornó: ".print_r($res, true));
         }    
-        if (strcmp($algoritmo, ALGORITMO_BRASILEIRAO_SERIE_A) == 0) {
-            $parser = new Helpers_Parsers_BraSerieA();
+        if (strcmp($algoritmo, ALGORITMO_LIGA) == 0) {
+            $parser = new Helpers_Parsers_Liga();
             $res = $parser->htmlToArray($server_output);
             $this->info("[GLOBO] el algoritmo retornó: ".print_r($res, true));
         }
-        if (strcmp($algoritmo, ALGORITMO_BRASILEIRAO_SERIE_B) == 0) {
-            $parser = new Helpers_Parsers_BraSerieA();
-            $res = $parser->htmlToArray($server_output);
-            $this->info("[GLOBO] el algoritmo retornó: ".print_r($res, true));
-        }        
 
         return $res['body'];   
     }
@@ -659,9 +653,9 @@ class CampeonatosController extends BolaoController
                     $urlcampeonatos = $m->getGlobo($partido['mt_idchampionship']);
 
                     $this->info("[VERIFICAR PARTIDOS] Conectando con la Globo en: ".$urlcampeonatos['dr_url']);
-                    $this->info("[VERIFICAR PARTIDOS] Reemplazando los ### con: ".$partido['rd_round']);
+                    $this->info("[VERIFICAR PARTIDOS] Reemplazando los ### con: ".$partido['rd_cambio']);
                     
-                    $urlcampeonatos['dr_url'] = str_replace("###",$partido['rd_round'], $urlcampeonatos['dr_url']);
+                    $urlcampeonatos['dr_url'] = str_replace("###",$partido['rd_cambio'], $urlcampeonatos['dr_url']);
 
                     $server_output = $this->get($urlcampeonatos['dr_url']);
                     

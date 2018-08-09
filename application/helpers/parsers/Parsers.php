@@ -69,12 +69,15 @@ abstract class Helpers_Parsers_Parsers {
     }
 
     public function html_to_obj($html) {
+        error_reporting(E_ERROR | E_PARSE);
         $dom = new DOMDocument();
         $dom->loadHTML($html);
         return $this->element_to_obj($dom->documentElement);
     }
 
     public function element_to_obj($element) {
+        error_reporting(E_ERROR | E_PARSE);
+
         $obj = array( "tag" => $element->tagName );
         foreach ($element->attributes as $attribute) {
             $obj[$attribute->name] = $attribute->value;

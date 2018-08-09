@@ -1,6 +1,6 @@
 <?php
 
-class Helpers_Parsers_Libertadores extends Helpers_Parsers_Parsers {
+class Helpers_Parsers_Eliminatorias extends Helpers_Parsers_Parsers {
 
     public function htmlToArray($html) {
         try {

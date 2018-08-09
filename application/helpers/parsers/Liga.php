@@ -1,6 +1,6 @@
 <?php
 
-class Helpers_Parsers_BraSerieA extends Helpers_Parsers_Parsers {
+class Helpers_Parsers_Liga extends Helpers_Parsers_Parsers {
 
     public function htmlToArray($html) {
         try {

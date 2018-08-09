@@ -1,8 +1,9 @@
 <?php
 
-    define("ALGORITMO_COPA_SUDAMERICANA", "copa_sulamericana");
-    define("ALGORITMO_BRASILEIRAO_SERIE_A","bra_serie_a");
-    define("ALGORITMO_BRASILEIRAO_SERIE_B","bra_serie_b");
+    define("ALGORITMO_ELIMINATORIAS", "eliminatorias");
+    define("ALGORITMO_LIGA","liga");
+    define("ALGORITMO_LIGA","liga");
+    define("ALGORITMO_ELIMINATORIAS","eliminatorias");
     
 include_once(APPLICATION_PATH."/../library/Zend/Log.php");
 include_once(APPLICATION_PATH."/../library/Zend/Log/Writer/Stream.php");

@@ -907,22 +907,17 @@ class IndexController extends Zend_Controller_Action
      * Devuelve la cantidad de partidos no jugados enviadas por parametro
      * del campeonato
      */
-    public function proximosjogosAction() {
-        $body = $this->getRequest()->getRawBody();
-        $params = Zend_Json::decode($body);
-
-        $m = new Application_Model_Matchs();
-        $matchs = $m->partidos($params['cantidad'], $params['idcampeonato']);
-        
-        $result['body'] = $matchs;
-
-        $this->getResponse()
-             ->setHeader('Content-Type', 'application/json');
-        
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(TRUE);
-        
-        $this->_helper->json($result); 
+    public function gamesAction() {
+        try {
+            $m = new Application_Model_Matchs();
+            $matchs = $m->games();
+            
+            $result['body'] = $matchs;
+            
+            $this->_helper->json($result); 
+        } catch (Exception $e) {
+            $this->_helper->json($e->getMessage()); 
+        }
     }
 
     public function noticiasAction() {

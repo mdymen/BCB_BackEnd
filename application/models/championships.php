@@ -201,10 +201,10 @@ class Application_Model_Championships extends Application_Model_Bd_Adapter
      * @param nome_rodada es el nombre de la rodada
      * @param suma si la rodada cuando se coloquen los ganadores se deben sumar puntos
      */
-    public function salvar_rodada($id_champ, $nome_rodada, $suma) {
+    public function salvar_rodada($id_champ, $nome_rodada, $suma, $cambio) {
         $db = $this->db;
         
-        $db->insert("round",array("rd_idchampionship" => $id_champ, "rd_round" => $nome_rodada, "rd_suma" => $suma));
+        $db->insert("round",array("rd_idchampionship" => $id_champ, "rd_round" => $nome_rodada, "rd_suma" => $suma, "rd_cambio" => $cambio));
 
         return $db->lastInsertId();
     }

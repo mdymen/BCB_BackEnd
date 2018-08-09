@@ -33,6 +33,7 @@ class RodadaController extends BolaoController
      * @param champ
      * @param rodada
      * @param suma
+     * @param cambio
      */
     public function postAction() {
         try {
@@ -44,7 +45,7 @@ class RodadaController extends BolaoController
             
             if ($this->getRequest()->isPost()) {  
                 $penca = new Application_Model_Championships();
-                $penca->salvar_rodada($params['champ'], $params['rodada'], !empty($params['suma']) ? true : false);
+                $penca->salvar_rodada($params['champ'], $params['rodada'], !empty($params['suma']) ? true : false, $params['cambio']);
                 $this->info("[CREAR RODADA] Rodada creada con éxito. ");
                 
             }
