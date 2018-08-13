@@ -15,9 +15,11 @@ class Helpers_Parsers_Liga extends Helpers_Parsers_Parsers {
             for ($i = 0; $i < count($lista); $i = $i + 1) {
 
                 $partidos[$i] = $this->jugado($lista[$i]);
+                $partidos[$i] = $this->isPlayed($partidos[$i]);
 
                 if ($partidos[$i]['equipo1']['nome'] == null) {
-                    $partidos[$i] = $this->noJugado($lista[$i]);
+                    $partidos[$i] = $this->jugadoSinVejaComoFoiONoJugado($lista[$i]);
+                    $partidos[$i] = $this->isPlayed($partidos[$i]);
                 }
 
             }
@@ -38,9 +40,19 @@ class Helpers_Parsers_Liga extends Helpers_Parsers_Parsers {
         $result['hora'] = $partido['children'][0]['children'][2]['html'];
         $result['equipo1']['nome'] = $partido['children'][0]['children'][3]['children'][0]['children'][1]['html'];
         $result['equipo2']['nome'] = $partido['children'][0]['children'][3]['children'][2]['children'][2]['html'];
-        $result['equipo1']['resultado'] = null;
-        $result['equipo2']['resultado'] = null;
-        $result['played'] = 0;
+        $result['equipo1']['resultado'] = null; 
+        $result['equipo2']['resultado'] = null; 
+
+        return $result;
+    }
+
+    public function jugadoSinVejaComoFoiONoJugado($partido) {
+        $result['data'] = $partido['children'][0]['children'][1]['content'];
+        $result['hora'] = $partido['children'][0]['children'][2]['html'];
+        $result['equipo1']['nome'] = $partido['children'][0]['children'][3]['children'][0]['children'][1]['html'];
+        $result['equipo2']['nome'] = $partido['children'][0]['children'][3]['children'][2]['children'][2]['html'];
+        $result['equipo1']['resultado'] = $partido['children'][0]['children'][3]['children'][1]['children'][0]['html'];
+        $result['equipo2']['resultado'] = $partido['children'][0]['children'][3]['children'][1]['children'][2]['html'];
 
         return $result;
     }
@@ -54,7 +66,6 @@ class Helpers_Parsers_Liga extends Helpers_Parsers_Parsers {
         $result['equipo1']['resultado'] = $partidos[1]['children'][0]['html'];
         $result['equipo2']['resultado'] = $partidos[1]['children'][2]['html'];
         $result['equipo2']['nome'] = $partidos[2]['children'][2]['html'];
-        $result['played'] = strcmp($partido['children'][0]['children'][2]['children'][2]['html'], "veja como foi") == 0 ? 1 : 0 ;
 
         return $result;
     }

@@ -22,7 +22,8 @@ include APPLICATION_PATH.'/helpers/paginacao.php';
 include APPLICATION_PATH.'/helpers/posicoes.php';
 include APPLICATION_PATH.'/helpers/ranking.php';
 include APPLICATION_PATH.'/helpers/partidos.php';
-class PartidosController extends Zend_Controller_Action
+include APPLICATION_PATH.'/modules/default/controllers/BolaoController.php';
+class PartidosController extends BolaoController
 {
     /**
      * GET
@@ -83,7 +84,7 @@ class PartidosController extends Zend_Controller_Action
             for ($i = 0; $i < count($resultados); $i = $i + 1) {
                 $resultado = $resultados[$i];
 
-                $p->save($resultado, ($resultado['played']); 
+                $p->save($resultado, ($resultado['played'])); 
 
             /*    $idMatch = $m->save($match);
 
@@ -127,6 +128,48 @@ class PartidosController extends Zend_Controller_Action
         for ($i = 0; $i < count($ganadores); $i = $i + 1) {
             $result->puntosAlGanador($ganadores[$i]['rs_iduser'], $idmatch);
         }
+    }
+
+    /**
+     * Retorna los ultimos 12 partidos jugados
+     */
+    public function ultimosjugadosAction() {
+        try {
+            $c = new Application_Model_Matchs();
+
+            $partidos = $c->ultimosjugados();
+            $result = array();
+
+            $campeonatos = array();
+
+            //Agrupa los partidos por campeonato y agrega el id del campeonato en
+            //un array
+            for ($i = 0; $i < count($partidos); $i = $i + 1) {
+                $idCampeonato = $partidos[$i]['ch_nome'];
+                $cantidad = count($result[$idCampeonato]);
+
+                $result[$idCampeonato][$cantidad] = $partidos[$i]; 
+
+                if (!in_array($idCampeonato, $campeonatos)) {
+                    $campeonatos[]=$idCampeonato;
+                }
+            }
+
+            //Saca el id del campeonato y deja un array con los array 
+            //de los partidos
+            $retorno = array();
+            for ($i = 0; $i < count($campeonatos); $i = $i + 1) {
+                $retorno[$i] = $result[$campeonatos[$i]];
+              //  $retorno[$i]['nome'] = $campeonatos[$i];
+            }
+
+            $res['body'] = $retorno;
+
+            $this->_helper->json($res);
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }    
     }
 
 }

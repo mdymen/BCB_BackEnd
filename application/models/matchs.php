@@ -456,6 +456,10 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
                 ->order("mt_idround")
                 ->query()
                 ->fetchAll();
+
+      //         print_r($result->__toString());
+           //     die(".");
+
         
         return $result;
                         
@@ -805,6 +809,28 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
             ->limit(12)
             ->query()
             ->fetchAll();
+    }
+
+    /**
+     * Retorna los ultimos 12 partidos jugados
+     */
+    public function ultimosJugados() {
+        $hoy = date('Y-m-d');
+
+        $db = $this->db;
+
+        return $this->db->select()
+            ->from("match")
+            ->joinInner("championship", "championship.ch_id = match.mt_idchampionship", array("ch_logocampeonato" => "championship.ch_logocampeonato", "ch_id" => "championship.ch_id","ch_nome" => "championship.ch_nome","ch_atualround" => "championship.ch_atualround"))
+            ->joinInner("round", "round.rd_id = match.mt_idround")
+            ->joinInner(array('t1' => 'equipo'), 't1.eq_id = match.mt_idteam1', array('tm1_id' => 't1.eq_id', 't1nome' => 't1.eq_nome', 'tm1_logo' => 't1.eq_logo', 'tm1_sigla' => 't1.eq_sigla'))
+            ->joinInner(array('t2' => 'equipo'), 't2.eq_id = match.mt_idteam2', array('tm2_id' => 't2.eq_id', 't2nome' => 't2.eq_nome', 'tm2_logo' => 't2.eq_logo', 'tm2_sigla' => 't2.eq_sigla'))
+            ->where("match.mt_date <= ?", $hoy)
+            ->where("match.mt_played = 1")
+            ->order("match.mt_date DESC")
+            ->limit(12)
+            ->query()
+            ->fetchAll();        
     }
 
     /**

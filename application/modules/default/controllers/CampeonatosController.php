@@ -402,15 +402,13 @@ class CampeonatosController extends BolaoController
         error_reporting(E_ERROR | E_PARSE);
 
         try {
-
-            $ps = new Helpers_Parsers_Sudamericana();
             
             $body = $this->getRequest()->getRawBody();
             $data = Zend_Json::decode($body);
             
             $server_output = $this->get($data['dir']);
 
-            $result = $ps->html_to_obj($server_output);
+            $result = $this->html_to_obj($server_output);
 
             $this->_helper->json($result);
         }
