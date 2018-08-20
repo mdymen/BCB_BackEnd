@@ -633,7 +633,10 @@ class CampeonatosController extends BolaoController
             //tambien carga los datos del campeonato y los datos de la rodada que 
             //sirven para saber si esa rodada del partido es la rodada actual del campeonato
             //sin hacer un nuevo select
-            $partidos = $m->loadPartidosNoJugados($hoy); 
+            $timestamp = strtotime($partido['hora']) - 180*60;
+            $time = date('H:i', $timestamp);
+
+            $partidos = $m->loadPartidosNoJugados($hoy." ".$time); 
             $this->info("[VERIFICAR PARTIDOS] Partidos no actualizados hasta ahora: ".json_encode($partidos));       
 
             $p = new Helpers_Partidos();

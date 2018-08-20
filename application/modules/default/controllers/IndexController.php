@@ -8,7 +8,8 @@ include APPLICATION_PATH."/helpers/html.php";
 include APPLICATION_PATH."/helpers/translate.php";
 include APPLICATION_PATH.'/helpers/box.php';
 include APPLICATION_PATH.'/helpers/mail.php';
-class IndexController extends Zend_Controller_Action
+include APPLICATION_PATH.'/modules/default/controllers/BolaoController.php';
+class IndexController extends BolaoController
 {
 
     public function init()
@@ -962,6 +963,50 @@ class IndexController extends Zend_Controller_Action
 */
        
 
+    }
+
+    /**
+     * Envia un email de contacto para martin@dymenstein.com
+     * @param nome da pessoa que está preenchendo o form
+     * @param assunto
+     * @param email
+     * @param corpo
+     */
+    public function contactoAction() {
+        try {
+            $body = $this->getRequest()->getRawBody();
+            $data = Zend_Json::decode($body);
+
+            $corpo=$data["nome"]."<br>".$data['assunto']."<br>".$data['email']."<br>".$data['corpo'];
+
+            $this->enviarmail($corpo, 'martin@dymenstein.com', "Formulario Contacto");
+
+            $this->_helper->json(200); 
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage()); 
+        }
+    }
+
+    public function enviarmail($body, $email, $subject) {
+        $config = array('ssl' => 'ssl',
+            'auth' => 'login',
+            'username' => 'bolaocraquedebola16@gmail.com',
+            'password' => 'Ebcfh94785',
+            'encoding' => 'UTF-8',
+            'charset' => 'UTF-8');
+
+        $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
+
+        $mail = new Zend_Mail('UTF-8');
+        $mail->setBodyHtml($body);
+        $mail->setFrom('bolaocraquedebola16@gmail.com', 'Bolão Craque de Bola');
+        
+        $mail->addTo($email, $email);
+        
+
+        $mail->setSubject($subject);
+        $mail->send($transport);
     }
 }
 

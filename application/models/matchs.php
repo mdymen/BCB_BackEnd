@@ -812,6 +812,53 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
     }
 
     /**
+     * Devuelve una lista de $limit partidos jugado o no jugado de la fecha dada
+     * @param date
+     * @param limit
+     * @param jugado 0 si el partido no tiene que haber sido jugado o 1 si el partido tiene que haber sido jugado
+     */
+    public function gamesByDate($date, $limit) {
+        $db = $this->db;
+
+        return $this->db->select()
+            ->from("match")
+            ->joinInner("championship", "championship.ch_id = match.mt_idchampionship", array("ch_id" => "championship.ch_id","ch_nome" => "championship.ch_nome","ch_atualround" => "championship.ch_atualround"))
+            ->joinInner("round", "round.rd_id = match.mt_idround")
+            ->joinInner(array('t1' => 'equipo'), 't1.eq_id = match.mt_idteam1', array('tm1_id' => 't1.eq_id', 't1nome' => 't1.eq_nome', 'tm1_logo' => 't1.eq_logo', 'tm1_sigla' => 't1.eq_sigla'))
+            ->joinInner(array('t2' => 'equipo'), 't2.eq_id = match.mt_idteam2', array('tm2_id' => 't2.eq_id', 't2nome' => 't2.eq_nome', 'tm2_logo' => 't2.eq_logo', 'tm2_sigla' => 't2.eq_sigla'))
+            ->where("match.mt_date >= ?", $date." 00:00:00")
+            ->where("match.mt_date <= ?", $date." 23:59:59")
+            ->order("match.mt_date ASC")
+            ->limit($limit)
+            ->query()
+            ->fetchAll();   
+    }
+
+    /**
+     * Devuelve una lista de 5 partidos de hoy
+     */
+    public function hoy() {
+        $hoy = date('Y-m-d');
+        return $this->gamesByDate($hoy, 5);
+    }
+
+    /**
+     * Devuelve una lista de 5 partidos de maniana
+     */
+    public function manana() {
+        $manana =  date('Y-m-d', strtotime('+1 day', strtotime(date("r"))));
+        return $this->gamesByDate($manana, 5);
+    }
+
+    /**
+     * Devuelve una lista de 5 partidos de ayer
+     */    
+    public function ayer() {
+        $ayer =  date('Y-m-d', strtotime('-1 day', strtotime(date("r"))));
+        return $this->gamesByDate($ayer, 5);
+    }
+
+    /**
      * Retorna los ultimos 12 partidos jugados
      */
     public function ultimosJugados() {

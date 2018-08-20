@@ -59,9 +59,7 @@ abstract class Helpers_Parsers_Parsers {
         for ($i = 0; $i < count($partidos); $i = $i + 1) {
             $partido = $partidos[$i];
 
-            if ($partido['data'] == null
-            || $partido['hora'] == null
-            || $partido['equipo1']['nome'] == null
+            if ($partido['equipo1']['nome'] == null
             || $partido['equipo2']['nome'] == null) {
                 throw new Exception("error al verificar el partido: Data".$partido['data']." Hora: ".$partido['hora']." Equipo1: ".$partido['equipo1']['nome']." Equipo2: ".$partido['equipo2']['nome']);
             }

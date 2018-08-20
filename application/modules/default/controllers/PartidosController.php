@@ -86,23 +86,6 @@ class PartidosController extends BolaoController
 
                 $p->save($resultado, ($resultado['played'])); 
 
-            /*    $idMatch = $m->save($match);
-
-                //Si el partido está marcado como NO JUGADO pero se están pasando los goles
-                //quiere decir que se tiene que procesar como NUEVO PARTIDO JUGADO
-                if (strcmp($resultado['mt_played'], "0") == 0 
-                    && strcmp($resultado['played'], "1") == 0 
-                    && !is_null($resultado['mt_goal1']) 
-                    && !is_null($resultado['mt_goal2'])) {                       
-
-                    //verifica el resultado del partido y setea los puntos
-                    //y setea al partido como jugado
-                    $r->verificarGanadores($resultado['mt_idteam1'], $resultado['mt_idteam2'], $resultado['mt_goal1'], $resultado['mt_goal2'], $idMatch);
-                    
-                    //verifica los usuarios ganadores y setea los puntos
-                    $this->usuariosGanadores($resultado['mt_goal1'], $resultado['mt_goal2'], $idMatch);
-
-                }*/
             }
                     
             $this->_helper->layout->disableLayout();
@@ -172,4 +155,21 @@ class PartidosController extends BolaoController
         }    
     }
 
+    /**
+     * Devuelve una lista de 5 partidos de hoy, de ayer y de maniana
+     */
+    public function getproximosAction() {
+        try {
+            $m = new Application_Model_Matchs();
+
+            $result['body']['hoy'] = $m->hoy();
+            $result['body']['maniana'] = $m->manana();
+            $result['body']['ayer'] = $m->ayer();
+
+            $this->_helper->json($result);
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
+    }
 }
