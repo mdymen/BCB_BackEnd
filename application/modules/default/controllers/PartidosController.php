@@ -172,4 +172,20 @@ class PartidosController extends BolaoController
             $this->_helper->json($e->getMessage());
         }
     }
+
+    public function getjogosbycampeonatoanddateAction() {
+        try {
+            $params = $this->getRequest()->getParams();
+
+            $date = date('Y-m-d');            
+
+            $m = new Application_Model_Matchs();
+
+            $result['body'] = $m->jogosByCampeonatoAndDate($date, $params['idCampeonato']);
+            $this->_helper->json($result);
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }        
+    }
 }

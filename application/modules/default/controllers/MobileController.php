@@ -979,58 +979,6 @@ class MobileController extends Zend_Controller_Action
        $this->_helper->json($result);
     }
 
-    /**
-     * Retorna la tabla de posicion del campeonato.
-     * La lista de equipos ordenada por posicion y/o grupo
-     * 
-     * @param champ
-     */
-    public function equiposAction() {
-        $body = $this->getRequest()->getRawBody();
-        $params = Zend_Json::decode($body);	  
-
-        $champ_id = $params['champ'];
-
-        $teams_obj = new Application_Model_Teams();
-        $teams = $teams_obj->load_teams_championship($champ_id); 
-
-        $novo_teams = array();
-
-        if (!empty($teams[0]['tm_grupo'])) {
-            $tem_grupo = true;
-            $grupo = $teams[0]['tm_grupo'];
-            $j = 0;
-            $k = 0;
-            for ($i = 0; $i < sizeof($teams); $i = $i + 1) {
-                if (strcmp($grupo, $teams[$i]['tm_grupo']) != 0) {
-                    $grupo = $teams[$i]['tm_grupo'];
-                    $j = $j + 1;
-                    $k = 0;
-                } 
-                $teams[$i]['tem_grupo'] = true;
-                $novo_teams[$j]['tem_grupo'] = true;
-                $novo_teams[$j]['tm_grupo'] = $teams[$i]['tm_grupo'];
-                $novo_teams[$j]["grupo"][$k] = $teams[$i];
-                $k = $k + 1;
-            }
-            $teams = $novo_teams;
-        } else {
-            for ($i = 0; $i < sizeof($teams); $i = $i + 1) {
-                $teams[$i]['tem_grupo'] = false;
-            }
-        }
-
-        $result['teams'] = $teams;
-
-        $this->getResponse()
-        ->setHeader('Content-Type', 'application/json');
-       
-       $this->_helper->layout->disableLayout();
-       $this->_helper->viewRenderer->setNoRender(TRUE);
-       
-       $this->_helper->json($result);
-    }
-
 	public function cellrankingcampeonatoAction() {
         $body = $this->getRequest()->getRawBody();
         $params = Zend_Json::decode($body);	 

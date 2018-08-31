@@ -27,7 +27,9 @@ include APPLICATION_PATH.'/helpers/ranking.php';
 class PencaController extends Zend_Controller_Action {
     
     public function indexAction() {
-        $params = $this->_request->getParams();
+        echo '<h1>TITULO</h1>';
+        die("");
+        /*$params = $this->_request->getParams();
         $id_penca = $params['penca'];
         
         $storage = new Zend_Auth_Storage_Session();
@@ -50,7 +52,7 @@ class PencaController extends Zend_Controller_Action {
         $this->view->rodada = $rodada;
         $this->view->penca = $id_penca;
         $this->view->championship = $info_penca[0]['pn_idchampionship'];
-        $this->view->is_iscripto = $penca->isIscriptoEmPenca($data['us_id'], $id_penca);
+        $this->view->is_iscripto = $penca->isIscriptoEmPenca($data['us_id'], $id_penca);*/
     }
     
     public function listAction() {
