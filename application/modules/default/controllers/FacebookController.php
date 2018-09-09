@@ -1,7 +1,7 @@
 <?php
 
 include APPLICATION_PATH.'/modules/default/controllers/BolaoController.php';
-
+include APPLICATION_PATH.'/models/bd_adapter.php';
 /*include APPLICATION_PATH.'/cloudinary/Cloudinary.php';
 include APPLICATION_PATH.'/cloudinary/Uploader.php';
 include APPLICATION_PATH.'/cloudinary/Api.php';
@@ -297,19 +297,20 @@ class FacebookController extends BolaoController {
 
     function call_p2i_with_callback()
     {
-        global $apikey, $api_url;
-        // URL can be those formats: http://www.google.com https://google.com google.com and www.google.com
-        $url = "http://www.google.com";
+        //Please input your restful API key here.
+        $apikey = "adca13bc35fae614";
+        $api_url = "http://api.page2images.com/restfullink";
         // 0 - iPhone4, 1 - iPhone5, 2 - Android, 3 - WinPhone, 4 - iPad, 5 - Android Pad, 6 - Desktop
         $device = 6;
 
         // you can pass us any parameters you like. We will pass it back.
         // Please make sure http://your_server_domain/api_callback can handle our call
-        $callback_url = "http://your_server_domain/api_callback?image_id=your_unique_image_id_here";
+        $callback_url = "http://www.bolaocraquedebola.com.br/public?image_id=".uniqid("");
         $para = array(
-                    "p2i_url" => $url,
+                    "p2i_url" => $api_url,
                     "p2i_key" => $apikey,
-                    "p2i_device" => $device
+                    "p2i_device" => $device,
+                    "p2i_callback" => $callback_url
                 );
         $response = connect($api_url, $para);
 
@@ -408,6 +409,91 @@ class FacebookController extends BolaoController {
 
         die(".");
         
+    }
+
+    public function postAction() {
+
+        try {
+
+            $p = new Application_Model_Posts();
+            $posts = $p->get();
+
+            for ($i = 0; $i < count($posts); $i = $i + 1) {
+                $return = $this->curl($posts[$i]);
+            }
+
+        /*    $newTime = strtotime('+5 minutes');
+            $hora = date('H:i', $newTime);
+            print_r($hora);
+            die(".");*/
+
+            $this->_helper->json($return);
+        }       
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
+    }
+
+    /**
+     * GET
+     * @param tag
+     * @param idCampeonato
+     */
+    public function manualpostAction() {
+
+        try {
+            $body = $this->getRequest()->getRawBody();
+            $params = Zend_Json::decode($body);
+
+            $p = new Application_Model_Posts();
+            $post = $p->getByTagAndCampeonato($params['tag'],$params['idCampeonato']);
+            $return = $this->curl($post);
+        
+            $this->_helper->json($return);
+        }       
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
+    }
+
+    public function curl($post) {
+
+        $data = array(
+            "url" => $post['ps_url']."/".$post['ps_idchampionship']."/".uniqid(""),
+            "idPost" => $post['ps_id']
+        );
+
+        $ch = curl_init();
+            
+        curl_setopt($ch, CURLOPT_URL, "http://www.bolaocraquedebola.com.br/public/send.php");
+        
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        curl_setopt($ch, CURLOPT_POST, true);
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        
+        $server_output = curl_exec ($ch);
+        
+        curl_close ($ch); 
+        
+        return $server_output;
+    }
+
+    public function getpostAction() {
+        try {
+            $body = $this->getRequest()->getRawBody();
+            $data = Zend_Json::decode($body);
+
+            $p = new Application_Model_Posts();
+            $posts = $p->getPost($data['idPost']);
+
+            $this->_helper->json($posts);
+
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
     }
 
 }

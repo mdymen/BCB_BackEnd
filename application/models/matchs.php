@@ -820,6 +820,13 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
     public function gamesByDate($date, $limit) {
         $db = $this->db;
 
+/*
+SELECT `match`.*, `championship`.`ch_id`, `championship`.`ch_nome`, `championship`.`ch_atualround`, `round`.*, `t1`.`eq_id` AS `tm1_id`, `t1`.`eq_nome` AS `t1nome`, `t1`.`eq_logo` AS `tm1_logo`, `t1`.`eq_sigla` AS `tm1_sigla`, `t2`.`eq_id` AS `tm2_id`, `t2`.`eq_nome` AS `t2nome`, `t2`.`eq_logo` AS `tm2_logo`, `t2`.`eq_sigla` AS `tm2_sigla` FROM `match`
+INNER JOIN `championship` ON championship.ch_id = match.mt_idchampionship
+INNER JOIN `round` ON round.rd_id = match.mt_idround
+INNER JOIN `equipo` AS `t1` ON t1.eq_id = match.mt_idteam1
+INNER JOIN `equipo` AS `t2` ON t2.eq_id = match.mt_idteam2 WHERE (match.mt_date >= '2018-09-07 00:00:00') AND (match.mt_date <= '2018-09-07 23:59:59') ORDER BY `match`.`mt_date` ASC LIMIT 100
+ */
         return $this->db->select()
             ->from("match")
             ->joinInner("championship", "championship.ch_id = match.mt_idchampionship", array("ch_id" => "championship.ch_id","ch_nome" => "championship.ch_nome","ch_atualround" => "championship.ch_atualround"))
@@ -854,12 +861,57 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
      * Devuelve una lista de 5 partidos de ayer
      */    
     public function ayer() {
-        $ayer =  date('Y-m-d', strtotime('-1 day', strtotime(date("r"))));
+        $ayer = $this->getAyerDate();
         return $this->gamesByDate($ayer, 5);
+    }
+
+    /**
+     * Retorna la fecha de ayer
+     */
+    public function getAyerDate() {
+        return date('Y-m-d', strtotime('-1 day', strtotime(date("r"))));
+    }
+
+    /**
+     * Retorna la fecha de hoy
+     */
+    public function getHoyDate() {
+        return date('Y-m-d');
+    }
+
+    /**
+     * Retorna partidos de ayer y del campeonato especificado
+     */
+    public function getAyerByCampeonato($campeonato) {
+        $ayer = $this->getAyerDate();
+        return $this->jogosByCampeonatoAndDate($ayer, $campeonato);
+    }
+
+    /**
+     * Retorna partidos de hoy y del campeonato especificado
+     */
+    public function getHoyByCampeonato($campeonato) {
+        $hoy = $this->getHoyDate();
+        return $this->jogosByCampeonatoAndDate($hoy, $campeonato);
     }
 
     public function jogosByCampeonatoAndDate($date, $campeonato) {
         $db = $this->db;
+
+/*        $x = $this->db->select()
+        ->from("match")
+        ->joinInner("championship", "championship.ch_id = match.mt_idchampionship", array("ch_id" => "championship.ch_id","ch_nome" => "championship.ch_nome","ch_atualround" => "championship.ch_atualround"))
+        ->joinInner("round", "round.rd_id = match.mt_idround")
+        ->joinInner(array('t1' => 'equipo'), 't1.eq_id = match.mt_idteam1', array('tm1_id' => 't1.eq_id', 't1nome' => 't1.eq_nome', 'tm1_logo' => 't1.eq_logo', 'tm1_sigla' => 't1.eq_sigla'))
+        ->joinInner(array('t2' => 'equipo'), 't2.eq_id = match.mt_idteam2', array('tm2_id' => 't2.eq_id', 't2nome' => 't2.eq_nome', 'tm2_logo' => 't2.eq_logo', 'tm2_sigla' => 't2.eq_sigla'))
+        ->where("match.mt_date >= ?", $date." 00:00:00")
+        ->where("match.mt_date <= ?", $date." 23:59:59")
+        ->where("championship.ch_id = ?", $campeonato)
+        ->order("match.mt_date ASC");
+
+        print_r($x->__toString());
+        die(".");
+*/
 
         return $this->db->select()
             ->from("match")
@@ -873,6 +925,31 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
             ->order("match.mt_date ASC")
             ->query()
             ->fetchAll();  
+    }
+
+    public function jogosByDate($date) {
+        $db = $this->db;
+
+        return $this->db->select()
+            ->from("match")
+            ->joinInner("championship", "championship.ch_id = match.mt_idchampionship", array("ch_id" => "championship.ch_id","ch_nome" => "championship.ch_nome","ch_atualround" => "championship.ch_atualround"))
+            ->joinInner("round", "round.rd_id = match.mt_idround")
+            ->joinInner(array('t1' => 'equipo'), 't1.eq_id = match.mt_idteam1', array('tm1_id' => 't1.eq_id', 't1nome' => 't1.eq_nome', 'tm1_logo' => 't1.eq_logo', 'tm1_sigla' => 't1.eq_sigla'))
+            ->joinInner(array('t2' => 'equipo'), 't2.eq_id = match.mt_idteam2', array('tm2_id' => 't2.eq_id', 't2nome' => 't2.eq_nome', 'tm2_logo' => 't2.eq_logo', 'tm2_sigla' => 't2.eq_sigla'))
+            ->where("match.mt_date >= ?", $date." 00:00:00")
+            ->where("match.mt_date <= ?", $date." 23:59:59")
+            ->order("match.mt_date ASC")
+            ->query()
+            ->fetchAll();  
+    }
+
+    public function getTitulo($idCampeonato, $tag) {
+        return $this->db->select()
+            ->from("post")
+            ->where("ps_idchampionship = ?", $idCampeonato)
+            ->where("ps_tag = ?", $tag)
+            ->query()
+            ->fetch();
     }
 
     /**
@@ -915,6 +992,16 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
             ->where("t1.eq_sigla = ?", $equipo1)
             ->where("t2.eq_sigla = ?", $equipo2)
             ->query()->fetch();
+    }
+
+    public function getPosts() {
+        $hora = date("H:i");
+
+        return $this->db->select()
+        ->from("post")     
+        ->where("post.ps_hora = ?", $hora)
+        ->query()
+        ->fetchAll();  
     }
     
 }

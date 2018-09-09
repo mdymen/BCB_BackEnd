@@ -156,6 +156,7 @@ class PartidosController extends BolaoController
     }
 
     /**
+     * GET
      * Devuelve una lista de 5 partidos de hoy, de ayer y de maniana
      */
     public function getproximosAction() {
@@ -171,6 +172,56 @@ class PartidosController extends BolaoController
         catch (Exception $e) {
             $this->_helper->json($e->getMessage());
         }
+    }
+
+    /**
+     * GET
+     * Devuelve los resultados o proximos partidos 
+     * @param idCampeonato
+     * @param tag especifica si es de ayer, hoy, o resultados, o partidos futuros.
+     */
+    public function getpostAction() {
+        try {
+            $params = $this->getRequest()->getParams();
+
+            $m = new Application_Model_Matchs();
+
+            $tag = $params['tag'];
+            $campeonato = $params['idCampeonato'];
+
+            $date = $this->getDateFromTag($tag);
+
+            if (!empty($campeonato)) {
+                $result['body']['partidos'] = $m->jogosByCampeonatoAndDate($date, $campeonato);
+            } else {
+                $result['body']['partidos'] = $m->jogosByDate($date);
+            }
+
+            $result['body']['post'] = $m->getTitulo($campeonato,$params['tag']);
+
+            $this->_helper->json($result);
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
+    }
+
+    /**
+     * Retorna la fecha dependiendo de si se quiere de hoy, maniana o ayer
+     */
+    private function getDateFromTag($tag) {
+        if (strcmp($tag, "H") == 0) {
+            return date("Y-m-d");
+        }
+
+        if (strcmp($tag, "A") == 0) {
+            return date('Y-m-d', strtotime('-1 day', strtotime(date("r"))));
+        }
+        
+        if (strcmp($tag, "M") == 0) {
+            return date('Y-m-d', strtotime('+1 day', strtotime(date("r"))));
+        }
+        
     }
 
     public function getjogosbycampeonatoanddateAction() {
