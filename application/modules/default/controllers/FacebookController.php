@@ -456,6 +456,40 @@ class FacebookController extends BolaoController {
         }
     }
 
+    public function testsqlAction() {
+
+        $p = new Application_Model_Result();
+        $p->test();
+
+    }
+
+    /**
+     * GET
+     * @param id
+     */
+    public function getpostposteriorAction() {
+        try{
+            $params = $this->getRequest()->getParams();
+
+            $p = new Application_Model_Posts();
+            $posts = $p->getPosteriorDe($params['id']);
+            
+            if (empty($posts)) {
+                $posts = $p->getPosteriorDe(0);
+            }
+
+            $this->curl($posts[0]);
+
+            $res['body'] = $posts[0];
+
+            $this->_helper->json($res);
+
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
+    }
+
     public function curl($post) {
 
         $data = array(
@@ -490,6 +524,88 @@ class FacebookController extends BolaoController {
 
             $this->_helper->json($posts);
 
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
+    }
+
+    public function getTextoPost($id) {
+
+        $p = new Application_Model_Posts();
+        $post = $p->getTextoPost($id);
+
+        $message = $post['tp_titulo'].":"."\n"."Não tem jogos registrados";
+
+        if (count($post) == 3) {
+
+            $result = $p->ejecutarSql($post['tp_select']);
+
+            if (count($result) > 0) {
+
+                $message = $post['tp_titulo'].":"."\n";
+
+                for ($i = $i + 1; $i < count($result); $i = $i + 1) {
+                    $partido = $result[$i];
+
+                    $originalDate = $partido['mt_date'];
+                    $newDate = date("d/m H:i", strtotime($originalDate));
+
+                    $message = $message."\n".$partido['ch_nome']."\n".$newDate." - ".$partido['t1nome']." ".$partido['mt_goal1'].' vs '.$partido['mt_goal2']." ".$partido['t2nome']."\n";
+                }
+
+            } 
+
+            return $message;
+            
+        }
+
+        return null;
+    }
+
+    public function postfacebookAction() {
+        try {
+            $body = $this->getRequest()->getRawBody();
+            $data = Zend_Json::decode($body);
+
+            $id = $data['id'];
+
+            if (empty($id)) {
+                $id = 1;
+            } else {
+                $id = $id + 1;
+            }
+
+            $message = $this->getTextoPost($id);
+            if ($message == null) {
+                $id = 1;
+                $message = $this->getTextoPost(1);
+            }
+
+            $data['link'] = "http://www.bolaocraquedebola.com.br";
+            $data['message'] = "sdfsdfsdf";		
+            $data['access_token'] = "EAAEp17DZCrAMBALn19QAIOsUWmpsFwu369NdYpk7woK6luDGfspAY9pUv4GPd1AjHENZAtP1S2sw0ZC4USWo5C3q5gXHCzfyW7YTP8N00UUQW1oybGa2XmoigCpoXfoUISrg0agPZB8QZBuznRJCe91LsYS5LLkPdWRxSgrsTblEQpPxtO4pZA";
+            
+            $post_url = 'https://graph.facebook.com/321383738230464/feed';
+
+
+            $p = "link=".urlencode("http://www.bolaocraquedebola.com.br")."&message=".urlencode($message)."&access_token=".$data['access_token'];
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $post_url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS,$p);    
+            curl_setopt($ch, CURLOPT_HEADER, 0);    
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+//            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+            //curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS); 
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $return = curl_exec($ch);
+            curl_close($ch);	
+
+            $result['body']['id'] = $id;
+            $result['body']['result'] = $message;
+            $result['body']['return'] = $return;
+            $this->_helper->json($result);
         }
         catch (Exception $e) {
             $this->_helper->json($e->getMessage());

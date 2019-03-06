@@ -474,4 +474,43 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
             $db->update("result",  $dados, $where);
         }
     }
+
+    public function getUltimosPalpites() {
+        $db = $this->db;
+
+        return $db->select()->from("result")
+            ->joinInner("user","user.us_id = result.rs_iduser")
+            ->joinInner("match","match.mt_id = result.rs_idmatch")
+            ->joinInner("round","round.rd_id = result.rs_round")
+            ->joinInner(array('t1' => 'equipo'), 't1.eq_id = match.mt_idteam1', array('tm1_id' => 't1.eq_id', 't1nome' => 't1.eq_nome', 'tm1_logo' => 't1.eq_logo', 'tm1_sigla' => 't1.eq_sigla'))
+            ->joinInner(array('t2' => 'equipo'), 't2.eq_id = match.mt_idteam2', array('tm2_id' => 't2.eq_id', 't2nome' => 't2.eq_nome', 'tm2_logo' => 't2.eq_logo', 'tm2_sigla' => 't2.eq_sigla'))
+            ->order("result.rs_date DESC")
+            ->limit(15)
+            ->query()
+            ->fetchAll();
+            
+    }
+
+    public function test() {
+        $db = $this->db;
+
+        $x = $db->select()->from("result")
+            ->joinInner("user","user.us_id = result.rs_iduser")
+            ->joinInner("match","match.mt_id = result.rs_idmatch")
+            ->joinInner("round","round.rd_id = result.rs_round")
+            ->joinInner(array('t1' => 'equipo'), 't1.eq_id = match.mt_idteam1', array('tm1_id' => 't1.eq_id', 't1nome' => 't1.eq_nome', 'tm1_logo' => 't1.eq_logo', 'tm1_sigla' => 't1.eq_sigla'))
+            ->joinInner(array('t2' => 'equipo'), 't2.eq_id = match.mt_idteam2', array('tm2_id' => 't2.eq_id', 't2nome' => 't2.eq_nome', 'tm2_logo' => 't2.eq_logo', 'tm2_sigla' => 't2.eq_sigla'))
+            ->order("result.rs_date DESC")
+            ->limit(15);
+
+        print_r($x->__toString());    
+            
+    }
+
+    public function testepost() {
+        $this->db->insert("testpost", array("tp_date" => date("Y-m-d H:i:s")));
+
+        return $this->db->select()->from("testpost")->order("tp_date DESC")->limit(20)->query()->fetchAll();
+    }
+    
 }

@@ -25,9 +25,14 @@ include APPLICATION_PATH.'/helpers/globo.php';
 include APPLICATION_PATH.'/helpers/partidos.php';
 include APPLICATION_PATH.'/helpers/parsers/Parsers.php';
 include APPLICATION_PATH.'/helpers/parsers/Eliminatorias.php';
+include APPLICATION_PATH.'/helpers/parsers/ApiLiga.php';
 include APPLICATION_PATH.'/helpers/parsers/Liga.php';
 include APPLICATION_PATH.'/exceptions/VerificaPartidosParserException.php';
 include APPLICATION_PATH.'/modules/default/controllers/BolaoController.php';
+
+
+
+
 class CampeonatosController extends BolaoController
 {
     public function indexAction() {
@@ -495,6 +500,13 @@ class CampeonatosController extends BolaoController
             $this->info("[GLOBO] el algoritmo retornó: ".print_r($res, true));
         }
 
+        if (strcmp($algoritmo, ALGORITMO_API) == 0) {
+            $parser = new Helpers_Parsers_ApiLiga();
+            $server_output = json_decode($server_output, true);
+            $res = $parser->htmlToArray($server_output);            
+            $this->info("[GLOBO] el algoritmo retornó: ".print_r($res, true));
+        }
+
         return $res['body'];   
     }
 
@@ -624,6 +636,8 @@ class CampeonatosController extends BolaoController
      */
     function updateAction() {
         try {
+            $g = new Helpers_Globo();
+
             $m = new Application_Model_Matchs();
             
             $hoy = date('Y-m-d');
@@ -641,7 +655,8 @@ class CampeonatosController extends BolaoController
 
             $p = new Helpers_Partidos();
 
-            for ($i = 0; $i < count($partidos); $i = $i + 1) {
+            $retorno = array();
+            for ($i = 0; $i < count($partidos); $i = $i + 1) {                
                 $partido = $partidos[$i];
                 $rodada = $partido['rd_round'];
                 $campeonato = $partido['mt_idchampionship'];
@@ -651,6 +666,7 @@ class CampeonatosController extends BolaoController
                 $this->info("[VERIFICAR PARTIDOS] Campeonato: ".$campeonato);
 
                 if (empty($pGlobo[$rodada][$campeonato])) {
+
                     $urlcampeonatos = $m->getGlobo($partido['mt_idchampionship']);
 
                     $this->info("[VERIFICAR PARTIDOS] Conectando con la Globo en: ".$urlcampeonatos['dr_url']);
@@ -658,17 +674,19 @@ class CampeonatosController extends BolaoController
                     
                     $urlcampeonatos['dr_url'] = str_replace("###",$partido['rd_cambio'], $urlcampeonatos['dr_url']);
 
-                    $server_output = $this->get($urlcampeonatos['dr_url']);
-                    
+                    $server_output = $g->get($urlcampeonatos['dr_url']);                
+
                     $res =  $this->getPartidosAlgoritmo($server_output, $urlcampeonatos['dr_algoritmo']) ;
 
                     $pGlobo[$rodada][$campeonato] = $res;
                     $this->info("[VERIFICAR PARTIDOS] Resultado de la GLOBO: ".json_encode($pGlobo[$rodada][$campeonato]));
                 }
 
+                $retorno[$i] = $pGlobo[$rodada][$campeonato];
+
                 for ($j = 0; $j < count($pGlobo[$rodada][$campeonato]); $j = $j + 1) {
-                    $partidoGlobo = $pGlobo[$rodada][$campeonato][$j];
-                    
+                    $partidoGlobo = $pGlobo[$rodada][$campeonato][$j];            
+
                     if (strcmp($partidoGlobo['equipo1']['nome'], $partido['tm1_sigla']) == 0
                         && strcmp($partidoGlobo['equipo2']['nome'], $partido['tm2_sigla']) == 0) {
                             $this->info("[VERIFICAR PARTIDOS] El siguiente partido sera actualizado: ".json_encode($partidoGlobo));
@@ -684,14 +702,15 @@ class CampeonatosController extends BolaoController
 
                             $this->info("[VERIFICAR PARTIDO] Partido: ".$partido['mt_id']." actualizando resultados para ".$partido['mt_goal1']." x ".$partido['mt_goal2']);
 
-
                             $p->save($partido, $partidoGlobo['played']);
                             $this->info("[VERIFICAR PARTIDOS] Ha finalizado la actualizacion del partido: ".json_encode($partidoGlobo));
                         }
                 }
+
+                $pGlobo[$rodada][$campeonato] = "";
             }
 
-            $this->_helper->json(200);
+            $this->_helper->json($retorno);
         }
         catch (Exception $e) {
             $this->error("[VERIFICAR PARTIDOS] ".$e->getMessage());

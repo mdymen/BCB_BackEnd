@@ -19,7 +19,8 @@ include APPLICATION_PATH."/helpers/box.php";
 include APPLICATION_PATH."/helpers/html.php";
 include APPLICATION_PATH."/helpers/translate.php";
 include APPLICATION_PATH.'/models/teams.php';
-class UsuarioController extends Zend_Controller_Action
+include APPLICATION_PATH.'/modules/default/controllers/BolaoController.php';
+class UsuarioController extends BolaoController
 {
     public function indexAction() {
         $params = $this->_request->getParams();
@@ -313,24 +314,22 @@ class UsuarioController extends Zend_Controller_Action
     * Retorna la informacion de un usuario
     * @param usuario
     */
-   public function usuarioAction() {
-        $body = $this->getRequest()->getRawBody();
-        $params = Zend_Json::decode($body);    
+   public function getAction() {
+       try {
+            $params = $this->_request->getParams();
 
-        $u = new Application_Model_Users();
-        $palpites = $u->getPalpitesUsuario($params['usuario']);
-        $usuario = $u->getUsuario($params['usuario']);
+            $u = new Application_Model_Users();
+            $palpites = $u->getPalpitesUsuario($params['usuario']);
+            $usuario = $u->getUsuario($params['usuario']);
 
-        $result = $usuario;
-        $result['palpites'] = $palpites;
-
-        $this->getResponse()
-        ->setHeader('Content-Type', 'application/json');
-        
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(TRUE);
-    
-        $this->_helper->json($result);
+            $result = $usuario;
+            $result['palpites'] = $palpites;
+            
+            $this->_helper->json($result);
+       }
+       catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+       }
    }
 
    /**
@@ -398,6 +397,15 @@ class UsuarioController extends Zend_Controller_Action
         catch (Exception $e) {
             $this->_helper->json($e->getMessage());
         }
+   }
+
+   public function ultimosusuariosregistradosAction() {
+       try {
+            
+       }
+       catch (Exception $e) {
+            $this->_helper->json($e->getMessage()); 
+       }
    }
     
 }

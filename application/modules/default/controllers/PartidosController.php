@@ -164,8 +164,13 @@ class PartidosController extends BolaoController
             $m = new Application_Model_Matchs();
 
             $result['body']['hoy'] = $m->hoy();
+            $result['body']['datahoy'] = date('Y-m-d');
+
             $result['body']['maniana'] = $m->manana();
+            $result['body']['datamaniana'] = date('Y-m-d', strtotime('+1 day', strtotime(date("r"))));
+
             $result['body']['ayer'] = $m->ayer();
+            $result['body']['dataayer'] = date('Y-m-d', strtotime('-1 day', strtotime(date("r"))));
 
             $this->_helper->json($result);
         }
@@ -239,4 +244,55 @@ class PartidosController extends BolaoController
             $this->_helper->json($e->getMessage());
         }        
     }
+
+    /**
+     * GET
+     * devuelve los ultimos palpites del sistema, 15 ultimos
+     */
+    public function getultimospalpitesAction() {
+        try {
+            $r = new Application_Model_Result();
+            $result['body'] = $r->getUltimosPalpites();
+
+            $this->_helper->json($result);
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());   
+        }
+    }
+
+    /**
+     * GET
+     * devuelve todos los partidos de una fecha determinada
+     */
+    public function bydateAction() {
+        try {
+
+            $params = $this->getRequest()->getParams();
+            $date = $params['date'];
+
+            $m = new Application_Model_Matchs();
+
+            $result['body'] = $m->jogosByDate($date);
+
+            $this->_helper->json($result);
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage()); 
+        }
+    }
+
+    public function posttesteAction() {
+        try {
+
+            $r = new Application_Model_Result();
+            $result['body'] = $r->testepost();
+
+            $this->_helper->json($result);
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage()); 
+        }
+    }
+    
 }

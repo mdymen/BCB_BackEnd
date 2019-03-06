@@ -25,4 +25,16 @@ class Application_Model_Rodada extends Application_Model_Bd_Adapter
             ->fetch();
     }
 
+    public function ranking($idRodada) {
+        $sql  = "SELECT SUM( rs_points ) AS suma, rs_iduser, rs_round, us_username
+        FROM result
+        INNER JOIN user ON result.rs_iduser = user.us_id WHERE rs_round = ".$idRodada."
+        GROUP BY rs_iduser
+        ORDER BY suma DESC";
+
+        $result = $this->db->query($sql)->fetchAll();
+
+        return $result;
+    }
+
 }

@@ -61,8 +61,8 @@ class Application_Model_Teams extends Application_Model_Bd_Adapter
         $result = $db->select()->from('equipo')
                 ->joinInner("equipocampeonato", "equipocampeonato.ec_idequipo = equipo.eq_id")
                 ->where('equipocampeonato.ec_idchampionship = ?', $champ)
-                ->order(array("equipocampeonato.ec_grupo", "equipocampeonato.ec_pontos DESC")) 
-               ->query()
+                ->order(array("equipocampeonato.ec_grupo", "equipocampeonato.ec_pontos DESC"))
+                ->query()
                 ->fetchAll();
                 
         return $result;  

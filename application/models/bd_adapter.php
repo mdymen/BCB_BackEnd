@@ -32,14 +32,14 @@ class Application_Model_Bd_Adapter extends Zend_Db_Table_Abstract
         
         $bd = $this->getDb();
         
-        if (strcmp()) { 
-            $this->db = new Zend_Db_Adapter_Pdo_Mysql(array(
-                'host'     => 'localhost',
-                'username' => 'wi061609_teste',
-                'password' => 'mo80tiNUke',
-                'dbname'   => 'wi061609_teste',
-                'charset' => 'UTF8'
-            ));
+    //    if (strcmp()) { 
+     //       $this->db = new Zend_Db_Adapter_Pdo_Mysql(array(
+        //        'host'     => 'localhost',
+       //         'username' => 'wi061609_teste',
+            //    'password' => 'mo80tiNUke',
+       //         'dbname'   => 'wi061609_teste',
+       //         'charset' => 'UTF8'
+       //     ));
             
             /*           $this->db = new Zend_Db_Adapter_Pdo_Mysql(array(
                 'host'     => 'localhost',
@@ -49,17 +49,22 @@ class Application_Model_Bd_Adapter extends Zend_Db_Table_Abstract
                 'charset' => 'UTF8'
             ));*/
             
-        } else {
+      //  } else {
             $this->db = Zend_Db_Table::getDefaultAdapter();
-        }
+   //     }
 
     }
     
     public function getDb() {
         $storage = new Zend_Auth_Storage_Session();
-        $data = (get_object_vars($storage->read()));
-        
-        return $data['us_base'];
+
+        if ($storage->read() != null) {
+
+            $data = (get_object_vars($storage->read()));
+            
+            return $data['us_base'];
+
+        }
     }
     
 }

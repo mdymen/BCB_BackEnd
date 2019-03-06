@@ -105,6 +105,24 @@ class RodadaController extends BolaoController
         
         $this->_helper->json(200);
     }
+
+    /**
+     * GET
+     * @param idRodada
+     */
+    public function rankingAction() {
+        try {
+            $params = $this->getRequest()->getParams();
+            
+            $r = new Application_Model_Rodada();        
+            $result['body'] = $r->ranking($params['idRodada']);
+            
+            $this->_helper->json($result);
+        }
+        catch (Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
+    }
     
 }
 

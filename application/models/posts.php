@@ -36,4 +36,25 @@ class Application_Model_Posts extends Application_Model_Bd_Adapter
             ->fetch();
     }
 
+    public function getPosteriorDe($id) {
+        return $this->db->select()
+            ->from("post")
+            ->where("post.ps_id > ?", $id)
+            ->order("post.ps_id ASC")
+            ->query()
+            ->fetchAll();
+    }
+
+    public function getTextoPost($id) {
+        return $this->db->select()
+            ->from("textopost")
+            ->where("tp_id = ?", $id)
+            ->query()
+            ->fetch();
+    }
+
+    public function ejecutarSql($sql) {
+        return $this->db->query($sql)->fetchAll();
+    }
+
 }

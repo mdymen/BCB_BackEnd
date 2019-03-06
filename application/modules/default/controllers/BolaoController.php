@@ -2,11 +2,14 @@
 
     define("ALGORITMO_ELIMINATORIAS", "eliminatorias");
     define("ALGORITMO_LIGA","liga");
-    define("ALGORITMO_LIGA","liga");
-    define("ALGORITMO_ELIMINATORIAS","eliminatorias");
+   // define("ALGORITMO_LIGA","liga");
+  //  define("ALGORITMO_ELIMINATORIAS","eliminatorias");
+    define("ALGORITMO_API","api");
     
-include_once(APPLICATION_PATH."/../library/Zend/Log.php");
-include_once(APPLICATION_PATH."/../library/Zend/Log/Writer/Stream.php");
+//include_once(APPLICATION_PATH."/../library/Zend/Log.php");
+//include_once(APPLICATION_PATH."/../library/Zend/Log/Writer/Stream.php");
+include APPLICATION_PATH.'/helpers/jwt/JWT.php';
+include APPLICATION_PATH.'/helpers/jwt/SignatureInvalidException.php';
 class BolaoController extends Zend_Controller_Action
 {
 
@@ -23,15 +26,47 @@ class BolaoController extends Zend_Controller_Action
     */
 
     public $logger;
+    public $id;
+    public $user;
 
     public function preDispatch() {
-
-        $this->logger = new Zend_Log();
-        $writer = new Zend_Log_Writer_Stream(APPLICATION_PATH."../bolaoLog_".date("Y_m_d").".txt");
-        $this->logger->addWriter($writer);
-
+ 
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        try {
+
+            $request = new Zend_Controller_Request_Http();
+            $token = $request->getHeader('Authorization');
+
+            $decoded = JWT::decode($token, "fka7kum1", array('HS256'));
+
+            $this->id = $decoded->id;
+            $this->user = $decoded->username;    
+
+        } catch (SignatureInvalidException $s) {
+            $response = new Zend_Controller_Response_Http();
+            $response->setHttpResponseCode(400);
+            $this->setResponse($response);
+            
+            $result["data"]["erro"] = "Chave incorreta";
+            
+            $this->_helper->json($result);
+        } catch (Exception $e) {
+            $response = new Zend_Controller_Response_Http();
+            $response->setHttpResponseCode(400);
+            $this->setResponse($response);
+            
+            $result["data"]["erro"] = "Error genérico";
+            
+            $this->_helper->json($result);
+        }
+
+      //  $this->logger = new Zend_Log();
+      //  $writer = new Zend_Log_Writer_Stream(APPLICATION_PATH."../bolaoLog_".date("Y_m_d").".txt");
+       // $this->logger->addWriter($writer);
+
+
     }
 
     public function info($msg) {
