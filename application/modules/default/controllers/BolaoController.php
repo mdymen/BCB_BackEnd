@@ -29,12 +29,26 @@ class BolaoController extends Zend_Controller_Action
     public $id;
     public $user;
 
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getUser() {
+        return $this->user;
+    }
+
     public function preDispatch() {
  
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
 
         try {
+            $x = $this->getRequest()->isOptions();
+
+            if ($x) {
+                $res = $this->getRequest();
+                return $res;
+            }
 
             $request = new Zend_Controller_Request_Http();
             $token = $request->getHeader('Authorization');
@@ -57,7 +71,7 @@ class BolaoController extends Zend_Controller_Action
             $response->setHttpResponseCode(400);
             $this->setResponse($response);
             
-            $result["data"]["erro"] = "Error genérico";
+            $result["data"]["erro"] = $e->getMessage();
             
             $this->_helper->json($result);
         }
