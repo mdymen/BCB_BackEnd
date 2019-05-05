@@ -135,4 +135,19 @@ class Application_Model_Teams extends Application_Model_Bd_Adapter
         
         return $result;
     }
+
+    /**
+     * Retorna la cantidad de partidos jugados del equipo
+     * y del campeonato especificado
+     * @param idEquipo 
+     * @param idCampeonato
+     */
+    public function partidosJugados($idEquipo, $idCampeonato) {
+        return $this->db->select()->from("match","count(*) as jugados")
+            ->where("match.mt_idchampionship = ?", $idCampeonato)
+            ->where("match.mt_played = 1")
+            ->where("match.mt_idteam1 = ".$idEquipo." or match.mt_idteam2 = ".$idEquipo)
+            ->query()
+            ->fetch();
+    }
 }

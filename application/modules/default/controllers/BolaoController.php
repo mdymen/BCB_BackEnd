@@ -46,18 +46,28 @@ class BolaoController extends Zend_Controller_Action
             $x = $this->getRequest()->isOptions();
 
             if ($x) {
-                $res = $this->getRequest();
-                return $res;
+                
+                $res = $this->getResponse();
+                $res->setHeader('Content-Type', 'application/json');
+                $res->setHeader('Access-Control-Allow-Origin', '*');
+                $res->setHeader('Access-Control-Allow-Credentials', 'true');
+                $res->setHeader('Access-Control-Max-Age', '60');
+                $res->setHeader('Access-Control-Allow-Headers', 'AccountKey,x-requested-with, Content-Type, origin, authorization, accept, client-security-token, host, date, cookie, cookie2');
+                $res->setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+                
+                $this->_helper->json($res);
+
+            } else {
+
+                $request = new Zend_Controller_Request_Http();
+                $token = $request->getHeader('Authorization');
+
+                $decoded = JWT::decode($token, "fka7kum1", array('HS256'));
+
+                $this->id = $decoded->id;
+                $this->user = $decoded->username;    
+                
             }
-
-            $request = new Zend_Controller_Request_Http();
-            $token = $request->getHeader('Authorization');
-
-            $decoded = JWT::decode($token, "fka7kum1", array('HS256'));
-
-            $this->id = $decoded->id;
-            $this->user = $decoded->username;    
-
         } catch (SignatureInvalidException $s) {
             $response = new Zend_Controller_Response_Http();
             $response->setHttpResponseCode(400);
@@ -94,7 +104,7 @@ class BolaoController extends Zend_Controller_Action
     public function logAction() {
         $params = $this->_request->getParams();
 
-        $file1 = APPLICATION_PATH."../bolaoLog_".$params["fecha"].".txt";
+        $file1 = APPLICATION_PATH."../logs/bolaoLog_".$params["fecha"].".txt";
         $lines = file($file1);
         foreach($lines as $line_num => $line)
         {

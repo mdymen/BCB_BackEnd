@@ -28,6 +28,22 @@ class Application_Model_Equipo extends Application_Model_Bd_Adapter
         return $db->lastInsertId();
     }
 
+    public function salvar($equipo) {
+        $db = $this->db;
+        $this->db->insert("equipo", $equipo);
+        return $db->lastInsertId();
+    }
+
+    public function salvarEquipoCampeonato($equipoCampeonato) {
+        $db = $this->db;
+        $this->db->insert("equipocampeonato", $equipoCampeonato);
+        return $db->lastInsertId();
+    }
+
+    public function atualizar($equipo) {
+        return $this->db->update("equipo", $equipo, "eq_id = ".$equipo["eq_id"]);
+    }
+
     /**
      * retorna toda la lista de equipos cadastrados por pais
      * @param idPais
@@ -104,7 +120,7 @@ class Application_Model_Equipo extends Application_Model_Bd_Adapter
     }
 
     /**
-     * Retorna el equipo mediante la sigla
+     * Retorna los equipos mediante la sigla
      * @param sigla
      */
     public function getBySigla($sigla) {
@@ -113,5 +129,35 @@ class Application_Model_Equipo extends Application_Model_Bd_Adapter
             ->where("eq_sigla = ?", $sigla)
             ->query()
             ->fetchAll();
+    }
+
+     /**
+     * Retorna el equipo mediante el id de la globo
+     * @param id
+     */
+    public function loadByIdGlobo($id) {
+        return $this->db->select()
+            ->from("equipo")
+            ->where("eq_idglobo = ?", $id)
+            ->query()
+            ->fetch();
+    }
+
+     /**
+     * Retorna el equipo mediante la sigla que pertenecen a un determinado campeonato
+     * @param sigla
+     */
+    public function loadBySiglaAndCampeonato($sigla, $campeonato) {
+        return $this->db->select()
+            ->from("equipo")
+            ->joinInner("equipocampeonato", "equipo.eq_id = equipocampeonato.ec_idequipo", array())
+            ->where("eq_sigla = ?", $sigla)
+            ->where("ec_idchampionship = ?", $campeonato)
+            ->query()
+            ->fetch();
+    }
+
+    public function actualizar($equipo) {
+       // $this->
     }
 }

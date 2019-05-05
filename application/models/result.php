@@ -333,20 +333,20 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
      * @param res1
      * @param res2
      */
-    public function verificarGanadores($id_team1, $id_team2, $res1, $res2, $id_match) {
+    public function verificarGanadores($id_team1, $id_team2, $res1, $res2, $id_match, $id_championship) {
         if ($res1 > $res2) {
-            $this->sumarPuntosGanador($id_team1);
-            $this->sumarPartidoJugado($id_team2);
+            $this->sumarPuntosGanador($id_team1, $id_championship);
+            $this->sumarPartidoJugado($id_team2, $id_championship);
         }
 
         if ($res1 == $res2) {
-            $this->sumarEmpate($id_team1);
-            $this->sumarEmpate($id_team2);
+            $this->sumarEmpate($id_team1, $id_championship);
+            $this->sumarEmpate($id_team2, $id_championship);
         }
 
         if ($res2 > $res1) {
-            $this->sumarPuntosGanador($id_team2);
-            $this->sumarPartidoJugado($id_team1);
+            $this->sumarPuntosGanador($id_team2, $id_championship);
+            $this->sumarPartidoJugado($id_team1, $id_championship);
         }
 
         $this->setearPartidoJugado($id_match);
@@ -365,34 +365,37 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
      * Se le suma 3 puntos al equipo ganador y mas un partido jugado.
      * @param id_team es el ID de un equipo para sumarle 3 puntos
      */
-    public function sumarPuntosGanador($id_team) {
+    public function sumarPuntosGanador($id_team, $id_championship) {
         $db = $this->db;
 
         $return = $db->select()->from("equipocampeonato")
             ->where("ec_idequipo = ?", $id_team)
+            ->where("ec_idchampionship = ?", $id_championship)
             ->query()
             ->fetch();
 
         $return['ec_pontos'] = $return['ec_pontos'] + 3;
         $return['ec_jugados'] = $return['ec_jugados'] + 1;
         
-        $db->update("equipocampeonato", 
+        $res = $db->update("equipocampeonato", 
             array(
                 'ec_pontos' => $return['ec_pontos'],
                 'ec_jugados' => $return['ec_jugados']
             ), 
-            "ec_idequipo = ".$id_team);
+            "ec_idequipo = ".$id_team." AND "."ec_idchampionship = ".$id_championship);        
+
     }
 
     /**
      * Suma un partido jugado
      * @param id_team
      */
-    public function sumarPartidoJugado($id_team) {
+    public function sumarPartidoJugado($id_team, $id_championship) {
         $db = $this->db;
 
         $return = $db->select()->from("equipocampeonato")
             ->where("ec_idequipo = ?", $id_team)
+            ->where("ec_idchampionship = ?", $id_championship)
             ->query()
             ->fetch();
 
@@ -402,18 +405,19 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
             array(
                 'ec_jugados' => $return['ec_jugados']
             ), 
-            "ec_idequipo = ".$id_team);        
+            "ec_idequipo = ".$id_team." AND "."ec_idchampionship = ".$id_championship);        
     }
 
     /**
      *  Suma 1 punto a un equipo y 1 partido mas jugado
      * @param id_team1
      */
-    public function sumarEmpate($id_team) {
+    public function sumarEmpate($id_team, $id_championship) {
         $db = $this->db;
 
         $return = $db->select()->from("equipocampeonato")
             ->where("ec_idequipo = ?", $id_team)
+            ->where("ec_idchampionship = ?",$id_championship)
             ->query()
             ->fetch();
 
@@ -425,7 +429,7 @@ class Application_Model_Result extends Application_Model_Bd_Adapter
                 'ec_pontos' => $return['ec_pontos'],
                 'ec_jugados' => $return['ec_jugados']
             ), 
-            "ec_idequipo = ".$id_team);
+            "ec_idequipo = ".$id_team." AND "."ec_idchampionship = ".$id_championship);
     }
 
     /**

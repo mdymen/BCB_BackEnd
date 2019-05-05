@@ -1,0 +1,987 @@
+﻿2019-05-05T22:17:38+02:00 INFO (6): [recalculartabla] recalcular la tabla de posiciones del campeonato: '38'
+2019-05-05T22:17:38+02:00 INFO (6): [recalculartabla] cargados todos los equipos del campeonato: 'Array
+(
+    [0] => Array
+        (
+            [eq_id] => 478
+            [eq_nome] => Palmeiras
+            [eq_idpais] => 1
+            [eq_logo] => palmeiras.jpg
+            [eq_sigla] => PAL
+            [eq_idglobo] => 275
+            [ec_id] => 193
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 478
+            [ec_jugados] => 3
+            [ec_pontos] => 7
+            [ec_grupo] => 
+        )
+
+    [1] => Array
+        (
+            [eq_id] => 463
+            [eq_nome] => Santos
+            [eq_idpais] => 1
+            [eq_logo] => santos.jpg
+            [eq_sigla] => SAN
+            [eq_idglobo] => 277
+            [ec_id] => 181
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 463
+            [ec_jugados] => 3
+            [ec_pontos] => 7
+            [ec_grupo] => 
+        )
+
+    [2] => Array
+        (
+            [eq_id] => 468
+            [eq_nome] => Atlético
+            [eq_idpais] => 1
+            [eq_logo] => atletico.jpg
+            [eq_sigla] => CAM
+            [eq_idglobo] => 282
+            [ec_id] => 184
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 468
+            [ec_jugados] => 3
+            [ec_pontos] => 7
+            [ec_grupo] => 
+        )
+
+    [3] => Array
+        (
+            [eq_id] => 602
+            [eq_nome] => Goiás
+            [eq_idpais] => 1
+            [eq_logo] => goias.jpg
+            [eq_sigla] => GOI
+            [eq_idglobo] => 290
+            [ec_id] => 192
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 602
+            [ec_jugados] => 3
+            [ec_pontos] => 5
+            [ec_grupo] => 
+        )
+
+    [4] => Array
+        (
+            [eq_id] => 474
+            [eq_nome] => São paulo
+            [eq_idpais] => 1
+            [eq_logo] => saopaulo.jpg
+            [eq_sigla] => SAO
+            [eq_idglobo] => 276
+            [ec_id] => 182
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 474
+            [ec_jugados] => 3
+            [ec_pontos] => 5
+            [ec_grupo] => 
+        )
+
+    [5] => Array
+        (
+            [eq_id] => 473
+            [eq_nome] => Atlético-PR
+            [eq_idpais] => 1
+            [eq_logo] => atleticopr.jpg
+            [eq_sigla] => CAP
+            [eq_idglobo] => 293
+            [ec_id] => 185
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 473
+            [ec_jugados] => 3
+            [ec_pontos] => 5
+            [ec_grupo] => 
+        )
+
+    [6] => Array
+        (
+            [eq_id] => 459
+            [eq_nome] => Cruzeiro
+            [eq_idpais] => 1
+            [eq_logo] => cruzeiro.jpg
+            [eq_sigla] => CRU
+            [eq_idglobo] => 283
+            [ec_id] => 178
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 459
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [7] => Array
+        (
+            [eq_id] => 471
+            [eq_nome] => Corinthians
+            [eq_idpais] => 1
+            [eq_logo] => corinthians.jpg
+            [eq_sigla] => COR
+            [eq_idglobo] => 264
+            [ec_id] => 189
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 471
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [8] => Array
+        (
+            [eq_id] => 477
+            [eq_nome] => Botafogo
+            [eq_idpais] => 1
+            [eq_logo] => botafogo.jpg
+            [eq_sigla] => BOT
+            [eq_idglobo] => 263
+            [ec_id] => 197
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 477
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [9] => Array
+        (
+            [eq_id] => 462
+            [eq_nome] => Flamengo
+            [eq_idpais] => 1
+            [eq_logo] => flamengo.jpg
+            [eq_sigla] => FLA
+            [eq_idglobo] => 262
+            [ec_id] => 180
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 462
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [10] => Array
+        (
+            [eq_id] => 475
+            [eq_nome] => Chapecoense
+            [eq_idpais] => 1
+            [eq_logo] => chapecoense.jpg
+            [eq_sigla] => CHA
+            [eq_idglobo] => 315
+            [ec_id] => 183
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 475
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [11] => Array
+        (
+            [eq_id] => 469
+            [eq_nome] => Internacional
+            [eq_idpais] => 1
+            [eq_logo] => internacional.jpg
+            [eq_sigla] => INT
+            [eq_idglobo] => 285
+            [ec_id] => 196
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 469
+            [ec_jugados] => 3
+            [ec_pontos] => 3
+            [ec_grupo] => 
+        )
+
+    [12] => Array
+        (
+            [eq_id] => 464
+            [eq_nome] => Ceará SC
+            [eq_idpais] => 1
+            [eq_logo] => cearasc.jpg
+            [eq_sigla] => CEA
+            [eq_idglobo] => 354
+            [ec_id] => 188
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 464
+            [ec_jugados] => 3
+            [ec_pontos] => 3
+            [ec_grupo] => 
+        )
+
+    [13] => Array
+        (
+            [eq_id] => 470
+            [eq_nome] => Bahía
+            [eq_idpais] => 1
+            [eq_logo] => bahia.jpg
+            [eq_sigla] => BAH
+            [eq_idglobo] => 265
+            [ec_id] => 186
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 470
+            [ec_jugados] => 2
+            [ec_pontos] => 3
+            [ec_grupo] => 
+        )
+
+    [14] => Array
+        (
+            [eq_id] => 592
+            [eq_nome] => Fortaleza
+            [eq_idpais] => 1
+            [eq_logo] => fortaleza.jpg
+            [eq_sigla] => FOR
+            [eq_idglobo] => 356
+            [ec_id] => 191
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 592
+            [ec_jugados] => 3
+            [ec_pontos] => 2
+            [ec_grupo] => 
+        )
+
+    [15] => Array
+        (
+            [eq_id] => 467
+            [eq_nome] => Vasco da Gama
+            [eq_idpais] => 1
+            [eq_logo] => vasco.jpg
+            [eq_sigla] => VAS
+            [eq_idglobo] => 267
+            [ec_id] => 194
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 467
+            [ec_jugados] => 3
+            [ec_pontos] => 2
+            [ec_grupo] => 
+        )
+
+    [16] => Array
+        (
+            [eq_id] => 593
+            [eq_nome] => CSA
+            [eq_idpais] => 1
+            [eq_logo] => csa.jpg
+            [eq_sigla] => CSA
+            [eq_idglobo] => 341
+            [ec_id] => 187
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 593
+            [ec_jugados] => 3
+            [ec_pontos] => 2
+            [ec_grupo] => 
+        )
+
+    [17] => Array
+        (
+            [eq_id] => 460
+            [eq_nome] => Gremio
+            [eq_idpais] => 1
+            [eq_logo] => gremio.jpg
+            [eq_sigla] => GRE
+            [eq_idglobo] => 284
+            [ec_id] => 179
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 460
+            [ec_jugados] => 2
+            [ec_pontos] => 1
+            [ec_grupo] => 
+        )
+
+    [18] => Array
+        (
+            [eq_id] => 595
+            [eq_nome] => Avaí
+            [eq_idpais] => 1
+            [eq_logo] => avai.jpg
+            [eq_sigla] => AVA
+            [eq_idglobo] => 314
+            [ec_id] => 195
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 595
+            [ec_jugados] => 2
+            [ec_pontos] => 1
+            [ec_grupo] => 
+        )
+
+    [19] => Array
+        (
+            [eq_id] => 472
+            [eq_nome] => Fluminense
+            [eq_idpais] => 1
+            [eq_logo] => fluminense.jpg
+            [eq_sigla] => FLU
+            [eq_idglobo] => 266
+            [ec_id] => 190
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 472
+            [ec_jugados] => 2
+            [ec_pontos] => 0
+            [ec_grupo] => 
+        )
+
+)
+'
+2019-05-05T22:17:38+02:00 INFO (6): [recalculartabla] verificando partidos jugados del equipo: '478' - Palmeiras del campeonato: '38'
+2019-05-05T22:19:19+02:00 INFO (6): [recalculartabla] recalcular la tabla de posiciones del campeonato: '38'
+2019-05-05T22:19:19+02:00 INFO (6): [recalculartabla] cargados todos los equipos del campeonato: 'Array
+(
+    [0] => Array
+        (
+            [eq_id] => 478
+            [eq_nome] => Palmeiras
+            [eq_idpais] => 1
+            [eq_logo] => palmeiras.jpg
+            [eq_sigla] => PAL
+            [eq_idglobo] => 275
+            [ec_id] => 193
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 478
+            [ec_jugados] => 3
+            [ec_pontos] => 7
+            [ec_grupo] => 
+        )
+
+    [1] => Array
+        (
+            [eq_id] => 463
+            [eq_nome] => Santos
+            [eq_idpais] => 1
+            [eq_logo] => santos.jpg
+            [eq_sigla] => SAN
+            [eq_idglobo] => 277
+            [ec_id] => 181
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 463
+            [ec_jugados] => 3
+            [ec_pontos] => 7
+            [ec_grupo] => 
+        )
+
+    [2] => Array
+        (
+            [eq_id] => 468
+            [eq_nome] => Atlético
+            [eq_idpais] => 1
+            [eq_logo] => atletico.jpg
+            [eq_sigla] => CAM
+            [eq_idglobo] => 282
+            [ec_id] => 184
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 468
+            [ec_jugados] => 3
+            [ec_pontos] => 7
+            [ec_grupo] => 
+        )
+
+    [3] => Array
+        (
+            [eq_id] => 602
+            [eq_nome] => Goiás
+            [eq_idpais] => 1
+            [eq_logo] => goias.jpg
+            [eq_sigla] => GOI
+            [eq_idglobo] => 290
+            [ec_id] => 192
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 602
+            [ec_jugados] => 3
+            [ec_pontos] => 5
+            [ec_grupo] => 
+        )
+
+    [4] => Array
+        (
+            [eq_id] => 474
+            [eq_nome] => São paulo
+            [eq_idpais] => 1
+            [eq_logo] => saopaulo.jpg
+            [eq_sigla] => SAO
+            [eq_idglobo] => 276
+            [ec_id] => 182
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 474
+            [ec_jugados] => 3
+            [ec_pontos] => 5
+            [ec_grupo] => 
+        )
+
+    [5] => Array
+        (
+            [eq_id] => 473
+            [eq_nome] => Atlético-PR
+            [eq_idpais] => 1
+            [eq_logo] => atleticopr.jpg
+            [eq_sigla] => CAP
+            [eq_idglobo] => 293
+            [ec_id] => 185
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 473
+            [ec_jugados] => 3
+            [ec_pontos] => 5
+            [ec_grupo] => 
+        )
+
+    [6] => Array
+        (
+            [eq_id] => 459
+            [eq_nome] => Cruzeiro
+            [eq_idpais] => 1
+            [eq_logo] => cruzeiro.jpg
+            [eq_sigla] => CRU
+            [eq_idglobo] => 283
+            [ec_id] => 178
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 459
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [7] => Array
+        (
+            [eq_id] => 471
+            [eq_nome] => Corinthians
+            [eq_idpais] => 1
+            [eq_logo] => corinthians.jpg
+            [eq_sigla] => COR
+            [eq_idglobo] => 264
+            [ec_id] => 189
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 471
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [8] => Array
+        (
+            [eq_id] => 477
+            [eq_nome] => Botafogo
+            [eq_idpais] => 1
+            [eq_logo] => botafogo.jpg
+            [eq_sigla] => BOT
+            [eq_idglobo] => 263
+            [ec_id] => 197
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 477
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [9] => Array
+        (
+            [eq_id] => 462
+            [eq_nome] => Flamengo
+            [eq_idpais] => 1
+            [eq_logo] => flamengo.jpg
+            [eq_sigla] => FLA
+            [eq_idglobo] => 262
+            [ec_id] => 180
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 462
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [10] => Array
+        (
+            [eq_id] => 475
+            [eq_nome] => Chapecoense
+            [eq_idpais] => 1
+            [eq_logo] => chapecoense.jpg
+            [eq_sigla] => CHA
+            [eq_idglobo] => 315
+            [ec_id] => 183
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 475
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [11] => Array
+        (
+            [eq_id] => 469
+            [eq_nome] => Internacional
+            [eq_idpais] => 1
+            [eq_logo] => internacional.jpg
+            [eq_sigla] => INT
+            [eq_idglobo] => 285
+            [ec_id] => 196
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 469
+            [ec_jugados] => 3
+            [ec_pontos] => 3
+            [ec_grupo] => 
+        )
+
+    [12] => Array
+        (
+            [eq_id] => 464
+            [eq_nome] => Ceará SC
+            [eq_idpais] => 1
+            [eq_logo] => cearasc.jpg
+            [eq_sigla] => CEA
+            [eq_idglobo] => 354
+            [ec_id] => 188
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 464
+            [ec_jugados] => 3
+            [ec_pontos] => 3
+            [ec_grupo] => 
+        )
+
+    [13] => Array
+        (
+            [eq_id] => 470
+            [eq_nome] => Bahía
+            [eq_idpais] => 1
+            [eq_logo] => bahia.jpg
+            [eq_sigla] => BAH
+            [eq_idglobo] => 265
+            [ec_id] => 186
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 470
+            [ec_jugados] => 2
+            [ec_pontos] => 3
+            [ec_grupo] => 
+        )
+
+    [14] => Array
+        (
+            [eq_id] => 592
+            [eq_nome] => Fortaleza
+            [eq_idpais] => 1
+            [eq_logo] => fortaleza.jpg
+            [eq_sigla] => FOR
+            [eq_idglobo] => 356
+            [ec_id] => 191
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 592
+            [ec_jugados] => 3
+            [ec_pontos] => 2
+            [ec_grupo] => 
+        )
+
+    [15] => Array
+        (
+            [eq_id] => 467
+            [eq_nome] => Vasco da Gama
+            [eq_idpais] => 1
+            [eq_logo] => vasco.jpg
+            [eq_sigla] => VAS
+            [eq_idglobo] => 267
+            [ec_id] => 194
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 467
+            [ec_jugados] => 3
+            [ec_pontos] => 2
+            [ec_grupo] => 
+        )
+
+    [16] => Array
+        (
+            [eq_id] => 593
+            [eq_nome] => CSA
+            [eq_idpais] => 1
+            [eq_logo] => csa.jpg
+            [eq_sigla] => CSA
+            [eq_idglobo] => 341
+            [ec_id] => 187
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 593
+            [ec_jugados] => 3
+            [ec_pontos] => 2
+            [ec_grupo] => 
+        )
+
+    [17] => Array
+        (
+            [eq_id] => 460
+            [eq_nome] => Gremio
+            [eq_idpais] => 1
+            [eq_logo] => gremio.jpg
+            [eq_sigla] => GRE
+            [eq_idglobo] => 284
+            [ec_id] => 179
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 460
+            [ec_jugados] => 2
+            [ec_pontos] => 1
+            [ec_grupo] => 
+        )
+
+    [18] => Array
+        (
+            [eq_id] => 595
+            [eq_nome] => Avaí
+            [eq_idpais] => 1
+            [eq_logo] => avai.jpg
+            [eq_sigla] => AVA
+            [eq_idglobo] => 314
+            [ec_id] => 195
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 595
+            [ec_jugados] => 2
+            [ec_pontos] => 1
+            [ec_grupo] => 
+        )
+
+    [19] => Array
+        (
+            [eq_id] => 472
+            [eq_nome] => Fluminense
+            [eq_idpais] => 1
+            [eq_logo] => fluminense.jpg
+            [eq_sigla] => FLU
+            [eq_idglobo] => 266
+            [ec_id] => 190
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 472
+            [ec_jugados] => 2
+            [ec_pontos] => 0
+            [ec_grupo] => 
+        )
+
+)
+'
+2019-05-05T22:19:19+02:00 INFO (6): [recalculartabla] verificando partidos jugados del equipo: '478' - Palmeiras del campeonato: '38'
+2019-05-05T22:20:02+02:00 INFO (6): [recalculartabla] recalcular la tabla de posiciones del campeonato: '38'
+2019-05-05T22:20:02+02:00 INFO (6): [recalculartabla] cargados todos los equipos del campeonato: 'Array
+(
+    [0] => Array
+        (
+            [eq_id] => 478
+            [eq_nome] => Palmeiras
+            [eq_idpais] => 1
+            [eq_logo] => palmeiras.jpg
+            [eq_sigla] => PAL
+            [eq_idglobo] => 275
+            [ec_id] => 193
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 478
+            [ec_jugados] => 3
+            [ec_pontos] => 7
+            [ec_grupo] => 
+        )
+
+    [1] => Array
+        (
+            [eq_id] => 463
+            [eq_nome] => Santos
+            [eq_idpais] => 1
+            [eq_logo] => santos.jpg
+            [eq_sigla] => SAN
+            [eq_idglobo] => 277
+            [ec_id] => 181
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 463
+            [ec_jugados] => 3
+            [ec_pontos] => 7
+            [ec_grupo] => 
+        )
+
+    [2] => Array
+        (
+            [eq_id] => 468
+            [eq_nome] => Atlético
+            [eq_idpais] => 1
+            [eq_logo] => atletico.jpg
+            [eq_sigla] => CAM
+            [eq_idglobo] => 282
+            [ec_id] => 184
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 468
+            [ec_jugados] => 3
+            [ec_pontos] => 7
+            [ec_grupo] => 
+        )
+
+    [3] => Array
+        (
+            [eq_id] => 602
+            [eq_nome] => Goiás
+            [eq_idpais] => 1
+            [eq_logo] => goias.jpg
+            [eq_sigla] => GOI
+            [eq_idglobo] => 290
+            [ec_id] => 192
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 602
+            [ec_jugados] => 3
+            [ec_pontos] => 5
+            [ec_grupo] => 
+        )
+
+    [4] => Array
+        (
+            [eq_id] => 474
+            [eq_nome] => São paulo
+            [eq_idpais] => 1
+            [eq_logo] => saopaulo.jpg
+            [eq_sigla] => SAO
+            [eq_idglobo] => 276
+            [ec_id] => 182
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 474
+            [ec_jugados] => 3
+            [ec_pontos] => 5
+            [ec_grupo] => 
+        )
+
+    [5] => Array
+        (
+            [eq_id] => 473
+            [eq_nome] => Atlético-PR
+            [eq_idpais] => 1
+            [eq_logo] => atleticopr.jpg
+            [eq_sigla] => CAP
+            [eq_idglobo] => 293
+            [ec_id] => 185
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 473
+            [ec_jugados] => 3
+            [ec_pontos] => 5
+            [ec_grupo] => 
+        )
+
+    [6] => Array
+        (
+            [eq_id] => 459
+            [eq_nome] => Cruzeiro
+            [eq_idpais] => 1
+            [eq_logo] => cruzeiro.jpg
+            [eq_sigla] => CRU
+            [eq_idglobo] => 283
+            [ec_id] => 178
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 459
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [7] => Array
+        (
+            [eq_id] => 471
+            [eq_nome] => Corinthians
+            [eq_idpais] => 1
+            [eq_logo] => corinthians.jpg
+            [eq_sigla] => COR
+            [eq_idglobo] => 264
+            [ec_id] => 189
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 471
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [8] => Array
+        (
+            [eq_id] => 477
+            [eq_nome] => Botafogo
+            [eq_idpais] => 1
+            [eq_logo] => botafogo.jpg
+            [eq_sigla] => BOT
+            [eq_idglobo] => 263
+            [ec_id] => 197
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 477
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [9] => Array
+        (
+            [eq_id] => 462
+            [eq_nome] => Flamengo
+            [eq_idpais] => 1
+            [eq_logo] => flamengo.jpg
+            [eq_sigla] => FLA
+            [eq_idglobo] => 262
+            [ec_id] => 180
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 462
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [10] => Array
+        (
+            [eq_id] => 475
+            [eq_nome] => Chapecoense
+            [eq_idpais] => 1
+            [eq_logo] => chapecoense.jpg
+            [eq_sigla] => CHA
+            [eq_idglobo] => 315
+            [ec_id] => 183
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 475
+            [ec_jugados] => 3
+            [ec_pontos] => 4
+            [ec_grupo] => 
+        )
+
+    [11] => Array
+        (
+            [eq_id] => 469
+            [eq_nome] => Internacional
+            [eq_idpais] => 1
+            [eq_logo] => internacional.jpg
+            [eq_sigla] => INT
+            [eq_idglobo] => 285
+            [ec_id] => 196
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 469
+            [ec_jugados] => 3
+            [ec_pontos] => 3
+            [ec_grupo] => 
+        )
+
+    [12] => Array
+        (
+            [eq_id] => 464
+            [eq_nome] => Ceará SC
+            [eq_idpais] => 1
+            [eq_logo] => cearasc.jpg
+            [eq_sigla] => CEA
+            [eq_idglobo] => 354
+            [ec_id] => 188
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 464
+            [ec_jugados] => 3
+            [ec_pontos] => 3
+            [ec_grupo] => 
+        )
+
+    [13] => Array
+        (
+            [eq_id] => 470
+            [eq_nome] => Bahía
+            [eq_idpais] => 1
+            [eq_logo] => bahia.jpg
+            [eq_sigla] => BAH
+            [eq_idglobo] => 265
+            [ec_id] => 186
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 470
+            [ec_jugados] => 2
+            [ec_pontos] => 3
+            [ec_grupo] => 
+        )
+
+    [14] => Array
+        (
+            [eq_id] => 592
+            [eq_nome] => Fortaleza
+            [eq_idpais] => 1
+            [eq_logo] => fortaleza.jpg
+            [eq_sigla] => FOR
+            [eq_idglobo] => 356
+            [ec_id] => 191
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 592
+            [ec_jugados] => 3
+            [ec_pontos] => 2
+            [ec_grupo] => 
+        )
+
+    [15] => Array
+        (
+            [eq_id] => 467
+            [eq_nome] => Vasco da Gama
+            [eq_idpais] => 1
+            [eq_logo] => vasco.jpg
+            [eq_sigla] => VAS
+            [eq_idglobo] => 267
+            [ec_id] => 194
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 467
+            [ec_jugados] => 3
+            [ec_pontos] => 2
+            [ec_grupo] => 
+        )
+
+    [16] => Array
+        (
+            [eq_id] => 593
+            [eq_nome] => CSA
+            [eq_idpais] => 1
+            [eq_logo] => csa.jpg
+            [eq_sigla] => CSA
+            [eq_idglobo] => 341
+            [ec_id] => 187
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 593
+            [ec_jugados] => 3
+            [ec_pontos] => 2
+            [ec_grupo] => 
+        )
+
+    [17] => Array
+        (
+            [eq_id] => 460
+            [eq_nome] => Gremio
+            [eq_idpais] => 1
+            [eq_logo] => gremio.jpg
+            [eq_sigla] => GRE
+            [eq_idglobo] => 284
+            [ec_id] => 179
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 460
+            [ec_jugados] => 2
+            [ec_pontos] => 1
+            [ec_grupo] => 
+        )
+
+    [18] => Array
+        (
+            [eq_id] => 595
+            [eq_nome] => Avaí
+            [eq_idpais] => 1
+            [eq_logo] => avai.jpg
+            [eq_sigla] => AVA
+            [eq_idglobo] => 314
+            [ec_id] => 195
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 595
+            [ec_jugados] => 2
+            [ec_pontos] => 1
+            [ec_grupo] => 
+        )
+
+    [19] => Array
+        (
+            [eq_id] => 472
+            [eq_nome] => Fluminense
+            [eq_idpais] => 1
+            [eq_logo] => fluminense.jpg
+            [eq_sigla] => FLU
+            [eq_idglobo] => 266
+            [ec_id] => 190
+            [ec_idchampionship] => 38
+            [ec_idequipo] => 472
+            [ec_jugados] => 2
+            [ec_pontos] => 0
+            [ec_grupo] => 
+        )
+
+)
+'
+2019-05-05T22:20:02+02:00 INFO (6): [recalculartabla] verificando partidos jugados del equipo: '478' - Palmeiras del campeonato: '38'
+2019-05-05T22:30:49+02:00 INFO (6): [updatesecuencialAction]
+2019-05-05T22:30:49+02:00 INFO (6): [updatesecuencialAction] idCampeonatoParaActualizar -> resultado 
+2019-05-05T22:30:49+02:00 INFO (6): [updatesecuencialAction] no existe ningun campeonato que precise ser actualizado
+2019-05-05T22:31:07+02:00 INFO (6): [updatesecuencialAction]
+2019-05-05T22:31:07+02:00 INFO (6): [updatesecuencialAction] idCampeonatoParaActualizar -> resultado 
+2019-05-05T22:31:07+02:00 INFO (6): [updatesecuencialAction] no existe ningun campeonato que precise ser actualizado
+2019-05-05T22:31:35+02:00 INFO (6): [updatesecuencialAction]
+2019-05-05T22:31:35+02:00 INFO (6): [updatesecuencialAction] idCampeonatoParaActualizar -> resultado 
+2019-05-05T22:31:35+02:00 INFO (6): [updatesecuencialAction] no existe ningun campeonato que precise ser actualizado

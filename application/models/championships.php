@@ -27,6 +27,8 @@ class Application_Model_Championships extends Application_Model_Bd_Adapter
         $db = $this->db;     
         
         $db->insert($this->_name,$params);
+
+        return $db->lastInsertId();
     }
     
 	public function getcampeonatos() { 
@@ -281,5 +283,14 @@ class Application_Model_Championships extends Application_Model_Bd_Adapter
             ->where("championship.ch_ativo =?", 1)
             ->query()
             ->fetchAll();
+    }
+
+    /**
+     * Salva na tabela urlcampeonatos a url para hacer requiciones en globo
+     * $url["dr_url"]
+     * $url["dr_idchampsionship]
+     */
+    public function saveUrlCampeonato($url) {
+        $this->db->insert("urlcampeonatos",$url);
     }
 }

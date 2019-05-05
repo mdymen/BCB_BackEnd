@@ -294,5 +294,40 @@ class PartidosController extends BolaoController
             $this->_helper->json($e->getMessage()); 
         }
     }
+
+
+    /**
+     * Palpita toda la rodada.
+     * Envia todos los partidos de una rododa con sus resultados.
+     * Crea la tupla del nuevo partido o actualiza si ya fue palpitado el partido.
+     * 
+     * En formato de array recibe
+     * @param partidos son todos los palpites realizados
+     */
+	public function palpitarAction() {
+        try {
+
+            $body = $this->getRequest()->getRawBody();
+            $data = Zend_Json::decode($body);
+
+            $jogos = $data['partidos'];
+            $usuario = $this->getId();
+
+            $results = new Application_Model_Result();
+            for ($i = 0; $i < count($jogos); $i = $i + 1) {
+                $jogo = $jogos[$i];
+
+                $jogo['rs_res1'] = strcmp($jogo['rs_res1'],"") == 0 ? null : $jogo['rs_res1'];
+                $jogo['rs_res2'] = strcmp($jogo['rs_res2'],"") == 0 ? null : $jogo['rs_res2'];        
+
+                $results->palpitar($jogo, $usuario);
+            }
+
+            $this->_helper->json(200);
+        
+        } catch(Zend_Exception $e) {
+            $this->_helper->json($e->getMessage());
+        }
+    }
     
 }

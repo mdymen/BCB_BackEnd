@@ -35,6 +35,35 @@ include APPLICATION_PATH.'/modules/default/controllers/BolaoController.php';
 
 class CampeonatosController extends BolaoController
 {
+
+    public function postAction() {
+
+        try {
+
+            $body = $this->getRequest()->getRawBody();
+            $data = Zend_Json::decode($body);
+            
+            $url = $data["dr_url"];
+            unset($data["dr_url"]);
+            
+            $c = new Application_Model_Championships();
+            $idCampeonato = $c->save($data);
+
+            $c->saveUrlCampeonato(
+                array(
+                    "dr_url" => $url,
+                    "dr_idchampionship" => $idCampeonato
+                    )
+            );
+
+        }
+        catch (Exception $e) {
+            print_r($e->getMessage());
+            die(".");
+        }
+
+    }
+
     public function indexAction() {
         $params = $this->_request->getParams();
                     

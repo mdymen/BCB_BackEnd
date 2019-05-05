@@ -39,10 +39,11 @@ class AuthenticationController  extends Zend_Controller_Action {
                 $token = array(
                     "id"=> $login['us_id'],
                     "username" => $login['us_username']
-                );
-                
+                );                                
+
                 $jwt = JWT::encode($token, $key);
 
+                $result["data"]["usuario"] = $login;
                 $result["data"]["token"] = $jwt;
                 $this->_helper->json($result);
 

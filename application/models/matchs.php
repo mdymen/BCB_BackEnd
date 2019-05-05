@@ -39,6 +39,41 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
         
     }
 
+    /**
+     * Devuelve el mayor id campeonato que tiene partidos
+     * que faltan setear resultados
+     */
+    public function idCampeonatoParaActualizar() {
+        $date = new DateTime("now", new DateTimeZone('America/Sao_Paulo') );
+
+
+        $id = $this->db->select()->from("match", "max(match.mt_idchampionship) as mt_idchampionship")
+            ->joinInner("championship", "match.mt_idchampionship = championship.ch_id", "")
+            ->where("championship.ch_ativo = 1")
+            ->where("mt_date < ?", $date->format('Y-m-d H:i:s'))
+            ->where("mt_played = 0")
+            ->query()
+            ->fetch();
+
+        return $id["mt_idchampionship"];
+    }
+
+    public function existsPartidosNoJugados($idRodada) {
+        return $this->db->select()->from("match", "count(*) as jogos")
+            ->where("mt_idround = ?", $idRodada)
+            ->where("mt_played = 0")
+            ->query()
+            ->fetch();
+    }
+
+    public function loadByIdGlobo($idGlobo) {
+        return $this->db->select()
+            ->from("match")
+            ->where("mt_idglobo = ?", $idGlobo)
+            ->query()
+            ->fetch();
+    }
+
     public function update_acumulado_match($match_id, $valor) {
         $db = $this->db;
         
@@ -748,6 +783,17 @@ class Application_Model_Matchs extends Application_Model_Bd_Adapter
             ->where("dr_idchampionship = ?", $idCampeonato)
             ->query()
             ->fetch();
+    }
+
+    /**
+     * Retorna todas las url de Globo para hacer requiciones para actualizar los partidos
+     * @param idCampeonato
+     */
+    public function getGloboUrls() {
+        return $this->db->select()
+            ->from("urlcampeonatos")
+            ->query()
+            ->fetchAll();
     }
 
     /**
